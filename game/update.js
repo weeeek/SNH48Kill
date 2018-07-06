@@ -1,0 +1,18 @@
+window.noname_update={
+	version:'1.9.52',
+	update:'1.9.51',
+	changeLog:[
+		'新武将'
+	],
+	players:[
+		'sp_liuqi',
+		'luzhi'
+	],
+	files:[
+		'character/diy.js',
+		'character/sp.js',
+		'character/yijiang.js',
+		'game/game.js',
+		'mode/boss.js'
+	]
+};
