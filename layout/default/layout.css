@@ -2122,7 +2122,7 @@ div:not(.handcards) > .card > .info > span,
     /*box-shadow: none;*/
     left: auto;
     right: 3px;
-    font-size: 36px;
+    font-size: 32px;
 }
 
 .button.newstyle > .name {
