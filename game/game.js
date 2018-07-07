@@ -5568,7 +5568,7 @@
                     },
                 }
             },
-            _48: {
+            SNH48G: {
                 name: 'SNH48',
                 connect: {
                     update: function (config, map) {
@@ -9362,7 +9362,7 @@
             eight: '八',
             nine: '九',
             ten: '十',
-            '_48': "SNH48",
+            'SNH48G': "SNH48",
             _chongzhu: '重铸',
             _lianhuan: '连环',
             _lianhuan2: '连环',

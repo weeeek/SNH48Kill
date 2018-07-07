@@ -28,10 +28,10 @@ window.config={
 	forbidboss:['caiwenji','gjqt_aruan','pal_xuanxiao','swd_hupo'],
 	forbiddouble:['zhugedan','swd_kangnalishi','dongzhuo','wutugu','hs_siwangzhiyi','hs_ronghejuren','hs_shanlingjuren'],
 	all:{
-		sgscharacters:['standard','shenhua','refresh','yijiang','sp','extra','old','_48'],
+		sgscharacters:['standard','shenhua','refresh','yijiang','sp','extra','old','SNH48G'],
 		sgscards: ['standard', 'extra', 'sp', 'guozhan'],
 		sgsmodes:['identity','guozhan','versus','brawl','connect'],
-		stockmode:['identity','guozhan','versus','boss','chess','stone','connect','brawl','tafang','_48'],
+		stockmode:['identity','guozhan','versus','boss','chess','stone','connect','brawl','tafang','SNH48G'],
 		stockextension:['boss','cardpile','coin','wuxing'],
 		layout:['default','newlayout'],
 		theme:['woodden','music','simple'],
@@ -139,7 +139,7 @@ window.config={
 	sort:'type_sort',
 
 	cards:['standard','ex','extra','sp','classic','basic'],
-	characters:['standard','shenhua','refresh','sp','yijiang','_48'],
+	characters:['standard','shenhua','refresh','sp','yijiang','SNH48G'],
 	connect_characters:[],
 	connect_cards:[],
 	plays:[],
@@ -189,7 +189,7 @@ window.config={
 		    initshow_draw: 2,
 		    dierestart: true
 		},
-		_48: {
+		SNH48G: {
 		    difficulty: 'normal',
 		    initshow_draw: 2,
 		    dierestart: true

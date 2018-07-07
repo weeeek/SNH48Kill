@@ -16,7 +16,7 @@
 		swd:'轩辕剑',
 		gujian:'古剑奇谭',
 		xianjian: '仙剑',
-        _48:'SNH48G'
+        SNH48G:'SNH48G'
 	},
 	card:{
 		standard:'标准',
@@ -29,7 +29,7 @@
 		gujian:'古剑奇谭',
 		hearth:'炉石传说',
 		gwent: '昆特牌',
-		_48: 'SNH48G'
+		SNH48G: 'SNH48G'
 	},
 	play:{
 		boss:'诸神降临',
@@ -40,7 +40,7 @@
 	mode:{
 		identity:'身份',
 		guozhan:'国战',
-		_48: 'SNH48',
+		SNH48G: 'SNH48',
 		versus:'对决',
 		connect:'联机',
 		boss:'挑战',

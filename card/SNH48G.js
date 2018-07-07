@@ -1,7 +1,7 @@
 'use strict';
 game.import('card',function(lib,game,ui,get,ai,_status){
 	return {
-		name:'_48',
+		name:'SNH48G',
 		connect:true,
 		card: {
 		    yingyuanbang: {
