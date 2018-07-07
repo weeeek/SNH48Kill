@@ -1,3 +1,4 @@
+//战棋模式
 'use strict';
 game.import('mode',function(lib,game,ui,get,ai,_status){
 	return {

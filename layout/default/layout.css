@@ -4256,6 +4256,8 @@ span[data-nature='black'] {
     text-shadow: rgba(0,0,0,0.5) 0 0 2px,rgba(0,0,0,0.5) 0 0 5px,rgba(0,0,0,0.5) 0 0 10px, rgba(0,0,0,0.5) 0 0 10px,rgba(0,0,0,0.5) 0 0 20px,rgba(0,0,0,0.5) 0 0 20px,black 0 0 1px;
 }
 
+div[data-color="unknownm"] div,
+span[data-color="unknownm"] div,
 div[data-color="unknownm"],
 span[data-color="unknownm"] {
     text-shadow: rgba(0,0,0,0.5) 0 0 2px,rgba(0,0,0,0.2) 0 0 5px,rgba(0,0,0,0.2) 0 0 5px, rgba(0,0,0,0.2) 0 0 5px,black 0 0 1px;

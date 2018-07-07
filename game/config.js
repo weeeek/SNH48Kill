@@ -27,9 +27,12 @@ window.config={
 	forbidchess:['hetaihou','swd_kangnalishi'],
 	forbidboss:['caiwenji','gjqt_aruan','pal_xuanxiao','swd_hupo'],
 	forbiddouble:['zhugedan','swd_kangnalishi','dongzhuo','wutugu','hs_siwangzhiyi','hs_ronghejuren','hs_shanlingjuren'],
-	all:{
-		sgscharacters:['standard','shenhua','refresh','yijiang','sp','extra','old','SNH48G'],
-		sgscards: ['standard', 'extra', 'sp', 'guozhan'],
+    all: {
+        //三国杀武将扩展包：标准，神话，一将成名，SP等，军争。。。
+        sgscharacters: ['standard', 'shenhua', 'refresh', 'yijiang', 'sp', 'extra', 'old', 'SNH48G'],
+        //三国杀牌堆扩展包：标准，军争，SP，国战
+        sgscards: ['standard', 'extra', 'sp', 'guozhan'],
+        //三国杀模式：身份，国战，对决，挑战
 		sgsmodes:['identity','guozhan','versus','brawl','connect'],
 		stockmode:['identity','guozhan','versus','boss','chess','stone','connect','brawl','tafang','SNH48G'],
 		stockextension:['boss','cardpile','coin','wuxing'],
@@ -44,12 +47,14 @@ window.config={
 	duration:500,
 	hoveration:1000,
 	doubleclick_intro:true,
-	cheat:false,
-	volumn_background:8,
-	volumn_audio:8,
+    cheat: false,
+    //背景音乐0-10
+    volumn_background: 2,
+    //游戏声效0-10
+	volumn_audio:2,
 
-	connect_avatar:'caocao',
-	connect_nickname:'无名玩家',
+	connect_avatar:'weeeek',
+	connect_nickname:'丶Gone',
 	config_menu:true,
 	auto_popped_config:true,
 	auto_popped_history:false,
