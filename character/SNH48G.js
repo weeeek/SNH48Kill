@@ -123,6 +123,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gjujingyi: '鞠婧祎',
             SNH48Gwuyanwen: '吴燕文',
             SNH48Gliujiongran: '刘炅然',
+            SNH48Gfeiqinyuan:'费沁源',
+            SNH48Gwangxiaojia:'王晓佳'
         },
     };
 });
