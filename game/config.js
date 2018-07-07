@@ -49,7 +49,7 @@ window.config={
 	doubleclick_intro:true,
     cheat: false,
     //背景音乐0-10
-    volumn_background: 2,
+    volumn_background: 1,
     //游戏声效0-10
 	volumn_audio:2,
 

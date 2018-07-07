@@ -2048,6 +2048,16 @@ div:not(.handcards) > .card > .info > span,
         padding: 0;
     }
 
+    .caption > span.invalid {
+        color: #EF1B52;
+        text-shadow: 0 0 2px #EF1B52;
+    }
+
+    .caption > span.effective {
+        color: #94D401;
+        text-shadow: 0 0 2px #94D401;
+    }
+
 .skill {
     left: 0 !important;
     width: 70px !important;

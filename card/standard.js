@@ -1621,7 +1621,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 						if((targets||target)&&!isJudge){
 							str+='对'+get.translation(targets||target);
 						}
-						str+='将'+(state>0?'生效':'失效')+'，是否无懈？';
+                        str += '将' + (state > 0 ? '<span class="effective">生效</span>' :'<span class="invalid">失效</span>')+'，是否无懈？';
 
 						if(player.isUnderControl(true)&&!_status.auto&&!ui.tempnowuxie&&tempnowuxie){
 							var translation=get.translation(card.name);
