@@ -46,8 +46,8 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 		    },
 		},
 		translate:{
-		    yingyuanbang_bg: '镜',
-		    yingyuanbang: '护心镜',
+		    yingyuanbang_bg: '棒',
+		    yingyuanbang: '应援棒',
 		    yingyuanbang_info: '抵消一点伤害',
 		},
 		list:[
