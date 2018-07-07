@@ -9585,7 +9585,7 @@
                             numx = num(player);
                         }
                         player.directgain(get.cards(numx));
-                        if (player.singleHp === true && get.mode() != 'guozhan') {
+                        if (player.singleHp === true && get.mode() != 'guozhan' && get.mode() != 'SNH48G') {
                             player.doubleDraw();
                         }
                         player = player.next;
@@ -18585,7 +18585,7 @@
                         skill = sourceSkill.sourceSkill;
                     }
                     if (lib.skill.global.contains(skill)) return false;
-                    if (get.mode() != 'guozhan' || game.expandSkills(this.getSkills()).contains(skill)) {
+                    if (get.mode() != 'guozhan' && get.mode() != 'SNH48G' || game.expandSkills(this.getSkills()).contains(skill)) {
                         if (showonly) {
                             return false;
                         }
@@ -37485,7 +37485,12 @@
                         if (lib.characterFilter[i] && !lib.characterFilter[i](get.mode())) continue;
                         if (filter && filter(i)) continue;
                         list.push(i);
-                        if (namecapt.indexOf(getCapt(i)) == -1) {
+                        if (i.indexOf('SNH48G') > -1) {
+                            if (namecapt.indexOf('SNH48G') == -1) {
+                                namecapt.push('SNH48G');
+                            }
+                        }
+                        else if (namecapt.indexOf(getCapt(i)) == -1) {
                             namecapt.push(getCapt(i));
                         }
                     }
@@ -37688,7 +37693,7 @@
                     }
                 }
                 if (!thisiscard) {
-                    var groups = ['wei', 'shu', 'wu', 'qun'];
+                    var groups = get.mode() == 'SNH48G'? ['S','N','H','X'] : ['wei', 'shu', 'wu', 'qun'];
                     for (var i in lib.character) {
                         if (lib.character[i][1] == 'shen') {
                             groups.add('shen'); break;

@@ -181,7 +181,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Gchengjue: ['female', 'S', 4, ['biyue', 'guidao']],
                 SNH48Gchensi: ['female', 'S', 3, ['wushuang', 'feiying']],
                 SNH48Gdaimeng: ['female', 'S', 4, ['kongcheng', 'qianxun']],
-                SNH48Gjiangyun: ['female', 'S', 3, ['leiji', 'hunshang']],
+                SNH48Gjiangyun: ['female', 'S', 3, ['leiji', 'guidao']],
                 SNH48Gkongxiaoyin: ['female', 'S', 4, ['lieren']],
                 SNH48Glvyi: ['female', 'S', 3, ['mingce', 'longdan']],
                 SNH48Gliyuqi: ['female', 'S', 3, ['mingce', 'longdan']],
@@ -2012,7 +2012,18 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
         game: {
             getCharacterChoice: function (list, num) {
                 var choice = list.splice(0, num);
-                var map = { wei: [], shu: [], wu: [], qun: [] };
+                //var map = {
+                //    wei: [],
+                //    shu: [],
+                //    wu: [],
+                //    qun: []
+                //};
+                var map = {
+                    S: [],
+                    N: [],
+                    H: [],
+                    X: []
+                };
                 for (var i = 0; i < choice.length; i++) {
                     var group = lib.character[choice[i]][1];
                     if (map[group]) {
@@ -2118,7 +2129,8 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     else {
                         data[identity][1]++;
                     }
-                    var list = ['wei', 'shu', 'wu', 'qun', 'ye'];
+                    //var list = ['wei', 'shu', 'wu', 'qun', 'ye'];
+                    var list = ['S', 'N', 'H', 'X', 'ye'];
                     var str = '';
                     for (var i = 0; i < list.length; i++) {
                         if (data[list[i]]) {
@@ -2132,30 +2144,38 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             getIdentityList: function (player) {
                 if (!player.isUnseen()) return;
                 if (player == game.me) return;
+                //var list = {
+                //    wei: '魏',
+                //    shu: '蜀',
+                //    wu: '吴',
+                //    qun: '群',
+                //    ye: '野',
+                //    unknown: '猜'
+                //}
                 var list = {
-                    wei: '魏',
-                    shu: '蜀',
-                    wu: '吴',
-                    qun: '群',
-                    ye: '野',
+                    S: 'S',
+                    N: 'N',
+                    H: 'H',
+                    X: 'X',
+                    ye: '野',                  
                     unknown: '猜'
                 }
                 var num = Math.floor((game.players.length + game.dead.length) / 2);
                 var noye = true;
-                if (get.population('wei') >= num) {
-                    delete list.wei;
+                if (get.population('S') >= num) {
+                    delete list.S;
                     noye = false;
                 }
-                if (get.population('shu') >= num) {
-                    delete list.shu;
+                if (get.population('N') >= num) {
+                    delete list.N;
                     noye = false;
                 }
-                if (get.population('wu') >= num) {
-                    delete list.wu;
+                if (get.population('H') >= num) {
+                    delete list.H;
                     noye = false;
                 }
-                if (get.population('qun') >= num) {
-                    delete list.qun;
+                if (get.population('X') >= num) {
+                    delete list.X;
                     noye = false;
                 }
                 if (noye) {
@@ -2169,7 +2189,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                         case 'unknown': list[i] = '未知'; break;
                         case 'ye': list[i] = '野心家'; break;
                         case 'qun': list[i] += '雄'; break;
-                        default: list[i] += '国';
+                        default: list[i] += '队';
                     }
                 }
             },
