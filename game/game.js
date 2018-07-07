@@ -2124,10 +2124,10 @@
                                     cbnum4 = 0;
                                 }
                                 ui.css.buttonsheet = lib.init.sheet(
-									'#system>div>div, .caption>div>.tdnode{padding-top:' + cbnum1 + 'px !important;padding-bottom:' + cbnum2 + 'px !important}',
-									'#control>.control>div{padding-top:' + cbnum3 + 'px;padding-bottom:' + cbnum4 + 'px}',
-									'#control>.control{padding-top:' + cbnum5 + 'px;padding-bottom:' + cbnum6 + 'px}'
-								);
+                                    '#system>div>div, .caption>div>.tdnode{padding-top:' + cbnum1 + 'px !important;padding-bottom:' + cbnum2 + 'px !important}',
+                                    '#control>.control>div{padding-top:' + cbnum3 + 'px;padding-bottom:' + cbnum4 + 'px}',
+                                    '#control>.control{padding-top:' + cbnum5 + 'px;padding-bottom:' + cbnum6 + 'px}'
+                                );
                             }
                         }
                     },
@@ -3265,8 +3265,8 @@
                     },
                     import_music: {
                         name: '<div style="white-space:nowrap;width:calc(100% - 5px)">' +
-						'<input type="file" style="width:calc(100% - 40px)" accept="audio/ogg,audio/mpeg">' +
-						'<button style="width:40px">确定</button></div>',
+                        '<input type="file" style="width:calc(100% - 40px)" accept="audio/ogg,audio/mpeg">' +
+                        '<button style="width:40px">确定</button></div>',
                         clear: true,
                     },
                     background_audio: {
@@ -3450,8 +3450,8 @@
                     },
                     import_data_button: {
                         name: '<div style="white-space:nowrap;width:calc(100% - 10px)">' +
-						'<input type="file" style="width:calc(100% - 40px)">' +
-						'<button style="width:40px">确定</button></div>',
+                        '<input type="file" style="width:calc(100% - 40px)">' +
+                        '<button style="width:40px">确定</button></div>',
                         clear: true,
                     },
                     export_data: {
@@ -4776,7 +4776,7 @@
                             map.enable_all_cards.hide();
                         }
                         if (config.versus_mode == 'jiange' || config.versus_mode == 'two' || config.versus_mode == 'endless' ||
-							config.versus_mode == 'three' || config.versus_mode == 'one' || config.versus_mode == 'siguo') {
+                            config.versus_mode == 'three' || config.versus_mode == 'one' || config.versus_mode == 'siguo') {
                             map.free_choose.show();
                         }
                         else {
@@ -5878,21 +5878,21 @@
         },
         help: {
             '游戏操作': '<ul><li>长按/鼠标悬停/右键单击显示信息<li>触屏模式中，双指点击切换暂停；下划显示菜单，上划切换托管<li>键盘快捷键<br>' +
-			'<table><tr><td>A<td>切换托管<tr><td>W<td>切换不询问无懈<tr><td>空格<td>暂停</table><li>编辑牌堆<br>在卡牌包中修改牌堆后，将自动创建一个临时牌堆，在所有模式中共用，当保存当前牌堆后，临时牌堆被清除。每个模式可设置不同的已保存牌堆，设置的牌堆优先级大于临时牌堆</ul>',
+            '<table><tr><td>A<td>切换托管<tr><td>W<td>切换不询问无懈<tr><td>空格<td>暂停</table><li>编辑牌堆<br>在卡牌包中修改牌堆后，将自动创建一个临时牌堆，在所有模式中共用，当保存当前牌堆后，临时牌堆被清除。每个模式可设置不同的已保存牌堆，设置的牌堆优先级大于临时牌堆</ul>',
             '游戏命令': '<div style="margin:10px">变量名</div><ul style="margin-top:0"><li>场上角色<br>game.players<li>阵亡角色<br>game.dead' +
-			'<li>玩家<br>game.me<li>玩家的上/下家<br>game.me.previous/next' +
-			'<li>玩家的上/下家（含阵亡）<br>game.me.previousSeat/<br>nextSeat' +
-			'<li>牌堆<br>ui.cardPile<li>弃牌堆<br>ui.discardPile</ul>' +
-			'<div style="margin:10px">角色属性</div><ul style="margin-top:0"><li>体力值<br>player.hp' +
-			'<li>体力上限<br>player.maxHp<li>身份<br>player.identity<li>手牌<br>player.get("h")<li>装备牌<br>player.get("e")<li>判定牌<br>player.get("j")' +
-			'<li>是否存活/横置/翻面<br>player.isAlive()/<br>isLinked()/<br>isTurnedOver()</ul>' +
-			'<div style="margin:10px">角色操作</div><ul style="margin-top:0"><li>受到伤害<br>player.damage(source,<br>num)' +
-			'<li>回复体力<br>player.recover(num)<li>摸牌<br>player.draw(num)<li>获得牌<br>player.gain(cards)<li>弃牌<br>player.discard(cards)' +
-			'<li>使用卡牌<br>player.useCard(card,<br>targets)<li>死亡<br>player.die()<li>复活<br>player.revive(hp)</ul>' +
-			'<div style="margin:10px">游戏操作</div><ul style="margin-top:0"><li>在命令框中输出结果<br>game.print(str)<li>清除命令框中的内容<br>cls<li>上一条/下一条输入的内容<br>up/down<li>游戏结束<br>game.over(bool)' +
-			'<li>角色资料<br>lib.character<li>卡牌资料<br>lib.card</ul>',
+            '<li>玩家<br>game.me<li>玩家的上/下家<br>game.me.previous/next' +
+            '<li>玩家的上/下家（含阵亡）<br>game.me.previousSeat/<br>nextSeat' +
+            '<li>牌堆<br>ui.cardPile<li>弃牌堆<br>ui.discardPile</ul>' +
+            '<div style="margin:10px">角色属性</div><ul style="margin-top:0"><li>体力值<br>player.hp' +
+            '<li>体力上限<br>player.maxHp<li>身份<br>player.identity<li>手牌<br>player.get("h")<li>装备牌<br>player.get("e")<li>判定牌<br>player.get("j")' +
+            '<li>是否存活/横置/翻面<br>player.isAlive()/<br>isLinked()/<br>isTurnedOver()</ul>' +
+            '<div style="margin:10px">角色操作</div><ul style="margin-top:0"><li>受到伤害<br>player.damage(source,<br>num)' +
+            '<li>回复体力<br>player.recover(num)<li>摸牌<br>player.draw(num)<li>获得牌<br>player.gain(cards)<li>弃牌<br>player.discard(cards)' +
+            '<li>使用卡牌<br>player.useCard(card,<br>targets)<li>死亡<br>player.die()<li>复活<br>player.revive(hp)</ul>' +
+            '<div style="margin:10px">游戏操作</div><ul style="margin-top:0"><li>在命令框中输出结果<br>game.print(str)<li>清除命令框中的内容<br>cls<li>上一条/下一条输入的内容<br>up/down<li>游戏结束<br>game.over(bool)' +
+            '<li>角色资料<br>lib.character<li>卡牌资料<br>lib.card</ul>',
             '游戏名词': '<ul><li>护甲：和体力类似，每点护甲可抵挡一点伤害，但不影响手牌上限' +
-			'<li>随从：通过技能获得，拥有独立的技能、手牌区和装备区（共享判定区），出场时替代主武将的位置；随从死亡时自动切换回主武将'
+            '<li>随从：通过技能获得，拥有独立的技能、手牌区和装备区（共享判定区），出场时替代主武将的位置；随从死亡时自动切换回主武将'
         },
         setIntro: function (node, func, left) {
             if (lib.config.touchscreen) {
@@ -5947,7 +5947,7 @@
         placePoppedDialog: function (dialog, e) {
             if (dialog._place_text) {
                 if (dialog._place_text.firstChild.offsetWidth >= 190 ||
-					dialog._place_text.firstChild.offsetHeight >= 30) {
+                    dialog._place_text.firstChild.offsetHeight >= 30) {
                     dialog._place_text.style.textAlign = 'left';
                     dialog._place_text.style.marginLeft = '14px';
                 }
@@ -6054,7 +6054,7 @@
         saveVideo: function () {
             if (_status.videoToSave) {
                 game.export(lib.init.encode(JSON.stringify(_status.videoToSave)),
-				'无名杀 - 录像 - ' + _status.videoToSave.name[0] + ' - ' + _status.videoToSave.name[1]);
+                    '无名杀 - 录像 - ' + _status.videoToSave.name[0] + ' - ' + _status.videoToSave.name[1]);
             }
         },
         init: {
@@ -6290,28 +6290,28 @@
                 HTMLDivElement.prototype.setBackgroundImage = function (img) {
                     this.style.backgroundImage = 'url("' + lib.assetURL + img + '")';
                 },
-				HTMLDivElement.prototype.listen = function (func) {
-				    if (lib.config.touchscreen) {
-				        this.addEventListener('touchend', function (e) {
-				            if (!_status.dragged) {
-				                func.call(this, e);
-				            }
-				        });
-				        var fallback = function (e) {
-				            if (!_status.touchconfirmed) {
-				                func.call(this, e);
-				            }
-				            else {
-				                this.removeEventListener('click', fallback);
-				            }
-				        }
-				        this.addEventListener('click', fallback);
-				    }
-				    else {
-				        this.addEventListener('click', func);
-				    }
-				    return this;
-				};
+                    HTMLDivElement.prototype.listen = function (func) {
+                        if (lib.config.touchscreen) {
+                            this.addEventListener('touchend', function (e) {
+                                if (!_status.dragged) {
+                                    func.call(this, e);
+                                }
+                            });
+                            var fallback = function (e) {
+                                if (!_status.touchconfirmed) {
+                                    func.call(this, e);
+                                }
+                                else {
+                                    this.removeEventListener('click', fallback);
+                                }
+                            }
+                            this.addEventListener('click', fallback);
+                        }
+                        else {
+                            this.addEventListener('click', func);
+                        }
+                        return this;
+                    };
                 HTMLDivElement.prototype.listenTransition = function (func, time) {
                     var that = this;
                     var done = false;
@@ -6830,7 +6830,7 @@
                             lib.init.js(lib.assetURL + 'mode', lib.config.mode, packLoaded, packLoaded);
                         }
                         else if ((localStorage.getItem(lib.configprefix + 'directstart') || !show_splash) &&
-							lib.config.all.mode.indexOf(lib.config.mode) != -1) {
+                            lib.config.all.mode.indexOf(lib.config.mode) != -1) {
                             toLoad++;
                             lib.init.js(lib.assetURL + 'mode', lib.config.mode, packLoaded, packLoaded);
                         }
@@ -7017,16 +7017,16 @@
                                 }
                                 else if (lib.config.confirm_exit) {
                                     navigator.notification.confirm(
-										'是否退出游戏？',
-										function (index) {
-										    switch (index) {
-										        case 2: game.saveConfig('null'); game.reload(); break;
-										        case 3: navigator.app.exitApp(); break;
-										    }
-										},
-										'确认退出',
-										['取消', '重新开始', '退出']
-									);
+                                        '是否退出游戏？',
+                                        function (index) {
+                                            switch (index) {
+                                                case 2: game.saveConfig('null'); game.reload(); break;
+                                                case 3: navigator.app.exitApp(); break;
+                                            }
+                                        },
+                                        '确认退出',
+                                        ['取消', '重新开始', '退出']
+                                    );
                                 }
                                 else {
                                     navigator.app.exitApp();
@@ -7438,31 +7438,31 @@
                     if (lib.device) {
                         if (navigator.notification) {
                             navigator.notification.confirm(
-								'游戏似乎未正常载入，是否重置游戏？',
-								function (index) {
-								    if (index == 2) {
-								        localStorage.removeItem('noname_inited');
-								        window.location.reload();
-								    }
-								    else if (index == 3) {
-								        var noname_inited = localStorage.getItem('noname_inited');
-								        var onlineKey = localStorage.getItem(lib.configprefix + 'key');
-								        localStorage.clear();
-								        if (noname_inited) {
-								            localStorage.setItem('noname_inited', noname_inited);
-								        }
-								        if (onlineKey) {
-								            localStorage.setItem(lib.configprefix + 'key', onlineKey);
-								        }
-								        if (indexedDB) indexedDB.deleteDatabase(lib.configprefix + 'data');
-								        setTimeout(function () {
-								            window.location.reload();
-								        }, 200);
-								    }
-								},
-								'确认退出',
-								['取消', '重新下载', '重置设置']
-							);
+                                '游戏似乎未正常载入，是否重置游戏？',
+                                function (index) {
+                                    if (index == 2) {
+                                        localStorage.removeItem('noname_inited');
+                                        window.location.reload();
+                                    }
+                                    else if (index == 3) {
+                                        var noname_inited = localStorage.getItem('noname_inited');
+                                        var onlineKey = localStorage.getItem(lib.configprefix + 'key');
+                                        localStorage.clear();
+                                        if (noname_inited) {
+                                            localStorage.setItem('noname_inited', noname_inited);
+                                        }
+                                        if (onlineKey) {
+                                            localStorage.setItem(lib.configprefix + 'key', onlineKey);
+                                        }
+                                        if (indexedDB) indexedDB.deleteDatabase(lib.configprefix + 'data');
+                                        setTimeout(function () {
+                                            window.location.reload();
+                                        }, 200);
+                                    }
+                                },
+                                '确认退出',
+                                ['取消', '重新下载', '重置设置']
+                            );
                         }
                         else {
                             if (confirm('游戏似乎未正常载入，是否重置游戏？')) {
@@ -7509,9 +7509,9 @@
                             game.metaZoom = zoom;
                             var barHeight = Math.round(20 / zoom);
                             lib.init.sheet(
-								'.statusbar #window{top:' + barHeight + 'px;height:calc(100% - ' + barHeight + 'px)}',
-								'.statusbar #statusbg{height:' + barHeight + 'px}'
-							);
+                                '.statusbar #window{top:' + barHeight + 'px;height:calc(100% - ' + barHeight + 'px)}',
+                                '.statusbar #statusbg{height:' + barHeight + 'px}'
+                            );
                         }
                     }
                     game.documentZoom = 1;
@@ -7542,7 +7542,7 @@
                     document.body.addEventListener('touchmove', function (e) {
                         if (_status.dragged) return;
                         if (Math.abs(e.touches[0].clientX / game.documentZoom - this.startX) > 10 ||
-							Math.abs(e.touches[0].clientY / game.documentZoom - this.startY) > 10) {
+                            Math.abs(e.touches[0].clientY / game.documentZoom - this.startY) > 10) {
                             _status.dragged = true;
                         }
                     });
@@ -7817,7 +7817,7 @@
                                         character[i][j][k][4] = [];
                                     }
                                     if (character[i][j][k][4].contains('boss') ||
-										character[i][j][k][4].contains('hiddenboss')) {
+                                        character[i][j][k][4].contains('hiddenboss')) {
                                         lib.config.forbidai.add(k);
                                     }
                                     if (lib.config.forbidai_user && lib.config.forbidai_user.contains(k)) {
@@ -8017,7 +8017,7 @@
                             }
                             for (j in play[i]) {
                                 if (j == 'mode' || j == 'forbid' || j == 'init' || j == 'element' ||
-								j == 'game' || j == 'get' || j == 'ui' || j == 'arenaReady') continue;
+                                    j == 'game' || j == 'get' || j == 'ui' || j == 'arenaReady') continue;
                                 for (k in play[i][j]) {
                                     if (j == 'translate' && k == i) {
                                         // lib[j][k+'_play_config']=play[i][j][k];
@@ -8065,7 +8065,7 @@
                                 lib.card.list.splice(i, 1); i--;
                             }
                             else if (lib.card[lib.card.list[i][2]].mode &&
-								lib.card[lib.card.list[i][2]].mode.contains(lib.config.mode) == false) {
+                                lib.card[lib.card.list[i][2]].mode.contains(lib.config.mode) == false) {
                                 lib.card.list.splice(i, 1); i--;
                             }
                         }
@@ -8112,7 +8112,7 @@
                                     if (lib.extensions[i][4].skill) {
                                         for (var j in lib.extensions[i][4].skill.skill) {
                                             game.addSkill(j, lib.extensions[i][4].skill.skill[j],
-											lib.extensions[i][4].skill.translate[j], lib.extensions[i][4].skill.translate[j + '_info']);
+                                                lib.extensions[i][4].skill.translate[j], lib.extensions[i][4].skill.translate[j + '_info']);
                                         }
                                     }
                                 }
@@ -8305,7 +8305,7 @@
                     try {
                         message = JSON.parse(messagestr);
                         if (!Array.isArray(message) ||
-							typeof lib.message.server[message[0]] !== 'function') {
+                            typeof lib.message.server[message[0]] !== 'function') {
                             throw ('err');
                         }
                         for (var i = 1; i < message.length; i++) {
@@ -8600,8 +8600,8 @@
                     str = str.replace(/'step 0'|"step 0"/, 'if(event.step==' + k + ') {event.finish();return;}switch(step){case 0:');
                 }
                 return (new Function('event', 'step', 'source', 'player', 'target', 'targets',
-					'card', 'cards', 'skill', 'forced', 'num', 'trigger', 'result',
-					'_status', 'lib', 'game', 'ui', 'get', 'ai', str));
+                    'card', 'cards', 'skill', 'forced', 'num', 'trigger', 'result',
+                    '_status', 'lib', 'game', 'ui', 'get', 'ai', str));
             },
             eval: function (func) {
                 if (typeof func == 'function') {
@@ -8618,29 +8618,29 @@
             },
             encode: function (strUni) {
                 var strUtf = strUni.replace(
-					/[\u0080-\u07ff]/g, function (c) {
-					    var cc = c.charCodeAt(0);
-					    return String.fromCharCode(0xc0 | cc >> 6, 0x80 | cc & 0x3f);
-					});
+                    /[\u0080-\u07ff]/g, function (c) {
+                        var cc = c.charCodeAt(0);
+                        return String.fromCharCode(0xc0 | cc >> 6, 0x80 | cc & 0x3f);
+                    });
                 strUtf = strUtf.replace(
-					/[\u0800-\uffff]/g, function (c) {
-					    var cc = c.charCodeAt(0);
-					    return String.fromCharCode(0xe0 | cc >> 12, 0x80 | cc >> 6 & 0x3F, 0x80 | cc & 0x3f);
-					});
+                    /[\u0800-\uffff]/g, function (c) {
+                        var cc = c.charCodeAt(0);
+                        return String.fromCharCode(0xe0 | cc >> 12, 0x80 | cc >> 6 & 0x3F, 0x80 | cc & 0x3f);
+                    });
                 return btoa(strUtf);
             },
             decode: function (str) {
                 var strUtf = atob(str);
                 var strUni = strUtf.replace(
-					/[\u00e0-\u00ef][\u0080-\u00bf][\u0080-\u00bf]/g, function (c) {
-					    var cc = ((c.charCodeAt(0) & 0x0f) << 12) | ((c.charCodeAt(1) & 0x3f) << 6) | (c.charCodeAt(2) & 0x3f);
-					    return String.fromCharCode(cc);
-					});
+                    /[\u00e0-\u00ef][\u0080-\u00bf][\u0080-\u00bf]/g, function (c) {
+                        var cc = ((c.charCodeAt(0) & 0x0f) << 12) | ((c.charCodeAt(1) & 0x3f) << 6) | (c.charCodeAt(2) & 0x3f);
+                        return String.fromCharCode(cc);
+                    });
                 strUni = strUni.replace(
-					/[\u00c0-\u00df][\u0080-\u00bf]/g, function (c) {
-					    var cc = (c.charCodeAt(0) & 0x1f) << 6 | c.charCodeAt(1) & 0x3f;
-					    return String.fromCharCode(cc);
-					});
+                    /[\u00c0-\u00df][\u0080-\u00bf]/g, function (c) {
+                        var cc = (c.charCodeAt(0) & 0x1f) << 6 | c.charCodeAt(1) & 0x3f;
+                        return String.fromCharCode(cc);
+                    });
                 return strUni;
             },
             stringify: function (obj) {
@@ -8758,8 +8758,8 @@
                 mode.remove('connect');
                 mode.remove('brawl');
                 var banned = ['yxs_luzhishen', 'zhenji', 'shen_guanyu', 'shen_caocao', 'zhurong',
-					'daqiao', 'lingcao', 'liuzan', 'lusu', 'luxun', 'yanwen', 'zhouyu', 'ns_wangyue', 'gw_yenaifa',
-					'old_caozhen', 'guojia', 'simayi', 'sp_pangde', 'swd_kangnalishi', 'hs_siwangzhiyi'];
+                    'daqiao', 'lingcao', 'liuzan', 'lusu', 'luxun', 'yanwen', 'zhouyu', 'ns_wangyue', 'gw_yenaifa',
+                    'old_caozhen', 'guojia', 'simayi', 'sp_pangde', 'swd_kangnalishi', 'hs_siwangzhiyi'];
                 var bannedcards = ['zengbin', 'huoshan', 'hongshui', 'guiyoujie', 'fengyinzhidan', 'sifeizhenmian'];
                 for (var i = 0; i < mode.length; i++) {
                     game.saveConfig(mode[i] + '_banned', banned);
@@ -8979,7 +8979,7 @@
             },
             b: function () {
                 if (!ui.dialog || !ui.dialog.buttons) return;
-                for (var i = 0; i < Math.min(arguments.length, ui.dialog.buttons.length) ; i++) {
+                for (var i = 0; i < Math.min(arguments.length, ui.dialog.buttons.length); i++) {
                     ui.dialog.buttons[i].link = arguments[i];
                 }
             },
@@ -9093,7 +9093,7 @@
                 }
 
                 var list = lib.rank.s.concat(lib.rank.ap).concat(lib.rank.a).concat(lib.rank.am).
-					concat(lib.rank.bp).concat(lib.rank.b).concat(lib.rank.bm).concat(lib.rank.c).concat(lib.rank.d);
+                    concat(lib.rank.bp).concat(lib.rank.b).concat(lib.rank.bm).concat(lib.rank.c).concat(lib.rank.d);
                 for (var i in lib.character) {
                     if (!lib.connectBanned.contains(i) && i.indexOf('boss_') != 0 && i.indexOf('tafang_') != 0 && !list.contains(i)) console.log(get.translation(i));
                 }
@@ -9318,7 +9318,7 @@
             NII: 'NII',
             HII: 'HII',
             X: 'X',
-            FT:'Ft',
+            FT: 'Ft',
             wei: '魏',
             shu: '蜀',
             wu: '吴',
@@ -9434,8 +9434,8 @@
                         var cfg = player.storage[event.directresult];
                         player.storage.subplayer.name2 = event.directresult;
                         player.reinit(current, event.directresult, [
-							cfg.hp,
-							cfg.maxHp
+                            cfg.hp,
+                            cfg.maxHp
                         ]);
                         if (cfg.hs.length) player.directgain(cfg.hs);
                         if (cfg.es.length) player.directequip(cfg.es);
@@ -9456,8 +9456,8 @@
                             player.lose(player.getCards('he'), ui.special)._triggered = null;
                         }
                         player.reinit(current, player.storage.subplayer.name, [
-							player.storage.subplayer.hp,
-							player.storage.subplayer.maxHp
+                            player.storage.subplayer.hp,
+                            player.storage.subplayer.maxHp
                         ]);
                         player.update();
                         if (event.remove) {
@@ -9690,7 +9690,7 @@
                                         character[i][j][k][4] = [];
                                     }
                                     if (character[i][j][k][4].contains('boss') ||
-										character[i][j][k][4].contains('hiddenboss')) {
+                                        character[i][j][k][4].contains('hiddenboss')) {
                                         lib.config.forbidai.add(k);
                                     }
                                     if (lib.config.forbidai_user && lib.config.forbidai_user.contains(k)) {
@@ -9781,7 +9781,7 @@
                         event.finish();
                     }
                     else if (typeof info.usable == 'number' && player.hasSkill('counttrigger') &&
-						player.storage.counttrigger && player.storage.counttrigger[event.skill] >= info.usable) {
+                        player.storage.counttrigger && player.storage.counttrigger[event.skill] >= info.usable) {
                         event.finish();
                     }
                     else if (info.round && (info.round - (game.roundNumber - player.storage[event.skill + '_roundcount']) > 0)) {
@@ -10025,8 +10025,8 @@
                             });
                         }
                         else if (typeof content.player == 'string' && game.playerMap[content.player] &&
-							game.playerMap[content.player].classList &&
-							!game.playerMap[content.player].classList.contains('obstacle')) {
+                            game.playerMap[content.player].classList &&
+                            !game.playerMap[content.player].classList.contains('obstacle')) {
                             game.videoContent[content.type](game.playerMap[content.player], content.content);
                         }
                         else {
@@ -10650,7 +10650,7 @@
                                     event.promptbar = event.dialog.add('0/' + get.numStr(event.selectCard[1], 'card'));
                                     event.custom.add.card = function () {
                                         _status.event.promptbar.innerHTML =
-										ui.selected.cards.length + '/' + get.numStr(_status.event.selectCard[1], 'card');
+                                            ui.selected.cards.length + '/' + get.numStr(_status.event.selectCard[1], 'card');
                                     }
                                 }
                             }
@@ -10695,7 +10695,7 @@
                     }
                     "step 3"
                     if (event.result.bool && event.result.cards && event.result.cards.length &&
-						!game.online && event.autodelay && !event.isMine()) {
+                        !game.online && event.autodelay && !event.isMine()) {
                         if (typeof event.autodelay == 'number') {
                             game.delayx(event.autodelay);
                         }
@@ -11208,7 +11208,7 @@
                                 event.promptbar = event.dialog.add('0/' + get.numStr(event.selectCard[1], 'card'));
                                 event.custom.add.card = function () {
                                     _status.event.promptbar.innerHTML =
-									ui.selected.cards.length + '/' + get.numStr(_status.event.selectCard[1], 'card');
+                                        ui.selected.cards.length + '/' + get.numStr(_status.event.selectCard[1], 'card');
                                 }
                             }
                         }
@@ -11268,7 +11268,7 @@
                             event.promptbar = event.dialog.add('0/' + get.numStr(get.select(event.selectTarget)[1], 'target'));
                             event.custom.add.target = function () {
                                 _status.event.promptbar.innerHTML =
-								ui.selected.targets.length + '/' + get.numStr(get.select(event.selectTarget)[1], 'target');
+                                    ui.selected.targets.length + '/' + get.numStr(get.select(event.selectTarget)[1], 'target');
                             }
                         }
                         else if (get.itemtype(event.dialog) == 'dialog') {
@@ -11465,7 +11465,7 @@
                                 event.dialog.open();
                                 for (var i = 0; i < event.choiceList.length; i++) {
                                     event.dialog.add('<div class="popup text" style="width:calc(100% - 10px);display:inline-block">选项' +
-									get.cnNumber(i + 1, true) + '：' + event.choiceList[i] + '</div>');
+                                        get.cnNumber(i + 1, true) + '：' + event.choiceList[i] + '</div>');
                                 }
                             }
                             else if (event.prompt) {
@@ -11581,10 +11581,10 @@
                     else {
                         var choice;
                         if (player.isDamaged() && get.recoverEffect(player) > 0 && (
-							player.hp == 1 || player.needsToDiscard() ||
-							player.hasSkillTag('maixie_hp') || event.num2 > event.num1 ||
-							(event.num2 == event.num1 && player.needsToDiscard(1))
-						)) {
+                            player.hp == 1 || player.needsToDiscard() ||
+                            player.hasSkillTag('maixie_hp') || event.num2 > event.num1 ||
+                            (event.num2 == event.num1 && player.needsToDiscard(1))
+                        )) {
                             choice = 'recover_hp';
                         }
                         else {
@@ -12086,12 +12086,12 @@
                             }
                             else if (att < 0) {
                                 if (game.hasPlayer(function (current) {
-									if (get.attitude(player, current) > 0) {
-										var es = target.getCards('e');
-										for (var i = 0; i < es.length; i++) {
-											if (!current.getEquip(get.subtype(es[i]))) return true;
-                                }
-                                }
+                                    if (get.attitude(player, current) > 0) {
+                                        var es = target.getCards('e');
+                                        for (var i = 0; i < es.length; i++) {
+                                            if (!current.getEquip(get.subtype(es[i]))) return true;
+                                        }
+                                    }
                                 })) {
                                     return -att;
                                 }
@@ -12250,11 +12250,11 @@
                         else {
                             var config = {};
                             if (card.nature == 'fire' ||
-								(card.classList && card.classList.contains('fire'))) {
+                                (card.classList && card.classList.contains('fire'))) {
                                 config.color = 'fire';
                             }
                             else if (card.nature == 'thunder' ||
-								(card.classList && card.classList.contains('thunder'))) {
+                                (card.classList && card.classList.contains('thunder'))) {
                                 config.color = 'thunder';
                             }
                             if (event.addedTarget) {
@@ -12611,8 +12611,8 @@
                     }
                     var info = get.info(event.skill);
                     if (targets[num] && targets[num].isDead() ||
-						targets[num] && targets[num].isOut() ||
-						targets[num] && targets[num].removed) {
+                        targets[num] && targets[num].isOut() ||
+                        targets[num] && targets[num].removed) {
                         if (!info.multitarget && num < targets.length - 1) {
                             event.num++;
                             event.redo();
@@ -13545,7 +13545,7 @@
                             if (lib.character[player.name] && lib.character[player.name][4].contains('die_audio')) {
                                 game.playAudio('die', player.name);
                             }
-                                // else if(true){
+                            // else if(true){
                             else {
                                 game.playAudio('die', player.name, function () {
                                     game.playAudio('die', player.name.slice(player.name.indexOf('_') + 1));
@@ -14554,11 +14554,11 @@
                         hp.classList.add('text');
                     }
                     else if (get.is.newLayout() &&
-					(
-						this.maxHp > 9 ||
-						(this.maxHp > 5 && this.classList.contains('minskin')) ||
-						((game.layout == 'mobile' || game.layout == 'long') && this.dataset.position == 0 && this.maxHp > 7)
-					)) {
+                        (
+                            this.maxHp > 9 ||
+                            (this.maxHp > 5 && this.classList.contains('minskin')) ||
+                            ((game.layout == 'mobile' || game.layout == 'long') && this.dataset.position == 0 && this.maxHp > 7)
+                        )) {
                         hp.innerHTML = this.hp + '<br>/<br>' + this.maxHp + '<div></div>';
                         if (this.hp == 0) {
                             hp.lastChild.classList.add('lost');
@@ -14663,8 +14663,8 @@
                         this.syncStorage(i);
                     }
                     if (i == 'ghujia' || ((!this.marks[i].querySelector('.image') || this.storage[i + '_markcount']) &&
-						lib.skill[i] && lib.skill[i].intro && !lib.skill[i].intro.nocount &&
-						(this.storage[i] || lib.skill[i].intro.markcount))) {
+                        lib.skill[i] && lib.skill[i].intro && !lib.skill[i].intro.nocount &&
+                        (this.storage[i] || lib.skill[i].intro.markcount))) {
                         this.marks[i].classList.add('overflowmark')
                         var num = 0;
                         if (typeof lib.skill[i].intro.markcount == 'function') {
@@ -14741,10 +14741,10 @@
                         }, this, target, config);
                         game.addVideo('line', this, [target.dataset.position, config]);
                         game.linexy([
-							this.offsetLeft + this.offsetWidth / 2,
-							this.offsetTop + this.offsetHeight / 2,
-							target.offsetLeft + target.offsetWidth / 2,
-							target.offsetTop + target.offsetHeight / 2
+                            this.offsetLeft + this.offsetWidth / 2,
+                            this.offsetTop + this.offsetHeight / 2,
+                            target.offsetLeft + target.offsetWidth / 2,
+                            target.offsetTop + target.offsetHeight / 2
                         ], config, true);
                     }
                 },
@@ -14889,7 +14889,7 @@
                                         value = cards[i][j];
                                     }
                                     if ((typeof arg2[j] == 'string' && value != arg2[j]) ||
-										(Array.isArray(arg2[j]) && !arg2[j].contains(value))) {
+                                        (Array.isArray(arg2[j]) && !arg2[j].contains(value))) {
                                         cards.splice(i--, 1); break;
                                     }
                                 }
@@ -15662,7 +15662,7 @@
                         return next;
                     }
                     else if (game.hasPlayer(function (current) {
-						return player.canUse(card, current);
+                        return player.canUse(card, current);
                     })) {
                         var next = player.chooseTarget(prompt || '选择' + get.translation(card) + '的目标');
                         next._get_card = card;
@@ -16056,11 +16056,11 @@
                             var es = current.getCards('e');
                             for (var i = 0; i < es.length; i++) {
                                 if (game.hasPlayer(function (current2) {
-									if (withatt) {
-										var att2 = get.attitude(player, current2);
-										if (att2 <= 0) return false;
-                                }
-									return current != current2 && !current2.isMin() && !current2.getEquip(get.subtype(es[i]));
+                                    if (withatt) {
+                                        var att2 = get.attitude(player, current2);
+                                        if (att2 <= 0) return false;
+                                    }
+                                    return current != current2 && !current2.isMin() && !current2.getEquip(get.subtype(es[i]));
                                 })) {
                                     return true;
                                 }
@@ -16070,11 +16070,11 @@
                             var js = current.getCards('j');
                             for (var i = 0; i < js.length; i++) {
                                 if (game.hasPlayer(function (current2) {
-									if (withatt) {
-										var att2 = get.attitude(player, current2);
-										if (att2 > 0) return false;
-                                }
-									return current != current2 && !current2.hasJudge(js[i]);
+                                    if (withatt) {
+                                        var att2 = get.attitude(player, current2);
+                                        if (att2 > 0) return false;
+                                    }
+                                    return current != current2 && !current2.hasJudge(js[i]);
                                 })) {
                                     return true;
                                 }
@@ -16300,7 +16300,7 @@
                     if (next.num <= 0) _status.event.next.remove(next);
                     next.setContent('draw');
                     if (lib.config.mode == 'stone' && _status.mode == 'deck' &&
-					next.drawDeck == undefined && !next.player.isMin() && next.num > 1) {
+                        next.drawDeck == undefined && !next.player.isMin() && next.num > 1) {
                         next.drawDeck = 1;
                     }
                     return next;
@@ -17177,7 +17177,7 @@
                     }
                     var info = lib.skill[name];
                     if (info && info.ai && info.ai.expose != undefined &&
-						this.logAi && (!targets || targets.length != 1 || targets[0] != this)) {
+                        this.logAi && (!targets || targets.length != 1 || targets[0] != this)) {
                         this.logAi(lib.skill[name].ai.expose);
                     }
                     if (info && info.round) {
@@ -17232,7 +17232,7 @@
                     }
                     node.dataset.position = this.dataset.position;
                     if (this.dataset.position == 0 || parseInt(this.dataset.position) == parseInt(ui.arena.dataset.number) / 2 ||
-						typeof name2 == 'number' || this.classList.contains('minskin')) {
+                        typeof name2 == 'number' || this.classList.contains('minskin')) {
                         node.innerHTML = name2;
                     }
                     else {
@@ -17259,7 +17259,7 @@
                     game.addVideo('popup', this, [name, className]);
                     node.dataset.position = this.dataset.position;
                     if (this.dataset.position == 0 || parseInt(this.dataset.position) == parseInt(ui.arena.dataset.number) / 2 ||
-						typeof name2 == 'number' || this.classList.contains('minskin')) {
+                        typeof name2 == 'number' || this.classList.contains('minskin')) {
                         node.innerHTML = name2;
                     }
                     else {
@@ -17546,7 +17546,7 @@
                     else {
                         for (var i = 0; i < this.node.marks.childNodes.length; i++) {
                             if (this.node.marks.childNodes[i].name == name &&
-								(!info || this.node.marks.childNodes[i].markidentifer == info)) {
+                                (!info || this.node.marks.childNodes[i].markidentifer == info)) {
                                 this.node.marks.childNodes[i].delete();
                                 this.node.marks.childNodes[i].style.transform += ' scale(0.2)';
                                 ui.updatem(this);
@@ -17599,7 +17599,7 @@
                     cfg.skill = cfg.skill || _status.event.name;
                     if (!cfg.source) {
                         if (this.hasSkill(_status.event.name) && this.name2 && lib.character[this.name2] &&
-							lib.character[this.name2][3].contains(_status.event.name)) {
+                            lib.character[this.name2][3].contains(_status.event.name)) {
                             cfg.source = this.name2;
                         }
                         else {
@@ -17777,11 +17777,11 @@
                         }
                         if (info.mark) {
                             if (info.mark == 'card' &&
-								get.itemtype(this.storage[skill]) == 'card') {
+                                get.itemtype(this.storage[skill]) == 'card') {
                                 this.markSkill(skill, null, this.storage[skill]);
                             }
                             else if (info.mark == 'card' &&
-								get.itemtype(this.storage[skill]) == 'cards') {
+                                get.itemtype(this.storage[skill]) == 'cards') {
                                 this.markSkill(skill, null, this.storage[skill][0]);
                             }
                             else if (info.mark == 'image') {
@@ -18165,7 +18165,7 @@
                         var skills = this.getSkills();
                         for (var i = 0; i < forbidlist.length; i++) {
                             if (lib.config.customforbid.contains(forbidlist[i]) ||
-								!lib.config.forbidlist.contains(getName(forbidlist[i]))) {
+                                !lib.config.forbidlist.contains(getName(forbidlist[i]))) {
                                 for (var j = 0; j < forbidlist[i].length; j++) {
                                     if (!skills.contains(forbidlist[i][j])) break;
                                 }
@@ -18647,7 +18647,7 @@
                         var info = lib.skill[skills[i]];
                         if (info && info.ai) {
                             if (info.ai.skillTagFilter && info.ai[tag] &&
-								info.ai.skillTagFilter(this, tag, arg) === false) continue;
+                                info.ai.skillTagFilter(this, tag, arg) === false) continue;
                             if (typeof info.ai[tag] == 'string') {
                                 if (info.ai[tag] == arg) return true;
                             }
@@ -18668,7 +18668,7 @@
                         var info = lib.skill[skills[i]];
                         if (info && info.ai) {
                             if (info.ai.skillTagFilter && info.ai[tag] &&
-								info.ai.skillTagFilter(this, tag, arg) === false) continue;
+                                info.ai.skillTagFilter(this, tag, arg) === false) continue;
                             if (typeof info.ai[tag] == 'string') {
                                 if (info.ai[tag] == arg) return true;
                             }
@@ -18990,8 +18990,8 @@
                     game.addVideo('compareMultiple', this, [get.cardInfo(card1), get.targetsInfo(targets), get.cardsInfo(cards)]);
                     var player = this;
                     var node1 = player.$throwxy2(card1,
-						'calc(50% - 52px)', 'calc(50% + 10px)', 'perspective(600px) rotateY(180deg)', true
-					);
+                        'calc(50% - 52px)', 'calc(50% + 10px)', 'perspective(600px) rotateY(180deg)', true
+                    );
                     if (lib.config.cardback_style != 'default') {
                         node1.style.transitionProperty = 'none';
                         ui.refresh(node1);
@@ -19033,13 +19033,13 @@
                                 var node2;
                                 if (left < 0) {
                                     node2 = target.$throwxy2(card2,
-										'calc(50% - ' + (-left) + 'px)', 'calc(50% - 114px)', 'perspective(600px) rotateY(180deg)', true
-									);
+                                        'calc(50% - ' + (-left) + 'px)', 'calc(50% - 114px)', 'perspective(600px) rotateY(180deg)', true
+                                    );
                                 }
                                 else {
                                     node2 = target.$throwxy2(card2,
-										'calc(50% + ' + left + 'px)', 'calc(50% - 114px)', 'perspective(600px) rotateY(180deg)', true
-									);
+                                        'calc(50% + ' + left + 'px)', 'calc(50% - 114px)', 'perspective(600px) rotateY(180deg)', true
+                                    );
                                 }
                                 if (lib.config.cardback_style != 'default') {
                                     node2.style.transitionProperty = 'none';
@@ -19083,8 +19083,8 @@
                     game.addVideo('compare', this, [get.cardInfo(card1), target.dataset.position, get.cardInfo(card2)]);
                     var player = this;
                     var node1 = player.$throwxy2(card1,
-						'calc(50% - 114px)', 'calc(50% - 52px)', 'perspective(600px) rotateY(180deg)', true
-					);
+                        'calc(50% - 114px)', 'calc(50% - 52px)', 'perspective(600px) rotateY(180deg)', true
+                    );
                     if (lib.config.cardback_style != 'default') {
                         node1.style.transitionProperty = 'none';
                         ui.refresh(node1);
@@ -19119,8 +19119,8 @@
                     node1.listenTransition(onEnd01);
                     setTimeout(function () {
                         var node2 = target.$throwxy2(card2,
-							'calc(50% + 10px)', 'calc(50% - 52px)', 'perspective(600px) rotateY(180deg)', true
-						);
+                            'calc(50% + 10px)', 'calc(50% - 52px)', 'perspective(600px) rotateY(180deg)', true
+                        );
                         if (lib.config.cardback_style != 'default') {
                             node2.style.transitionProperty = 'none';
                             ui.refresh(node2);
@@ -19217,7 +19217,7 @@
                     node.style.transitionProperty = 'left,top,opacity,transform';
                     for (var i = 0; i < ui.thrown.length; i++) {
                         if (ui.thrown[i].parentNode != ui.arena ||
-							ui.thrown[i].classList.contains('removing')) {
+                            ui.thrown[i].classList.contains('removing')) {
                             ui.thrown.splice(i--, 1);
                         }
                     }
@@ -19237,7 +19237,7 @@
                                 break;
                             default:
                                 tops = ['calc(50% - 253px)', 'calc(50% - 139px)',
-									'calc(50% - 25px)', 'calc(50% + 89px)'];
+                                    'calc(50% - 25px)', 'calc(50% + 89px)'];
                         }
                     }
                     else {
@@ -19253,7 +19253,7 @@
                                 break;
                             default:
                                 tops = ['calc(50% - 223px)', 'calc(50% - 109px)',
-									'calc(50% + 5px)', 'calc(50% + 119px)'];
+                                    'calc(50% + 5px)', 'calc(50% + 119px)'];
                         }
                     }
                     while (uithrowns.length) {
@@ -19380,7 +19380,7 @@
 
                     for (var i = 0; i < ui.thrown.length; i++) {
                         if (ui.thrown[i].parentNode != ui.arena ||
-							ui.thrown[i].classList.contains('removing')) {
+                            ui.thrown[i].classList.contains('removing')) {
                             ui.thrown.splice(i--, 1);
                         }
                     }
@@ -19837,9 +19837,9 @@
                     var list = [], list2 = [];
                     for (var i = 0; i < cards.length; i++) {
                         if (cards[i].clone &&
-							(cards[i].clone.parentNode == this.parentNode ||
-							cards[i].clone.parentNode == ui.arena) &&
-							parseFloat(getComputedStyle(cards[i].clone).opacity) > 0.3) {
+                            (cards[i].clone.parentNode == this.parentNode ||
+                                cards[i].clone.parentNode == ui.arena) &&
+                            parseFloat(getComputedStyle(cards[i].clone).opacity) > 0.3) {
                             cards[i].clone.moveDelete(this);
                             list2.push(cards[i].clone);
                         }
@@ -19901,7 +19901,7 @@
                         top = this.offsetTop;
                     }
                     game.animate.flame(left + this.offsetWidth / 2,
-						top + this.offsetHeight - 20, 700, 'fire');
+                        top + this.offsetHeight - 20, 700, 'fire');
                 },
                 $thunder: function () {
                     game.addVideo('flame', this, 'thunder');
@@ -19916,7 +19916,7 @@
                         top = this.offsetTop;
                     }
                     game.animate.flame(left + this.offsetWidth / 2,
-						top + this.offsetHeight - 30, 700, 'thunder');
+                        top + this.offsetHeight - 30, 700, 'thunder');
                 },
                 $rare2: function () {
                     game.addVideo('flame', this, 'rare2');
@@ -19924,7 +19924,7 @@
                     var left = rect.left;
                     var top = rect.top + 15;
                     game.animate.flame(left + this.offsetWidth / 2,
-						top + this.offsetHeight - 30, 700, 'rare');
+                        top + this.offsetHeight - 30, 700, 'rare');
                 },
                 $epic2: function () {
                     game.addVideo('flame', this, 'epic2');
@@ -19932,7 +19932,7 @@
                     var left = rect.left;
                     var top = rect.top + 15;
                     game.animate.flame(left + this.offsetWidth / 2,
-						top + this.offsetHeight - 30, 700, 'epic');
+                        top + this.offsetHeight - 30, 700, 'epic');
                 },
                 $legend2: function () {
                     game.addVideo('flame', this, 'legend2');
@@ -19940,7 +19940,7 @@
                     var left = rect.left;
                     var top = rect.top + 15;
                     game.animate.flame(left + this.offsetWidth / 2,
-						top + this.offsetHeight - 30, 700, 'legend');
+                        top + this.offsetHeight - 30, 700, 'legend');
                 },
                 $rare: function (time) {
                     time = time || 700;
@@ -19958,7 +19958,7 @@
                         top += 15;
                     }
                     game.animate.flame(left + this.offsetWidth / 2,
-						top + this.offsetHeight - 30, time, 'rare');
+                        top + this.offsetHeight - 30, time, 'rare');
                 },
                 $epic: function (time) {
                     time = time || 700;
@@ -19976,7 +19976,7 @@
                         top += 15;
                     }
                     game.animate.flame(left + this.offsetWidth / 2,
-						top + this.offsetHeight - 30, time, 'epic');
+                        top + this.offsetHeight - 30, time, 'epic');
                 },
                 $legend: function (time) {
                     time = time || 700;
@@ -19994,7 +19994,7 @@
                         top += 15;
                     }
                     game.animate.flame(left + this.offsetWidth / 2,
-						top + this.offsetHeight - 30, time, 'legend');
+                        top + this.offsetHeight - 30, time, 'legend');
                 },
                 $coin: function () {
                     game.broadcast(function (player) {
@@ -20010,7 +20010,7 @@
                     }
                     top -= 25;
                     game.animate.flame(left + this.offsetWidth / 2,
-						top + this.offsetHeight - 30, 700, 'coin');
+                        top + this.offsetHeight - 30, 700, 'coin');
                 },
                 $dust: function () {
                     game.broadcast(function (player) {
@@ -20026,7 +20026,7 @@
                     }
                     top -= 25;
                     game.animate.flame(left + this.offsetWidth / 2,
-						top + this.offsetHeight - 30, 700, 'dust');
+                        top + this.offsetHeight - 30, 700, 'dust');
                 },
                 $recover: function () {
                     game.addVideo('flame', this, 'recover');
@@ -20041,7 +20041,7 @@
                         top = this.offsetTop;
                     }
                     game.animate.flame(left + this.offsetWidth / 2,
-						top + this.offsetHeight - 30, 700, 'recover');
+                        top + this.offsetHeight - 30, 700, 'recover');
                 },
                 $fullscreenpop: function (str, nature, avatar) {
                     game.broadcast(function (player, str, nature, avatar) {
@@ -20242,7 +20242,7 @@
                         top = Math.random() * 5 + 10;
                     }
                     var transform = 'translate(' + left + 'px,' + top + 'px) ' +
-					'rotate(' + (Math.random() * 20 - 10) + 'deg) ';
+                        'rotate(' + (Math.random() * 20 - 10) + 'deg) ';
                     if (type == 'flip') {
                         if (game.layout == 'long' || game.layout == 'long2') {
                             transform += 'rotateY(180deg)';
@@ -20594,9 +20594,9 @@
                     else {
                         if (_status.event.player != game.me) return;
                         if (this._transform && this.parentNode && this.parentNode.parentNode &&
-							this.parentNode.parentNode.parentNode == ui.me &&
-							(!_status.mousedown || _status.mouseleft) &&
-							(!this.parentNode.parentNode.classList.contains('scrollh') || game.layout == 'long2')) {
+                            this.parentNode.parentNode.parentNode == ui.me &&
+                            (!_status.mousedown || _status.mouseleft) &&
+                            (!this.parentNode.parentNode.classList.contains('scrollh') || game.layout == 'long2')) {
                             if (bool) {
                                 this.style.transform = this._transform + ' translateY(-20px)';
                             }
@@ -20803,7 +20803,7 @@
                         next._modparent = event;
                         game.resume();
                     }, this.name, this._args || [], this._set,
-					get.stringifiedResult(this.parent, 3), get.skillState(this.player));
+                        get.stringifiedResult(this.parent, 3), get.skillState(this.player));
                     this.player.wait();
                     game.pause();
                 },
@@ -21007,15 +21007,15 @@
                         for (var j in player.tempSkills) {
                             var expire = player.tempSkills[j];
                             if (expire === name ||
-								(Array.isArray(expire) && expire.contains(name)) ||
-								(typeof expire === 'function' && expire(event, player, name))) {
+                                (Array.isArray(expire) && expire.contains(name)) ||
+                                (typeof expire === 'function' && expire(event, player, name))) {
                                 delete player.tempSkills[j];
                                 player.removeSkill(j);
                             }
                             else if (get.objtype(expire) === 'object') {
                                 for (var i = 0; i < roles.length; i++) {
                                     if (expire[roles[i]] && player === event[roles[i]] &&
-										(expire[roles[i]] === name || (Array.isArray(expire[roles[i]]) && expire[roles[i]].contains(name)))) {
+                                        (expire[roles[i]] === name || (Array.isArray(expire[roles[i]]) && expire[roles[i]].contains(name)))) {
                                         delete player.tempSkills[j];
                                         player.removeSkill(j);
                                     }
@@ -21037,8 +21037,8 @@
                                             else if (trigger.player.contains(name)) add = true;
                                         }
                                         if ((player === event.target ||
-											(event.multitarget && event.targets && event.targets.contains(player))) &&
-											trigger.target) {
+                                            (event.multitarget && event.targets && event.targets.contains(player))) &&
+                                            trigger.target) {
                                             if (typeof trigger.target === 'string') {
                                                 if (trigger.target === name) add = true;
                                             }
@@ -21395,7 +21395,7 @@
                     try {
                         message = JSON.parse(messageevent.data);
                         if (!Array.isArray(message) ||
-							typeof lib.message.client[message[0]] !== 'function') {
+                            typeof lib.message.client[message[0]] !== 'function') {
                             throw ('err');
                         }
                         for (var i = 1; i < message.length; i++) {
@@ -21589,7 +21589,7 @@
             filterCard: function (card, player, event) {
                 if (get.info(card).toself && !lib.filter.targetEnabled(card, player, player)) return false;
                 return (lib.filter.cardEnabled(card, player, event) &&
-					lib.filter.cardUsable(card, player, event));
+                    lib.filter.cardUsable(card, player, event));
             },
             targetEnabled: function (card, player, target) {
                 if (!card) return false;
@@ -21643,11 +21643,11 @@
             },
             filterTarget: function (card, player, target) {
                 return (lib.filter.targetEnabled(card, player, target) &&
-					lib.filter.targetInRange(card, player, target));
+                    lib.filter.targetInRange(card, player, target));
             },
             filterTarget2: function (card, player, target) {
                 return (lib.filter.targetEnabled2(card, player, target) &&
-					lib.filter.targetInRange(card, player, target));
+                    lib.filter.targetInRange(card, player, target));
             },
             notMe: function (card, player, target) {
                 return player != target;
@@ -21711,7 +21711,7 @@
                     if (!_status.connectMode && lib.config.wuxie_self && event.getParent().state) {
                         var tw = event.getTrigger().parent;
                         if (tw.player.isUnderControl(true) && !tw.player.hasSkillTag('noautowuxie') &&
-							tw.targets && tw.targets.length == 1 && !tw.noai) {
+                            tw.targets && tw.targets.length == 1 && !tw.noai) {
                             return true;
                         }
                     }
@@ -21833,8 +21833,8 @@
             autoswap: {
                 trigger: {
                     player: ['chooseToUseBegin', 'chooseToRespondBegin', 'chooseToDiscardBegin', 'chooseToCompareBegin',
-                    'chooseButtonBegin', 'chooseCardBegin', 'chooseTargetBegin', 'chooseCardTargetBegin', 'chooseControlBegin',
-                    'chooseBoolBegin', 'choosePlayerCardBegin', 'discardPlayerCardBegin', 'gainPlayerCardBegin']
+                        'chooseButtonBegin', 'chooseCardBegin', 'chooseTargetBegin', 'chooseCardTargetBegin', 'chooseControlBegin',
+                        'chooseBoolBegin', 'choosePlayerCardBegin', 'discardPlayerCardBegin', 'gainPlayerCardBegin']
                 },
                 forced: true,
                 priority: 100,
@@ -22195,9 +22195,9 @@
                         event._result = { bool: false }
                     }
                     else if (player.isOnline() || (_status.connectMode && player == game.me) || player.hasSkillTag('save', true, null, true) || player.hasCard(function (card) {
-						var savable = get.info(card).savable;
-						if (typeof savable == 'function') savable = savable(card, player, event.dying);
-						return savable;
+                        var savable = get.info(card).savable;
+                        if (typeof savable == 'function') savable = savable(card, player, event.dying);
+                        return savable;
                     })) {
                         player.chooseToUse({
                             filterCard: function (card, player, event) {
@@ -22298,7 +22298,7 @@
                 content: function () {
                     "step 0"
                     if (lib.config.mode == 'stone' && _status.mode == 'deck' &&
-					!player.isMin() && get.type(cards[0]).indexOf('stone') == 0) {
+                        !player.isMin() && get.type(cards[0]).indexOf('stone') == 0) {
                         var list = get.stonecard(1, player.career);
                         if (list.length) {
                             player.gain(game.createCard(list.randomGet()), 'draw');
@@ -22381,7 +22381,7 @@
                 trigger: { global: 'damageAfter' },
                 filter: function (event, player) {
                     return (event.nature && lib.linked.contains(event.nature) && event.player.isLinked() &&
-						event.player.classList.contains('dead') && player.isLinked());
+                        event.player.classList.contains('dead') && player.isLinked());
                 },
                 forced: true,
                 priority: -5,
@@ -23858,7 +23858,7 @@
             var info = get.info(skill);
             if (!info) return;
             if ((!info.direct || directaudio) && lib.config.background_speak &&
-				(!lib.skill.global.contains(skill) || lib.skill[skill].forceaudio)) {
+                (!lib.skill.global.contains(skill) || lib.skill[skill].forceaudio)) {
                 var audioname = skill;
                 var audioinfo = info.audio;
                 if (typeof audioinfo == 'string') {
@@ -24084,7 +24084,7 @@
                     var cfg = {};
                     for (var j in lib.config) {
                         if (j.indexOf('extension_' + obj.name) == 0 &&
-							j != 'extension_' + obj.name) {
+                            j != 'extension_' + obj.name) {
                             cfg[j.slice(11 + obj.name.length)] = lib.config[j];
                         }
                     }
@@ -24835,7 +24835,7 @@
             },
             addSubPlayer: function (player, content) {
                 if (player && content && content[0] && content[1] &&
-					content[2] && content[3] && content[4]) {
+                    content[2] && content[3] && content[4]) {
                     var skill = content[0];
                     lib.skill[skill] = content[1];
                     lib.character[skill] = content[2];
@@ -26145,7 +26145,7 @@
                         var middle = 0.5;
                         var radius = p.radius;
                         if (type == 'recover' || type == 'legend' || type == 'rare' ||
-							type == 'epic' || type == 'coin' || type == 'dust') {
+                            type == 'epic' || type == 'coin' || type == 'dust') {
                             middle = 0.7;
                             radius /= 3;
                         }
@@ -26324,7 +26324,7 @@
                 if (time < total / 3) {
                     ctx.strokeStyle = 'rgba(' + color.toString() + ',' + opacity * (time / (total / 3)) + ')';
                     current = [from[0] + (to[0] - from[0]) * time / (total / 3),
-						from[1] + (to[1] - from[1]) * time / (total / 3)];
+                    from[1] + (to[1] - from[1]) * time / (total / 3)];
                 }
                 else if (time <= total) {
                     current = to;
@@ -26430,7 +26430,7 @@
                         }
                         pack[i][j][4].push(imgsrc);
                         if (pack[i][j][4].contains('boss') ||
-							pack[i][j][4].contains('hiddenboss')) {
+                            pack[i][j][4].contains('hiddenboss')) {
                             lib.config.forbidai.add(j);
                         }
                         if (lib.config.forbidai_user && lib.config.forbidai_user.contains(j)) {
@@ -27493,8 +27493,8 @@
                         if (lib.config.compatiblemode || (_status.connectMode && !lib.config.debug)) {
                             try {
                                 event.content(event, step, source, player, target, targets,
-									card, cards, skill, forced, num, trigger, result,
-									_status, lib, game, ui, get, ai);
+                                    card, cards, skill, forced, num, trigger, result,
+                                    _status, lib, game, ui, get, ai);
                             }
                             catch (e) {
                                 game.print('游戏出错：' + event.name);
@@ -27504,8 +27504,8 @@
                         }
                         else {
                             event.content(event, step, source, player, target, targets,
-								card, cards, skill, forced, num, trigger, result,
-								_status, lib, game, ui, get, ai);
+                                card, cards, skill, forced, num, trigger, result,
+                                _status, lib, game, ui, get, ai);
                         }
                     }
                     event.step++;
@@ -27626,12 +27626,12 @@
                     var firstCheck = false;
                     range = get.select(event.selectCard);
                     if (!event._cardChoice && typeof event.selectCard != 'function' &&
-						!event.complexCard && range[1] != -1 && !lib.config.compatiblemode) {
+                        !event.complexCard && range[1] != -1 && !lib.config.compatiblemode) {
                         event._cardChoice = [];
                         firstCheck = true;
                     }
                     if (event.isMine() && event.name == 'chooseToUse' && event.parent.name == 'phaseUse' && !event.skill &&
-						!event._targetChoice && !firstCheck && window.Map && !lib.config.compatiblemode) {
+                        !event._targetChoice && !firstCheck && window.Map && !lib.config.compatiblemode) {
                         event._targetChoice = new Map();
                         for (var i = 0; i < event._cardChoice.length; i++) {
                             if (!lib.card[event._cardChoice[i].name].complexTarget) {
@@ -27659,8 +27659,8 @@
                         }
                         else {
                             if (player.isOut() || !lib.filter.cardRespondable(cards[i], player) ||
-							cards[i].classList.contains('uncheck') ||
-							!event.filterCard(cards[i], player)) {
+                                cards[i].classList.contains('uncheck') ||
+                                !event.filterCard(cards[i], player)) {
                                 nochess = false;
                             }
                         }
@@ -27702,8 +27702,8 @@
                     }
 
                     if (lib.config.popequip && get.is.phoneLayout() &&
-						typeof event.position == 'string' && event.position.indexOf('e') != -1 &&
-						player.node.equips.querySelector('.card.selectable')) {
+                        typeof event.position == 'string' && event.position.indexOf('e') != -1 &&
+                        player.node.equips.querySelector('.card.selectable')) {
                         player.node.equips.classList.add('popequip');
                         auto_confirm = false;
                     }
@@ -27924,7 +27924,7 @@
                     }
                 }
                 if (ok && auto && (auto_confirm || (skillinfo && skillinfo.direct)) && (!_status.mousedragging || !_status.mouseleft) &&
-				!_status.mousedown && !_status.touchnocheck) {
+                    !_status.mousedown && !_status.touchnocheck) {
                     if (ui.confirm) {
                         if (!skillinfo || !skillinfo.preservecancel) {
                             ui.confirm.close();
@@ -28360,7 +28360,7 @@
                             lib.card.list.splice(i, 1); i--;
                         }
                         else if (lib.card[lib.card.list[i][2]].mode &&
-							lib.card[lib.card.list[i][2]].mode.contains(lib.config.mode) == false) {
+                            lib.card[lib.card.list[i][2]].mode.contains(lib.config.mode) == false) {
                             lib.card.list.splice(i, 1); i--;
                         }
                     }
@@ -30294,10 +30294,10 @@
                         }
                     }
                     else if (get.objtype(arguments[i]) == 'div' ||
-						get.objtype(arguments[i]) == 'table' ||
-						get.objtype(arguments[i]) == 'tr' ||
-						get.objtype(arguments[i]) == 'td' ||
-						get.objtype(arguments[i]) == 'body') position = arguments[i];
+                        get.objtype(arguments[i]) == 'table' ||
+                        get.objtype(arguments[i]) == 'tr' ||
+                        get.objtype(arguments[i]) == 'td' ||
+                        get.objtype(arguments[i]) == 'body') position = arguments[i];
                     else if (typeof arguments[i] == 'number') position2 = arguments[i];
                     else if (get.itemtype(arguments[i]) == 'divposition') divposition = arguments[i];
                     else if (typeof arguments[i] == 'object') style = arguments[i];
@@ -30368,10 +30368,10 @@
                         }
                     }
                     else if (get.objtype(arguments[i]) == 'div' ||
-						get.objtype(arguments[i]) == 'table' ||
-						get.objtype(arguments[i]) == 'tr' ||
-						get.objtype(arguments[i]) == 'td' ||
-						get.objtype(arguments[i]) == 'body') position = arguments[i];
+                        get.objtype(arguments[i]) == 'table' ||
+                        get.objtype(arguments[i]) == 'tr' ||
+                        get.objtype(arguments[i]) == 'td' ||
+                        get.objtype(arguments[i]) == 'body') position = arguments[i];
                     else if (typeof arguments[i] == 'number') position2 = arguments[i];
                     else if (get.itemtype(arguments[i]) == 'divposition') divposition = arguments[i];
                     else if (typeof arguments[i] == 'object') style = arguments[i];
@@ -32476,7 +32476,7 @@
                                 return;
                             }
                             if (mode.indexOf('mode_') == 0 && mode.indexOf('mode_extension_') != 0 &&
-								mode != 'mode_favourite' && mode != 'mode_banned') {
+                                mode != 'mode_favourite' && mode != 'mode_banned') {
                                 if (!connectMenu && lib.config.show_charactercard) {
                                     ui.click.charactercard(this.link, this, mode == 'mode_guozhan' ? 'guozhan' : true);
                                 }
@@ -32918,15 +32918,15 @@
                             cardpileaddname.style.marginRight = '2px';
                             cardpileaddname.style.marginLeft = '-1px';
                             var cardpileaddsuit = ui.create.selectlist([
-								['heart', '红桃'],
-								['diamond', '方片'],
-								['club', '梅花'],
-								['spade', '黑桃'],
+                                ['heart', '红桃'],
+                                ['diamond', '方片'],
+                                ['club', '梅花'],
+                                ['spade', '黑桃'],
                             ], null, cardpileadd);
                             cardpileaddsuit.style.width = '53px';
                             cardpileaddsuit.style.marginRight = '2px';
                             var cardpileaddnumber = ui.create.selectlist([
-								1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
+                                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
                             ], null, cardpileadd);
                             cardpileaddnumber.style.width = '43px';
                             cardpileaddnumber.style.marginRight = '2px';
@@ -32946,9 +32946,9 @@
                             };
                             button.onclick = function () {
                                 var card = [
-									cardpileaddsuit.value,
-									cardpileaddnumber.value,
-									cardpileaddname.value,
+                                    cardpileaddsuit.value,
+                                    cardpileaddnumber.value,
+                                    cardpileaddname.value,
                                 ];
                                 lib.config.addedpile[mode].push(card);
                                 recreatePile();
@@ -33145,7 +33145,7 @@
                                 delete lib.config.customcardpile['当前牌堆'];
                                 for (var i in lib.mode) {
                                     if (lib.config.mode_config[i] &&
-										(lib.config.mode_config[i].cardpilename == '当前牌堆' || !lib.config.mode_config[i].cardpilename)) {
+                                        (lib.config.mode_config[i].cardpilename == '当前牌堆' || !lib.config.mode_config[i].cardpilename)) {
                                         game.saveConfig('cardpilename', name, i);
                                     }
                                 }
@@ -33950,16 +33950,16 @@
                             ui.create.div('.indent', '体力：<input class="new_hp" type="text">', newCharacter).style.paddingTop = '8px';
                             newCharacter.querySelector('input.new_name').onblur = updateButton;
                             var sexes = ui.create.selectlist([
-								['male', '男'],
-								['female', '女'],
-								['none', '无'],
+                                ['male', '男'],
+                                ['female', '女'],
+                                ['none', '无'],
                             ], null, ui.create.div('.indent', '性别：', newCharacter));
                             var groups = ui.create.selectlist([
-								['wei', '魏'],
-								['shu', '蜀'],
-								['wu', '吴'],
-								['qun', '群'],
-								['shen', '神'],
+                                ['wei', '魏'],
+                                ['shu', '蜀'],
+                                ['wu', '吴'],
+                                ['qun', '群'],
+                                ['shen', '神'],
                             ], null, ui.create.div('.indent', '势力：', newCharacter));
                             var options = ui.create.div('.add_skill.options', '<span>主公<input type="checkbox" name="zhu"></span><span>BOSS<input type="checkbox" name="boss"></span><span>AI禁选<input type="checkbox" name="forbidai"></span><br>', newCharacter);
                             var addSkill = ui.create.div('.add_skill', '添加技能<br>', newCharacter);
@@ -34783,15 +34783,15 @@
                             cardpileaddname.style.marginRight = '2px';
                             cardpileaddname.style.marginLeft = '-1px';
                             var cardpileaddsuit = ui.create.selectlist([
-								['heart', '红桃'],
-								['diamond', '方片'],
-								['club', '梅花'],
-								['spade', '黑桃'],
+                                ['heart', '红桃'],
+                                ['diamond', '方片'],
+                                ['club', '梅花'],
+                                ['spade', '黑桃'],
                             ], null, cardpileadd);
                             cardpileaddsuit.style.width = '53px';
                             cardpileaddsuit.style.marginRight = '2px';
                             var cardpileaddnumber = ui.create.selectlist([
-								1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
+                                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
                             ], null, cardpileadd);
                             cardpileaddnumber.style.width = '43px';
                             cardpileaddnumber.style.marginRight = '2px';
@@ -34800,9 +34800,9 @@
                             button.style.width = '40px';
                             button.onclick = function () {
                                 var card = [
-									cardpileaddsuit.value,
-									cardpileaddnumber.value,
-									cardpileaddname.value,
+                                    cardpileaddsuit.value,
+                                    cardpileaddnumber.value,
+                                    cardpileaddname.value,
                                 ];
                                 var node = document.createElement('button');
                                 node.innerHTML = page.content.pack.translate[card[2]] + ' ' + lib.translate[card[0]] + card[1];
@@ -35534,7 +35534,7 @@
                                 if (byte == -1) {
                                     byte = size;
                                 }
-                                progress.firstChild.style.width = Math.round(100 * byte/size) + '%';
+                                progress.firstChild.style.width = Math.round(100 * byte / size) + '%';
                             };
                             var files = this.info.files || [];
                             for (var i = 0; i < files.length; i++) {
@@ -36007,21 +36007,21 @@
                                                 }
                                             }
                                             navigator.notification.confirm(
-												str2,
-												function (index) {
-												    if (index == 1) {
-												        goupdate(files, update);
-												    }
-												    else {
-												        button1.disabled = false;
-												        button1.innerHTML = '检查游戏更新';
-												        button3.disabled = false;
-												        button3.innerHTML = '更新到开发版';
-												    }
-												},
-												str,
-												['确定', '取消']
-											);
+                                                str2,
+                                                function (index) {
+                                                    if (index == 1) {
+                                                        goupdate(files, update);
+                                                    }
+                                                    else {
+                                                        button1.disabled = false;
+                                                        button1.innerHTML = '检查游戏更新';
+                                                        button3.disabled = false;
+                                                        button3.innerHTML = '更新到开发版';
+                                                    }
+                                                },
+                                                str,
+                                                ['确定', '取消']
+                                            );
                                         }
                                         else {
                                             if (confirm(str)) {
@@ -36973,7 +36973,7 @@
                                     }
                                     var date = new Date(video.time);
                                     var str = date.getFullYear() + '.' + (date.getMonth() + 2) + '.' + (date.getDay() + 1) + ' ' +
-										date.getHours() + ':';
+                                        date.getHours() + ':';
                                     var minutes = date.getMinutes();
                                     if (minutes < 10) {
                                         str += '0';
@@ -37001,9 +37001,9 @@
                                 }
                                 ui.create.videoNode = createNode;
                                 var importVideoNode = ui.create.div('.config.switcher.pointerspan',
-								'<span class="underlinenode slim ">导入录像...</span>', function () {
-								    this.nextSibling.classList.toggle('hidden');
-								}, page);
+                                    '<span class="underlinenode slim ">导入录像...</span>', function () {
+                                        this.nextSibling.classList.toggle('hidden');
+                                    }, page);
                                 importVideoNode.style.marginLeft = '12px';
                                 importVideoNode.style.marginTop = '3px';
                                 var importVideo = ui.create.div('.config.hidden', page);
@@ -37012,7 +37012,7 @@
                                 importVideo.style.marginLeft = '13px';
                                 importVideo.style.width = 'calc(100% - 30px)';
                                 importVideo.innerHTML = '<input type="file" style="width:calc(100% - 40px)">' +
-								'<button style="width:40px">确定</button>';
+                                    '<button style="width:40px">确定</button>';
                                 importVideo.lastChild.onclick = function () {
                                     var fileToLoad = importVideo.firstChild.files[0];
                                     var fileReader = new FileReader();
@@ -37082,7 +37082,7 @@
                                     var current = this.parentNode.querySelector('.videonode.active');
                                     if (current) {
                                         game.export(lib.init.encode(JSON.stringify(current.link)),
-										'无名杀 - 录像 - ' + current.link.name[0] + ' - ' + current.link.name[1]);
+                                            '无名杀 - 录像 - ' + current.link.name[0] + ' - ' + current.link.name[1]);
                                     }
                                 });
 
@@ -37191,10 +37191,10 @@
                         else row = arguments[i];
                     }
                     else if (get.objtype(arguments[i]) == 'div' ||
-						get.objtype(arguments[i]) == 'table' ||
-						get.objtype(arguments[i]) == 'tr' ||
-						get.objtype(arguments[i]) == 'td' ||
-						get.objtype(arguments[i]) == 'body') position = arguments[i];
+                        get.objtype(arguments[i]) == 'table' ||
+                        get.objtype(arguments[i]) == 'tr' ||
+                        get.objtype(arguments[i]) == 'td' ||
+                        get.objtype(arguments[i]) == 'body') position = arguments[i];
                     else if (typeof arguments[i] == 'boolean') fixed = arguments[i];
                     else if (get.itemtype(arguments[i]) == 'divposition') divposition = arguments[i];
                     else if (typeof arguments[i] == 'object') style = arguments[i];
@@ -37292,7 +37292,7 @@
                             node.classList.add('thundertext');
                             for (var i = 0; i < dialog.buttons.length; i++) {
                                 if (dialog.buttons[i].group != link ||
-								(dialog.currentcapt && dialog.buttons[i].capt != dialog.getCurrentCapt(dialog.buttons[i].link, dialog.buttons[i].capt))) {
+                                    (dialog.currentcapt && dialog.buttons[i].capt != dialog.getCurrentCapt(dialog.buttons[i].link, dialog.buttons[i].capt))) {
                                     dialog.buttons[i].classList.add('nodisplay');
                                 }
                                 else {
@@ -38018,7 +38018,7 @@
                 }
                 if (!expandall) {
                     if (!thisiscard && (lib.characterDialogGroup[lib.config.character_dialog_tool] ||
-						lib.config.character_dialog_tool == '自创')) {
+                        lib.config.character_dialog_tool == '自创')) {
                         clickCapt.call(node[lib.config.character_dialog_tool]);
                     }
                 }
@@ -39988,8 +39988,8 @@
             },
             dragtouchdialog: function (e) {
                 if (e.touches.length > 1 &&
-					!this.classList.contains('popped') &&
-					!this.classList.contains('fixed')) {
+                    !this.classList.contains('popped') &&
+                    !this.classList.contains('fixed')) {
                     _status.draggingtouchdialog = this;
                     this._dragorigin = {
                         clientX: e.touches[0].clientX,
@@ -40690,7 +40690,7 @@
                                 ey -= -ui.chessContainer.scrollTop + ui.chess.offsetTop;
                             }
                             if (itemtype != 'player' || (ex > item.offsetLeft && ex < item.offsetLeft + item.offsetWidth &&
-								ey > item.offsetTop && ey < item.offsetTop + item.offsetHeight)) {
+                                ey > item.offsetTop && ey < item.offsetTop + item.offsetHeight)) {
                                 var targetfixed = false;
                                 if (itemtype == 'player') {
                                     if (get.select(_status.event.selectTarget)[1] == -1) {
@@ -41067,7 +41067,7 @@
                                 ey -= -ui.chessContainer.scrollTop + ui.chess.offsetTop;
                             }
                             if (itemtype != 'player' || (ex > item.offsetLeft && ex < item.offsetLeft + item.offsetWidth &&
-								ey > item.offsetTop && ey < item.offsetTop + item.offsetHeight)) {
+                                ey > item.offsetTop && ey < item.offsetTop + item.offsetHeight)) {
                                 var targetfixed = false;
                                 if (itemtype == 'player') {
                                     if (get.select(_status.event.selectTarget)[1] == -1) {
@@ -41125,13 +41125,13 @@
                             else {
                                 hoveration = parseInt(lib.config.hoveration);
                                 if (node.classList.contains('button') ||
-									(node.parentNode && node.parentNode.parentNode) == ui.me) {
+                                    (node.parentNode && node.parentNode.parentNode) == ui.me) {
                                     hoveration += 500;
                                 }
                             }
                             _status._mouseentertimeout = setTimeout(function () {
                                 if (_status.currentmouseenter != node || node._mouseentercreated || _status.tempunpopup ||
-									_status.mousedragging || _status.mousedown || !node.offsetWidth || !node.offsetHeight) {
+                                    _status.mousedragging || _status.mousedown || !node.offsetWidth || !node.offsetHeight) {
                                     return;
                                 }
                                 if (node._hoverfunc && !node._nopup) {
@@ -41189,8 +41189,8 @@
                     var itemtype = get.itemtype(item);
                     if (itemtype == 'button') break;
                     if (itemtype == 'dialog' &&
-					!item.classList.contains('popped') &&
-					!item.classList.contains('fixed')) {
+                        !item.classList.contains('popped') &&
+                        !item.classList.contains('fixed')) {
                         var ddialog = item;
                         _status.draggingdialog = ddialog;
                         ddialog._dragorigin = e;
@@ -41220,8 +41220,8 @@
                     var itemtype = get.itemtype(item);
                     if (itemtype == 'card' || itemtype == 'button' || itemtype == 'player') {
                         if (item.classList.contains('selectable') &&
-							!item.classList.contains('selected') &&
-							!item.classList.contains('noclick')) {
+                            !item.classList.contains('selected') &&
+                            !item.classList.contains('noclick')) {
                             _status.clicked = false;
                             ui.click[itemtype].call(item);
                             if (item.classList.contains('selected')) {
@@ -41247,8 +41247,8 @@
                 if (this.parentNode.parentNode.parentNode != ui.me) return;
                 if (this.parentNode.parentNode.classList.contains('scrollh')) return;
                 if (this.classList.contains('selectable') &&
-					!this.classList.contains('selected') &&
-					!this.classList.contains('noclick')) {
+                    !this.classList.contains('selected') &&
+                    !this.classList.contains('noclick')) {
                     this._waitingfordrag = {
                         clientX: e.touches[0].clientX,
                         clientY: e.touches[0].clientY
@@ -41685,7 +41685,7 @@
                     this.updateTransform(true);
                 }
                 if (game.chess && get.config('show_range') && !_status.event.skill && this.classList.contains('selected') &&
-				_status.event.isMine() && _status.event.name == 'chooseToUse') {
+                    _status.event.isMine() && _status.event.name == 'chooseToUse') {
                     var player = _status.event.player;
                     var range = get.info(this).range;
                     if (range) {
@@ -41703,8 +41703,8 @@
                 game.check();
 
                 if (lib.config.popequip && get.is.phoneLayout() &&
-					arguments[0] != 'popequip' && ui.arena && ui.arena.classList.contains('selecting') &&
-					this.parentNode.classList.contains('popequip')) {
+                    arguments[0] != 'popequip' && ui.arena && ui.arena.classList.contains('selecting') &&
+                    this.parentNode.classList.contains('popequip')) {
                     var rect = this.getBoundingClientRect();
                     ui.click.touchpop();
                     ui.click.intro.call(this.parentNode, {
@@ -41773,7 +41773,7 @@
                                     lib.configOL.number++;
                                 }
                                 game.send('changeNumConfig', lib.configOL.number,
-								game.connectPlayers.indexOf(this), this.classList.contains('unselectable2'));
+                                    game.connectPlayers.indexOf(this), this.classList.contains('unselectable2'));
                             }
                         }
                         else if (this.hasOwnProperty('roomindex')) {
@@ -42412,8 +42412,8 @@
                 }
                 var uiintro;
                 if (this.classList.contains('card') && this.parentNode &&
-				this.parentNode.classList.contains('equips') && get.is.phoneLayout() &&
-				!get.is.mobileMe(this.parentNode.parentNode)) {
+                    this.parentNode.classList.contains('equips') && get.is.phoneLayout() &&
+                    !get.is.mobileMe(this.parentNode.parentNode)) {
                     uiintro = get.nodeintro(this.parentNode.parentNode, false, e);
                 }
                 uiintro = uiintro || get.nodeintro(this, false, e);
@@ -42556,7 +42556,7 @@
                 if (this.classList.contains('hidden')) return;
                 this.classList.toggle('glow');
                 if (this.classList.contains('glow') && _status.event.type == 'wuxie' &&
-				_status.event.isMine() && ui.confirm && _status.imchoosing) {
+                    _status.event.isMine() && ui.confirm && _status.imchoosing) {
                     ui.click.cancel(ui.confirm.lastChild);
                 }
             },
@@ -42564,7 +42564,7 @@
                 if (this.classList.contains('hidden')) return;
                 this.classList.toggle('glow');
                 if (this.classList.contains('glow') && _status.event.type == 'wuxie' &&
-				_status.event.isMine() && ui.confirm && _status.imchoosing) {
+                    _status.event.isMine() && ui.confirm && _status.imchoosing) {
                     var triggerevent = _status.event.getTrigger();
                     if (triggerevent && this._origin == triggerevent.parent.id) {
                         if (triggerevent.targets && triggerevent.num == triggerevent.targets.length - 1) {
@@ -42640,7 +42640,7 @@
             },
             mousewheel: function (evt) {
                 if (this.firstChild && this.firstChild.classList.contains('handcards') &&
-					!this.classList.contains('scrollh')) return;
+                    !this.classList.contains('scrollh')) return;
                 var node = this;
                 var num = this._scrollnum || 6;
                 var speed = this._scrollspeed || 16;
@@ -42680,7 +42680,7 @@
                 if (_status.draggingtouchdialog) return;
                 if (!_status.dragged) {
                     if (Math.abs(e.touches[0].clientX / game.documentZoom - this.startX) > 10 ||
-						Math.abs(e.touches[0].clientY / game.documentZoom - this.startY) > 10) {
+                        Math.abs(e.touches[0].clientY / game.documentZoom - this.startY) > 10) {
                         _status.dragged = true;
                     }
                 }
@@ -43565,11 +43565,26 @@
         groupnature: function (group, method) {
             var nature;
             switch (group) {
-                case 'shen': nature = 'thunder'; break;
-                case 'wei': nature = 'water'; break;
-                case 'shu': nature = 'soil'; break;
-                case 'wu': nature = 'wood'; break;
-                case 'qun': nature = 'metal'; break;
+                case 'shen':
+                case 'N':
+                    nature = 'thunder';
+                    break;
+                case 'wei':
+                case 'S':
+                    nature = 'water';
+                    break;
+                case 'shu':
+                case 'H':
+                    nature = 'soil';
+                    break;
+                case 'wu':
+                case 'X':
+                    nature = 'wood';
+                    break;
+                case 'qun':
+                    nature = 'metal';
+                    break;
+                    break;
                 default: return '';
             }
             if (method == 'raw') {
@@ -43850,8 +43865,8 @@
                 if (lib.config.bannedcards.contains(i)) continue;
                 if (!lib.translate[i + '_info']) continue;
                 if ((type.indexOf('equip') == 0 && type.length == 6) ||
-					(type.indexOf('hslingjian') == 0 && type.length == 11) ||
-					(type.indexOf('spell_') == 0)) {
+                    (type.indexOf('hslingjian') == 0 && type.length == 11) ||
+                    (type.indexOf('spell_') == 0)) {
                     if (get.subtype(i) == type) list.push(i);
                 }
                 else {
@@ -44090,8 +44105,8 @@
             if (rank.d.contains(name)) return num ? Math.round(0 * (num - 1) / 8 + 1) : 'd';
             if (lib.character[name] && lib.character[name][4]) {
                 if (lib.character[name][4].contains('boss') ||
-				lib.character[name][4].contains('bossallowed') ||
-				lib.character[name][4].contains('hiddenboss')) {
+                    lib.character[name][4].contains('bossallowed') ||
+                    lib.character[name][4].contains('hiddenboss')) {
                     return num ? Math.round(9 * (num - 1) / 8 + 1) : 'sp';
                 }
             }
@@ -44135,7 +44150,7 @@
                     num = 1 / Math.sqrt(threaten);
                 }
                 if (info.trigger && (info.trigger.global || info.trigger.target || (typeof info.trigger.player == 'string' &&
-				(info.trigger.player.indexOf('damage') == 0 || info.trigger.player.indexOf('lose') == 0)))) num += 0.1;
+                    (info.trigger.player.indexOf('damage') == 0 || info.trigger.player.indexOf('lose') == 0)))) num += 0.1;
                 if (info.ai) {
                     if (info.ai.maixie || info.ai.maixie_hp || info.ai.maixie_defend) {
                         num += 0.5;
@@ -44922,7 +44937,7 @@
             var selectable = [];
             for (var i = 0; i < buttons.length; i++) {
                 if (buttons[i].classList.contains('selectable') &&
-					buttons[i].classList.contains('selected') == false) {
+                    buttons[i].classList.contains('selected') == false) {
                     selectable.push(buttons[i]);
                 }
             }
@@ -44937,7 +44952,7 @@
             var selectable = [];
             for (var i = 0; i < cards.length; i++) {
                 if (cards[i].classList.contains('selectable') &&
-					cards[i].classList.contains('selected') == false) {
+                    cards[i].classList.contains('selected') == false) {
                     selectable.push(cards[i]);
                 }
             }
@@ -44993,7 +45008,7 @@
             var selectable = [];
             for (var i = 0; i < game.players.length; i++) {
                 if (game.players[i].classList.contains('selectable') &&
-					game.players[i].classList.contains('selected') == false) {
+                    game.players[i].classList.contains('selected') == false) {
                     selectable.push(game.players[i]);
                 }
             }
@@ -45255,8 +45270,8 @@
                     }
                     var skilltrans = get.translation(skills[i]).slice(0, 2);
                     str += '<div class="skill" style="' + opacity +
-					'">【' + skilltrans + '】</div><div style="' + opacity + '">' +
-					get.skillInfoTranslation(skills[i]) + '</div><div style="display:block;height:10px"></div>';
+                        '">【' + skilltrans + '】</div><div style="' + opacity + '">' +
+                        get.skillInfoTranslation(skills[i]) + '</div><div style="display:block;height:10px"></div>';
                 }
             }
             return str;
@@ -45423,8 +45438,8 @@
                 }
                 for (var i in node.disabledSkills) {
                     if (node.disabledSkills[i].length == 1 &&
-						node.disabledSkills[i][0] == i + '_awake' &&
-						!node.hiddenSkills.contains(i)) {
+                        node.disabledSkills[i][0] == i + '_awake' &&
+                        !node.hiddenSkills.contains(i)) {
                         skills.push(i);
                     }
                 }
@@ -45606,7 +45621,7 @@
                 }
                 var modepack = lib.characterPack['mode_' + get.mode()];
                 if (lib.config.show_favourite && lib.character[node.name] && game.players.contains(node) &&
-					(!modepack || !modepack[node.name]) && (!simple || get.is.phoneLayout())) {
+                    (!modepack || !modepack[node.name]) && (!simple || get.is.phoneLayout())) {
                     var addFavourite = ui.create.div('.text.center.pointerdiv');
                     addFavourite.link = node.link;
                     if (lib.config.favouriteCharacter.contains(node.name)) {
@@ -45723,7 +45738,7 @@
                 uiintro.add(ui.create.div('.placeholder.slim'));
             }
             else if (node.classList.contains('mark') && node.info &&
-				node.parentNode && node.parentNode.parentNode && node.parentNode.parentNode.classList.contains('player')) {
+                node.parentNode && node.parentNode.parentNode && node.parentNode.parentNode.classList.contains('player')) {
                 var info = node.info;
                 var player = node.parentNode.parentNode;
                 if (info.name) {
@@ -45741,7 +45756,7 @@
                     uiintro.add(get.translation(node.skill));
                 }
                 if (typeof info.id == 'string' && info.id.indexOf('subplayer') == 0 &&
-					player.isUnderControl(true) && player.storage[info.id] && !_status.video) {
+                    player.isUnderControl(true) && player.storage[info.id] && !_status.video) {
                     var storage = player.storage[info.id];
                     uiintro.addText('当前体力：' + storage.hp + '/' + storage.maxHp);
                     if (storage.hs.length) {
@@ -46088,7 +46103,7 @@
                     }
                     var modepack = lib.characterPack['mode_' + get.mode()];
                     if (lib.config.show_favourite &&
-					lib.character[node.link] && (!modepack || !modepack[node.link]) && (!simple || get.is.phoneLayout())) {
+                        lib.character[node.link] && (!modepack || !modepack[node.link]) && (!simple || get.is.phoneLayout())) {
                         var addFavourite = ui.create.div('.text.center.pointerdiv');
                         addFavourite.link = node.link;
                         addFavourite.style.marginBottom = '15px';
