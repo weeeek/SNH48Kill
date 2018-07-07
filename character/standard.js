@@ -1695,7 +1695,51 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 						}
 					}
 				}
-			},
+            },
+
+            neidou: {
+                audio: 2,
+                enable: 'phaseUse',
+                usable: 1,
+                filter: function (event, player) {
+                    return game.countPlayer(function (current) {
+                        return current != player && current.sex == 'female';
+                    }) > 1;
+                },
+                check: function (card) { return 10 - get.value(card) },
+                filterCard: true,
+                position: 'he',
+                filterTarget: function (card, player, target) {
+                    if (player == target) return false;
+                    if (target.sex != 'female') return false;
+                    if (ui.selected.targets.length == 1) {
+                        return target.canUse({ name: 'juedou' }, ui.selected.targets[0]);
+                    }
+                    return true;
+                },
+                targetprompt: ['先出杀', '后出杀'],
+                selectTarget: 2,
+                multitarget: true,
+                content: function () {
+                    targets[1].useCard({ name: 'juedou' }, targets[0], 'noai').animate = false;
+                    game.delay(0.5);
+                },
+                ai: {
+                    order: 8,
+                    result: {
+                        target: function (player, target) {
+                            if (ui.selected.targets.length == 0) {
+                                return -3;
+                            }
+                            else {
+                                return get.effect(target, { name: 'juedou' }, ui.selected.targets[0], target);
+                            }
+                        }
+                    },
+                    expose: 0.4,
+                    threaten: 3,
+                }
+            },
 			lijian:{
 				audio:2,
 				enable:'phaseUse',
@@ -1738,7 +1782,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					expose:0.4,
 					threaten:3,
 				}
-			},
+            },
 			biyue:{
 				audio:2,
 				trigger:{player:'phaseEnd'},
@@ -1821,8 +1865,9 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			jijiu:'急救',
 			wushuang:'无双',
 			wushuang1:'无双',
-			wushuang2:'无双',
-			lijian:'离间',
+            wushuang2: '无双',
+            lijian: '离间',
+            neidou: '内斗',
 			biyue:'闭月',
 			pileTop:'牌堆顶',
 			pileBottom:'牌堆底',
@@ -1864,8 +1909,9 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			jieyin_info:'出牌阶段，你可以弃置两张牌并选择1名已经受伤的男性角色，你与其各回复一点体力，每阶段限一次',
 			qingnang_info:'出牌阶段，你可以弃置一张手牌令一名角色回复一点体力，每阶段限一次',
 			jijiu_info:'回合外，你可以将一张红色牌当[桃]使用',
-			wushuang_info:'锁定技，你使用的【杀】或【决斗】需要两张【闪】或【杀】响应',
-			lijian_info:'出牌阶段，你可以弃一张牌，视为一名男性角色对另一名男性角色使用一张[决斗]，每阶段限一次',
+            wushuang_info: '锁定技，你使用的【杀】或【决斗】需要两张【闪】或【杀】响应',
+            lijian_info: '出牌阶段，你可以弃一张牌，视为一名男性角色对另一名男性角色使用一张[决斗]，每阶段限一次',
+            neidou_info: '出牌阶段，你可以弃一张牌，视为一名女性角色对另一名女性角色使用一张[决斗]，每阶段限一次',
 			biyue_info:'结束阶段，你可以摸一张牌',
 		},
 	};
