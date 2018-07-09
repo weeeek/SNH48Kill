@@ -8,17 +8,17 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //S
             SNH48Gchenguanhui: ['female', 'S', 4, ['biyue', 'guidao']],
             SNH48Gchengjue: ['female', 'S', 4, ['biyue', 'guidao']],
-            SNH48Gchensi: ['female', 'S', 3, ['wushuang', 'feiying']],
+            SNH48Gchensi: ['female', 'S', 3, ['jingwu', 'modi']],
             SNH48Gdaimeng: ['female', 'S', 4, ['kongcheng', 'qianxun']],
             SNH48Gjiangyun: ['female', 'S', 3, ['leiji', 'guidao']],
             SNH48Gkongxiaoyin: ['female', 'S', 4, ['lieren']],
             SNH48Glvyi: ['female', 'S', 3, ['mingce', 'longdan']],
-            SNH48Gliyuqi: ['female', 'S', 3, ['mingce', 'longdan']],
+            SNH48Gliyuqi: ['female', 'S', 3, ['nuannan', 'quanneng']],
             SNH48Gliuzengyan: ['female', 'S', 3, ['mingce', 'longdan']],
             SNH48Gmohan: ['female', 'S', 3, ['jizhi', 'qicai']],
             SNH48Gqianbeiting: ['female', 'S', 4, ['chongzhen', 'longdan']],
             SNH48Gqiuxinyi: ['female', 'S', 4, ['chongzhen', 'longdan']],
-            SNH48Gsunrui: ['female', 'S', 4, ['tiaoxin', 'tiandu']],
+            SNH48Gsunrui: ['female', 'S', 4, ['gaoshi', 'letian']],
             SNH48Gshaoxuecong: ['female', 'S', 4, ['tiaoxin', 'tiandu']],
             SNH48Gwenjingjie: ['female', 'S', 4, ['zaiqi']],
             SNH48Gwuzhehan: ['female', 'S', 3, ['qianxun', 'qixi']],
@@ -55,7 +55,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gjujingyi: ['female', 'N', 3, ['liuli', 'lianying']],
 
             //H
-            SNH48Gfeiqinyuan: ['female', 'H', 4, ['jiang', 'luanji']],
+            SNH48Gfeiqinyuan: ['female', 'H', 4, ['yuanqi', 'fengfa']],
             SNH48Ghongpeiyun: ['female', 'H', 4, ['jiang', 'luanji']],
             SNH48Gjiangshan: ['female', 'H', 4, ['jiang', 'luanji']],
             SNH48Gjiangshuting: ['female', 'H', 4, ['jiang', 'luanji']],
@@ -90,7 +90,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gsunxinwen: ['female', 'X', 4, ['wushuang', 'mashu']],
             SNH48Gwangjialing: ['female', 'X', 4, ['wushuang', 'mashu']],
             SNH48Gwangshu: ['female', 'X', 4, ['wushuang', 'mashu']],
-            SNH48Gwangxiaojia: ['female', 'X', 4, ['guanxing', 'danlao']],
+            SNH48Gwangxiaojia: ['female', 'X', 4, ['zhanbu', 'yezhan']],
             SNH48Gxushiqi: ['female', 'X', 4, ['wushuang', 'mashu']],
             SNH48Gxietianyi: ['female', 'X', 4, ['wushuang', 'mashu']],
             SNH48Gyangbingyi: ['female', 'X', 4, ['wushuang', 'mashu']],
@@ -220,6 +220,217 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gaji: '张竞，前SNH48剧场发言人。',
         },
         skill: {
+            fengfa: {
+                audio: 2,
+                enable: 'phaseUse',
+                viewAs: { name: 'wanjian' },
+                filterCard: function (card, player) {
+                    if (ui.selected.cards.length) {
+                        return get.suit(card) == get.suit(ui.selected.cards[0]);
+                    }
+                    var cards = player.getCards('h');
+                    for (var i = 0; i < cards.length; i++) {
+                        if (card != cards[i]) {
+                            if (get.suit(card) == get.suit(cards[i])) return true;
+                        }
+                    }
+                    return false;
+                },
+                selectCard: 2,
+                complexCard: true,
+                check: function (card) {
+                    var player = _status.event.player;
+                    var targets = game.filterPlayer(function (current) {
+                        return player.canUse('wanjian', current);
+                    });
+                    var num = 0;
+                    for (var i = 0; i < targets.length; i++) {
+                        var eff = get.sgn(get.effect(targets[i], { name: 'wanjian' }, player, player));
+                        if (targets[i].hp == 1) {
+                            eff *= 1.5;
+                        }
+                        num += eff;
+                    }
+                    if (!player.needsToDiscard(-1)) {
+                        if (targets.length >= 7) {
+                            if (num < 2) return 0;
+                        }
+                        else if (targets.length >= 5) {
+                            if (num < 1.5) return 0;
+                        }
+                    }
+                    return 6 - get.value(card);
+                },
+                ai: {
+                    basic: {
+                        order: 10
+                    }
+                }
+            },
+            gaoshi: {
+                audio: 4,
+                enable: 'phaseUse',
+                usable: 1,
+                filterTarget: function (card, player, target) {
+                    return target.canUse({ name: 'sha' }, player) && target.countCards('he');
+                },
+                content: function () {
+                    "step 0"
+                    target.chooseToUse({ name: 'sha' }, player, -1, '挑衅：对' + get.translation(player) + '使用一张杀，或令其弃置你的一张牌').set('targetRequired', true);
+                    "step 1"
+                    if (result.bool == false && target.countCards('he') > 0) {
+                        player.discardPlayerCard(target, 'he', true);
+                    }
+                    else {
+                        event.finish();
+                    }
+                },
+                ai: {
+                    order: 4,
+                    expose: 0.2,
+                    result: {
+                        target: -1,
+                        player: function (player, target) {
+                            if (target.countCards('h') == 0) return 0;
+                            if (target.countCards('h') == 1) return -0.1;
+                            if (player.hp <= 2) return -2;
+                            if (player.countCards('h', 'shan') == 0) return -1;
+                            return -0.5;
+                        }
+                    },
+                    threaten: 1.1
+                }
+            },
+            modi: {
+                mod: {
+                    globalTo: function (from, to, distance) {
+                        return distance + 1;
+                    }
+                }
+            },
+            nuannan: {
+                enable: 'phaseUse',
+                usable: 1,
+                audio: 2,
+                position: 'he',
+                filterCard: function (card) {
+                    return card.name == 'sha' || get.type(card) == 'equip';
+                },
+                filter: function (event, player) {
+                    return player.countCards('h', 'sha') > 0 || player.countCards('he', { type: 'equip' }) > 0;
+                },
+                check: function (card) { return 8 - get.value(card) },
+                selectTarget: 2,
+                multitarget: true,
+                discard: false,
+                targetprompt: ['得到牌', '出杀目标'],
+                prepare: 'give',
+                filterTarget: function (card, player, target) {
+                    if (ui.selected.targets.length == 0) {
+                        return player != target;
+                    }
+                    else {
+                        return lib.filter.filterTarget({ name: 'sha' }, ui.selected.targets[0], target);
+                    }
+                },
+                content: function () {
+                    "step 0"
+                    targets[0].gain(cards, player);
+                    "step 1"
+                    targets[0].chooseControl('draw_card', '出杀', function () {
+                        var player = _status.event.player;
+                        var target = _status.event.target;
+                        if (get.effect(_status.event.target, { name: 'sha' }, player, player) > 0) {
+                            return 1;
+                        }
+                        return 0;
+                    }).set('target', targets[1]).set('prompt', '对' + get.translation(targets[1]) + '使用一张杀，或摸一张牌');
+                    "step 2"
+                    if (result.control == 'draw_card') {
+                        targets[0].draw();
+                    }
+                    else {
+                        targets[0].useCard({ name: 'sha' }, targets[1]);
+                    }
+                },
+                ai: {
+                    result: {
+                        player: function (player) {
+                            var players = game.filterPlayer();
+                            for (var i = 0; i < players.length; i++) {
+                                if (players[i] != player && get.attitude(player, players[i]) > 1 && get.attitude(players[i], player) > 1) {
+                                    return 1;
+                                }
+                            }
+                            return 0;
+                        },
+                        target: function (player, target) {
+                            if (ui.selected.targets.length) {
+                                return -0.1;
+                            }
+                            return 1;
+                        }
+                    },
+                    order: 8.5,
+                    expose: 0.2
+                }
+            },
+            jingwu: {
+                forced: true,
+                locked: true,
+                group: ['jingwu1', 'jingwu2']
+            },
+            jingwu1: {
+                audio: 2,
+                trigger: { player: 'shaBegin' },
+                forced: true,
+                filter: function (event, player) {
+                    return !event.directHit;
+                },
+                priority: -1,
+                content: function () {
+                    if (typeof trigger.shanRequired == 'number') {
+                        trigger.shanRequired++;
+                    }
+                    else {
+                        trigger.shanRequired = 2;
+                    }
+                }
+            },
+            jingwu2: {
+                audio: 2,
+                trigger: { player: 'juedou', target: 'juedou' },
+                forced: true,
+                filter: function (event, player) {
+                    return event.turn != player;
+                },
+                priority: -1,
+                content: function () {
+                    "step 0"
+                    var next = trigger.turn.chooseToRespond({ name: 'sha' }, '请打出一张杀响应决斗');
+                    next.set('prompt2', '（共需打出2张杀）');
+                    next.autochoose = lib.filter.autoRespondSha;
+                    next.set('ai', function (card) {
+                        var player = _status.event.player;
+                        var trigger = _status.event.getTrigger();
+                        if (get.attitude(trigger.turn, player) < 0 && trigger.turn.countCards('h', 'sha') > 1) {
+                            return get.unuseful2(card);
+                        }
+                        return -1;
+                    });
+                    "step 1"
+                    if (result.bool == false) {
+                        trigger.directHit = true;
+                    }
+                },
+                ai: {
+                    result: {
+                        target: function (card, player, target) {
+                            if (card.name == 'juedou' && target.countCards('h') > 0) return [1, 0, 0, -1];
+                        }
+                    }
+                }
+            },
             kuaihuo: {
                 audio: 2,
                 trigger: { player: 'loseEnd' },
@@ -256,6 +467,102 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         }
                     },
                     noh: true,
+                }
+            },
+            letian: {
+                audio: 2,
+                trigger: { player: 'judgeEnd' },
+                frequent: function (event) {
+                    if (event.result.card.name == 'du') return false;
+                    if (get.mode() == 'guozhan') return false;
+                    return true;
+                },
+                check: function (event) {
+                    if (event.result.card.name == 'du') return false;
+                    return true;
+                },
+                filter: function (event, player) {
+                    if (get.owner(event.result.card)) {
+                        return false;
+                    }
+                    if (event.nogain && event.nogain(event.result.card)) {
+                        return false;
+                    }
+                    return true;
+                },
+                content: function () {
+                    player.gain(trigger.result.card);
+                    player.$gain2(trigger.result.card);
+                }
+            },
+            quanneng: {
+                group: ['longdan_sha', 'longdan_shan', 'longdan_draw'],
+                subSkill: {
+                    draw: {
+                        trigger: { player: ['useCard', 'respond'] },
+                        forced: true,
+                        popup: false,
+                        filter: function (event, player) {
+                            if (!get.zhu(player, 'shouyue')) return false;
+                            return event.skill == 'longdan_sha' || event.skill == 'longdan_shan';
+                        },
+                        content: function () {
+                            player.draw();
+                            player.storage.fanghun2++;
+                        }
+                    },
+                    sha: {
+                        audio: 2,
+                        enable: ['chooseToUse', 'chooseToRespond'],
+                        filterCard: { name: 'shan' },
+                        viewAs: { name: 'sha' },
+                        viewAsFilter: function (player) {
+                            if (!player.countCards('h', 'shan')) return false;
+                        },
+                        prompt: '将一张闪当杀使用或打出',
+                        check: function () { return 1 },
+                        ai: {
+                            effect: {
+                                target: function (card, player, target, current) {
+                                    if (get.tag(card, 'respondSha') && current < 0) return 0.6
+                                }
+                            },
+                            respondSha: true,
+                            skillTagFilter: function (player) {
+                                if (!player.countCards('h', 'shan')) return false;
+                            },
+                            order: function () {
+                                return get.order({ name: 'sha' }) + 0.1;
+                            },
+                            useful: -1,
+                            value: -1
+                        }
+                    },
+                    shan: {
+                        audio: 2,
+                        enable: ['chooseToRespond'],
+                        filterCard: { name: 'sha' },
+                        viewAs: { name: 'shan' },
+                        prompt: '将一张杀当闪打出',
+                        check: function () { return 1 },
+                        viewAsFilter: function (player) {
+                            if (!player.countCards('h', 'sha')) return false;
+                        },
+                        ai: {
+                            respondShan: true,
+                            skillTagFilter: function (player) {
+                                if (!player.countCards('h', 'sha')) return false;
+                            },
+                            effect: {
+                                target: function (card, player, target, current) {
+                                    if (get.tag(card, 'respondShan') && current < 0) return 0.6
+                                }
+                            },
+                            order: 4,
+                            useful: -1,
+                            value: -1
+                        }
+                    }
                 }
             },
             tianlai: {
@@ -326,6 +633,137 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                             }
                         }
                     }
+                }
+            },
+            yezhan: {
+                priority: 9,
+                audio: 2,
+                filter: function (event, player) {
+                    return event.player != player && get.type(event.card) == 'trick' && event.targets && event.targets.length > 1;
+                },
+                check: function (event, player) {
+                    return get.tag(event.card, 'multineg') || get.effect(player, event.card, event.player, player) <= 0;
+                },
+                trigger: { target: 'useCardToBefore' },
+                content: function () {
+                    trigger.cancel();
+                    player.draw();
+                },
+                ai: {
+                    effect: {
+                        target: function (card) {
+                            if (get.type(card) != 'trick') return;
+                            if (card.name == 'tiesuo') return [0, 0];
+                            if (card.name == 'yihuajiemu') return [0, 1];
+                            if (get.tag(card, 'multineg')) return [0, 2];
+                        }
+                    }
+                }
+            },
+            yuanqi: {
+                audio: 2,
+                trigger: { player: ['shaBefore', 'juedouBefore'], target: ['shaBefore', 'juedouBefore'] },
+                filter: function (event, player) {
+                    if (event.card.name == 'juedou') return true;
+                    return get.color(event.card) == 'red';
+                },
+                frequent: true,
+                content: function () {
+                    player.draw();
+                },
+                ai: {
+                    effect: {
+                        target: function (card, player, target) {
+                            if (card.name == 'sha' && get.color(card) == 'red') return [1, 0.6];
+                        },
+                        player: function (card, player, target) {
+                            if (card.name == 'sha' && get.color(card) == 'red') return [1, 1];
+                        }
+                    }
+                }
+            },
+            zhanbu: {
+                audio: 2,
+                audioname: ['jiangwei'],
+                trigger: { player: 'phaseBegin' },
+                frequent: true,
+                content: function () {
+                    'step 0'
+                    event.num = Math.min(5, game.countPlayer());
+                    event.cards = get.cards(event.num);
+                    event.chosen = [];
+                    'step 1'
+                    var js = player.getCards('j');
+                    var pos;
+                    var choice = -1;
+                    var getval = function (card, pos) {
+                        if (js[pos]) {
+                            return (get.judge(js[pos]))(card);
+                        }
+                        else {
+                            return get.value(card);
+                        }
+                    };
+                    for (pos = 0; pos < Math.min(event.cards.length, js.length + 2); pos++) {
+                        var max = getval(event.cards[pos], pos);
+                        for (var j = pos + 1; j < event.cards.length; j++) {
+                            var current = getval(event.cards[j], pos);
+                            if (current > max) {
+                                choice = j;
+                                max = current;
+                            }
+                        }
+                        if (choice != -1) {
+                            break;
+                        }
+                    }
+                    player.chooseCardButton('观星：选择要移动的牌', event.cards).set('filterButton', function (button) {
+                        return !_status.event.chosen.contains(button.link);
+                    }).set('chosen', event.chosen).set('ai', function (button) {
+                        return button.link == _status.event.choice ? 1 : 0;
+                    }).set('choice', event.cards[choice]);
+                    event.pos = pos;
+                    'step 2'
+                    if (result.bool) {
+                        var card = result.links[0];
+                        var index = event.cards.indexOf(card);
+                        event.card = card;
+                        event.chosen.push(card);
+                        event.cards.remove(event.card);
+                        var buttons = event.cards.slice(0);
+                        player.chooseControl(function () {
+                            return _status.event.controlai;
+                        }).set('controlai', event.pos || 0).set('sortcard', buttons).set('tosort', card);
+                    }
+                    else {
+                        event.goto(4);
+                    }
+                    'step 3'
+                    if (typeof result.index == 'number') {
+                        if (result.index > event.cards.length) {
+                            ui.cardPile.appendChild(event.card);
+                        }
+                        else {
+                            event.cards.splice(result.index, 0, event.card);
+                        }
+                        event.num--;
+                        if (event.num > 0) {
+                            event.goto(1);
+                        }
+                    }
+                    'step 4'
+                    while (event.cards.length) {
+                        ui.cardPile.insertBefore(event.cards.pop(), ui.cardPile.firstChild);
+                    }
+                    var js = player.getCards('j');
+                    if (js.length == 1) {
+                        if ((get.judge(js[0]))(ui.cardPile.firstChild) < 0) {
+                            player.addTempSkill('guanxing_fail');
+                        }
+                    }
+                },
+                ai: {
+                    guanxing: true
                 }
             },
         },
@@ -427,10 +865,30 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Glijing: '李晶',
 
             //技能显示名称，技能说明文字
+            fengfa: '风发',
+            fengfa: '出牌阶段，你可以将任意两张相同花色的手牌当【万箭齐发】使用。',
+            gaoshi: '搞事',
+            gaoshi_info:'出牌阶段，你可以指定一名使用【杀】能攻击到你的角色，该角色需对你使用一张【杀】，若该角色不如此做，你弃掉他的一张牌，每回合限一次。',
+            jingwu: '精武',
+            jingwu_info:'锁定技，你使用的【杀】或【决斗】需要两张【闪】或【杀】响应',
+            kuaihuo: '快活',
+            kuaihuo_info: '当你失去最后的手牌时，你可以令至多X名角色各摸一张牌（X为你此次失去的手牌数）。',
+            letian: '乐天',
+            letian_info:'你可以立即获得你的判定牌',
+            modi: '魔笛',
+            modi_info:'锁定技，你的防御距离+1',
+            nuannan: '暖男',
+            nuannan_info:'出牌阶段，你可以交给任一其他角色一张装备牌或【杀】，该角色进行二选一：1. 视为对其攻击范围内的另一名由你指定的角色使用一张【杀】。2. 摸一张牌。每回合限一次。',
             tianlai: '天籁',
             tianlai_info: '每当你使用或打出一张【闪】，可令任意一名角色进行一次判定，若结果为梅花，其受到一点雷电伤害，然后你回复一点体力；若结果为黑桃，其受到两点雷电伤害',
-            kuaihuo: '快活',
-            kuaihuo_info: '当你失去最后的手牌时，你可以令至多X名角色各摸一张牌（X为你此次失去的手牌数）。'
+            quanneng: '全能',
+            quanneng_info:'你可以将[杀]当[闪]，或[闪]当[杀]使用或打出',
+            yezhan: '夜战',
+            yezhan_info:'当你成为一张指定了多个目标的锦囊牌的目标时，你可以取消之，并摸一张牌。',
+            yuanqi: '元气',
+            yuanqi_info: '每当你使用（指定目标后）或被使用（成为目标后）一张【决斗】或红色的【杀】时，你可以摸一张牌。',
+            zhanbu: '占卜',
+            zhanbu_info:'准备阶段，你可以观看牌堆顶的x张牌，并将其以任意顺序置于牌堆项或牌堆底，x为存活角色个数且不超过5'
         },
     };
 });
