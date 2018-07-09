@@ -22,7 +22,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gshaoxuecong: ['female', 'S', 4, ['tiaoxin', 'tiandu']],
             SNH48Gwenjingjie: ['female', 'S', 4, ['zaiqi']],
             SNH48Gwuzhehan: ['female', 'S', 3, ['qianxun', 'qixi']],
-            SNH48Gxuchenchen: ['female', 'S', 3, ['leiji', 'lianying']],
+            SNH48Gxuchenchen: ['female', 'S', 3, ['tianlai', 'kuaihuo']],
             SNH48Gxujiaqi: ['female', 'S', 3, ['luoshen', 'biyue']],
             SNH48Gxuyiren: ['female', 'S', 3, ['luoshen', 'biyue']],
             SNH48Gxuzixuan: ['female', 'S', 4, ['jianxiong']],
@@ -208,15 +208,126 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gzhangdansan: 'Team X 成员，SNH48四期生',
             SNH48Gzhangjiayu: 'Team X 成员，SNH48七期生',
 
-            SNH48Glijing: 'Team X 前队长，SNH48四期生',      
+            SNH48Glijing: 'Team X 前队长，SNH48四期生',
         },
         characterFilter: {
             SNH48G: function (mode) {
                 return mode != 'SNH48G';
             }
         },
-        card: {
-            
+        characterIntro: {
+            SNH48Gwangzijie: '王靖，上海丝芭文化传媒集团有限公司董事长。',
+            SNH48Gaji: '张竞，前SNH48剧场发言人。',
+        },
+        skill: {
+            kuaihuo: {
+                audio: 2,
+                trigger: { player: 'loseEnd' },
+                direct: true,
+                filter: function (event, player) {
+                    if (player.countCards('h')) return false;
+                    for (var i = 0; i < event.cards.length; i++) {
+                        if (event.cards[i].original == 'h') return true;
+                    }
+                    return false;
+                },
+                content: function () {
+                    "step 0"
+                    var num = 0;
+                    for (var i = 0; i < trigger.cards.length; i++) {
+                        if (trigger.cards[i].original == 'h') num++;
+                    }
+                    player.chooseTarget('选择发动连营的目标', [1, num]).ai = function (target) {
+                        var player = _status.event.player;
+                        if (player == target) return get.attitude(player, target) + 10;
+                        return get.attitude(player, target);
+                    }
+                    "step 1"
+                    if (result.bool) {
+                        player.logSkill('relianying', result.targets);
+                        game.asyncDraw(result.targets);
+                    }
+                },
+                ai: {
+                    threaten: 0.8,
+                    effect: {
+                        target: function (card) {
+                            if (card.name == 'guohe' || card.name == 'liuxinghuoyu') return 0.5;
+                        }
+                    },
+                    noh: true,
+                }
+            },
+            tianlai: {
+                audio: 2,
+                audioname: ['boss_qinglong'],
+                trigger: { player: 'respond' },
+                filter: function (event, player) {
+                    return event.card.name == 'shan';
+                },
+                direct: true,
+                content: function () {
+                    "step 0";
+                    player.chooseTarget(get.prompt('releiji')).ai = function (target) {
+                        if (target.hasSkill('hongyan')) return 0;
+                        return get.damageEffect(target, _status.event.player, _status.event.player, 'thunder');
+                    };
+                    "step 1"
+                    if (result.bool) {
+                        player.logSkill('releiji', result.targets, 'thunder');
+                        event.target = result.targets[0];
+                        event.target.judge(function (card) {
+                            var suit = get.suit(card);
+                            if (suit == 'spade') return -4;
+                            if (suit == 'club') return -2;
+                            return 0;
+                        });
+                    }
+                    else {
+                        event.finish();
+                    }
+                    "step 2"
+                    if (result.suit == 'club') {
+                        event.target.damage('thunder');
+                        player.recover();
+                    }
+                    else if (result.suit == 'spade') {
+                        event.target.damage(2, 'thunder');
+                    }
+                },
+                ai: {
+                    useShan: true,
+                    effect: {
+                        target: function (card, player, target, current) {
+                            if (get.tag(card, 'respondShan')) {
+                                var hastarget = game.hasPlayer(function (current) {
+                                    return get.attitude(target, current) < 0;
+                                });
+                                var be = target.countCards('e', { color: 'black' });
+                                if (target.countCards('h', 'shan') && be) {
+                                    if (!target.hasSkill('guidao')) return 0;
+                                    return [0, hastarget ? target.countCards('he') / 2 : 0];
+                                }
+                                if (target.countCards('h', 'shan') && target.countCards('h') > 2) {
+                                    if (!target.hasSkill('guidao')) return 0;
+                                    return [0, hastarget ? target.countCards('h') / 4 : 0];
+                                }
+                                if (target.countCards('h') > 3 || (be && target.countCards('h') >= 2)) {
+                                    return [0, 0];
+                                }
+                                if (target.countCards('h') == 0) {
+                                    return [1.5, 0];
+                                }
+                                if (target.countCards('h') == 1 && !be) {
+                                    return [1.2, 0];
+                                }
+                                if (!target.hasSkill('guidao')) return [1, 0.05];
+                                return [1, Math.min(0.5, (target.countCards('h') + be) / 4)];
+                            }
+                        }
+                    }
+                }
+            },
         },
         translate: {
             //S
@@ -313,7 +424,13 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gzhangdansan: '张丹三',
             SNH48Gzhangjiayu: '张嘉予',
 
-            SNH48Glijing: '李晶',      
+            SNH48Glijing: '李晶',
+
+            //技能显示名称，技能说明文字
+            tianlai: '天籁',
+            tianlai_info: '每当你使用或打出一张【闪】，可令任意一名角色进行一次判定，若结果为梅花，其受到一点雷电伤害，然后你回复一点体力；若结果为黑桃，其受到两点雷电伤害',
+            kuaihuo: '快活',
+            kuaihuo_info: '当你失去最后的手牌时，你可以令至多X名角色各摸一张牌（X为你此次失去的手牌数）。'
         },
     };
 });

@@ -176,6 +176,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
         },
         characterPack: {
             mode_guozhan: {
+                //国战版武将属性配置
                 //S
                 SNH48Gchenguanhui: ['female', 'S', 4, ['biyue', 'guidao']],
                 SNH48Gchengjue: ['female', 'S', 4, ['biyue', 'guidao']],
@@ -193,7 +194,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Gshaoxuecong: ['female', 'S', 4, ['tiaoxin', 'tiandu']],
                 SNH48Gwenjingjie: ['female', 'S', 4, ['zaiqi']],
                 SNH48Gwuzhehan: ['female', 'S', 3, ['qianxun', 'qixi']],
-                SNH48Gxuchenchen: ['female', 'S', 3, ['leiji', 'lianying']],
+                SNH48Gxuchenchen: ['female', 'S', 3, ['tianlai', 'kuaihuo']],
                 SNH48Gxujiaqi: ['female', 'S', 3, ['luoshen', 'biyue']],
                 SNH48Gxuyiren: ['female', 'S', 3, ['luoshen', 'biyue']],
                 SNH48Gxuzixuan: ['female', 'S', 4, ['jianxiong']],
@@ -286,6 +287,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             }
         },
         skill: {
+            //国战版技能
             gzsuishi: {
                 audio: 'suishi',
                 trigger: { global: 'dying' },

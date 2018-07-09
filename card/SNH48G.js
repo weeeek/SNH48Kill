@@ -2,7 +2,7 @@
 game.import('card',function(lib,game,ui,get,ai,_status){
 	return {
 		name:'SNH48G',
-		connect:true,
+        connect: true,
 		card: {
 		    yingyuanbang: {
 		        lianheng: true,
