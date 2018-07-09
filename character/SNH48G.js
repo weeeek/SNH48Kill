@@ -100,7 +100,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
 
             SNH48Glijing: ['female', 'X', 4, ['guanxing', 'danlao']],
 
-
+            SNH48Gwangzijie: ['male', 'ye', 1, ['longdan', 'chongzhen', 'paoxiao', 'jiang', 'linglong']],
 
             shibing1wei: ['male', 'S', 0, [], ['unseen']],
             shibing2wei: ['female', 'S', 0, [], ['unseen']],
@@ -209,15 +209,14 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gzhangjiayu: 'Team X 成员，SNH48七期生',
 
             SNH48Glijing: 'Team X 前队长，SNH48四期生',
+
+            SNH48Gwangzijie: '王靖，上海丝芭文化传媒集团有限公司董事长。',
+            SNH48Gaji: '张竞，前SNH48剧场发言人。',
         },
         characterFilter: {
             SNH48G: function (mode) {
                 return mode != 'SNH48G';
             }
-        },
-        characterIntro: {
-            SNH48Gwangzijie: '王靖，上海丝芭文化传媒集团有限公司董事长。',
-            SNH48Gaji: '张竞，前SNH48剧场发言人。',
         },
         skill: {
             fengfa: {
@@ -864,31 +863,33 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
 
             SNH48Glijing: '李晶',
 
+            SNH48Gwangzijie: '王子杰',
+
             //技能显示名称，技能说明文字
             fengfa: '风发',
             fengfa: '出牌阶段，你可以将任意两张相同花色的手牌当【万箭齐发】使用。',
             gaoshi: '搞事',
-            gaoshi_info:'出牌阶段，你可以指定一名使用【杀】能攻击到你的角色，该角色需对你使用一张【杀】，若该角色不如此做，你弃掉他的一张牌，每回合限一次。',
+            gaoshi_info: '出牌阶段，你可以指定一名使用【杀】能攻击到你的角色，该角色需对你使用一张【杀】，若该角色不如此做，你弃掉他的一张牌，每回合限一次。',
             jingwu: '精武',
-            jingwu_info:'锁定技，你使用的【杀】或【决斗】需要两张【闪】或【杀】响应',
+            jingwu_info: '锁定技，你使用的【杀】或【决斗】需要两张【闪】或【杀】响应',
             kuaihuo: '快活',
             kuaihuo_info: '当你失去最后的手牌时，你可以令至多X名角色各摸一张牌（X为你此次失去的手牌数）。',
             letian: '乐天',
-            letian_info:'你可以立即获得你的判定牌',
+            letian_info: '你可以立即获得你的判定牌',
             modi: '魔笛',
-            modi_info:'锁定技，你的防御距离+1',
+            modi_info: '锁定技，你的防御距离+1',
             nuannan: '暖男',
-            nuannan_info:'出牌阶段，你可以交给任一其他角色一张装备牌或【杀】，该角色进行二选一：1. 视为对其攻击范围内的另一名由你指定的角色使用一张【杀】。2. 摸一张牌。每回合限一次。',
+            nuannan_info: '出牌阶段，你可以交给任一其他角色一张装备牌或【杀】，该角色进行二选一：1. 视为对其攻击范围内的另一名由你指定的角色使用一张【杀】。2. 摸一张牌。每回合限一次。',
             tianlai: '天籁',
             tianlai_info: '每当你使用或打出一张【闪】，可令任意一名角色进行一次判定，若结果为梅花，其受到一点雷电伤害，然后你回复一点体力；若结果为黑桃，其受到两点雷电伤害',
             quanneng: '全能',
-            quanneng_info:'你可以将[杀]当[闪]，或[闪]当[杀]使用或打出',
+            quanneng_info: '你可以将[杀]当[闪]，或[闪]当[杀]使用或打出',
             yezhan: '夜战',
-            yezhan_info:'当你成为一张指定了多个目标的锦囊牌的目标时，你可以取消之，并摸一张牌。',
+            yezhan_info: '当你成为一张指定了多个目标的锦囊牌的目标时，你可以取消之，并摸一张牌。',
             yuanqi: '元气',
             yuanqi_info: '每当你使用（指定目标后）或被使用（成为目标后）一张【决斗】或红色的【杀】时，你可以摸一张牌。',
             zhanbu: '占卜',
-            zhanbu_info:'准备阶段，你可以观看牌堆顶的x张牌，并将其以任意顺序置于牌堆项或牌堆底，x为存活角色个数且不超过5'
+            zhanbu_info: '准备阶段，你可以观看牌堆顶的x张牌，并将其以任意顺序置于牌堆项或牌堆底，x为存活角色个数且不超过5'
         },
     };
 });
