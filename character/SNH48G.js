@@ -101,7 +101,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Glijing: ['female', 'X', 4, ['guanxing', 'danlao']],
 
             SNH48Gwangzijie: ['male', 'ye', 2, ['longdan', 'chongzhen', 'paoxiao', 'jiang', 'linglong']],
-            SNH48Gaji:['male','ye',2,['zhiheng','xiaoji','paoxiao','kurou','weimu']],
+            SNH48Gaji: ['male', 'ye', 2, ['buqu', 'yingzi', 'kuaihuo', 'yiji', 'jizhi']],
+            SNH48Gyegou: ['male', 'ye', 2, ['zhiheng', 'paoxiao', 'wansha', 'weimu', 'luanwu']],
+            SNH48Gmulaosi: ['female', 'ye', 2, ['biyue', 'tiaoxin', 'xiaoji', 'liuli', 'ruoyu']],
+
 
             shibing1wei: ['male', 'S', 0, [], ['unseen']],
             shibing2wei: ['female', 'S', 0, [], ['unseen']],
@@ -213,6 +216,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
 
             SNH48Gwangzijie: '王靖，上海丝芭文化传媒集团有限公司董事长。',
             SNH48Gaji: '张竞，前SNH48剧场发言人。',
+            SNH48Gyegou: '叶盛，上海丝芭文化传媒集团有限公司“艺术总监”。',
+            SNH48Gmulaosi: '棒槌女郎，上海丝芭文化传媒集团有限公司舞蹈总监。',
         },
         characterFilter: {
             SNH48G: function (mode) {
@@ -865,7 +870,9 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Glijing: '李晶',
 
             SNH48Gwangzijie: '王子杰',
-            SNH48Gaji:'阿吉',
+            SNH48Gaji: '阿吉',
+            SNH48Gyegou: '叶盛',
+            SNH48Gmulaosi:'马老师',
 
             //技能显示名称，技能说明文字
             fengfa: '风发',

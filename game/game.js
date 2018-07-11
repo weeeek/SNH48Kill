@@ -37695,7 +37695,7 @@
                     }
                 }
                 if (!thisiscard) {
-                    var groups = get.mode() == 'SNH48G'? ['S','N','H','X'] : ['wei', 'shu', 'wu', 'qun'];
+                    var groups = get.mode() == 'SNH48G'? ['S','N','H','X','guan'] : ['wei', 'shu', 'wu', 'qun','ye'];
                     for (var i in lib.character) {
                         if (lib.character[i][1] == 'shen') {
                             groups.add('shen'); break;
@@ -43589,6 +43589,7 @@
                     nature = 'wood';
                     break;
                 case 'qun':
+                case 'guan':
                     nature = 'metal';
                     break;
                     break;

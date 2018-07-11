@@ -273,18 +273,9 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Glijing: ['female', 'X', 4, ['guanxing', 'danlao']],
                 
                 SNH48Gwangzijie: ['male', 'guan', 1, ['longdan', 'chongzhen', 'paoxiao', 'jiang', 'linglong']],
-                SNH48Gaji:['male','guan',1,['buqu','yingzi','kuaihuo','biyue','jizhi']],
-
-                shibing1wei: ['male', 'S', 0, [], ['unseen']],
-                shibing2wei: ['female', 'S', 0, [], ['unseen']],
-                shibing1shu: ['male', 'H', 0, [], ['unseen']],
-                shibing2shu: ['female', 'H', 0, [], ['unseen']],
-                shibing1wu: ['male', 'X', 0, [], ['unseen']],
-                shibing2wu: ['female', 'X', 0, [], ['unseen']],
-                shibing1qun: ['male', 'qun', 0, [], ['unseen']],
-                shibing2qun: ['female', 'qun', 0, [], ['unseen']],
-                shibing1ye: ['male', 'N', 0, [], ['unseen']],
-                shibing2ye: ['female', 'N', 0, [], ['unseen']],
+                SNH48Gaji: ['male', 'guan', 1, ['buqu', 'yingzi', 'kuaihuo', 'yiji', 'jizhi']],
+                SNH48Gyegou: ['male', 'guan', 1, ['zhiheng', 'paoxiao', 'wansha', 'weimu', 'luanwu']],
+                SNH48Gmulaosi: ['female', 'guan', 1, ['biyue', 'tiaoxin', 'xiaoji', 'liuli', 'ruoyu']],
             }
         },
         skill: {
