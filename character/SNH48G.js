@@ -13,7 +13,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gjiangyun: ['female', 'S', 3, ['leiji', 'guidao']],
             SNH48Gkongxiaoyin: ['female', 'S', 4, ['lieren']],
             SNH48Glvyi: ['female', 'S', 3, ['mingce', 'longdan']],
-            SNH48Gliyuqi: ['female', 'S', 3, ['nuannan', 'quanneng']],
+            SNH48Gliyuqi: ['female', 'S', 3, ['zhanwu', 'quanneng']],
             SNH48Gliuzengyan: ['female', 'S', 3, ['mingce', 'longdan']],
             SNH48Gmohan: ['female', 'S', 3, ['jizhi', 'qicai']],
             SNH48Gqianbeiting: ['female', 'S', 4, ['chongzhen', 'longdan']],
@@ -307,7 +307,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }
                 }
             },
-            nuannan: {
+            zhanwu: {
                 enable: 'phaseUse',
                 usable: 1,
                 audio: 2,
@@ -867,7 +867,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
 
             //技能显示名称，技能说明文字
             fengfa: '风发',
-            fengfa: '出牌阶段，你可以将任意两张相同花色的手牌当【万箭齐发】使用。',
+            fengfa_info: '出牌阶段，你可以将任意两张相同花色的手牌当【万箭齐发】使用。',
             gaoshi: '搞事',
             gaoshi_info: '出牌阶段，你可以指定一名使用【杀】能攻击到你的角色，该角色需对你使用一张【杀】，若该角色不如此做，你弃掉他的一张牌，每回合限一次。',
             jingwu: '精武',
@@ -878,8 +878,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             letian_info: '你可以立即获得你的判定牌',
             modi: '魔笛',
             modi_info: '锁定技，你的防御距离+1',
-            nuannan: '暖男',
-            nuannan_info: '出牌阶段，你可以交给任一其他角色一张装备牌或【杀】，该角色进行二选一：1. 视为对其攻击范围内的另一名由你指定的角色使用一张【杀】。2. 摸一张牌。每回合限一次。',
+            zhanwu: '战舞',
+            zhanwu_info: '出牌阶段，你可以交给任一其他角色一张装备牌或【杀】，该角色进行二选一：1. 视为对其攻击范围内的另一名由你指定的角色使用一张【杀】。2. 摸一张牌。每回合限一次。',
             tianlai: '天籁',
             tianlai_info: '每当你使用或打出一张【闪】，可令任意一名角色进行一次判定，若结果为梅花，其受到一点雷电伤害，然后你回复一点体力；若结果为黑桃，其受到两点雷电伤害',
             quanneng: '全能',

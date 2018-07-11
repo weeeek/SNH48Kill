@@ -185,7 +185,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Gjiangyun: ['female', 'S', 3, ['leiji', 'guidao']],
                 SNH48Gkongxiaoyin: ['female', 'S', 4, ['lieren']],
                 SNH48Glvyi: ['female', 'S', 3, ['mingce', 'longdan']],
-                SNH48Gliyuqi: ['female', 'S', 3, ['nuannan', 'quanneng']],
+                SNH48Gliyuqi: ['female', 'S', 3, ['zhanwu', 'quanneng']],
                 SNH48Gliuzengyan: ['female', 'S', 3, ['mingce', 'longdan']],
                 SNH48Gmohan: ['female', 'S', 3, ['jizhi', 'qicai']],
                 SNH48Gqianbeiting: ['female', 'S', 4, ['chongzhen', 'longdan']],
