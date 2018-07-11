@@ -54,7 +54,7 @@ window.config={
 	volumn_audio:2,
 
 	connect_avatar:'weeeek',
-	connect_nickname:'丶Gone',
+	connect_nickname:'Gone',
 	config_menu:true,
 	auto_popped_config:true,
 	auto_popped_history:false,
