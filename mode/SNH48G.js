@@ -272,8 +272,8 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
 
                 SNH48Glijing: ['female', 'X', 4, ['guanxing', 'danlao']],
                 
-                SNH48Gwangzijie: ['male', 'ye', 1, ['longdan', 'chongzhen', 'paoxiao', 'jiang', 'linglong']],
-                SNH48Gaji:['male','ye',1,['buqu','yingzi','kuaihuo','biyue','jizhi']],
+                SNH48Gwangzijie: ['male', 'guan', 1, ['longdan', 'chongzhen', 'paoxiao', 'jiang', 'linglong']],
+                SNH48Gaji:['male','guan',1,['buqu','yingzi','kuaihuo','biyue','jizhi']],
 
                 shibing1wei: ['male', 'S', 0, [], ['unseen']],
                 shibing2wei: ['female', 'S', 0, [], ['unseen']],
@@ -293,17 +293,13 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
         game: {
             getCharacterChoice: function (list, num) {
                 var choice = list.splice(0, num);
-                //var map = {
-                //    wei: [],
-                //    shu: [],
-                //    wu: [],
-                //    qun: []
-                //};
+                //选将快速检索的类型
                 var map = {
                     S: [],
                     N: [],
                     H: [],
-                    X: []
+                    X: [],
+                    guan:[]
                 };
                 for (var i = 0; i < choice.length; i++) {
                     var group = lib.character[choice[i]][1];
@@ -410,8 +406,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     else {
                         data[identity][1]++;
                     }
-                    //var list = ['wei', 'shu', 'wu', 'qun', 'ye'];
-                    var list = ['S', 'N', 'H', 'X', 'ye'];
+                    var list = ['S', 'N', 'H', 'X', 'guan'];
                     var str = '';
                     for (var i = 0; i < list.length; i++) {
                         if (data[list[i]]) {
@@ -430,7 +425,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     N: 'N',
                     H: 'H',
                     X: 'X',
-                    ye: '野',
+                    guan: '官',
                     unknown: '猜'
                 }
                 var num = Math.floor((game.players.length + game.dead.length) / 2);
@@ -460,7 +455,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 for (var i in list) {
                     switch (i) {
                         case 'unknown': list[i] = '未知'; break;
-                        case 'ye': list[i] = '野心家'; break;
+                        case 'guan': list[i] = '官方'; break;
                         case 'qun': list[i] += '雄'; break;
                         default: list[i] += '队';
                     }
@@ -470,8 +465,8 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 var str = get.translation(game.me.name1) + '/' + get.translation(game.me.name2);
                 var str2 = get.cnNumber(parseInt(get.config('player_number'))) + '人' +
                     get.translation(lib.config.mode);
-                if (game.me.identity == 'ye') {
-                    str2 += ' - 野心家';
+                if (game.me.identity == 'guan') {
+                    str2 += ' - 官方';
                 }
                 var name = [str, str2];
                 return name;
@@ -500,7 +495,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     }
                 }
                 if (check) {
-                    if (get.population('ye')) {
+                    if (get.population('guan')) {
                         if (game.players.length > 1) {
                             check = false;
                         }
@@ -543,8 +538,8 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     if (ids.length != 2) return;
                     var id1 = ids[0], id2 = ids[1];
                     if (idmap[id1] > 1 && idmap[id2] > 1) return;
-                    if (idmap[id1] > 1 && id1 == 'ye') return;
-                    if (idmap[id2] > 1 && id2 == 'ye') return;
+                    if (idmap[id1] > 1 && id1 == 'guan') return;
+                    if (idmap[id2] > 1 && id2 == 'guan') return;
                     if (idmap[id1] == 1) {
                         idp[id1].showGiveup();
                     }
@@ -558,7 +553,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 for (var i = 0; i < game.players.length; i++) {
                     game.players[i].showCharacter(2);
                 }
-                if (game.me.identity == 'ye') {
+                if (game.me.identity == 'guan') {
                     if (game.me.classList.contains('dead')) {
                         game.over('战斗失败');
                     }
@@ -577,7 +572,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 game.showIdentity();
             },
             checkOnlineResult: function (player) {
-                if (player.identity == 'ye') {
+                if (player.identity == 'guan') {
                     return player.isAlive();
                 }
                 return get.population(player.identity) > 0;
@@ -1052,7 +1047,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 // 			case '魏':this.firstChild.innerHTML='蜀';this.dataset.color='shu';break;
                 // 			case '蜀':this.firstChild.innerHTML='吴';this.dataset.color='wu';break;
                 // 			case '吴':this.firstChild.innerHTML='群';this.dataset.color='qun';break;
-                // 			case '群':this.firstChild.innerHTML='野';this.dataset.color='ye';break;
+                // 			case '群':this.firstChild.innerHTML='野';this.dataset.color='guan';break;
                 // 			case '野':this.firstChild.innerHTML='猜';this.dataset.color='unknown';break;
                 // 			default:this.firstChild.innerHTML='魏';this.dataset.color='wei';break;
                 // 		}
@@ -1313,14 +1308,14 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                         }
                         game.broadcastAll(function (list) {
                             for (var i = 0; i < list.length; i++) {
-                                list[i].identity = 'ye';
+                                list[i].identity = 'guan';
                                 list[i].setIdentity();
                             }
                         }, yelist);
                         _status.yeidentity.add(this.identity);
                     }
                     if (source && source.identity != 'unknown') {
-                        if (this.identity == 'ye') source.draw(1);
+                        if (this.identity == 'guan') source.draw(1);
                         else if (this.identity != source.identity) source.draw(get.population(this.identity) + 1);
                         else source.discard(source.getCards('he'));
                     }
@@ -1467,7 +1462,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                             this.identity = this.group;
                             var yelist = [];
                             for (var i = 0; i < game.players.length; i++) {
-                                if (game.players[i].identity == 'ye' && game.players[i]._group == this.group) {
+                                if (game.players[i].identity == 'guan' && game.players[i]._group == this.group) {
                                     yelist.push(game.players[i]);
                                 }
                             }
@@ -1482,7 +1477,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                             this.identity = this.group;
                         }
                         else {
-                            this.identity = 'ye';
+                            this.identity = 'guan';
                         }
                         this.setIdentity(this.identity);
                         this.ai.shown = 1;
@@ -1606,7 +1601,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     return false;
                 },
                 siege: function (player) {
-                    if (this.identity == 'unknown' || this.identity == 'ye' || this.hasSkill('undist')) return false;
+                    if (this.identity == 'unknown' || this.identity == 'guan' || this.hasSkill('undist')) return false;
                     if (!player) {
                         var next = this.getNext();
                         if (next && next.sieged()) return true;
@@ -1627,14 +1622,14 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                         var next = this.getNext();
                         var previous = this.getPrevious();
                         if (next && previous && next != previous) {
-                            if (next.identity == 'unknown' || next.identity == 'ye' || next.identity == this.identity) return false;
+                            if (next.identity == 'unknown' || next.identity == 'guan' || next.identity == this.identity) return false;
                             return next.identity == previous.identity;
                         }
                         return false;
                     }
                 },
                 inline: function () {
-                    if (this.identity == 'unknown' || this.identity == 'ye' || this.hasSkill('undist')) return false;
+                    if (this.identity == 'unknown' || this.identity == 'guan' || this.hasSkill('undist')) return false;
                     var next = this, previous = this;
                     var list = [];
                     for (var i = 0; next || previous; i++) {
@@ -1668,7 +1663,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     var list = [];
                     for (var i = 0; i < game.players.length; i++) {
                         if (game.players[i].getEquip('yuxi')) {
-                            if (game.players[i].identity != 'ye' && game.players[i].identity != 'unknown') {
+                            if (game.players[i].identity != 'guan' && game.players[i].identity != 'unknown') {
                                 list.add(game.players[i].identity);
                             }
                         }
@@ -1696,7 +1691,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     if (!lib.group.contains(this.identity)) return true;
                     var min = game.players.length;
                     if (game.hasPlayer(function (current) {
-                        return current.identity == 'ye';
+                        return current.identity == 'guan';
                     })) {
                         min = 1;
                     }
@@ -1753,7 +1748,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
         },
         get: {
             realAttitude: function (from, toidentity, difficulty) {
-                if (from.identity == toidentity && toidentity != 'ye') {
+                if (from.identity == toidentity && toidentity != 'guan') {
                     return 4 + difficulty;
                 }
                 if (from.identity == 'unknown' && lib.character[from.name1][1] == toidentity) {
@@ -1767,8 +1762,8 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 if (max <= 1) return -3;
                 var from_p = get.population(from.identity != 'unknown' ? from.identity : lib.character[from.name1][1]);
                 var to_p = get.population(toidentity);
-                if (from.identity == 'ye') from_p = 1;
-                if (toidentity == 'ye') to_p = 1;
+                if (from.identity == 'guan') from_p = 1;
+                if (toidentity == 'guan') to_p = 1;
 
                 if (to_p == max) return -5;
                 if (from_p == max) return -2 - get.population(toidentity);
@@ -1789,7 +1784,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 var difficulty = 0;
                 if (to == game.me) difficulty = (2 - get.difficulty()) * 1.5;
                 if (from == to) return 5 + difficulty;
-                if (from.identity == to.identity && from.identity != 'unknown' && from.identity != 'ye') return 5 + difficulty;
+                if (from.identity == to.identity && from.identity != 'unknown' && from.identity != 'guan') return 5 + difficulty;
                 if (from.identity == 'unknown' && lib.character[from.name1][1] == to.identity) {
                     if (from.wontYe()) return 4 + difficulty;
                 }
@@ -1797,7 +1792,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 if (toidentity == 'unknown') {
                     toidentity = lib.character[to.name1][1];
                     if (get.population(toidentity) >= get.population() - 2) {
-                        toidentity = 'ye';
+                        toidentity = 'guan';
                     }
                 }
                 var att = get.realAttitude(from, toidentity, difficulty);

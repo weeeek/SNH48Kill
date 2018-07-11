@@ -865,6 +865,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Glijing: '李晶',
 
             SNH48Gwangzijie: '王子杰',
+            SNH48Gaji:'阿吉',
 
             //技能显示名称，技能说明文字
             fengfa: '风发',
