@@ -1249,6 +1249,10 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             ['diamond', 4, 'xietianzi'],
             ['club', 1, 'yuxi'],
             ['heart', 3, 'taipingyaoshu'],
+
+            //附加游戏卡牌
+			['heart', 2, 'yingyuanbang'],
+			//['spade', 2, 'antyvote'],
         ],
         element: {
             content: {
