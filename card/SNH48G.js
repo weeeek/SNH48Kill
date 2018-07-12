@@ -76,7 +76,7 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                 },
                 position: 'he',
                 viewAs: { name: 'tao' },
-                prompt: '弃置一张红色手牌令一名SNH48女性角色回复一点体力',
+                prompt: '当有角色濒死时，你可以弃置一张红色手牌令所有SNH48女性角色回复一点体力',
                 check: function (card) { return 15 - get.value(card) },
                 //装备时：给角色添加技能
                 onEquip: function () {
@@ -158,7 +158,7 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
             yingyuanbang: '应援棒',
             yingyuanbang_bg: '棒',
             yingyuanbang_skill: '应援',
-            yingyuanbang_info: '出牌阶段，你可以弃置一张红色手牌令一名SNH48女性角色回复一点体力，每阶段限一次',
+            yingyuanbang_info: '当有角色濒死时，你可以弃置一张红色手牌令所有SNH48女性角色回复一点体力',
             antyvote: 'Anty票',
             antyvote_bg: '票',
             antyvote_skill: 'Anty',
