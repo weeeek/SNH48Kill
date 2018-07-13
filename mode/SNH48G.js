@@ -1119,6 +1119,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             ["diamond", 13, "zixin"],
             ["club", 1, "zhuge"],
             ["diamond", 1, "zhuge"],
+            //因为代码有BUG，禁用飞龙夺凤
             ["spade", 2, "feilongduofeng"],
             ["spade", 6, "qinggang"],
             ["spade", 5, "qinglong"],
@@ -1253,6 +1254,11 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             //附加游戏卡牌
 			['heart', 2, 'yingyuanbang'],
 			['spade', 2, 'antyvote'],
+
+            ['club', 12, 'yongqizhichui'],
+            ['club', 13, 'yongqizhichui'],
+            ['club', 12, 'yongqizhichui'],
+            ['club', 13, 'yongqizhichui'],
         ],
         element: {
             content: {
