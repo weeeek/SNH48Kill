@@ -1252,7 +1252,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
 
             //附加游戏卡牌
 			['heart', 2, 'yingyuanbang'],
-			//['spade', 2, 'antyvote'],
+			['spade', 2, 'antyvote'],
         ],
         element: {
             content: {

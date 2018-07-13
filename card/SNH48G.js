@@ -46,7 +46,7 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                 type: "equip",
                 subtype: "equip1",
                 distance: { attackFrom: -4 },
-                skills: ['antivote_skill'],
+                skills: ['antyvote_skill'],
                 ai: {
                     basic: {
                         equipValue: 3
@@ -61,6 +61,7 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                 filter: function (event, player) {
                     return _status.currentPhase != player;
                 },
+                selectCard: 2,
                 filterCard: function (card) {
                     return get.color(card) == 'red';
                 },
@@ -76,7 +77,7 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                 },
                 position: 'he',
                 viewAs: { name: 'tao' },
-                prompt: '当有角色濒死时，你可以弃置一张红色手牌令所有SNH48女性角色回复一点体力',
+                prompt: '当有角色濒死时，你可以弃置两张红色手牌令所有SNH48女性角色回复一点体力',
                 check: function (card) { return 15 - get.value(card) },
                 //装备时：给角色添加技能
                 onEquip: function () {
@@ -96,14 +97,11 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                 }
             },
             antyvote_skill: {
-                audio: 2,
+                audio:2,
                 enable: 'phaseUse',
+                //使用次数
                 usable: 1,
-                filterCard: function (card) {
-                    //黑色牌
-                    return get.color(card) == 'black';
-                },
-                selectCard: [0, 1],
+                viewAs: { name: 'wanjian' },
                 filterTarget: function (card, player, target) {
                     //不能以自己为目标
                     if (player == target)
@@ -115,12 +113,10 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                     else
                         return false;
                 },
-                content: function () {
-                    target.damage();
+                filterCard: function (card) {
+                    return get.color(card) == 'black';
                 },
-                check: function (card) {
-                    return 10 - get.value(card);
-                },
+                prompt: '弃置三张黑色牌以视为对所有SNH48女性角色打出“万箭齐发”，一回合限一次',
                 //装备时：给角色添加技能
                 onEquip: function () {
                     player.markSkill('antyvote_skill');
@@ -129,29 +125,37 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                 onLose: function () {
                     player.unmarkSkill('antyvote_skill');
                 },
-                position: 'he',
-                prompt: '弃置一张黑色牌以视为对一名SNH48女性角色造成一点伤害',
-                ai: {
-                    damage: true,
-                    order: 8,
-                    result: {
-                        player: function (player, target) {
-                            if (player.getEquip(1)) return 0;
-                            if (player.hp >= target.hp) return -0.9;
-                            if (player.hp <= 2) return -10;
-                            return -2;
-                        },
-                        target: function (player, target) {
-                            if (!player.getEquip(1)) {
-                                if (player.hp < 2) return 0;
-                                if (player.hp == 2 && target.hp >= 2) return 0;
-                                if (target.hp > player.hp) return 0;
-                            }
-                            return get.damageEffect(target, player);
+                //选择3张牌
+                selectCard:3,
+                complexCard:true,
+                check:function(card){
+                    var player=_status.event.player;
+                    var targets=game.filterPlayer(function(current){
+                        return player.canUse('wanjian',current);
+                    });
+                    var num=0;
+                    for(var i=0;i<targets.length;i++){
+                        var eff=get.sgn(get.effect(targets[i],{name:'wanjian'},player,player));
+                        if(targets[i].hp==1){
+                            eff*=1.5;
+                        }
+                        num+=eff;
+                    }
+                    if(!player.needsToDiscard(-1)){
+                        if(targets.length>=7){
+                            if(num<2) return 0;
+                        }
+                        else if(targets.length>=5){
+                            if(num<1.5) return 0;
                         }
                     }
+                    return 6-get.value(card);
                 },
-                threaten: 1.3
+                ai:{
+                    basic:{
+                        order:10
+                    }
+                }
             }
         },
         translate: {
@@ -162,23 +166,16 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
             antyvote: 'Anty票',
             antyvote_bg: '票',
             antyvote_skill: 'Anty',
-            antyvote_info: '出牌阶段，你可以弃置一张黑色手牌对一名SNH48女性角色造成一点伤害，每阶段限一次',
+            antyvote_info: '出牌阶段，你可以弃置三张黑色牌视为对所有SNH48女性角色打出“万箭齐发”，每回合限一次',
         },
         list: [
+            //游戏卡包，具体模式可额外加入
             //heart: "♥︎",
             //diamond: "♦︎",
             //spade: "♠︎",
             //club: "♣︎",
 			['heart', 2, 'yingyuanbang'],
-			['heart', 3, 'yingyuanbang'],
-			['heart', 4, 'yingyuanbang'],
-			['heart', 5, 'yingyuanbang'],
-			['heart', 6, 'yingyuanbang'],
-			['heart', 7, 'yingyuanbang'],
-			['heart', 8, 'yingyuanbang'],
-			['heart', 9, 'yingyuanbang'],
-			['heart', 1, 'yingyuanbang'],
-			//['spade', 2, 'antyvote'],
+			['spade', 2, 'antyvote'],
         ],
     }
 });
