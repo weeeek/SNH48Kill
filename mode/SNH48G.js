@@ -276,6 +276,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Gaji: ['male', 'guan', 1, ['buqu', 'yingzi', 'kuaihuo', 'yiji', 'jizhi']],
                 SNH48Gyegou: ['male', 'guan', 1, ['zhiheng', 'paoxiao', 'wansha', 'weimu', 'luanwu']],
                 SNH48Gmulaosi: ['female', 'guan', 1, ['biyue', 'tiaoxin', 'xiaoji', 'liuli', 'ruoyu']],
+                SNH48Gpiggyrae: ['female', 'guan', 1, ['luoshen', 'luandance', 'qingguo', 'fankui', 'leiji']],
             }
         },
         skill: {

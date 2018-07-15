@@ -53,7 +53,7 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                         equipValue: 3
                     }
                 },
-            }
+            },
         },
         skill: {
             yongqizhichui_skill: {
@@ -71,11 +71,12 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                     player.chooseToCompare(target);
                     "step 1"
                     if (result.bool) {
-                        player.markSkill('luandance');
+                        target.damage(player);
                     }
                     else {
-                        player.loseHp();
+                        player.damage(target);                        
                     }
+                    event.finish();
                 },
                 ai: {
                     order: function (name, player) {
@@ -107,77 +108,6 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                         },
                     },
                     threaten: 1.3
-                }
-            },
-            luandance: {
-                audio: 2,
-                unique: true,
-                enable: 'phaseUse',
-                skillAnimation: 'epic',
-                animationColor: 'thunder',
-                filterTarget: function (card, player, target) {
-                    return target != player;
-                },
-                position: 'he',
-                selectCard:1,
-                selectTarget: -1,
-                multitarget: true,
-                multiline: true,
-                content: function () {
-                    "step 0"
-                    player.unmarkSkill('luandance');
-                    event.current = player.next;
-                    "step 1"
-                    event.current.animate('target');
-                    event.current.chooseToUse('乱舞：使用一张杀或受到一点伤害', { name: 'sha' }, function (card, player, target) {
-                        if (player == target) return false;
-                        if (!player.canUse('sha', target)) return false;
-                        //距离为1者
-                        //if (get.distance(player, target) <= 1) return true;
-                        if (game.hasPlayer(function (current) {
-							return current != player && get.distance(player, current) < get.distance(player, target);
-                        })) {
-                            return false;
-                        }
-                        return true;
-                    });
-                    "step 2"
-                    if (result.bool == false) event.current.damage();
-                    if (event.current.next != player) {
-                        event.current = event.current.next;
-                        game.delay(0.5);
-                        event.goto(1);
-                    }
-                },
-                ai: {
-                    order: 1,
-                    result: {
-                        player: function (player) {
-                            if (lib.config.mode == 'identity' && game.zhu.isZhu && player.identity == 'fan') {
-                                if (game.zhu.hp == 1 && game.zhu.countCards('h') <= 2) return 1;
-                            }
-                            var num = 0;
-                            var players = game.filterPlayer();
-                            for (var i = 0; i < players.length; i++) {
-                                var att = get.attitude(player, players[i]);
-                                if (att > 0) att = 1;
-                                if (att < 0) att = -1;
-                                if (players[i] != player && players[i].hp <= 3) {
-                                    if (players[i].countCards('h') == 0) num += att / players[i].hp;
-                                    else if (players[i].countCards('h') == 1) num += att / 2 / players[i].hp;
-                                    else if (players[i].countCards('h') == 2) num += att / 4 / players[i].hp;
-                                }
-                                if (players[i].hp == 1) num += att * 1.5;
-                            }
-                            if (player.hp == 1) {
-                                return -num;
-                            }
-                            if (player.hp == 2) {
-                                return -game.players.length / 4 - num;
-                            }
-                            return -game.players.length / 3 - num;
-                        }
-                    }
                 }
             },
             yingyuanbang_skill: {
@@ -275,7 +205,7 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                         order: 10
                     }
                 }
-            }
+            },
         },
         translate: {
             yingyuanbang: '应援棒',
@@ -290,13 +220,9 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
             yongqizhichui: '勇气之锤',
             yongqizhichui_bg: '锤',
             yongqizhichui_skill: '求锤',
-            yongqizhichui_info: '选择一个角色进行拼点，你获得"乱舞"直到回合结束：令除你外的所有角色依次对另一名角色使用一张【杀】，无法如此做者受到1点伤害。，若你没赢，失去一点体力。每回合限一次。',
+            yongqizhichui_info: '选择一个角色进行拼点，若你赢，你对其造成一点伤害，若你没赢，其对你造成一点伤害。每回合限一次。',
 
 
-            luandance: '乱舞',
-            luandance_bg: '锤',
-            luandance_skill: '乱舞',
-            luandance_info: '出牌阶段，你可以弃置一张牌，令除你外的所有角色依次对另一名角色使用一张【杀】，无法如此做者受到1点伤害。'
         },
         list: [
             //游戏卡包，具体模式可额外加入

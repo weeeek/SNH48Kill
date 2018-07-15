@@ -9,7 +9,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gchenguanhui: ['female', 'S', 4, ['biyue', 'guidao']],
             SNH48Gchengjue: ['female', 'S', 4, ['biyue', 'guidao']],
             SNH48Gchensi: ['female', 'S', 3, ['jingwu', 'modi']],
-            SNH48Gdaimeng: ['female', 'S', 4, ['kongcheng', 'qianxun']],
+            SNH48Gdaimeng: ['female', 'S', 4, ['jianyi', 'lingjun'], ['zhu']],
             SNH48Gjiangyun: ['female', 'S', 3, ['leiji', 'guidao']],
             SNH48Gkongxiaoyin: ['female', 'S', 4, ['lieren']],
             SNH48Glvyi: ['female', 'S', 3, ['mingce', 'longdan']],
@@ -104,6 +104,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gaji: ['male', 'ye', 2, ['buqu', 'yingzi', 'kuaihuo', 'yiji', 'jizhi']],
             SNH48Gyegou: ['male', 'ye', 2, ['zhiheng', 'paoxiao', 'wansha', 'weimu', 'luanwu']],
             SNH48Gmulaosi: ['female', 'ye', 2, ['biyue', 'tiaoxin', 'xiaoji', 'liuli', 'ruoyu']],
+            SNH48Gpiggyrae: ['female', 'ye', 2, ['luoshen', 'luandance', 'qingguo', 'fankui', 'leiji']],
 
 
             shibing1wei: ['male', 'S', 0, [], ['unseen']],
@@ -218,6 +219,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gaji: '张竞，前SNH48剧场发言人。',
             SNH48Gyegou: '叶盛，上海丝芭文化传媒集团有限公司“艺术总监”。',
             SNH48Gmulaosi: '棒槌女郎，上海丝芭文化传媒集团有限公司舞蹈总监。',
+            SNH48Gpiggyrae: '朱小希，SNH48G Team SII的舞蹈老师'
         },
         characterFilter: {
             SNH48G: function (mode) {
@@ -771,6 +773,193 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     guanxing: true
                 }
             },
+
+            //北极瑞风HZYQ   定义的技能
+            //戴萌
+            dandang: {},
+            jianyi: {
+                audio: 2,
+                trigger: { target: 'useCardToBefore' },
+                forced: true,
+                filter: function (event, player) {
+                    return event.card.name == 'sha';
+                },
+                content: function () {
+                    "step 0"
+                    var eff = get.effect(player, trigger.card, trigger.player, trigger.player);
+                    trigger.player.chooseToDiscard('坚毅：弃置一张牌，否则此杀对' + get.translation(player) + '造成的伤害-1', function (card) {
+                        //基本牌
+                        //return get.type(card) == 'basic';
+                        //所有牌
+                        return true;
+                    }).set('ai', function (card) {
+                        if (_status.event.eff > 0) {
+                            return 10 - get.value(card);
+                        }
+                        return 0;
+                    }).set('eff', eff);
+                    "step 1"
+                    if (result.bool == false) {
+                        //伤害来源取消
+                        //trigger.cancel();
+                        //伤害-1
+                        trigger.num--;
+                    }
+                },
+                ai: {
+                    effect: {
+                        target: function (card, player, target, current) {
+                            if (card.name == 'sha' && get.attitude(player, target) < 0) {
+                                if (_status.event.name == 'jianyi') return;
+                                var bs = player.getCards('h', { type: 'basic' });
+                                if (bs.length < 2) return 0;
+                                if (player.hasSkill('jiu') || player.hasSkill('tianxianjiu')) return;
+                                if (bs.length <= 3 && player.countCards('h', 'sha') <= 1) {
+                                    for (var i = 0; i < bs.length; i++) {
+                                        if (bs[i].name != 'sha' && get.value(bs[i]) < 7) {
+                                            return [1, 0, 1, -0.5];
+                                        }
+                                    }
+                                    return 0;
+                                }
+                                return [1, 0, 1, -0.5];
+                            }
+                        }
+                    }
+                }
+            },
+            lingjun: {
+                audio: 2,
+                unique: true,
+                trigger: { target: 'taoBegin' },
+                zhuSkill: true,
+                forced: true,
+                filter: function (event, player) {
+                    //自己对自己不触发
+                    if (event.player == player) return false;
+                    //没有领军主公技不触发
+                    if (!player.hasZhuSkill('lingjun')) return false;
+                    //主公体力大于0不触发
+                    if (player.hp > 0) return false;
+                    //当前势力不是主公势力不触发
+                    if (event.player.group != player.group) return false;
+                    return true;
+                },
+                filterCard: function (card) {
+                    return card.name == 'jiu' || card.name == 'tao';
+                },
+                content: function () {
+                    if (card.name == 'tao')
+                        player.recover();
+                    event.player.draw();
+                }
+                //救援的代码
+                //audio: 2,
+                //unique: true,
+                //trigger: { target: 'taoBegin' },
+                //zhuSkill: true,
+                //forced: true,
+                //filter: function (event, player) {
+                //    //自己对自己不触发
+                //    if (event.player == player) return false;
+                //    //没有领军主公技不触发
+                //    if (!player.hasZhuSkill('lingjun')) return false;
+                //    //主公体力大于0不触发
+                //    if (player.hp > 0) return false;
+                //    //当前势力不是主公势力不触发
+                //    if (event.player.group != player.group) return false;
+                //    return true;
+                //},
+                //content: function () {
+                //    player.recover();
+                //}
+            },
+            luandance: {
+                audio: 2,
+                unique: true,
+                enable: 'phaseUse',
+                filterTarget: function (card, player, target) {
+                    if (target.group == 'S' || target.group == 'N' || target.group == 'H' || target.group == 'X')
+                        return true;
+                    else
+                        return false;
+                },
+                filter: function (event, player) {
+                    return !player.storage.luandance;
+                },
+                init: function (player) {
+                    player.storage.luandance = false;
+                },
+                mark: true,
+                intro: {
+                    content: 'limited'
+                },
+                skillAnimation: 'epic',
+                animationColor: 'thunder',
+                filterTarget: function (card, player, target) {
+                    return target != player;
+                },
+                selectTarget: -1,
+                multitarget: true,
+                multiline: true,
+                content: function () {
+                    "step 0"
+                    player.unmarkSkill('luandance')
+                    player.storage.luandance = true;
+                    event.current = player.next;
+                    "step 1"
+                    event.current.animate('target');
+                    event.current.chooseToUse('乱舞：使用一张杀或受到一点伤害', { name: 'sha' }, function (card, player, target) {
+                        if (player == target) return false;
+                        if (!player.canUse('sha', target)) return false;
+                        if (get.distance(player, target) <= 1) return true;
+                        if (game.hasPlayer(function (current) {
+                            return current != player && get.distance(player, current) < get.distance(player, target);
+                        })) {
+                            return false;
+                        }
+                        return true;
+                    });
+                    "step 2"
+                    if (result.bool == false)
+                        event.current.damage(player);
+                    if (event.current.next != player) {
+                        event.current = event.current.next;
+                        game.delay(0.5);
+                        event.goto(1);
+                    }
+                },
+                ai: {
+                    order: 1,
+                    result: {
+                        player: function (player) {
+                            if (lib.config.mode == 'identity' && game.zhu.isZhu && player.identity == 'fan') {
+                                if (game.zhu.hp == 1 && game.zhu.countCards('h') <= 2) return 1;
+                            }
+                            var num = 0;
+                            var players = game.filterPlayer();
+                            for (var i = 0; i < players.length; i++) {
+                                var att = get.attitude(player, players[i]);
+                                if (att > 0) att = 1;
+                                if (att < 0) att = -1;
+                                if (players[i] != player && players[i].hp <= 3) {
+                                    if (players[i].countCards('h') == 0) num += att / players[i].hp;
+                                    else if (players[i].countCards('h') == 1) num += att / 2 / players[i].hp;
+                                    else if (players[i].countCards('h') == 2) num += att / 4 / players[i].hp;
+                                }
+                                if (players[i].hp == 1) num += att * 1.5;
+                            }
+                            if (player.hp == 1) {
+                                return -num;
+                            }
+                            if (player.hp == 2) {
+                                return -game.players.length / 4 - num;
+                            }
+                            return -game.players.length / 3 - num;
+                        }
+                    }
+                }
+            },
         },
         translate: {
             //S
@@ -872,7 +1061,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gwangzijie: '王子杰',
             SNH48Gaji: '阿吉',
             SNH48Gyegou: '叶盛',
-            SNH48Gmulaosi:'马老师',
+            SNH48Gmulaosi: '马老师',
+            SNH48Gpiggyrae: '朱老师',
 
             //技能显示名称，技能说明文字
             fengfa: '风发',
@@ -898,7 +1088,17 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             yuanqi: '元气',
             yuanqi_info: '每当你使用（指定目标后）或被使用（成为目标后）一张【决斗】或红色的【杀】时，你可以摸一张牌。',
             zhanbu: '占卜',
-            zhanbu_info: '准备阶段，你可以观看牌堆顶的x张牌，并将其以任意顺序置于牌堆项或牌堆底，x为存活角色个数且不超过5'
+            zhanbu_info: '准备阶段，你可以观看牌堆顶的x张牌，并将其以任意顺序置于牌堆项或牌堆底，x为存活角色个数且不超过5',
+
+            luandance: '乱舞',
+            luandance_info: '令除你外的所有SNH48G非官方角色依次对另一名角色使用一张【杀】，无法如此做者受到1点伤害。',
+
+            dandang: '担当',
+            dandang_info: '当你的同势力角色被杀指定为目标时，你可弃一张牌并将该杀的目标转移至你身上。（力所能及的范围内关心队友是身为队长的本能）',
+            jianyi: '坚毅',
+            jianyi_info: '当你成为杀的目标时，若你的伤害来源不弃一张牌，该次杀伤害-1。（严格的自我要求既是底线也是成功之处）',
+            lingjun: '领军',
+            lingjun_info: '主公技，当你陷入濒死状态时，与你同势力的武将可弃置一张“酒”或“桃”，若为“酒”，视为对你使用“桃”；若为“桃”，你回复的两点体力值。你以此法脱离濒死状态时，其可摸一张牌。（为队友付出必然能得到回应，每次陷入低谷再出发必将更进一步）',
         },
     };
 });
