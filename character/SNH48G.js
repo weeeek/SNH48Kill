@@ -15,7 +15,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Glvyi: ['female', 'S', 3, ['mingce', 'longdan']],
             SNH48Gliyuqi: ['female', 'S', 3, ['zhanwu', 'quanneng']],
             SNH48Gliuzengyan: ['female', 'S', 3, ['mingce', 'longdan']],
-            SNH48Gmohan: ['female', 'S', 3, ['jizhi', 'qicai']],
+            SNH48Gmohan: ['female', 'S', 3, ['shiyu', 'yuyan', 'ziqiang'], ['zhu']],
             SNH48Gqianbeiting: ['female', 'S', 4, ['chongzhen', 'longdan']],
             SNH48Gqiuxinyi: ['female', 'S', 4, ['chongzhen', 'longdan']],
             SNH48Gsunrui: ['female', 'S', 4, ['gaoshi', 'letian']],
@@ -103,7 +103,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gwangzijie: ['male', 'ye', 2, ['longdan', 'chongzhen', 'paoxiao', 'jiang', 'linglong']],
             SNH48Gaji: ['male', 'ye', 2, ['buqu', 'yingzi', 'kuaihuo', 'yiji', 'jizhi']],
             SNH48Gyegou: ['male', 'ye', 2, ['zhiheng', 'paoxiao', 'wansha', 'weimu', 'luanwu']],
-            SNH48Gmulaosi: ['female', 'ye', 2, ['biyue', 'tiaoxin', 'xiaoji', 'liuli', 'ruoyu']],
+            SNH48Gmulaosi: ['female', 'ye', 2, ['biyue', 'tiaoxin', 'xiaoji', 'liuli', 'ziqiang']],
             SNH48Gpiggyrae: ['female', 'ye', 2, ['luoshen', 'luandance', 'qingguo', 'fankui', 'leiji']],
 
 
@@ -129,7 +129,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Glvyi: 'SNH48 Team SII 成员，SNH48七期生',
             SNH48Gliyuqi: 'SNH48 Team SII 成员，SNH48一期生',
             SNH48Gliuzengyan: 'SNH48 Team SII 成员，SNH48五期生',
-            SNH48Gmohan: 'SNH48 Team SII 副队长，SNH48一期生',
+            SNH48Gmohan: 'SNH48 Team SII 副队长，SNH48一期生。莫寒是一个表面无害实则刚强的人，回合内依靠食欲进行续航与爆发，回合外以预言保证手牌量不会过低，也会让敌人因为判定牌而随时改变战术。觉醒后的大魔王更加强大，不仅血量增加还拥有了回合外的强输出能力，凸显了于危难中接任队长时莫莫的魄力和强势。',
             SNH48Gqianbeiting: 'SNH48 Team SII 成员，SNH48一期生',
             SNH48Gqiuxinyi: 'SNH48 Team SII 成员，SNH48一期生',
             SNH48Gsunrui: 'SNH48 Team SII 成员，生日公演专用“男”嘉宾，SNH48二期生',
@@ -773,6 +773,92 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     guanxing: true
                 }
             },
+            luandance: {
+                audio: 2,
+                unique: true,
+                enable: 'phaseUse',
+                filterTarget: function (card, player, target) {
+                    if (target.group == 'S' || target.group == 'N' || target.group == 'H' || target.group == 'X')
+                        return true;
+                    else
+                        return false;
+                },
+                filter: function (event, player) {
+                    return !player.storage.luandance;
+                },
+                init: function (player) {
+                    player.storage.luandance = false;
+                },
+                mark: true,
+                intro: {
+                    content: 'limited'
+                },
+                skillAnimation: 'epic',
+                animationColor: 'thunder',
+                filterTarget: function (card, player, target) {
+                    return target != player;
+                },
+                selectTarget: -1,
+                multitarget: true,
+                multiline: true,
+                content: function () {
+                    "step 0"
+                    player.unmarkSkill('luandance')
+                    player.storage.luandance = true;
+                    event.current = player.next;
+                    "step 1"
+                    event.current.animate('target');
+                    event.current.chooseToUse('乱舞：使用一张杀或受到一点伤害', { name: 'sha' }, function (card, player, target) {
+                        if (player == target) return false;
+                        if (!player.canUse('sha', target)) return false;
+                        if (get.distance(player, target) <= 1) return true;
+                        if (game.hasPlayer(function (current) {
+                            return current != player && get.distance(player, current) < get.distance(player, target);
+                        })) {
+                            return false;
+                        }
+                        return true;
+                    });
+                    "step 2"
+                    if (result.bool == false)
+                        event.current.damage(player);
+                    if (event.current.next != player) {
+                        event.current = event.current.next;
+                        game.delay(0.5);
+                        event.goto(1);
+                    }
+                },
+                ai: {
+                    order: 1,
+                    result: {
+                        player: function (player) {
+                            if (lib.config.mode == 'identity' && game.zhu.isZhu && player.identity == 'fan') {
+                                if (game.zhu.hp == 1 && game.zhu.countCards('h') <= 2) return 1;
+                            }
+                            var num = 0;
+                            var players = game.filterPlayer();
+                            for (var i = 0; i < players.length; i++) {
+                                var att = get.attitude(player, players[i]);
+                                if (att > 0) att = 1;
+                                if (att < 0) att = -1;
+                                if (players[i] != player && players[i].hp <= 3) {
+                                    if (players[i].countCards('h') == 0) num += att / players[i].hp;
+                                    else if (players[i].countCards('h') == 1) num += att / 2 / players[i].hp;
+                                    else if (players[i].countCards('h') == 2) num += att / 4 / players[i].hp;
+                                }
+                                if (players[i].hp == 1) num += att * 1.5;
+                            }
+                            if (player.hp == 1) {
+                                return -num;
+                            }
+                            if (player.hp == 2) {
+                                return -game.players.length / 4 - num;
+                            }
+                            return -game.players.length / 3 - num;
+                        }
+                    }
+                }
+            },
 
             //北极瑞风HZYQ   定义的技能
             //戴萌
@@ -905,92 +991,140 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     trigger.player.draw();
                 }
             },
-            luandance: {
+            //莫寒
+            shiyu: {
                 audio: 2,
-                unique: true,
-                enable: 'phaseUse',
-                filterTarget: function (card, player, target) {
-                    if (target.group == 'S' || target.group == 'N' || target.group == 'H' || target.group == 'X')
-                        return true;
-                    else
-                        return false;
-                },
+                trigger: { source: 'damageEnd' },
                 filter: function (event, player) {
-                    return !player.storage.luandance;
+                    if (event._notrigger.contains(event.player)) return false;
+                    return (event.card && event.card.name == 'sha' &&
+                        event.player.classList.contains('dead') == false &&
+                        event.player.countCards('h') && player.countCards('h')) && event.player != player;
                 },
-                init: function (player) {
-                    player.storage.luandance = false;
+                check: function (event, player) {
+                    return get.attitude(player, event.player) < 0 && player.countCards('h') > 1;
                 },
-                mark: true,
-                intro: {
-                    content: 'limited'
-                },
-                skillAnimation: 'epic',
-                animationColor: 'thunder',
-                filterTarget: function (card, player, target) {
-                    return target != player;
-                },
-                selectTarget: -1,
-                multitarget: true,
-                multiline: true,
+                priority: 5,
                 content: function () {
                     "step 0"
-                    player.unmarkSkill('luandance')
-                    player.storage.luandance = true;
-                    event.current = player.next;
+                    player.chooseToCompare(trigger.player);
                     "step 1"
-                    event.current.animate('target');
-                    event.current.chooseToUse('乱舞：使用一张杀或受到一点伤害', { name: 'sha' }, function (card, player, target) {
-                        if (player == target) return false;
-                        if (!player.canUse('sha', target)) return false;
-                        if (get.distance(player, target) <= 1) return true;
-                        if (game.hasPlayer(function (current) {
-                            return current != player && get.distance(player, current) < get.distance(player, target);
-                        })) {
-                            return false;
+                    if (result.bool && trigger.player.countCards('he')) {
+                        player.gainPlayerCard(trigger.player, true, 'he');
+                        player.draw();
+                    }
+                },
+            },
+            yuyan: {
+                audio: 2,
+                trigger: { player: 'loseEnd' },
+                frequent: true,
+                filter: function (event, player) {
+                    if (player == _status.currentPhase) return false;
+                    for (var i = 0; i < event.cards.length; i++) {
+                        if (event.cards[i].original && event.cards[i].original != 'j') return true;
+                    }
+                    return false;
+                },
+                content: function () {
+                    "step 0"
+                    player.chooseControl('heart2', 'diamond2', 'club2', 'spade2').set('ai', function (event) {
+                        switch (Math.floor(Math.random() * 6)) {
+                            case 0: return 'heart2';
+                            case 1:
+                            case 4:
+                            case 5: return 'diamond2';
+                            case 2: return 'club2';
+                            case 3: return 'spade2';
                         }
-                        return true;
                     });
+                    "step 1"
+                    game.log(player, '选择了' + get.translation(result.control));
                     "step 2"
-                    if (result.bool == false)
-                        event.current.damage(player);
-                    if (event.current.next != player) {
-                        event.current = event.current.next;
-                        game.delay(0.5);
-                        event.goto(1);
+                    player.judge(function (card) {
+                        //猜中
+                        if ((get.suit(card) + '2') == result.control)
+                            return 1;
+                        return -1;
+                    })
+                    "step 3"
+                    if (result.bool) {
+                        //摸一张牌
+                        //player.draw();
+                        //获得判定牌
+                        player.gain(result.card);
+                        player.$gain2(result.card);
                     }
                 },
                 ai: {
-                    order: 1,
-                    result: {
-                        player: function (player) {
-                            if (lib.config.mode == 'identity' && game.zhu.isZhu && player.identity == 'fan') {
-                                if (game.zhu.hp == 1 && game.zhu.countCards('h') <= 2) return 1;
-                            }
-                            var num = 0;
-                            var players = game.filterPlayer();
-                            for (var i = 0; i < players.length; i++) {
-                                var att = get.attitude(player, players[i]);
-                                if (att > 0) att = 1;
-                                if (att < 0) att = -1;
-                                if (players[i] != player && players[i].hp <= 3) {
-                                    if (players[i].countCards('h') == 0) num += att / players[i].hp;
-                                    else if (players[i].countCards('h') == 1) num += att / 2 / players[i].hp;
-                                    else if (players[i].countCards('h') == 2) num += att / 4 / players[i].hp;
-                                }
-                                if (players[i].hp == 1) num += att * 1.5;
-                            }
-                            if (player.hp == 1) {
-                                return -num;
-                            }
-                            if (player.hp == 2) {
-                                return -game.players.length / 4 - num;
-                            }
-                            return -game.players.length / 3 - num;
+                    threaten: function (player, target) {
+                        if (target.countCards('h') == 0) return 2;
+                        return 0.5;
+                    },
+                    nodiscard: true,
+                    nolose: true
+                }
+            },
+            ziqiang: {
+                skillAnimation: true,
+                audio: 2,
+                unique: true,
+                zhuSkill: true,
+                keepSkill: true,
+                derivation: 'mowang',
+                trigger: { player: 'phaseBegin' },
+                forced: true,
+                filter: function (event, player) {
+                    if (!player.hasZhuSkill('ziqiang')) return false;
+                    if (player.storage.ziqiang) return false;
+                    return player.isMinHp();
+                },
+                content: function () {
+                    player.storage.ziqiang = true;
+                    player.maxHp++;
+                    player.update();
+                    player.recover();
+                    if (player.hasSkill('ziqiang')) {
+                        //失去技能“预言”
+                        //player.unmarkSkill('yuyan');
+                        player.addSkill('mowang');
+                    }
+                    else {
+                        player.addAdditionalSkill('ziqiang', 'mowang');
+                    }
+                    if (!player.isZhu) {
+                        player.storage.zhuSkill_ziqiang = ['mowang'];
+                    }
+                    else {
+                        event.trigger('zhuUpdate');
+                    }
+                    player.awakenSkill('ziqiang');
+                }
+            },
+            mowang: {
+                audio: 2,
+                trigger: { player: 'damageEnd' },
+                filter: function (event, player) {
+                    return (event.source != undefined);
+                },
+                check: function (event, player) {
+                    return (get.attitude(player, event.source) <= 0);
+                },
+                logTarget: 'source',
+                content: function () {
+                    trigger.source.damage(player.maxHp - player.hp);
+                },
+                ai: {
+                    maixie_defend: true,
+                    effect: {
+                        target: function (card, player, target) {
+                            if (player.hasSkillTag('jueqing', false, target)) return [1, -1];
+                            return 0.8;
+                            // if(get.tag(card,'damage')&&get.damageEffect(target,player,player)>0) return [1,0,0,-1.5];
                         }
                     }
                 }
-            },
+            }
         },
         translate: {
             //S
@@ -1130,6 +1264,14 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             jianyi_info: '当你受到伤害时，若你的伤害来源不弃一张牌，此次伤害-1。（严格的自我要求既是底线也是成功之处）',
             lingjun: '领军',
             lingjun_info: '主公技，当你陷入濒死状态时，与你同势力的角色对你使用的[桃]额外回复一点体力值。你以此法脱离濒死状态时，其可摸一张牌。（为队友付出必然能得到回应，每次陷入低谷再出发必将更进一步）',
+            shiyu: '食欲',
+            shiyu_info: '每当你对一名武将造成伤害时，你可与其拼点，若你赢，你获得对方的一张牌并且摸一张牌。（旺盛的食欲能在短时间内提供大量能量）',
+            yuyan: '预言',
+            yuyan_info: '回合外每失去一张牌，你选择一个颜色并进行一次判定，若结果相同，你获得该判定牌。（神奇的预言能力能让很多事情的走向变得不可捉摸）',
+            mowang: '魔王',
+            mowang_info: '你每受到一点伤害，你对伤害来源造成X点伤害（X为莫寒已损失体力值）。（统帅全军当断则断，强势的队长往往能带领队伍走向胜利）',
+            ziqiang: '自强',
+            ziqiang_info: '主公技，觉醒技, 准备阶段，若你的体力为全场最低（或之一），你增加一点体力上限并回复1点体力，获得技能“魔王”',
         },
     };
 });
