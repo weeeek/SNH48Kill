@@ -9,7 +9,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gchenguanhui: ['female', 'S', 4, ['biyue', 'guidao']],
             SNH48Gchengjue: ['female', 'S', 4, ['biyue', 'guidao']],
             SNH48Gchensi: ['female', 'S', 3, ['jingwu', 'modi']],
-            SNH48Gdaimeng: ['female', 'S', 4, ['jianyi', 'lingjun'], ['zhu']],
+            SNH48Gdaimeng: ['female', 'S', 4, ['dandang', 'jianyi', 'lingjun'], ['zhu']],
             SNH48Gjiangyun: ['female', 'S', 3, ['leiji', 'guidao']],
             SNH48Gkongxiaoyin: ['female', 'S', 4, ['lieren']],
             SNH48Glvyi: ['female', 'S', 3, ['mingce', 'longdan']],
@@ -123,7 +123,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gchenguanhui: 'SNH48 Team SII 成员，SNH48一期生',
             SNH48Gchengjue: 'SNH48 Team SII 预备成员，SNH48六期生',
             SNH48Gchensi: 'SNH48 Team SII 成员，SNH48一期生',
-            SNH48Gdaimeng: 'SNH48 Team SII 队长，SNH48一期生',
+            SNH48Gdaimeng: 'SNH48 Team SII 队长，SNH48一期生。全队的领军人物，也是队里的家长般的存在。作为主公坚毅提供了一定的防护能力，担当虽然属性上更适合忠臣，但是能够体恤忠臣的付出更显王道本色，领军意味着只要队友不死，就能依靠队友的支持一次次重新站起，体现出了TEAM SII的诚挚团结之意。',
             SNH48Gjiangyun: 'SNH48 Team SII 成员，古风大佬，SNH48二期生',
             SNH48Gkongxiaoyin: 'SNH48 Team SII 性感成员，SNH48一期生',
             SNH48Glvyi: 'SNH48 Team SII 成员，SNH48七期生',
@@ -582,13 +582,13 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 direct: true,
                 content: function () {
                     "step 0";
-                    player.chooseTarget(get.prompt('releiji')).ai = function (target) {
+                    player.chooseTarget(get.prompt('tianlai')).ai = function (target) {
                         if (target.hasSkill('hongyan')) return 0;
                         return get.damageEffect(target, _status.event.player, _status.event.player, 'thunder');
                     };
                     "step 1"
                     if (result.bool) {
-                        player.logSkill('releiji', result.targets, 'thunder');
+                        player.logSkill('tianlai', result.targets, 'thunder');
                         event.target = result.targets[0];
                         event.target.judge(function (card) {
                             var suit = get.suit(card);
@@ -776,59 +776,114 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
 
             //北极瑞风HZYQ   定义的技能
             //戴萌
-            dandang: {},
-            jianyi: {
-                audio: 2,
-                trigger: { target: 'useCardToBefore' },
-                forced: true,
+            dandang: {
+                trigger: { global: 'useCardToBefore' },
+                direct: true,
+                priority: 5,
+                prompt: '弃一张牌并将该杀的目标转移至你身上',
+                //触发时机
                 filter: function (event, player) {
-                    return event.card.name == 'sha';
+                    //你不是来源，且不是目标
+                    if (player == event.target || player == event.player) return false;
+                    //有手牌
+                    if (!player.countCards('he')) return false;
+                    //目标是唯一目标
+                    if (event.targets.length > 1) return false;
+                    //有目标
+                    if (!event.target) return false;
+
+                    //目标在你的攻击距离内
+                    var inRange = function () {
+                        return get.distance(player, event.target, 'attack') <= 1;
+                    }
+                    var card = event.card;
+
+                    //杀
+                    if (card.name == 'sha') return inRange();
+                    //黑色锦囊
+                    //if (get.color(card) == 'black' && get.type(card) == 'trick') return inRange();
+                    return false;
                 },
                 content: function () {
                     "step 0"
-                    var eff = get.effect(player, trigger.card, trigger.player, trigger.player);
-                    trigger.player.chooseToDiscard('坚毅：弃置一张牌，否则此杀对' + get.translation(player) + '造成的伤害-1', function (card) {
-                        //基本牌
-                        //return get.type(card) == 'basic';
-                        //所有牌
-                        return true;
-                    }).set('ai', function (card) {
-                        if (_status.event.eff > 0) {
-                            return 10 - get.value(card);
+                    var save = false;
+                    if (get.attitude(player, trigger.target) > 2) {
+                        if (trigger.card.name == 'sha') {
+                            if (player.countCards('h', 'shan') || player.getEquip(2) ||
+                                trigger.target.hp == 1 || player.hp > trigger.target.hp + 1) {
+                                if (!trigger.target.countCards('h', 'shan') || trigger.target.countCards('h') < player.countCards('h')) {
+                                    save = true;
+                                }
+                            }
+                        }
+                    }
+                    var next = player.chooseToDiscard('he', get.prompt('dandang'));
+
+                    next.logSkill = ['dandang', trigger.target];
+                    next.set('ai', function (card) {
+                        if (_status.event.aisave) {
+                            return 7 - get.value(card);
                         }
                         return 0;
-                    }).set('eff', eff);
+                    });
+                    next.set('aisave', save);
                     "step 1"
-                    if (result.bool == false) {
-                        //伤害来源取消
-                        //trigger.cancel();
-                        //伤害-1
+                    if (result.bool) {
+                        //转移目标
+                        trigger.target = player;
+                        trigger.targets.length = 0;
+                        trigger.targets.push(player);
+                        trigger.untrigger();
+                        trigger.trigger('useCardToBefore');
+                        trigger.trigger(trigger.card.name + 'Before');
+                        trigger.player.line(player);
+                    }
+                    game.delay();
+                },
+                ai: {
+                    threaten: 1.1
+                }
+            },
+            jianyi: {
+                audio: true,
+                trigger: { player: 'damageBegin' },
+                direct: true,
+                prompt: '弃置一张手牌，否则伤害-1',
+                filter: function (event, player) {
+                    //有伤害来源，且不是自己，才能触发这个技能
+                    return (event.source && event.source != player);
+                },
+                content: function (event) {
+                    "step 0"
+                    if (trigger.source) {
+                        trigger.source.chooseToDiscard('he', '弃置一张牌，否则造成伤害-1').set('ai', function (card) {
+                            //忠主互相造成的伤害直接触发不弃牌，造成伤害-1
+                            //反与反互相造成的伤害直接触发不弃牌，造成伤害-1
+                            if (trigger.source.identity == 'zhong' && player.identity == 'zhu' ||
+                                trigger.source.identity == 'mingzhong' && player.identity == 'mingzhu' ||
+                                trigger.source.identity == 'zhu' && player.identity == 'zhong' ||
+                                trigger.source.identity == 'mingzhu' && player.identity == 'mingzhong' ||
+                                trigger.source.identity == 'fan' && player.identity == 'fan' ||
+                                trigger.source.identity == 'mingfan' && player.identity == 'mingfan'
+                            )
+                                return 0;
+
+                            else
+                                return 7 - get.value(card);
+                        });
+                    }
+                    "step 1"
+                    if (!result.bool) {
                         trigger.num--;
                     }
                 },
                 ai: {
-                    effect: {
-                        target: function (card, player, target, current) {
-                            if (card.name == 'sha' && get.attitude(player, target) < 0) {
-                                if (_status.event.name == 'jianyi') return;
-                                var bs = player.getCards('h', { type: 'basic' });
-                                if (bs.length < 2) return 0;
-                                if (player.hasSkill('jiu') || player.hasSkill('tianxianjiu')) return;
-                                if (bs.length <= 3 && player.countCards('h', 'sha') <= 1) {
-                                    for (var i = 0; i < bs.length; i++) {
-                                        if (bs[i].name != 'sha' && get.value(bs[i]) < 7) {
-                                            return [1, 0, 1, -0.5];
-                                        }
-                                    }
-                                    return 0;
-                                }
-                                return [1, 0, 1, -0.5];
-                            }
-                        }
-                    }
+                    expose: 0.2,
+                    threaten: 1.5
                 }
             },
             lingjun: {
+                //救援的代码
                 audio: 2,
                 unique: true,
                 trigger: { target: 'taoBegin' },
@@ -845,34 +900,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     if (event.player.group != player.group) return false;
                     return true;
                 },
-                filterCard: function (card) {
-                    return card.name == 'jiu' || card.name == 'tao';
-                },
-                content: function () {
-                    if (card.name == 'tao')
-                        player.recover();
-                    event.player.draw();
+                content: function (event, target) {
+                    player.recover();
+                    trigger.player.draw();
                 }
-                //救援的代码
-                //audio: 2,
-                //unique: true,
-                //trigger: { target: 'taoBegin' },
-                //zhuSkill: true,
-                //forced: true,
-                //filter: function (event, player) {
-                //    //自己对自己不触发
-                //    if (event.player == player) return false;
-                //    //没有领军主公技不触发
-                //    if (!player.hasZhuSkill('lingjun')) return false;
-                //    //主公体力大于0不触发
-                //    if (player.hp > 0) return false;
-                //    //当前势力不是主公势力不触发
-                //    if (event.player.group != player.group) return false;
-                //    return true;
-                //},
-                //content: function () {
-                //    player.recover();
-                //}
             },
             luandance: {
                 audio: 2,
@@ -1094,11 +1125,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             luandance_info: '令除你外的所有SNH48G非官方角色依次对另一名角色使用一张【杀】，无法如此做者受到1点伤害。',
 
             dandang: '担当',
-            dandang_info: '当你的同势力角色被杀指定为目标时，你可弃一张牌并将该杀的目标转移至你身上。（力所能及的范围内关心队友是身为队长的本能）',
+            dandang_info: '当你攻击距离内的角色被杀指定为目标时，你可弃一张牌并将该杀的目标转移至你身上。（力所能及的范围内关心队友是身为队长的本能）',
             jianyi: '坚毅',
-            jianyi_info: '当你成为杀的目标时，若你的伤害来源不弃一张牌，该次杀伤害-1。（严格的自我要求既是底线也是成功之处）',
+            jianyi_info: '当你受到伤害时，若你的伤害来源不弃一张牌，此次伤害-1。（严格的自我要求既是底线也是成功之处）',
             lingjun: '领军',
-            lingjun_info: '主公技，当你陷入濒死状态时，与你同势力的武将可弃置一张“酒”或“桃”，若为“酒”，视为对你使用“桃”；若为“桃”，你回复的两点体力值。你以此法脱离濒死状态时，其可摸一张牌。（为队友付出必然能得到回应，每次陷入低谷再出发必将更进一步）',
+            lingjun_info: '主公技，当你陷入濒死状态时，与你同势力的角色对你使用的[桃]额外回复一点体力值。你以此法脱离濒死状态时，其可摸一张牌。（为队友付出必然能得到回应，每次陷入低谷再出发必将更进一步）',
         },
     };
 });

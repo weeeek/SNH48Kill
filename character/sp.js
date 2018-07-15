@@ -396,7 +396,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 						prompt:'视为使用一张杀',
 						ai:{
 							order:function(){
-								if(!player.hasShan()&&!game.hasPlayer(function(current){
+								if(!game.hasPlayer(function(current){
 									return player.canUse('sha',current)&&current.hp==1&&get.effect(current,{name:'sha'},player,player)>0;
 								})){
 									return 0;
