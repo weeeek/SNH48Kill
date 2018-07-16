@@ -8,7 +8,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //S
             SNH48Gchenguanhui: ['female', 'S', 4, ['biyue', 'guidao']],
             SNH48Gchengjue: ['female', 'S', 4, ['biyue', 'guidao']],
-            SNH48Gchensi: ['female', 'S', 3, ['jingwu', 'modi']],
+            SNH48Gchensi: ['female', 'S', 4, ['jingwu', 'tianyin']],
             SNH48Gdaimeng: ['female', 'S', 4, ['dandang', 'jianyi', 'lingjun'], ['zhu']],
             SNH48Gjiangyun: ['female', 'S', 3, ['leiji', 'guidao']],
             SNH48Gkongxiaoyin: ['female', 'S', 4, ['lieren']],
@@ -382,62 +382,6 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     expose: 0.2
                 }
             },
-            jingwu: {
-                forced: true,
-                locked: true,
-                group: ['jingwu1', 'jingwu2']
-            },
-            jingwu1: {
-                audio: 2,
-                trigger: { player: 'shaBegin' },
-                forced: true,
-                filter: function (event, player) {
-                    return !event.directHit;
-                },
-                priority: -1,
-                content: function () {
-                    if (typeof trigger.shanRequired == 'number') {
-                        trigger.shanRequired++;
-                    }
-                    else {
-                        trigger.shanRequired = 2;
-                    }
-                }
-            },
-            jingwu2: {
-                audio: 2,
-                trigger: { player: 'juedou', target: 'juedou' },
-                forced: true,
-                filter: function (event, player) {
-                    return event.turn != player;
-                },
-                priority: -1,
-                content: function () {
-                    "step 0"
-                    var next = trigger.turn.chooseToRespond({ name: 'sha' }, '请打出一张杀响应决斗');
-                    next.set('prompt2', '（共需打出2张杀）');
-                    next.autochoose = lib.filter.autoRespondSha;
-                    next.set('ai', function (card) {
-                        var player = _status.event.player;
-                        var trigger = _status.event.getTrigger();
-                        if (get.attitude(trigger.turn, player) < 0 && trigger.turn.countCards('h', 'sha') > 1) {
-                            return get.unuseful2(card);
-                        }
-                        return -1;
-                    });
-                    "step 1"
-                    if (result.bool == false) {
-                        trigger.directHit = true;
-                    }
-                },
-                ai: {
-                    result: {
-                        target: function (card, player, target) {
-                            if (card.name == 'juedou' && target.countCards('h') > 0) return [1, 0, 0, -1];
-                        }
-                    }
-                }
-            },
             kuaihuo: {
                 audio: 2,
                 trigger: { player: 'loseEnd' },
@@ -711,7 +655,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                             return get.value(card);
                         }
                     };
-                    for (pos = 0; pos < Math.min(event.cards.length, js.length + 2) ; pos++) {
+                    for (pos = 0; pos < Math.min(event.cards.length, js.length + 2); pos++) {
                         var max = getval(event.cards[pos], pos);
                         for (var j = pos + 1; j < event.cards.length; j++) {
                             var current = getval(event.cards[j], pos);
@@ -1135,59 +1079,100 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 }
             },
             //陈思
-            qiangwu: {
+            jingwu: {
                 audio: 2,
-                trigger: { player: 'shaBegin' },
+                trigger: { player: 'phaseUseBegin' },
+                forced: true,
+                filterTarget: function (card, player, target) {
+                    return player != target && target.countCards('h') > 0;
+                },
+                filter: function (event, player) {
+                    return player.countCards('h') > 0;
+                },
+                content: function () {
+                    if (player.hp % 2 == 1) {
+                        player.addTempSkill('jingwu2');
+                    }
+                    else {
+                        //体力值为双数：无视防具且能弃置对方一张牌。
+                        console.log(player.name + ' add skill jingwu3，体力值为双数，无视防具且可额外使用1个杀。')
+                        player.addTempSkill('jingwu3');
+                    }
+                },
+                ai: {
+                    order: function (name, player) {
+                        var cards = player.getCards('h');
+                        if (player.countCards('h', 'sha') == 0) {
+                            return 1;
+                        }
+                        for (var i = 0; i < cards.length; i++) {
+                            if (cards[i].name != 'sha' && cards[i].number > 11 && get.value(cards[i]) < 7) {
+                                return 9;
+                            }
+                        }
+                        return get.order({ name: 'sha' }) - 1;
+                    },
+                    result: {
+                        player: function (player) {
+                            if (player.countCards('h', 'sha') > 0) return 0;
+                            var num = player.countCards('h');
+                            if (num > player.hp) return 0;
+                            if (num == 1) return -2;
+                            if (num == 2) return -1;
+                            return -0.7;
+                        },
+                        target: function (player, target) {
+                            var num = target.countCards('h');
+                            if (num == 1) return -1;
+                            if (num == 2) return -0.7;
+                            return -0.5
+                        },
+                    },
+                    threaten: 1.3
+                }
+            },
+            jingwu2: {
                 mod: {
                     //无视距离
-                    targetInRange: function (card, player) {
-                        return player.hp % 2 == 1;
+                    targetInRange: function (card, player, target, now) {                        
+                        return true;
                     },
                     //无限杀
                     //cardUsable: function (card, player, num) {
                     //    if (card.name == 'sha') return Infinity;
                     //}
-                    //杀额外指定一个目标
+                    //杀额外指定1个目标
                     selectTarget: function (card, player, range) {
-                        if (player.hp % 2 == 1 && card.name == 'sha' && range[1] != -1) range[1]++;
-                    },
+                        if (card.name != 'sha') return;
+                        if (range[1] == -1) return;
+                        var cards = player.getCards('h');
+                        //检查是否是最后一张手牌
+                        //for (var i = 0; i < cards.length; i++) {
+                        //    if (cards[i].classList.contains('selected') == false)
+                        //        return;
+                        //}
+                        range[1] += 1;
+                    }
+                }
+            },
+            jingwu3: {
+                mod: {
                     //额外使用1个杀
-                    //cardUsable: function (card, player, num) {
-                    //    if (card.name == 'sha') return num + 1;
-                    //}
-                },
-                filter: function (event, player) {
-                    return player.countCards('h') > 0 && event.target.countCards('h') > 0 && event.target != player;
-                },
-                content: function () {
-                    if (player.hp % 2 == 0) {
-                        //体力值双数
-                        //无视防具
-
-                        //弃置对方一张牌
-                        player.discardPlayerCard('he', trigger.target, true);
-
-                    } else {
-                        //无视距离且能额外指定一名角色
-
+                    cardUsable: function (card, player, num) {
+                        if (card.name == 'sha') return num + 1;
                     }
                 },
                 ai: {
-                    unequip: function (card, player) {
-                        return player.hp % 2 == 0;
-                    },
+                    //无视防具
+                    unequip: true
                 }
             },
             tianyin: {
                 audio: 2,
-                enable: 'phaseUse',
+                trigger: { player: 'phaseDrawBegin' },
                 filterCard: function (card) {
                     //使用红色牌
                     return get.color(card) == 'red';
-                },
-                usable: 1,
-                check: function (card) {
-                    return 9 - get.value(card)
                 },
                 filterTarget: function (card, player, target) {
                     //目标有损失体力
@@ -1195,10 +1180,33 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     return true;
                 },
                 content: function () {
+                    'step 0'
+                    player.chooseToDiscard(get.prompt('tianyin'), '弃置一张红色手牌，使一个角色回复1点体力', function (card) {
+                        return get.color(card) == 'red';
+                    }).set('ai',function (target) {
+                        return player.countCards('he', { color: 'red' }) > 0 && _status.currentPhase != player;
+                    });
+                    'step 1'
+                    if (result.bool)
+                        player.chooseTarget(get.prompt('tianyin'), '使其回复1点体力', function (card, player, target) {
+                            return target.hp < target.maxHp;
+                        }).set('ai', function (target) {
+                            return target.hp < target.maxHp;
+                        })
+                    else
+                        event.finish;
+                    'step 2'
                     //回复一点体力
-                    target.recover();
-                    //添加不能使用杀的锁定技
-                    player.addTempSkill('shaDisabled');
+
+                    if (result.bool) {
+                        player.line(result.targets[0], 'green');
+
+                        result.targets[0].recover();
+                        //添加不能使用杀的锁定技
+                        player.addTempSkill('shaDisabled');
+                    }
+                    else
+                        event.finish;
                 },
                 ai: {
                     order: 9,
@@ -1327,8 +1335,6 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             fengfa_info: '出牌阶段，你可以将任意两张相同花色的手牌当【万箭齐发】使用。',
             gaoshi: '搞事',
             gaoshi_info: '出牌阶段，你可以指定一名使用【杀】能攻击到你的角色，该角色需对你使用一张【杀】，若该角色不如此做，你弃掉他的一张牌，每回合限一次。',
-            jingwu: '精武',
-            jingwu_info: '锁定技，你使用的【杀】或【决斗】需要两张【闪】或【杀】响应',
             kuaihuo: '快活',
             kuaihuo_info: '当你失去最后的手牌时，你可以令至多X名角色各摸一张牌（X为你此次失去的手牌数）。',
             letian: '乐天',
@@ -1365,10 +1371,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             mowang_info: '你每受到一点伤害，你对伤害来源造成X点伤害（X为莫寒已损失体力值）。（统帅全军当断则断，强势的队长往往能带领队伍走向胜利）',
             ziqiang: '自强',
             ziqiang_info: '主公技，觉醒技, 准备阶段，若你的体力为全场最低（或之一），你增加一点体力上限并回复1点体力，获得技能“魔王”',
-            qiangwu: '强武',
-            qiangwu_info: '你的杀根据当前体力值获得如下效果。体力值为单数：无视距离且能额外指定一名角色；体力值为双数：无视防具且能弃置对方一张牌。（强大的武力是保证队友不被伤害的根本）',
+            jingwu: '精武',
+            jingwu_info: '你的杀根据当前体力值获得如下效果。体力值为单数：无视距离且能额外指定一名角色；体力值为双数：无视防具且可额外使用1个杀。（强大的武力是保证队友不被伤害的根本）',
             tianyin: '甜音',
-            tianyin_info: '出牌阶段，你可弃置一张红色手牌并指定一名角色，该角色回复1点体力，若如此做，本回合你不能出杀。（即使世界以痛吻我，我愿以爱回应世界）',
+            tianyin_info: '摸牌阶段开始时，你可弃置一张红色手牌并指定一名角色，该角色回复1点体力，若如此做，本回合你不能出杀。（即使世界以痛吻我，我愿以爱回应世界）',
+
             wenwan: '温婉',
             wenwan_info: '你使用或打出的闪根据当前体力值获得如下效果：体力值为单数：结算后可强制伤害来源结束回合；体力值为双数：该闪结算后视为对伤害来源使用乐不思蜀。（无害的性格不愿与人发生冲突）',
             fuhei: '腹黑',
@@ -1380,7 +1387,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             xinggan: '性感',
             xinggan_info: '觉醒技，你的回合内若音符数为你体力值的2倍，你体力上限-1，获得技能"美艳"。（勾人心弦的魅力无人可挡）',
             meiyan: '美艳',
-            meiyan_info:'出牌阶段限一次，你可弃置一张武将牌最上面的“音符”并指定一名角色，该角色直至下一个自己的回合结束前不能使用或打出与“音符”相同类型的牌。'
+            meiyan_info: '出牌阶段限一次，你可弃置一张武将牌最上面的“音符”并指定一名角色，该角色直至下一个自己的回合结束前不能使用或打出与“音符”相同类型的牌。'
         },
     };
 });
