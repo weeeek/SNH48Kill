@@ -120,12 +120,12 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
         },
         characterIntro: {
             //S
-            SNH48Gchenguanhui: 'SNH48 Team SII 成员，SNH48一期生',
+            SNH48Gchenguanhui: 'SNH48 Team SII 成员，SNH48一期生。很少有人知道如今的人妻艾在当初也曾是S队的标准男役担当。温婉是一个标准的纯防御技能，体现着小艾不欲与人争锋的性格特点。而偶尔腹黑的一面，不仅能跟队友形成微妙的联动，还能有力的回击来自外界的恶意',
             SNH48Gchengjue: 'SNH48 Team SII 预备成员，SNH48六期生',
-            SNH48Gchensi: 'SNH48 Team SII 成员，SNH48一期生',
+            SNH48Gchensi: 'SNH48 Team SII 成员，SNH48一期生。教练是早期的最强者，也是队内的小天使。在面对有恶意的人时，教练会以强大的武力回击来保护自己的队友。同时，即使自身的经历并不美好，教练仍然对这个世界抱有期待，在各种不被人注意的时候总能看到其暖心的一面。',
             SNH48Gdaimeng: 'SNH48 Team SII 队长，SNH48一期生。全队的领军人物，也是队里的家长般的存在。作为主公坚毅提供了一定的防护能力，担当虽然属性上更适合忠臣，但是能够体恤忠臣的付出更显王道本色，领军意味着只要队友不死，就能依靠队友的支持一次次重新站起，体现出了TEAM SII的诚挚团结之意。',
             SNH48Gjiangyun: 'SNH48 Team SII 成员，古风大佬，SNH48二期生',
-            SNH48Gkongxiaoyin: 'SNH48 Team SII 性感成员，SNH48一期生',
+            SNH48Gkongxiaoyin: 'SNH48 Team SII 性感成员，SNH48一期生。小孔是一个十分有趣的人，既是全团最拽也是队内总欺，温柔大方的她所在之处一定不会缺少欢乐。神魂颠倒是小孔的成名曲，神魂也是小孔的精髓所在，提高手牌上限能加强蓄爆能力，而颠倒则赋予了回合外的反制能力以及加快音符数的累积。音符是小孔家粉丝的昵称，觉醒后的小孔会跟自己的粉丝共同进退，赢得最终的胜利',
             SNH48Glvyi: 'SNH48 Team SII 成员，SNH48七期生',
             SNH48Gliyuqi: 'SNH48 Team SII 成员，SNH48一期生',
             SNH48Gliuzengyan: 'SNH48 Team SII 成员，SNH48五期生',
@@ -711,7 +711,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                             return get.value(card);
                         }
                     };
-                    for (pos = 0; pos < Math.min(event.cards.length, js.length + 2); pos++) {
+                    for (pos = 0; pos < Math.min(event.cards.length, js.length + 2) ; pos++) {
                         var max = getval(event.cards[pos], pos);
                         for (var j = pos + 1; j < event.cards.length; j++) {
                             var current = getval(event.cards[j], pos);
@@ -795,15 +795,12 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 },
                 skillAnimation: 'epic',
                 animationColor: 'thunder',
-                filterTarget: function (card, player, target) {
-                    return target != player;
-                },
                 selectTarget: -1,
                 multitarget: true,
                 multiline: true,
                 content: function () {
                     "step 0"
-                    player.unmarkSkill('luandance')
+                    player.unmarkSkill('luandance');
                     player.storage.luandance = true;
                     event.current = player.next;
                     "step 1"
@@ -1112,7 +1109,19 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 },
                 logTarget: 'source',
                 content: function () {
-                    trigger.source.damage(player.maxHp - player.hp);
+                    'step 0'
+                    trigger.source.chooseCard('he', [0, player.maxHp - player.hp], '魔王：你将受到' + (player.maxHp - player.hp) + '点伤害，你可弃置0~' + (player.maxHp - player.hp) + '张牌，每弃置一张，减少1点伤害', true).set('ai', function (card) {
+                        if (get.attitude(_status.event.player, _status.event.getParent().player) > 0) {
+                            return 7 - get.value(card);
+                        }
+                        return -get.value(card);
+                    });
+
+                    'step 1'
+                    if (result.bool)
+                        trigger.source.damage(player.maxHp - player.hp - result.cards.length);
+                    else
+                        trigger.source.damage(player.maxHp - player.hp);
                 },
                 ai: {
                     maixie_defend: true,
@@ -1123,6 +1132,90 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                             // if(get.tag(card,'damage')&&get.damageEffect(target,player,player)>0) return [1,0,0,-1.5];
                         }
                     }
+                }
+            },
+            //陈思
+            qiangwu: {
+                audio: 2,
+                trigger: { player: 'shaBegin' },
+                mod: {
+                    //无视距离
+                    targetInRange: function (card, player) {
+                        return player.hp % 2 == 1;
+                    },
+                    //无限杀
+                    //cardUsable: function (card, player, num) {
+                    //    if (card.name == 'sha') return Infinity;
+                    //}
+                    //杀额外指定一个目标
+                    selectTarget: function (card, player, range) {
+                        if (player.hp % 2 == 1 && card.name == 'sha' && range[1] != -1) range[1]++;
+                    },
+                    //额外使用1个杀
+                    //cardUsable: function (card, player, num) {
+                    //    if (card.name == 'sha') return num + 1;
+                    //}
+                },
+                filter: function (event, player) {
+                    return player.countCards('h') > 0 && event.target.countCards('h') > 0 && event.target != player;
+                },
+                content: function () {
+                    if (player.hp % 2 == 0) {
+                        //体力值双数
+                        //无视防具
+
+                        //弃置对方一张牌
+                        player.discardPlayerCard('he', trigger.target, true);
+
+                    } else {
+                        //无视距离且能额外指定一名角色
+
+                    }
+                },
+                ai: {
+                    unequip: function (card, player) {
+                        return player.hp % 2 == 0;
+                    },
+                }
+            },
+            tianyin: {
+                audio: 2,
+                enable: 'phaseUse',
+                filterCard: function (card) {
+                    //使用红色牌
+                    return get.color(card) == 'red';
+                },
+                usable: 1,
+                check: function (card) {
+                    return 9 - get.value(card)
+                },
+                filterTarget: function (card, player, target) {
+                    //目标有损失体力
+                    if (target.hp >= target.maxHp) return false;
+                    return true;
+                },
+                content: function () {
+                    //回复一点体力
+                    target.recover();
+                    //添加不能使用杀的锁定技
+                    player.addTempSkill('shaDisabled');
+                },
+                ai: {
+                    order: 9,
+                    result: {
+                        target: function (player, target) {
+                            if (target.hp == 1) return 5;
+                            if (player == target && player.countCards('h') > player.hp) return 5;
+                            return 2;
+                        }
+                    },
+                    threaten: 2
+                }
+            },
+            shaDisabled: {
+                mod: {
+                    //
+                    cardEnabled: function (card) { if (card.name == 'sha') return false }
                 }
             }
         },
@@ -1272,6 +1365,22 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             mowang_info: '你每受到一点伤害，你对伤害来源造成X点伤害（X为莫寒已损失体力值）。（统帅全军当断则断，强势的队长往往能带领队伍走向胜利）',
             ziqiang: '自强',
             ziqiang_info: '主公技，觉醒技, 准备阶段，若你的体力为全场最低（或之一），你增加一点体力上限并回复1点体力，获得技能“魔王”',
+            qiangwu: '强武',
+            qiangwu_info: '你的杀根据当前体力值获得如下效果。体力值为单数：无视距离且能额外指定一名角色；体力值为双数：无视防具且能弃置对方一张牌。（强大的武力是保证队友不被伤害的根本）',
+            tianyin: '甜音',
+            tianyin_info: '出牌阶段，你可弃置一张红色手牌并指定一名角色，该角色回复1点体力，若如此做，本回合你不能出杀。（即使世界以痛吻我，我愿以爱回应世界）',
+            wenwan: '温婉',
+            wenwan_info: '你使用或打出的闪根据当前体力值获得如下效果：体力值为单数：结算后可强制伤害来源结束回合；体力值为双数：该闪结算后视为对伤害来源使用乐不思蜀。（无害的性格不愿与人发生冲突）',
+            fuhei: '腹黑',
+            fuhei_info: '出牌阶段，你可弃置一张黑桃牌并选择一名角色，该角色失去1点体力，若这么做，下一个该角色的回合你需要两张闪来响应该角色的杀。（恶趣味的另一面会给所有人别样的“惊喜”）',
+            shenhun: '神魂',
+            shenhun_info: '你的判定牌生效时，你可将该判定牌置于你的武将牌上，称为"音符"。你的手牌上限+X（X为音符数）。（有趣的灵魂是成功的关键）',
+            diandao: '颠倒',
+            diandao_info: '你的回合外每受到一次伤害可进行一次判定，若结果为梅花，伤害来源弃一张牌；若结果为方块，你摸两张牌；若结果为红桃，你回复一点体力；若结果为梅花，伤害来源弃两张牌。（好看的皮囊与呆萌的性格堪称完美的结合）',
+            xinggan: '性感',
+            xinggan_info: '觉醒技，你的回合内若音符数为你体力值的2倍，你体力上限-1，获得技能"美艳"。（勾人心弦的魅力无人可挡）',
+            meiyan: '美艳',
+            meiyan_info:'出牌阶段限一次，你可弃置一张武将牌最上面的“音符”并指定一名角色，该角色直至下一个自己的回合结束前不能使用或打出与“音符”相同类型的牌。'
         },
     };
 });
