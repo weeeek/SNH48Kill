@@ -11,7 +11,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gchensi: ['female', 'S', 4, ['jingwu', 'tianyin']],
             SNH48Gdaimeng: ['female', 'S', 4, ['dandang', 'jianyi', 'lingjun'], ['zhu']],
             SNH48Gjiangyun: ['female', 'S', 3, ['leiji', 'guidao']],
-            SNH48Gkongxiaoyin: ['female', 'S', 4, ['lieren']],
+            SNH48Gkongxiaoyin: ['female', 'S', 4, ['shenhun', 'diandao', 'xinggan']],
             SNH48Glvyi: ['female', 'S', 3, ['mingce', 'longdan']],
             SNH48Gliyuqi: ['female', 'S', 3, ['zhanwu', 'quanneng']],
             SNH48Gliuzengyan: ['female', 'S', 3, ['mingce', 'longdan']],
@@ -227,6 +227,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             }
         },
         skill: {
+            shaDisabled: { mod: { cardEnabled: function (card) { return card.name != 'sha' } } },
+            shanDisabled: { mod: { cardEnabled: function (card) { return card.name != 'shan' } } },
+            basicDisabled: { mod: { cardEnabled: function (card) { return get.type(card) != 'basic' } } },
+            triggerDisabled: { mod: { cardEnabled: function (card) { return get.type(card) != 'trigger' } } },
+            equipDisabled: { mod: { cardEnabled: function (card) { return get.type(card) != 'equip'; } } },
             fengfa: {
                 audio: 2,
                 enable: 'phaseUse',
@@ -655,7 +660,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                             return get.value(card);
                         }
                     };
-                    for (pos = 0; pos < Math.min(event.cards.length, js.length + 2); pos++) {
+                    for (pos = 0; pos < Math.min(event.cards.length, js.length + 2) ; pos++) {
                         var max = getval(event.cards[pos], pos);
                         for (var j = pos + 1; j < event.cards.length; j++) {
                             var current = getval(event.cards[j], pos);
@@ -1134,7 +1139,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             jingwu2: {
                 mod: {
                     //无视距离
-                    targetInRange: function (card, player, target, now) {                        
+                    targetInRange: function (card, player, target, now) {
                         return true;
                     },
                     //无限杀
@@ -1183,7 +1188,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     'step 0'
                     player.chooseToDiscard(get.prompt('tianyin'), '弃置一张红色手牌，使一个角色回复1点体力', function (card) {
                         return get.color(card) == 'red';
-                    }).set('ai',function (target) {
+                    }).set('ai', function (target) {
                         return player.countCards('he', { color: 'red' }) > 0 && _status.currentPhase != player;
                     });
                     'step 1'
@@ -1220,10 +1225,243 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     threaten: 2
                 }
             },
-            shaDisabled: {
+            wenwan: {
+                audio: 2,
+                trigger: { player: 'respond' },
+                filter: function (event, player) {
+                    return event.card.name == 'shan';
+                },
+                direct: true,
+                content: function (player, target, event) {
+                    if (player.hp % 2 == 1) {
+                        console.log("来源：" + event.source.name);
+
+                        //体力值为单数：结算后可强制伤害来源结束出牌阶段；
+                        //雷击代码
+                        //"step 0";
+                        //player.chooseTarget(get.prompt('leiji')).ai = function (target) {
+                        //    if (target.hasSkill('hongyan')) return 0;
+                        //    return get.damageEffect(target, _status.event.player, _status.event.player, 'thunder');
+                        //};
+                        //"step 1"
+                        //if (result.bool) {
+                        //    player.logSkill('leiji', result.targets, 'thunder');
+                        //    event.target = result.targets[0];
+                        //    event.target.judge(function (card) {
+                        //        if (get.suit(card) == 'spade') return -4;
+                        //        return 0;
+                        //    });
+                        //}
+                        //else {
+                        //    event.finish();
+                        //}
+                        //"step 2"
+                        //if (result.bool == false) {
+                        //    event.target.damage(2, 'thunder');
+                        //}
+                    } else {
+                        if (target.hasSkill('qianxun')) return 0;
+                        //体力值为双数：该闪结算后，视为对伤害来源使用乐不思蜀
+                        //event.card.viewAs('lebu');
+                    }
+                },
+                ai: {
+                    mingzhi: false,
+                    useShan: true,
+                    effect: {
+                        target: function (card, player, target, current) {
+                            if (get.tag(card, 'respondShan')) {
+                                var hastarget = game.hasPlayer(function (current) {
+                                    return get.attitude(target, current) < 0;
+                                });
+                                if (target.countCards('h', 'shan') && target.countCards('e', { suit: 'spade' })) {
+                                    return [0, hastarget ? target.countCards('he') / 2 : 0];
+                                }
+                                if (target.countCards('h', 'shan')) {
+                                    return [1, hastarget ? target.countCards('he') / 2 : 0];
+                                }
+                                return [1, target.countCards('h') / 4];
+                            }
+                        }
+                    }
+                }
+            },
+            fuhei: {
+                audio: 2,
+                trigger: { player: 'phaseUseBegin' },
+                enable: 'phaseUse',
+                usable: 1,
+                selectCard: 1,
+                selectTarget: 1,
+                filterTarget: function (card, player, target) {
+                    return player != target;
+                },
+                content: function (player, event, target) {
+                    //目标受到一点伤害
+                    target.damage();
+                    //获得一个标记
+                    player.logSkill('fuhei', target);
+                    target.addSkill('fuhei_mark');
+                },
+                check: function (card) {
+                    return 10 - get.value(card);
+                },
+                position: 'he',
+                ai: {
+                    damage: true,
+                    order: 8,
+                    result: {
+                        player: function (player, target) {
+                            if (player.hp >= target.hp) return -0.9;
+                            if (player.hp <= 2) return -10;
+                            return -2;
+                        },
+                        target: function (player, target) {
+                            if (!player.getEquip(1)) {
+                                if (player.hp < 2) return 0;
+                                if (player.hp == 2 && target.hp >= 2) return 0;
+                                if (target.hp > player.hp) return 0;
+                            }
+                            return get.damageEffect(target, player);
+                        }
+                    }
+                },
+                threaten: 1.3
+            },
+            shenhun: {
+                audio: 2,
+                trigger: { player: 'judgeEnd' },
+                filter: function (event, player) {
+                    if (get.owner(event.result.card)) {
+                        return false;
+                    }
+                    if (event.nogain && event.nogain(event.result.card)) {
+                        return false;
+                    }
+                    return true;
+                },
+                content: function () {
+                    if (player.storage.shenhun == undefined)
+                        player.storage.shenhun = [];
+                    console.log('音符数量：'+player.storage.shenhun.length);
+                    player.storage.shenhun.push(event.card);
+                    player.markSkill('shenhun');
+                },
                 mod: {
-                    //
-                    cardEnabled: function (card) { if (card.name == 'sha') return false }
+                    maxHandcard: function (player, num) {
+                        if (player.storage.shenhun == undefined)
+                            player.storage.shenhun = [];
+                        return num + player.storage.shenhun.length;
+                    }
+                }
+            },
+            diandao: {
+                audio: 2,
+                trigger: { player: 'damageEnd' },
+                filter: function (event, player) {
+                    return (event.source != undefined);
+                },
+                check: function (event, player) {
+                    return (get.attitude(player, event.source) <= 0);
+                },
+                logTarget: 'source',
+                content: function () {
+                    "step 0"
+                    player.judge();
+                    "step 1"
+                    //你的回合外每受到一次伤害可进行一次判定，
+                    switch (get.suit(result.card)) {
+                        //若结果为黑桃，伤害来源翻面；
+                        case 'spade': trigger.source.turnOver(); break;
+                            //若结果为方块，你摸两张牌；
+                        case 'diamond': player.draw(2); break;
+                            //若结果为红桃，你回复一点体力；
+                        case 'heart': player.recover(); break;
+                            //若结果为梅花，伤害来源弃两张牌。
+                        case 'club': trigger.source.chooseToDiscard('he', 2, true); break;
+                    }
+                },
+                ai: {
+                    expose: 0.3
+                }
+            },
+            xinggan: {
+                skillAnimation: true,
+                audio: 2,
+                unique: true,
+                keepSkill: true,
+                derivation: 'meiyan',
+                trigger: { player: 'phaseBegin' },
+                forced: true,
+                filter: function (event, player) {
+                    if (!player.storage.shenhun)
+                        return false;
+                    console.log(player.storage.shenhun.length);
+                    return player.storage.shenhun.length > player.hp;
+                },
+                content: function () {
+                    player.storage.meiyan = true;
+                    player.maxHp--;
+                    player.update();
+                    player.recover();
+                    if (player.hasSkill('xinggan')) {
+                        //失去技能“预言”
+                        //player.unmarkSkill('yuyan');
+                        player.addSkill('meiyan');
+                    }
+                    else {
+                        player.addAdditionalSkill('xinggan', 'meiyan');
+                    }
+                    if (!player.isZhu) {
+                        player.storage.zhuSkill_xinggan = ['meiyan'];
+                    }
+                    else {
+                        event.trigger('zhuUpdate');
+                    }
+                    player.awakenSkill('xinggan');
+                }
+            },
+            meiyan: {
+                audio: 2,
+                enable: 'phaseUse',
+                filter: function(event, player) {
+                    return player.storage.shenhun.length > 0;
+                },
+                chooseButton: {
+                    dialog: function(event, player) {
+                        return ui.create.dialog('美艳', player.storage.shenhun, 'hidden');
+                    },
+                    backup: function(links, player) {
+                        return {
+                            filterCard: function() { return false },
+                            selectCard: -1,
+                            viewAs: { name: 'lebu' },
+                            cards: links,
+                            onuse: function(result, player) {
+                                result.cards = lib.skill[result.skill].cards;
+                                var card = result.cards[0];
+                                player.storage.shenhun.remove(card);
+                                player.syncStorage('shenhun');
+                                if (!player.storage.shenhun.length) {
+                                    player.unmarkSkill('shenhun');
+                                } else {
+                                    player.markSkill('shenhun');
+                                }
+                                player.logSkill('meiyan', result.targets);
+                            }
+                        }
+                    },
+                    prompt: function(links, player) {
+                        return '选择目标';
+                    }
+                },
+                ai: {
+                    order: 10,
+                    result: {
+                        player: function(player) {
+                            return player.storage.shenhun.length - 1;
+                        }
+                    }
                 }
             }
         },
@@ -1364,7 +1602,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             lingjun: '领军',
             lingjun_info: '主公技，当你陷入濒死状态时，与你同势力的角色对你使用的[桃]额外回复一点体力值。你以此法脱离濒死状态时，其可摸一张牌。（为队友付出必然能得到回应，每次陷入低谷再出发必将更进一步）',
             shiyu: '食欲',
-            shiyu_info: '每当你对一名武将造成伤害时，你可与其拼点，若你赢，你获得对方的一张牌并且摸一张牌。（旺盛的食欲能在短时间内提供大量能量）',
+            shiyu_info: '每当你使用杀对一名角色造成伤害时，你可与其拼点，若你赢，你获得对方的一张牌并且摸一张牌。（旺盛的食欲能在短时间内提供大量能量）',
             yuyan: '预言',
             yuyan_info: '回合外每失去一张牌，你选择一个颜色并进行一次判定，若结果相同，你获得该判定牌。（神奇的预言能力能让很多事情的走向变得不可捉摸）',
             mowang: '魔王',
@@ -1377,17 +1615,23 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             tianyin_info: '摸牌阶段开始时，你可弃置一张红色手牌并指定一名角色，该角色回复1点体力，若如此做，本回合你不能出杀。（即使世界以痛吻我，我愿以爱回应世界）',
 
             wenwan: '温婉',
-            wenwan_info: '你使用或打出的闪根据当前体力值获得如下效果：体力值为单数：结算后可强制伤害来源结束回合；体力值为双数：该闪结算后视为对伤害来源使用乐不思蜀。（无害的性格不愿与人发生冲突）',
+            wenwan_info: '你使用或打出的闪根据当前体力值获得如下效果：体力值为单数：结算后可强制伤害来源结束出牌阶段；体力值为双数：该闪结算后视为对伤害来源使用乐不思蜀。（无害的性格不愿与人发生冲突）',
             fuhei: '腹黑',
-            fuhei_info: '出牌阶段，你可弃置一张黑桃牌并选择一名角色，该角色失去1点体力，若这么做，下一个该角色的回合你需要两张闪来响应该角色的杀。（恶趣味的另一面会给所有人别样的“惊喜”）',
+            fuhei_mark: '腹黑',
+            fuhei_mark_bg: '腹',
+            fuhei_info: '出牌阶段，你可弃置一张黑桃牌并选择一名角色，对其造成1点伤害，若如此做，下一个该角色的回合你需要两张闪来响应该角色的杀。（恶趣味的另一面会给所有人别样的“惊喜”）',
+
+
             shenhun: '神魂',
+            shenhun_bg:'音符',
+            shenhun_mark_bg:'音',
             shenhun_info: '你的判定牌生效时，你可将该判定牌置于你的武将牌上，称为"音符"。你的手牌上限+X（X为音符数）。（有趣的灵魂是成功的关键）',
             diandao: '颠倒',
-            diandao_info: '你的回合外每受到一次伤害可进行一次判定，若结果为梅花，伤害来源弃一张牌；若结果为方块，你摸两张牌；若结果为红桃，你回复一点体力；若结果为梅花，伤害来源弃两张牌。（好看的皮囊与呆萌的性格堪称完美的结合）',
+            diandao_info: '你的回合外每受到一次伤害可进行一次判定，判定结果为：♥该角色回复1点体力；♦︎该角色摸两张牌；♣伤害来源弃两张牌；♠伤害来源将其武将牌翻面。（好看的皮囊与呆萌的性格堪称完美的结合）',
             xinggan: '性感',
-            xinggan_info: '觉醒技，你的回合内若音符数为你体力值的2倍，你体力上限-1，获得技能"美艳"。（勾人心弦的魅力无人可挡）',
+            xinggan_info: '觉醒技，你的回合内若音符数大于你体力值，你体力上限-1，获得技能"美艳"。（勾人心弦的魅力无人可挡）',
             meiyan: '美艳',
-            meiyan_info: '出牌阶段限一次，你可弃置一张武将牌最上面的“音符”并指定一名角色，该角色直至下一个自己的回合结束前不能使用或打出与“音符”相同类型的牌。'
+            meiyan_info: '出牌阶段限一次，你可弃置一张武将牌最上面的“音符”并指定一名角色，视为对该角色使用乐不思蜀。'
         },
     };
 });

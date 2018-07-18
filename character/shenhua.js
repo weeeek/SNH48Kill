@@ -4113,7 +4113,8 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				content:function(){
 					"step 0"
 					event.card=get.cards()[0];
-					if(player.storage.buqu==undefined) player.storage.buqu=[];
+					if (player.storage.buqu == undefined)
+					    player.storage.buqu = [];
 					player.storage.buqu.push(event.card);
 					player.syncStorage('buqu');
 					player.showCards(player.storage.buqu,'不屈')
