@@ -1354,10 +1354,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 intro: {
                     content: 'cards'
                 },
-                content: function () {
+                content: function (card) {
                     if (player.storage.shenhun == undefined)
                         player.storage.shenhun = [];
-                    player.storage.shenhun.push(event.card);
+                    console.log(trigger.result.card);
+                    player.storage.shenhun.push(trigger.result.card);
                     player.markSkill('shenhun');
                 },
                 mod: {
@@ -1385,7 +1386,6 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                             }
                             else if (get.tag(card, 'respondSha') || get.tag(card, 'respondShan')) {
                                 if (get.attitude(player, target) > 0 && card.name == 'juedou') return;
-                                if (get.tag(card, 'damage') && target.hasSkillTag('maixie')) return;
                                 if (target.countCards('h') == 0) return 2;
                                 if (target.hasSkill('ziliang')) return 0.7;
                                 if (get.mode() == 'guozhan') return 0.5;
@@ -1418,7 +1418,9 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     //你的回合外每受到一次伤害可进行一次判定，
                     switch (get.suit(result.card)) {
                         //若结果为黑桃，伤害来源翻面；
-                        case 'spade': trigger.source.turnOver(); break;
+                        //case 'spade': trigger.source.turnOver(); break;
+                        //若结果为黑桃，伤害来源受到一点伤害；
+                        case 'spade': trigger.source.damage();
                         //若结果为方块，你摸两张牌；
                         case 'diamond': player.draw(2); break;
                         //若结果为红桃，你回复一点体力；
