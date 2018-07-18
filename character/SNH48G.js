@@ -660,7 +660,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                             return get.value(card);
                         }
                     };
-                    for (pos = 0; pos < Math.min(event.cards.length, js.length + 2) ; pos++) {
+                    for (pos = 0; pos < Math.min(event.cards.length, js.length + 2); pos++) {
                         var max = getval(event.cards[pos], pos);
                         for (var j = pos + 1; j < event.cards.length; j++) {
                             var current = getval(event.cards[j], pos);
@@ -956,8 +956,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     player.chooseToCompare(trigger.player);
                     "step 1"
                     if (result.bool && trigger.player.countCards('he')) {
-                        player.gainPlayerCard(trigger.player, true, 'he');
                         player.draw();
+                        player.gainPlayerCard(trigger.player, true, 'he');
                     }
                 },
             },
@@ -1059,16 +1059,22 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 logTarget: 'source',
                 content: function () {
                     'step 0'
-                    trigger.source.chooseCard('he', [0, player.maxHp - player.hp], '魔王：你将受到' + (player.maxHp - player.hp) + '点伤害，你可弃置0~' + (player.maxHp - player.hp) + '张牌，每弃置一张，减少1点伤害', true).set('ai', function (card) {
-                        if (get.attitude(_status.event.player, _status.event.getParent().player) > 0) {
-                            return 7 - get.value(card);
-                        }
-                        return -get.value(card);
+                    var next = trigger.source.chooseToDiscard('he', [0, player.maxHp - player.hp], '魔王：你将受到' + (player.maxHp - player.hp) + '点伤害，你可弃置0~' + (player.maxHp - player.hp) + '张牌，每弃置一张，减少1点伤害', true);
+                    
+                    next.set('ai', function (card) {
+                        if (card.name == 'tao') return -10;
+                        if (card.name == 'jiu' && _status.event.player.hp == 1) return -10;
+                        return get.unuseful(card) + 2.5 * (5 - get.owner(card).hp);
                     });
 
                     'step 1'
-                    if (result.bool)
+                    if (result.bool) {
+                        console.log(player.maxHp);
+                        console.log(player.hp);
+                        console.log(result.cards.length);
+
                         trigger.source.damage(player.maxHp - player.hp - result.cards.length);
+                    }
                     else
                         trigger.source.damage(player.maxHp - player.hp);
                 },
@@ -1225,6 +1231,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     threaten: 2
                 }
             },
+            //陈观慧
             wenwan: {
                 audio: 2,
                 trigger: { player: 'respond' },
@@ -1328,6 +1335,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 },
                 threaten: 1.3
             },
+            //孔肖吟
             shenhun: {
                 audio: 2,
                 trigger: { player: 'judgeEnd' },
@@ -1340,10 +1348,15 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }
                     return true;
                 },
+                init: function (player) {
+                    player.storage.shenhun = [];
+                },
+                intro: {
+                    content: 'cards'
+                },
                 content: function () {
                     if (player.storage.shenhun == undefined)
                         player.storage.shenhun = [];
-                    console.log('音符数量：'+player.storage.shenhun.length);
                     player.storage.shenhun.push(event.card);
                     player.markSkill('shenhun');
                 },
@@ -1353,6 +1366,39 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                             player.storage.shenhun = [];
                         return num + player.storage.shenhun.length;
                     }
+                },
+                ai: {
+                    effect: {
+                        target: function (card, player, target, current) {
+                            if (!target.hasFriend() && !player.hasUnknown()) return;
+                            if (_status.currentPhase == target) return;
+                            if (get.tag(card, 'loseCard') && target.countCards('he')) {
+                                if (target.hasSkill('ziliang')) return 0.7;
+                                return [0.5, Math.max(2, target.countCards('h'))];
+                            }
+                            if (target.isUnderControl(true, player)) {
+                                if ((get.tag(card, 'respondSha') && target.countCards('h', 'sha')) ||
+                                    (get.tag(card, 'respondShan') && target.countCards('h', 'shan'))) {
+                                    if (target.hasSkill('ziliang')) return 0.7;
+                                    return [0.5, 1];
+                                }
+                            }
+                            else if (get.tag(card, 'respondSha') || get.tag(card, 'respondShan')) {
+                                if (get.attitude(player, target) > 0 && card.name == 'juedou') return;
+                                if (get.tag(card, 'damage') && target.hasSkillTag('maixie')) return;
+                                if (target.countCards('h') == 0) return 2;
+                                if (target.hasSkill('ziliang')) return 0.7;
+                                if (get.mode() == 'guozhan') return 0.5;
+                                return [0.5, Math.max(target.countCards('h') / 4, target.countCards('h', 'sha') + target.countCards('h', 'shan'))];
+                            }
+                        }
+                    },
+                    threaten: function (player, target) {
+                        if (target.countCards('h') == 0) return 2;
+                        return 0.5;
+                    },
+                    nodiscard: true,
+                    nolose: true
                 }
             },
             diandao: {
@@ -1373,11 +1419,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     switch (get.suit(result.card)) {
                         //若结果为黑桃，伤害来源翻面；
                         case 'spade': trigger.source.turnOver(); break;
-                            //若结果为方块，你摸两张牌；
+                        //若结果为方块，你摸两张牌；
                         case 'diamond': player.draw(2); break;
-                            //若结果为红桃，你回复一点体力；
+                        //若结果为红桃，你回复一点体力；
                         case 'heart': player.recover(); break;
-                            //若结果为梅花，伤害来源弃两张牌。
+                        //若结果为梅花，伤害来源弃两张牌。
                         case 'club': trigger.source.chooseToDiscard('he', 2, true); break;
                     }
                 },
@@ -1424,22 +1470,28 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             meiyan: {
                 audio: 2,
                 enable: 'phaseUse',
-                filter: function(event, player) {
+                filter: function (event, player) {
                     return player.storage.shenhun.length > 0;
                 },
                 chooseButton: {
-                    dialog: function(event, player) {
+                    dialog: function (event, player) {
                         return ui.create.dialog('美艳', player.storage.shenhun, 'hidden');
                     },
-                    backup: function(links, player) {
+                    backup: function (links, player) {
                         return {
-                            filterCard: function() { return false },
+                            filterCard: function () { return false },
                             selectCard: -1,
                             viewAs: { name: 'lebu' },
                             cards: links,
-                            onuse: function(result, player) {
+                            onuse: function (result, player) {
                                 result.cards = lib.skill[result.skill].cards;
+
+                                console.log(result.cards);
+
                                 var card = result.cards[0];
+
+                                console.log(player.storage.shenhun)
+
                                 player.storage.shenhun.remove(card);
                                 player.syncStorage('shenhun');
                                 if (!player.storage.shenhun.length) {
@@ -1451,14 +1503,14 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                             }
                         }
                     },
-                    prompt: function(links, player) {
+                    prompt: function (links, player) {
                         return '选择目标';
                     }
                 },
                 ai: {
                     order: 10,
                     result: {
-                        player: function(player) {
+                        player: function (player) {
                             return player.storage.shenhun.length - 1;
                         }
                     }
@@ -1623,8 +1675,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
 
 
             shenhun: '神魂',
-            shenhun_bg:'音符',
-            shenhun_mark_bg:'音',
+            shenhun_bg: '音符',
+            shenhun_mark_bg: '音',
             shenhun_info: '你的判定牌生效时，你可将该判定牌置于你的武将牌上，称为"音符"。你的手牌上限+X（X为音符数）。（有趣的灵魂是成功的关键）',
             diandao: '颠倒',
             diandao_info: '你的回合外每受到一次伤害可进行一次判定，判定结果为：♥该角色回复1点体力；♦︎该角色摸两张牌；♣伤害来源弃两张牌；♠伤害来源将其武将牌翻面。（好看的皮囊与呆萌的性格堪称完美的结合）',
