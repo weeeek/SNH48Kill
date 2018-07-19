@@ -13,7 +13,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gjiangyun: ['female', 'S', 3, ['leiji', 'guidao']],
             SNH48Gkongxiaoyin: ['female', 'S', 4, ['shenhun', 'diandao', 'xinggan']],
             SNH48Glvyi: ['female', 'S', 3, ['chengzhang', 'yanji']],
-            SNH48Gliyuqi: ['female', 'S', 3, ['zhanwu', 'quanneng']],
+            SNH48Gliyuqi: ['female', 'S', 4, ['haomai', 'quanneng', 'qice']],
             SNH48Gliuzengyan: ['female', 'S', 3, ['mingce', 'longdan']],
             SNH48Gmohan: ['female', 'S', 3, ['shiyu', 'yuyan', 'ziqiang'], ['zhu']],
             SNH48Gqianbeiting: ['female', 'S', 4, ['chongzhen', 'longdan']],
@@ -23,7 +23,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gwenjingjie: ['female', 'S', 4, ['zaiqi']],
             SNH48Gwuzhehan: ['female', 'S', 3, ['qianxun', 'qixi']],
             SNH48Gxuchenchen: ['female', 'S', 3, ['tianlai', 'kuaihuo']],
-            SNH48Gxujiaqi: ['female', 'S', 3, ['luoshen', 'biyue']],
+            SNH48Gxujiaqi: ['female', 'S', 4, ['meiren']],
             SNH48Gxuyiren: ['female', 'S', 3, ['luoshen', 'biyue']],
             SNH48Gxuzixuan: ['female', 'S', 4, ['jianxiong']],
             SNH48Gyuandanni: ['female', 'S', 4, ['guicai', 'yiji']],
@@ -127,7 +127,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gjiangyun: 'SNH48 Team SII 成员，古风大佬，SNH48二期生。一首红玫瑰惊艳四座，她的潜力远远超过了我们的想象。多面结合了张郃的巧变和荀攸的奇策，进可攻退可守，是上限极高的技能之一。气场则保证了多面的命中率，跟多变形成独有的锦囊类强命技能，还能跟络崽的技能形成几乎完美的配合。',
             SNH48Gkongxiaoyin: 'SNH48 Team SII 性感成员，SNH48一期生。小孔是一个十分有趣的人，既是全团最拽也是队内总欺，温柔大方的她所在之处一定不会缺少欢乐。神魂颠倒是小孔的成名曲，神魂也是小孔的精髓所在，提高手牌上限能加强蓄爆能力，而颠倒则赋予了回合外的反制能力以及加快音符数的累积。音符是小孔家粉丝的昵称，觉醒后的小孔会跟自己的粉丝共同进退，赢得最终的胜利',
             SNH48Glvyi: 'SNH48 Team SII 成员，SNH48七期生。口口一是个灵动的孩子，既有不俗的舞蹈能力，也有高能的MC水平，表情包是她的绝技，网盘是她的禁忌。成长是这个S队次时代目前最强者最有力的武器，只要给她时间，没什么是她做不到的。演技则是于吉的蛊惑改版，但却是一个非常具有操作性的技能，也预示着串儿不可预知的成长空间。',
-            SNH48Gliyuqi: 'SNH48 Team SII 成员，SNH48一期生',
+            SNH48Gliyuqi: 'SNH48 Team SII 成员，SNH48一期生。李毛毛是嘉兴路著名暖男，全能偶像，日常义务公演，从替补到选拔，坚韧是毛毛最好的代名词。豪迈是根据毛毛有话直说的个性得来，虽然放弃了属性伤害，但却大幅提高了普通杀和决斗的收益，堂堂正正以王道取胜。全能与其说是神技不如说是信仰，只要手中仍有牌就有希望，与李毛一贯的坚韧风格相匹配。',
             SNH48Gliuzengyan: 'SNH48 Team SII 成员，SNH48五期生',
             SNH48Gmohan: 'SNH48 Team SII 副队长，SNH48一期生。莫寒是一个表面无害实则刚强的人，回合内依靠食欲进行续航与爆发，回合外以预言保证手牌量不会过低，也会让敌人因为判定牌而随时改变战术。觉醒后的大魔王更加强大，不仅血量增加还拥有了回合外的强输出能力，凸显了于危难中接任队长时莫莫的魄力和强势。',
             SNH48Gqianbeiting: 'SNH48 Team SII 成员，SNH48一期生',
@@ -137,7 +137,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gwenjingjie: 'SNH48 Team SII 成员，SNH48二期生',
             SNH48Gwuzhehan: 'SNH48 Team SII 成员，SNH48一期生',
             SNH48Gxuchenchen: 'SNH48 Team SII 成员，SNH48一期生',
-            SNH48Gxujiaqi: 'SNH48 Team SII 成员，SNH48一期生',
+            SNH48Gxujiaqi: 'SNH48 Team SII 成员，SNH48一期生。从许玛丽到许钩钩，许佳琪一直在超越上一秒的自己，KIKI闪耀的地方不仅仅是好看的外表，更是始终坚强的心灵。阿妈是第一个拥有翻面技能的人，时尚作为回合外的拆顺有稳定的限制爆发能力，上钩改自刘禅的放权，但效果从辅助队友变成强力控场，令KIKI一跃成为S队数一数二的团战强力控制。',
             SNH48Gxuyiren: 'SNH48 Team SII 成员，SNH48三期生',
             SNH48Gxuzixuan: 'SNH48 Team SII 成员，SNH48二期生',
             SNH48Gyuandanni: 'SNH48 Team SII 成员，SNH48三期生',
@@ -660,7 +660,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                             return get.value(card);
                         }
                     };
-                    for (pos = 0; pos < Math.min(event.cards.length, js.length + 2) ; pos++) {
+                    for (pos = 0; pos < Math.min(event.cards.length, js.length + 2); pos++) {
                         var max = getval(event.cards[pos], pos);
                         for (var j = pos + 1; j < event.cards.length; j++) {
                             var current = getval(event.cards[j], pos);
@@ -806,7 +806,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 }
             },
 
-            //北极瑞风HZYQ   定义的技能
+            //参考北极瑞风HZYQ   定义的技能
             //戴萌
             dandang: {
                 trigger: { global: 'useCardToBefore' },
@@ -915,7 +915,6 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 }
             },
             lingjun: {
-                //救援的代码
                 audio: 2,
                 unique: true,
                 trigger: { target: 'taoBegin' },
@@ -1231,7 +1230,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     threaten: 2
                 }
             },
-            //陈观慧
+            //陈观慧，未完成
             wenwan: {
                 audio: 2,
                 trigger: { player: 'respond' },
@@ -1357,7 +1356,6 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 content: function (card) {
                     if (player.storage.shenhun == undefined)
                         player.storage.shenhun = [];
-                    console.log(trigger.result.card);
                     player.storage.shenhun.push(trigger.result.card);
                     player.markSkill('shenhun');
                 },
@@ -1421,11 +1419,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         //case 'spade': trigger.source.turnOver(); break;
                         //若结果为黑桃，伤害来源受到一点伤害；
                         case 'spade': trigger.source.damage();
-                            //若结果为方块，你摸两张牌；
+                        //若结果为方块，你摸两张牌；
                         case 'diamond': player.draw(2); break;
-                            //若结果为红桃，你回复一点体力；
+                        //若结果为红桃，你回复一点体力；
                         case 'heart': player.recover(); break;
-                            //若结果为梅花，伤害来源弃两张牌。
+                        //若结果为梅花，伤害来源弃两张牌。
                         case 'club': trigger.source.chooseToDiscard('he', 2, true); break;
                     }
                 },
@@ -1518,6 +1516,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }
                 }
             },
+            //成珏
             kuaidao: {
                 trigger: { player: 'shaBegin' },
                 filter: function (event) {
@@ -1533,7 +1532,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }).set('logSkill', ['kuaidao', trigger.target]).set('att', get.attitude(player, trigger.target) <= 0);
                     'step 1'
                     if (result.bool && result.links && result.links.length) {
-                        //花色相同不能被响应
+                        //为装备牌，伤害+1
                         if (get.type(result.links[0]) == 'equip') {
                             ++trigger.num;
                         }
@@ -1597,6 +1596,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }
                 }
             },
+            //冯晓菲
             rewu: {
                 //出牌阶段限一次，你可弃置X张手牌，并最多指定除你之外当前体力值的角色，你摸X张牌，其他角色模你已损失体力值的牌。（超强表现力的舞姿闪耀全场）
                 audio: 2,
@@ -1682,10 +1682,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     player.storage.yuanzhen = true;
                 }
             },
+            //吕一，未完成
             chengzhang: {
-                audio:2,
+                audio: 2,
                 trigger: { player: ['gainEnd', 'loseEnd'] },
-                forced:true,
+                forced: true,
                 mod: {
                     maxHp: function (player, num) {
                         return num + player.countCards('e');
@@ -1696,7 +1697,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 audio: 2,
                 trigger: { target: 'shaBegin' },
                 frequent: true,
-                forced:true,
+                forced: true,
                 //其他角色对你使用杀时，你可说出一种牌并将一张手牌背面朝上出示之，该角色可选择是否质疑，若不质疑，跳过当前结算阶段。若质疑则展示，若为真，对方给你一张装备牌或让你对其造成1点伤害；若为假，你失去1点体力，对方获得你展示的手牌。（丰富的表情包既能表达情绪也能掩盖心思）
                 filter: function (event, player) {
                     //有手牌时发动
@@ -1762,7 +1763,34 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     },
                     threaten: 1.6,
                 }
-            }
+            },
+            //李宇琪
+            haomai: {
+                trigger: { source: 'damageBegin', player: 'damageBegin' },
+                filter: function (event) {
+                    console.log(event.card.name);
+                    return event.card && (event.card.name == 'sha' || event.card.name == 'juedou') && event.notLink();
+                },
+                forced: true,
+                content: function () {
+                    trigger.num++;
+                },
+                ai: {
+                    damageBonus: true
+                }
+            },
+            //许佳琪
+            shishang: {
+                trigger: { global: 'phaseUseBefore' },
+
+            },
+            shanggou: {},
+            meiren: {
+                group: ['yingzi', 'biyue'],
+                //锁定技
+                forced:true
+
+            },
         },
         translate: {
             //S
@@ -1943,8 +1971,16 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             yuanzhen_info: '限定技，摸牌阶段，你可额外摸X张牌，减少1点体力上限，并回复1点体力（X为场上与你同势力角色数）（著名神秘仪式独此一家不可复制）',
             chengzhang: '成长',
             chengzhang_info: '锁定技。装备区每多一张牌，体力上限+1。每失去一张装备区内的牌，体力上限-1。（青春是最任性的资本，次时代未来可期）',
-            yanji:'演技',
-            yanji_info: '其他角色对你使用杀时，你可说出一种牌并将一张手牌背面朝上出示之，该角色可选择是否质疑，若不质疑，跳过当前结算阶段。若质疑则展示，若为真，对方给你一张装备牌或让你对其造成1点伤害；若为假，你失去1点体力，对方获得你展示的手牌。（丰富的表情包既能表达情绪也能掩盖心思）'
+            yanji: '演技',
+            yanji_info: '其他角色对你使用杀时，你可说出一种牌并将一张手牌背面朝上出示之，该角色可选择是否质疑，若不质疑，跳过当前结算阶段。若质疑则展示，若为真，对方给你一张装备牌或让你对其造成1点伤害；若为假，你失去1点体力，对方获得你展示的手牌。（丰富的表情包既能表达情绪也能掩盖心思）',
+            haomai: '豪迈',
+            haomai_info: '锁定技：你受到和使用杀或决斗造成伤害时结算结束后伤害+1。（直率的个性有着别样的魅力）',
+            shishang: '时尚',
+            shishang_info: '你可在其它任意角色的出牌阶段开始时与其拼点，若你赢，你获得其一张牌。（风尚一姐的自信能带来无比的闪耀）',
+            shanggou: '上钩',
+            shanggou_info: '出牌阶段开始时，你可以选择跳过出牌阶段并弃置一张牌，若这么做，你令一名其他角色翻面。（撩人的神态堪称妖精却又不失风雅）',
+            meiren: '美人',
+            meiren_info:'锁定技：（英姿）摸牌阶段多摸一张牌，（闭月）回合结束阶段摸一张牌'
         },
     };
 });
