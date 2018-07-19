@@ -7,12 +7,12 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
         character: {
             //S
             SNH48Gchenguanhui: ['female', 'S', 4, ['biyue', 'guidao']],
-            SNH48Gchengjue: ['female', 'S', 4, ['biyue', 'guidao']],
+            SNH48Gchengjue: ['female', 'S', 4, ['kuaidao', 'qiaoyan']],
             SNH48Gchensi: ['female', 'S', 4, ['jingwu', 'tianyin']],
             SNH48Gdaimeng: ['female', 'S', 4, ['dandang', 'jianyi', 'lingjun'], ['zhu']],
             SNH48Gjiangyun: ['female', 'S', 3, ['leiji', 'guidao']],
             SNH48Gkongxiaoyin: ['female', 'S', 4, ['shenhun', 'diandao', 'xinggan']],
-            SNH48Glvyi: ['female', 'S', 3, ['mingce', 'longdan']],
+            SNH48Glvyi: ['female', 'S', 3, ['chengzhang', 'yanji']],
             SNH48Gliyuqi: ['female', 'S', 3, ['zhanwu', 'quanneng']],
             SNH48Gliuzengyan: ['female', 'S', 3, ['mingce', 'longdan']],
             SNH48Gmohan: ['female', 'S', 3, ['shiyu', 'yuyan', 'ziqiang'], ['zhu']],
@@ -82,7 +82,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //X
             SNH48Gchenlin: ['female', 'X', 4, ['wushuang', 'mashu']],
             SNH48Gchenyunling: ['female', 'X', 4, ['wushuang', 'mashu']],
-            SNH48Gfengxiaofei: ['female', 'X', 4, ['wushuang', 'mashu']],
+            SNH48Gfengxiaofei: ['female', 'X', 4, ['rewu', 'beifen', 'yuanzhen']],
             SNH48Glizhao: ['female', 'X', 4, ['wushuang', 'mashu']],
             SNH48Gpanyingqi: ['female', 'X', 4, ['wushuang', 'mashu']],
             SNH48Gqijing: ['female', 'X', 4, ['wushuang', 'mashu']],
@@ -121,12 +121,12 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
         characterIntro: {
             //S
             SNH48Gchenguanhui: 'SNH48 Team SII 成员，SNH48一期生。很少有人知道如今的人妻艾在当初也曾是S队的标准男役担当。温婉是一个标准的纯防御技能，体现着小艾不欲与人争锋的性格特点。而偶尔腹黑的一面，不仅能跟队友形成微妙的联动，还能有力的回击来自外界的恶意',
-            SNH48Gchengjue: 'SNH48 Team SII 预备成员，SNH48六期生',
+            SNH48Gchengjue: 'SNH48 Team SII 成员，SNH48六期生。MC四大输出之一，同时直播里喜欢疯狂暗示自成一路的王玉是S队次时代之一。快刀在当前环境下算是较为合理的强命技。巧盐则保证了不会缺少武器的尴尬，有队友支持的情况下输出能力相当不俗',
             SNH48Gchensi: 'SNH48 Team SII 成员，SNH48一期生。教练是早期的最强者，也是队内的小天使。在面对有恶意的人时，教练会以强大的武力回击来保护自己的队友。同时，即使自身的经历并不美好，教练仍然对这个世界抱有期待，在各种不被人注意的时候总能看到其暖心的一面。',
             SNH48Gdaimeng: 'SNH48 Team SII 队长，SNH48一期生。全队的领军人物，也是队里的家长般的存在。作为主公坚毅提供了一定的防护能力，担当虽然属性上更适合忠臣，但是能够体恤忠臣的付出更显王道本色，领军意味着只要队友不死，就能依靠队友的支持一次次重新站起，体现出了TEAM SII的诚挚团结之意。',
-            SNH48Gjiangyun: 'SNH48 Team SII 成员，古风大佬，SNH48二期生',
+            SNH48Gjiangyun: 'SNH48 Team SII 成员，古风大佬，SNH48二期生。一首红玫瑰惊艳四座，她的潜力远远超过了我们的想象。多面结合了张郃的巧变和荀攸的奇策，进可攻退可守，是上限极高的技能之一。气场则保证了多面的命中率，跟多变形成独有的锦囊类强命技能，还能跟络崽的技能形成几乎完美的配合。',
             SNH48Gkongxiaoyin: 'SNH48 Team SII 性感成员，SNH48一期生。小孔是一个十分有趣的人，既是全团最拽也是队内总欺，温柔大方的她所在之处一定不会缺少欢乐。神魂颠倒是小孔的成名曲，神魂也是小孔的精髓所在，提高手牌上限能加强蓄爆能力，而颠倒则赋予了回合外的反制能力以及加快音符数的累积。音符是小孔家粉丝的昵称，觉醒后的小孔会跟自己的粉丝共同进退，赢得最终的胜利',
-            SNH48Glvyi: 'SNH48 Team SII 成员，SNH48七期生',
+            SNH48Glvyi: 'SNH48 Team SII 成员，SNH48七期生。口口一是个灵动的孩子，既有不俗的舞蹈能力，也有高能的MC水平，表情包是她的绝技，网盘是她的禁忌。成长是这个S队次时代目前最强者最有力的武器，只要给她时间，没什么是她做不到的。演技则是于吉的蛊惑改版，但却是一个非常具有操作性的技能，也预示着串儿不可预知的成长空间。',
             SNH48Gliyuqi: 'SNH48 Team SII 成员，SNH48一期生',
             SNH48Gliuzengyan: 'SNH48 Team SII 成员，SNH48五期生',
             SNH48Gmohan: 'SNH48 Team SII 副队长，SNH48一期生。莫寒是一个表面无害实则刚强的人，回合内依靠食欲进行续航与爆发，回合外以预言保证手牌量不会过低，也会让敌人因为判定牌而随时改变战术。觉醒后的大魔王更加强大，不仅血量增加还拥有了回合外的强输出能力，凸显了于危难中接任队长时莫莫的魄力和强势。',
@@ -660,7 +660,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                             return get.value(card);
                         }
                     };
-                    for (pos = 0; pos < Math.min(event.cards.length, js.length + 2); pos++) {
+                    for (pos = 0; pos < Math.min(event.cards.length, js.length + 2) ; pos++) {
                         var max = getval(event.cards[pos], pos);
                         for (var j = pos + 1; j < event.cards.length; j++) {
                             var current = getval(event.cards[j], pos);
@@ -1060,7 +1060,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 content: function () {
                     'step 0'
                     var next = trigger.source.chooseToDiscard('he', [0, player.maxHp - player.hp], '魔王：你将受到' + (player.maxHp - player.hp) + '点伤害，你可弃置0~' + (player.maxHp - player.hp) + '张牌，每弃置一张，减少1点伤害', true);
-                    
+
                     next.set('ai', function (card) {
                         if (card.name == 'tao') return -10;
                         if (card.name == 'jiu' && _status.event.player.hp == 1) return -10;
@@ -1421,11 +1421,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         //case 'spade': trigger.source.turnOver(); break;
                         //若结果为黑桃，伤害来源受到一点伤害；
                         case 'spade': trigger.source.damage();
-                        //若结果为方块，你摸两张牌；
+                            //若结果为方块，你摸两张牌；
                         case 'diamond': player.draw(2); break;
-                        //若结果为红桃，你回复一点体力；
+                            //若结果为红桃，你回复一点体力；
                         case 'heart': player.recover(); break;
-                        //若结果为梅花，伤害来源弃两张牌。
+                            //若结果为梅花，伤害来源弃两张牌。
                         case 'club': trigger.source.chooseToDiscard('he', 2, true); break;
                     }
                 },
@@ -1516,6 +1516,251 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                             return player.storage.shenhun.length - 1;
                         }
                     }
+                }
+            },
+            kuaidao: {
+                trigger: { player: 'shaBegin' },
+                filter: function (event) {
+                    return event.target.countCards('he') > 0;
+                },
+                direct: true,
+                content: function () {
+                    'step 0'
+                    player.discardPlayerCard(trigger.target, get.prompt('kuaidao', trigger.target)).set('ai', function (button) {
+                        if (!_status.event.att) return 0;
+                        if (get.position(button.link) == 'e') return get.value(button.link);
+                        return 1;
+                    }).set('logSkill', ['kuaidao', trigger.target]).set('att', get.attitude(player, trigger.target) <= 0);
+                    'step 1'
+                    if (result.bool && result.links && result.links.length) {
+                        //花色相同不能被响应
+                        if (get.type(result.links[0]) == 'equip') {
+                            ++trigger.num;
+                        }
+                        //花色相同不能被响应
+                        if (get.suit(result.links[0]) == get.suit(trigger.cards[0])) {
+                            trigger.directHit = true;
+                        }
+                        if (trigger.cards) {
+                            trigger.target.gain(trigger.cards, 'gain2', 'log');
+                        }
+                    }
+                }
+            },
+            qiaoyan: {
+                audio: 4,
+                enable: 'chooseToUse',
+                filterCard: function (card) {
+                    return get.color(card) == 'black';
+                },
+                position: 'he',
+                viewAs: { name: 'jiedao' },
+                viewAsFilter: function (player) {
+                    if (!player.countCards('he', { color: 'black' })) return false;
+                },
+                prompt: '将一张黑色牌当借刀杀人使用',
+                check: function (card) { return 4 - get.value(card) },
+                filter: function (event, player) {
+                    return player.countCards('he', { color: 'black' }) > 0;
+                },
+                threaten: 1.2,
+                group: 'qiaoyan_yan',
+                subSkill: {
+                    yan: {
+                        audio: 2,
+                        trigger: { target: 'useCardToBefore' },
+                        forced: true,
+                        priority: 15,
+                        check: function (event, player) {
+                            return get.effect(event.target, event.card, event.player, player) < 0;
+                        },
+                        filter: function (event, player) {
+                            //没有目标的锦囊（无中生有）
+                            if (!event.target) return false;
+                            //自己对自己使用的
+                            if (event.player == player && event.target == player) return false;
+                            return (get.type(event.card) == 'trick');
+                        },
+                        content: function () {
+                            trigger.cancel();
+                        },
+                        ai: {
+                            effect: {
+                                target: function (card, player, target, current) {
+                                    if (get.type(card) == 'trick' && player != target) return 'zeroplayertarget';
+                                },
+                                //player:function(card,player,target,current){
+                                //    if(get.type(card)=='trick'&&player!=target) return 'zeroplayertarget';
+                                //}
+                            }
+                        }
+                    }
+                }
+            },
+            rewu: {
+                //出牌阶段限一次，你可弃置X张手牌，并最多指定除你之外当前体力值的角色，你摸X张牌，其他角色模你已损失体力值的牌。（超强表现力的舞姿闪耀全场）
+                audio: 2,
+                enable: 'phaseUse',
+                usable: 1,
+                //h:手牌，e:装备牌
+                //position: 'he',
+                prompt: '弃置任意张手牌，你摸等同于你弃置的数量张牌，并可以最多指定至多X名角色，各摸1张牌（X为你当前已损失体力值）',
+                direct: true,
+                content: function () {
+                    'step 0'
+                    player.chooseToDiscard('h', [0, player.countCards('h')], get.prompt('rewu'), true).set('ai', function (target) {
+                        return _status.currentPhase != player;
+                    });
+                    'step 1'
+                    player.draw(result.cards.length);
+                    if (result.bool && player.maxHp > player.hp) {
+                        player.chooseTarget('选择角色各摸1张牌', [0, player.maxHp - player.hp], function (target) {
+                            return true;
+                        }).set('ai', function (target) {
+                            return true;
+                        });
+                    }
+                    'step 2'
+                    if (result.bool) {
+                        player.logSkill('rewu', result.targets);
+                        game.asyncDraw(result.targets);
+                    }
+                },
+                ai: {
+                    order: 1,
+                    result: {
+                        player: 1
+                    },
+                    threaten: 1.5
+                },
+            },
+            beifen: {
+                audio: 2,
+                trigger: { source: 'damageBefore', player: 'damageBefore' },
+                forced: true,
+                priority: 15,
+                check: function (event, player) {
+                    if (player == event.player) return true;
+                    return false;
+                },
+                filter: function (event, player) {
+                    if (get.type(event.card, 'trick') == 'trick' && get.tag(event.card, 'damage') && event.source.hp >= player.hp) {
+                        console.log("辈分触发");
+                        return true;
+                    }
+                    return false;
+                },
+                content: function (card, target, player, trigger) {
+                    trigger.cancel();
+                }
+            },
+            yuanzhen: {
+                audio: 2,
+                unique: true,
+                trigger: { player: 'phaseDrawBegin' },
+                filter: function (event, player) {
+                    return !player.storage.yuanzhen;
+                },
+                init: function (player) {
+                    player.storage.yuanzhen = false;
+                },
+                mark: true,
+                intro: {
+                    content: 'limited'
+                },
+                skillAnimation: true,
+                //被迫的。自动发动
+                //forced: true,
+                content: function () {
+                    game.countPlayer(function (current) {
+                        if (current.group == player.group)
+                            trigger.num++;
+                    });
+                    player.maxHp--;
+                    player.update();
+                    player.recover();
+                    player.storage.yuanzhen = true;
+                }
+            },
+            chengzhang: {
+                audio:2,
+                trigger: { player: ['gainEnd', 'loseEnd'] },
+                forced:true,
+                mod: {
+                    maxHp: function (player, num) {
+                        return num + player.countCards('e');
+                    }
+                },
+            },
+            yanji: {
+                audio: 2,
+                trigger: { target: 'shaBegin' },
+                frequent: true,
+                forced:true,
+                //其他角色对你使用杀时，你可说出一种牌并将一张手牌背面朝上出示之，该角色可选择是否质疑，若不质疑，跳过当前结算阶段。若质疑则展示，若为真，对方给你一张装备牌或让你对其造成1点伤害；若为假，你失去1点体力，对方获得你展示的手牌。（丰富的表情包既能表达情绪也能掩盖心思）
+                filter: function (event, player) {
+                    //有手牌时发动
+                    return player.countCards('h') > 0;
+                },
+                chooseButton: {
+                    dialog: function () {
+                        var list = ['sha', 'tao', 'jiu', 'taoyuan', 'wugu', 'juedou', 'huogong', 'jiedao', 'tiesuo', 'guohe', 'shunshou', 'wuzhong', 'wanjian', 'nanman'];
+                        for (var i = 0; i < list.length; i++) {
+                            if (i < 3) {
+                                list[i] = ['基本', '', list[i]];
+                            }
+                            else {
+                                list[i] = ['锦囊', '', list[i]];
+                            }
+                        }
+                        return ui.create.dialog([list, 'vcard']);
+                    },
+                    filter: function (button, player) {
+                        return lib.filter.filterCard({ name: button.link[2] }, player, _status.event.getParent());
+                    },
+                    check: function (button) {
+                        var player = _status.event.player;
+                        if (player.countCards('h', 'wuzhong')) {
+                            if (player.hp == 1 && player.countCards('h', 'tao')) {
+                                return button.link == 'tao' ? 1 : 0;
+                            }
+                            return button.link == 'wuzhong' ? 1 : 0;
+                        }
+                        if (player.hp < player.maxHp) {
+                            if (player.countCards('h', 'tao')) {
+                                return button.link == 'tao' ? 1 : 0;
+                            }
+                        }
+                    },
+                    backup: function (links, player) {
+                        return {
+                            filterCard: true,
+                            selectCard: -1,
+                            audio: 2,
+                            popname: true,
+                            viewAs: { name: links[0][2] },
+                        }
+                    },
+                    prompt: function (links, player) {
+                        return '将全部手牌当' + get.translation(links[0][2]) + '使用';
+                    }
+                },
+                ai: {
+                    order: 1,
+                    result: {
+                        player: function (player) {
+                            var num = 0;
+                            var cards = player.getCards('h');
+                            if (cards.length >= 3 && player.hp >= 3) return 0;
+                            for (var i = 0; i < cards.length; i++) {
+                                num += Math.max(0, get.value(cards[i], player, 'raw'));
+                            }
+                            num /= cards.length;
+                            num *= Math.min(cards.length, player.hp);
+                            return 12 - num;
+                        }
+                    },
+                    threaten: 1.6,
                 }
             }
         },
@@ -1685,7 +1930,21 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             xinggan: '性感',
             xinggan_info: '觉醒技，你的回合内若音符数大于你体力值，你体力上限-1，获得技能"美艳"。（勾人心弦的魅力无人可挡）',
             meiyan: '美艳',
-            meiyan_info: '出牌阶段限一次，你可弃置一张武将牌最上面的“音符”并指定一名角色，视为对该角色使用乐不思蜀。'
+            meiyan_info: '出牌阶段限一次，你可弃置一张武将牌最上面的“音符”并指定一名角色，视为对该角色使用乐不思蜀。',
+            kuaidao: '快刀',
+            kuaidao_info: '使用杀指定目标后，你可以弃置其一张牌，若此牌与“杀”花色相同，此“杀”不可被“闪”响应；若此牌为装备牌，此杀伤害+1；此“杀”结算后，该角色获得此“杀”',
+            qiaoyan: '巧盐',
+            qiaoyan_info: '你可以将黑色牌当借刀杀人使用，其他角色使用的普通锦囊对你无效',
+            rewu: '热舞',
+            rewu_info: '出牌阶段限一次，你可弃置X张手牌并最多指定你当前体力值的角色各摸1张牌。（超强表现力的舞姿闪耀全场）',
+            beifen: '辈分',
+            beifen_info: '锁定技，你不会受到体力值不低于你的角色使用锦囊时造成的伤害。（零期生的崛起之路谁人不服）',
+            yuanzhen: '圆阵',
+            yuanzhen_info: '限定技，摸牌阶段，你可额外摸X张牌，减少1点体力上限，并回复1点体力（X为场上与你同势力角色数）（著名神秘仪式独此一家不可复制）',
+            chengzhang: '成长',
+            chengzhang_info: '锁定技。装备区每多一张牌，体力上限+1。每失去一张装备区内的牌，体力上限-1。（青春是最任性的资本，次时代未来可期）',
+            yanji:'演技',
+            yanji_info: '其他角色对你使用杀时，你可说出一种牌并将一张手牌背面朝上出示之，该角色可选择是否质疑，若不质疑，跳过当前结算阶段。若质疑则展示，若为真，对方给你一张装备牌或让你对其造成1点伤害；若为假，你失去1点体力，对方获得你展示的手牌。（丰富的表情包既能表达情绪也能掩盖心思）'
         },
     };
 });
