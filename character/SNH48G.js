@@ -1868,6 +1868,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             huangguan: {
                 audio: 2,
                 unique: true,
+                usable: 1,
                 enable: 'phaseUse',
                 prompt: '弃置任意张手牌并指定不多于弃置手牌数的其他角色，造成弃牌数的伤害随机分配在这些角色上，随后你翻面（X为弃牌数量）',
                 direct: true,
@@ -1881,10 +1882,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     if (result.bool) {
                         player.storage.huangguanDamageCount = result.cards.length;
 
-                        player.chooseTarget('选择角色随机造成' + player.storage.huangguanDamageCount + '点伤害', [1, player.storage.huangguanDamageCount], function(target) {
-                            return true;
-                        }).set('ai', function(target) {
-                            return true;
+                        player.chooseTarget('选择角色随机造成' + player.storage.huangguanDamageCount + '点伤害', [1, player.storage.huangguanDamageCount], function (target) {
+                            return target != player;
+                        }).set('ai', function (target) {
+                            return target != player;
                         });
                     } else {
                         player.storage.huangguanDamageCount = 0;
@@ -1904,6 +1905,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                                 result.targets[randomTarget].damage();
                             }
                         }
+                        player.turnOver();
                     }
                 },
                 ai: {
