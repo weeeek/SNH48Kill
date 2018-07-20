@@ -21,7 +21,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gsunrui: ['female', 'S', 4, ['gaoshi', 'letian']],
             SNH48Gshaoxuecong: ['female', 'S', 4, ['tiaoxin', 'tiandu']],
             SNH48Gwenjingjie: ['female', 'S', 4, ['zaiqi']],
-            SNH48Gwuzhehan: ['female', 'S', 3, ['qianxun', 'qixi']],
+            SNH48Gwuzhehan: ['female', 'S', 4, ['jiangshan', 'jiamian']],
             SNH48Gxuchenchen: ['female', 'S', 3, ['tianlai', 'kuaihuo']],
             SNH48Gxujiaqi: ['female', 'S', 4, ['meiren']],
             SNH48Gxuyiren: ['female', 'S', 3, ['luoshen', 'biyue']],
@@ -135,7 +135,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gsunrui: 'SNH48 Team SII 成员，生日公演专用“男”嘉宾，SNH48二期生',
             SNH48Gshaoxuecong: 'SNH48 Team SII 成员，SNH48四期生',
             SNH48Gwenjingjie: 'SNH48 Team SII 成员，SNH48二期生',
-            SNH48Gwuzhehan: 'SNH48 Team SII 成员，SNH48一期生',
+            SNH48Gwuzhehan: 'SNH48 Team SII 成员，SNH48一期生。五折是一个有点傻气却又不天真的人，热爱动物热爱自然，沉稳和童心在她身上显得无比的和谐。阿爸的武将卡我是特地做得比较中二的，这样比较符合阿爸天然的一面23333。江山是询询的强化，偶尔能英姿的李典谁用谁知道。觉醒之后阿爸则化身暴力输出，皇冠改自神吕布的神愤，与KIKI的上钩形成完美COMBO，也是七五折CP的实力象征。',
             SNH48Gxuchenchen: 'SNH48 Team SII 成员，SNH48一期生',
             SNH48Gxujiaqi: 'SNH48 Team SII 成员，SNH48一期生。从许玛丽到许钩钩，许佳琪一直在超越上一秒的自己，KIKI闪耀的地方不仅仅是好看的外表，更是始终坚强的心灵。阿妈是第一个拥有翻面技能的人，时尚作为回合外的拆顺有稳定的限制爆发能力，上钩改自刘禅的放权，但效果从辅助队友变成强力控场，令KIKI一跃成为S队数一数二的团战强力控制。',
             SNH48Gxuyiren: 'SNH48 Team SII 成员，SNH48三期生',
@@ -660,7 +660,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                             return get.value(card);
                         }
                     };
-                    for (pos = 0; pos < Math.min(event.cards.length, js.length + 2); pos++) {
+                    for (pos = 0; pos < Math.min(event.cards.length, js.length + 2) ; pos++) {
                         var max = getval(event.cards[pos], pos);
                         for (var j = pos + 1; j < event.cards.length; j++) {
                             var current = getval(event.cards[j], pos);
@@ -1105,7 +1105,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }
                     else {
                         //体力值为双数：无视防具且能弃置对方一张牌。
-                        console.log(player.name + ' add skill jingwu3，体力值为双数，无视防具且可额外使用1个杀。')
+                        console.log(player.name + ' add skill jingwu3，体力值为双数，无视防具且可额外使用1个杀。');
                         player.addTempSkill('jingwu3');
                     }
                 },
@@ -1419,11 +1419,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         //case 'spade': trigger.source.turnOver(); break;
                         //若结果为黑桃，伤害来源受到一点伤害；
                         case 'spade': trigger.source.damage();
-                        //若结果为方块，你摸两张牌；
+                            //若结果为方块，你摸两张牌；
                         case 'diamond': player.draw(2); break;
-                        //若结果为红桃，你回复一点体力；
+                            //若结果为红桃，你回复一点体力；
                         case 'heart': player.recover(); break;
-                        //若结果为梅花，伤害来源弃两张牌。
+                            //若结果为梅花，伤害来源弃两张牌。
                         case 'club': trigger.source.chooseToDiscard('he', 2, true); break;
                     }
                 },
@@ -1442,7 +1442,6 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 filter: function (event, player) {
                     if (!player.storage.shenhun)
                         return false;
-                    console.log(player.storage.shenhun.length);
                     return player.storage.shenhun.length > player.hp;
                 },
                 content: function () {
@@ -1485,13 +1484,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                             cards: links,
                             onuse: function (result, player) {
                                 result.cards = lib.skill[result.skill].cards;
-
-                                console.log(result.cards);
-
                                 var card = result.cards[0];
-
-                                console.log(player.storage.shenhun)
-
                                 player.storage.shenhun.remove(card);
                                 player.syncStorage('shenhun');
                                 if (!player.storage.shenhun.length) {
@@ -1768,7 +1761,6 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             haomai: {
                 trigger: { source: 'damageBegin', player: 'damageBegin' },
                 filter: function (event) {
-                    console.log(event.card.name);
                     return event.card && (event.card.name == 'sha' || event.card.name == 'juedou') && event.notLink();
                 },
                 forced: true,
@@ -1779,7 +1771,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     damageBonus: true
                 }
             },
-            //许佳琪
+            //许佳琪，未完成
             shishang: {
                 trigger: { global: 'phaseUseBefore' },
 
@@ -1788,9 +1780,145 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             meiren: {
                 group: ['yingzi', 'biyue'],
                 //锁定技
-                forced:true
-
+                forced: true
             },
+            //吴哲晗
+            jiangshan: {
+                //神吕蒙，涉猎
+                audio: 2,
+                trigger: { player: 'phaseDrawBefore' },
+                content: function () {
+                    "step 0"
+                    //放弃摸牌
+                    trigger.cancel();
+                    "step 1"
+                    //牌堆顶五张
+                    event.cards = get.cards(5);
+                    if (event.isMine() == false) {
+                        event.dialog = ui.create.dialog('江山', event.cards);
+                        game.delay(2);
+                    }
+                    "step 2"
+                    if (event.dialog) event.dialog.close();
+                    var dialog = ui.create.dialog('江山', event.cards);
+                    player.chooseButton([0, 5], dialog, true).set('ai', function (button) {
+                        return get.value(button.link);
+                    }).filterButton = function (button) {
+                        for (var i = 0; i < ui.selected.buttons.length; i++) {
+                            //不同花色
+                            //if (get.suit(button.link) == get.suit(ui.selected.buttons[i].link)) return false;
+                            //不同类型
+                            if (get.type(button.link) == get.type(ui.selected.buttons[i].link)) return false;
+                        }
+                        return true;
+                    }
+                    "step 3"
+                    var cards2 = [];
+                    for (var i = 0; i < result.buttons.length; i++) {
+                        cards2.push(result.buttons[i].link);
+                        cards.remove(result.buttons[i].link);
+                    }
+                    player.gain(cards2, 'log');
+                    if (cards2.length) player.$gain2(cards2);
+                    for (var i = 0; i < cards.length; i++) {
+                        cards[i].discard();
+                    }
+                    game.delay(2);
+                },
+                ai: {
+                    threaten: 1.2
+                }
+            },
+            jiamian: {
+                skillAnimation: true,
+                audio: 2,
+                unique: true,
+                keepSkill: true,
+                derivation: 'huangguan',
+                trigger: { player: 'phaseUseBegin' },
+                forced: true,
+                filter: function (event, player) {
+                    return player.countCards('h', { suit: 'heart' }) > 0 &&
+                           player.countCards('h', { suit: 'diamond' }) > 0 &&
+                           player.countCards('h', { suit: 'spade' }) > 0 &&
+                           player.countCards('h', { suit: 'club' }) > 0;
+                },
+                content: function () {
+                    player.storage.huangguan = true;
+                    player.maxHp--;
+                    player.update();
+                    player.recover();
+                    if (player.hasSkill('jiamian')) {
+                        //失去技能“预言”
+                        //player.unmarkSkill('yuyan');
+                        player.addSkill('huangguan');
+                    }
+                    else {
+                        player.addAdditionalSkill('jiamian', 'huangguan');
+                    }
+                    if (!player.isZhu) {
+                        player.storage.zhuSkill_jiamian = ['huangguan'];
+                    }
+                    else {
+                        event.trigger('zhuUpdate');
+                    }
+                    player.awakenSkill('jiamian');
+                }
+            },
+            huangguan: {
+                audio: 2,
+                unique: true,
+                enable: 'phaseUse',
+                prompt: '弃置任意张手牌并指定不多于弃置手牌数的其他角色，造成弃牌数的伤害随机分配在这些角色上，随后你翻面（X为弃牌数量）',
+                direct: true,
+                content: function () {
+                    'step 0'
+                    player.chooseToDiscard('h', [1, player.countCards('h')], get.prompt('huangguan'), true).set('ai', function (target) {
+                        return _status.currentPhase != player;
+                    });
+                    'step 1'
+                    //var damageCount = result.cards.length;
+                    if (result.bool) {
+                        player.storage.huangguanDamageCount = result.cards.length;
+
+                        player.chooseTarget('选择角色随机造成' + player.storage.huangguanDamageCount + '点伤害', [1, player.storage.huangguanDamageCount], function(target) {
+                            return true;
+                        }).set('ai', function(target) {
+                            return true;
+                        });
+                    } else {
+                        player.storage.huangguanDamageCount = 0;
+                    }
+                    'step 2'
+                    if (result.bool) {
+                        player.logSkill('huangguan', result.targets);
+                        console.log("目标：" + result.targets.length + "个，均摊伤害：" + player.storage.huangguanDamageCount);
+                        if (result.targets.length == 1) {
+                            result.targets[0].damage(player.storage.huangguanDamageCount);
+                        } else {
+                            for (var i = 0; i < player.storage.huangguanDamageCount; i++) {
+                                var randomTarget = Math.floor(Math.random() * result.targets.length);//随机目标
+
+                                console.log(result.targets[randomTarget].name);
+
+                                result.targets[randomTarget].damage();
+                            }
+                        }
+                    }
+                },
+                ai: {
+                    order: 10,
+                    result: {
+                        player: function (player) {
+                            return game.countPlayer(function (current) {
+                                if (current != player) {
+                                    return get.sgn(get.damageEffect(current, player, player));
+                                }
+                            });
+                        }
+                    }
+                }
+            }
         },
         translate: {
             //S
@@ -1980,7 +2108,13 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             shanggou: '上钩',
             shanggou_info: '出牌阶段开始时，你可以选择跳过出牌阶段并弃置一张牌，若这么做，你令一名其他角色翻面。（撩人的神态堪称妖精却又不失风雅）',
             meiren: '美人',
-            meiren_info:'锁定技：（英姿）摸牌阶段多摸一张牌，（闭月）回合结束阶段摸一张牌'
+            meiren_info: '锁定技：（英姿）摸牌阶段多摸一张牌，（闭月）回合结束阶段摸一张牌',
+            jiangshan: '江山',
+            jiangshan_info: '摸牌阶段开始时，你可以跳过摸牌阶段并观看牌堆最上方5张牌，然后获得其中不同类型的牌各1张，其余牌弃置。（苍生万物，皆为我所掌控）',
+            jiamian: '加冕',
+            jiamian_info: '觉醒技，出牌阶段开始时，若你的手牌包含了四种不同花色的牌，你体力上限-1，回复1点体力，永久获得技能"皇冠"。',
+            huangguan: '皇冠',
+            huangguan_info: '出牌阶段限一次，你可弃置任意张手牌并指定不多于弃置手牌数的其他角色，视为你对这些角色随机造成X点伤害，随后你翻面（X为弃牌数量）。 （辉煌不仅停留在回忆，更是一种资本）',
         },
     };
 });
