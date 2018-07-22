@@ -502,7 +502,14 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 				priority:-10,
 				content:function(){
 					trigger.num=1;
-				}
+                },
+                ai: {
+                    effect: {
+                        target: function (card, player, target, current) {
+                            return 1;
+                        }
+                    }
+                }
 			},
 			zhuque_skill:{
 				trigger:{player:'useCardToBefore'},
