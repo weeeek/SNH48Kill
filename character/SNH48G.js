@@ -19,7 +19,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gpanyanqi: ['female', 'S', 4, ['tongxin', 'dedication']],
             SNH48Gqianbeiting: ['female', 'S', 4, ['juxia', 'qiangong']],
             SNH48Gqiuxinyi: ['female', 'S', 4, ['meixi', 'nvwang']],
-            SNH48Gsunrui: ['female', 'S',  3, ['qigai', 'rexin']],
+            SNH48Gsunrui: ['female', 'S', 3, ['qigai', 'rexin']],
             SNH48Gshaoxuecong: ['female', 'S', 4, ['yibing', 'tianpin', 'jiaozhu']],
             SNH48Gshenzhilin: ['female', 'S', 4, ['zanmei', 'luanyin', 'luansheng']],
             SNH48Gwenjingjie: ['female', 'S', 4, ['talent', 'wenhe']],
@@ -32,6 +32,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gyuanyuzhen: ['female', 'S', 4, ['duanliang']],
             SNH48Gzhangyuge: ['female', 'S', 3, ['guayan', 'xuanmu']],
             SNH48Gzhaohanqian: ['female', 'S', 4, ['kuaiyan', 'innocence']],
+            SNH48Gzhaoye: ['female', 'S', 4, ['baofa', 'caihua']],
 
             SNH48Gzhaojiamin: ['female', 'S', 3, ['fankui', 'tiandu']],
 
@@ -146,9 +147,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gxuyiren: 'SNH48 Team SII 成员，SNH48三期生。伊姐是S队的老熟人了，是S队公演一道闪烁的光。技能方面很简单，徐家司机担当是伊姐成名之始，提速自带青龙偃月刀效果，保证了杀的高效率使用。另一方面，不懈的努力和良好的人缘使得伊姐无论在哪都能迅速跟成员打成一片，奋发使得伊姐几乎不会缺杀，简单而直接的技能也是伊姐的作风。',
             SNH48Gxuzixuan: 'SNH48 Team SII 成员，SNH48二期生。络络是S队的忙内，曾经是一个大号的中二患者，现在是继承了七五折外加隔壁戴叔叔优点的中流砥柱。络崽作为七五折之子完美继承了阿爸跟阿妈的技能，同时又有着满满的队魂能辅助其他队友，堪称全能。龙宫改自貂蝉的闭月，龙宫成员越多络崽就越强，更能体现一个浪帅浪帅的徐子苏个人魅力。总之一个字，强。',
             SNH48Gyuandanni: 'SNH48 Team SII 成员，SNH48三期生。有着好人缘的丹妮在队里一直以舞蹈担当的存在散发着自己的光和热。补刀源自丹妮的袁式飞刀人设，也是跟队友联动的神技，联合高爆发的队友几乎无解。自己回合内判定的酷炫增加了手牌可使用杀的数量，跟补刀联动使得丹妮可以瞬间打出三刀流的高爆发。',
-            SNH48Gyuanyuzhen: 'SNH48 Team SII 成员，SNH48二期生',
-            SNH48Gzhaohanqian: 'SNH48 Team SII 成员，SNH48 七期生。赵韩倩给我们带来了很多快乐，也是S队大家的开心果，如今的抖音红人--“赵韩倩要吃钳子”，了解一下。小钳子的两个技能是两种完全不同的机制，只要有发挥的舞台，小钳子就能用自己的实力改变很多东西。',
+            SNH48Gyuanyuzhen: 'SNH48 Team SII 成员，SNH48二期生。余震震，S队第二个98LINE，戏精担当，补刀小能手，安静时美如画，活泼时疯如马（芮哥：儿子儿子MUA~）民乐歌姬了解一下。感性是稳定的拆迁控制，虽然有自己的手牌会被对方看到的风险，但配合第二个技能活泼就完全不一样了，大规模拉牌差能力是余震的强势之处，但单挑能力的缺失以及回合外的反制能力差也是高收益背后的高风险。',
             SNH48Gzhangyuge: 'SNH48 Team SII 成员，SNH48一期生。TAKO是队宠，更是核心，从话唠小章鱼成长为如今的老干部张帅，多方面发展使得TAKO在任何场合都能迅速成为聚焦点。技能方面简单而实用，寡言使得TAKO免疫了除了翻面以外的所有控制，炫目则是神曹操的归心变化而来，一血多牌可以说是卖血流的最强技能之一，也代表着TAKO即使受伤仍然要坚持梦想的决心。',
+            SNH48Gzhaohanqian: 'SNH48 Team SII 成员，SNH48 七期生。赵韩倩给我们带来了很多快乐，也是S队大家的开心果，如今的抖音红人--“赵韩倩要吃钳子”，了解一下。小钳子的两个技能是两种完全不同的机制，只要有发挥的舞台，小钳子就能用自己的实力改变很多东西。',
+            SNH48Gzhaoye: 'SNH48 Team SII 成员，SNH48三期生。腿腿，三期生中为数不多的创作担当，MC冷枪王，TAKO著名小迷妹，虽然天天喊着躺床，却依旧能用优质的表现征服大家。腿腿跟王玉一样属于强命系，不同的地方在于王玉是精准打击，腿腿则是大范围的AOE伤害，而且造成的伤害越多，才华的用处就越大，属于越打越强的残局收割者，也跟腿腿不鸣则已一鸣惊人的设定相符合。',
 
             SNH48Gzhaojiamin: 'SNH48 Team SII 成员，SNH48一期生',
 
@@ -2865,7 +2867,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 usable: 2,
                 trigger: { global: 'damageEnd' },
                 filter: function (event, player) {
-                    return event.player != player && event.player.hp > 0 && player.countCards('h', { name: 'sha' }) > 0 && event.source.group == player.group;
+                    //修复补刀能鞭尸的BUG：死了就别鞭尸了。。。
+                    return event.player != player && event.player.hp > 0 &&
+                        event.player.classList.contains('dead') == false &&
+                        player.countCards('h', { name: 'sha' }) > 0 &&
+                        event.source.group == player.group;
                 },
                 content: function (event) {
                     player.chooseToUse('对' + get.translation(trigger.player.name) + '使用杀', { name: 'sha' }, trigger.player, -1).set('addCount', false).logSkill = 'complement';
@@ -3413,21 +3419,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
 
                         var color = get.color(result.links[0]);
                         var backCards = event.cards.filter(card => get.color(card) == color);
-                        //for (var i = 0; i < event.cards.length; i++) {
-                        //    if (get.color(event.cards[i]) == color) 
-                        //        backCards.push(event.cards[i]);                            
-                        //}
+
                         trigger.player.gain(backCards);
                         trigger.player.$gain2(backCards);
 
                         game.log(trigger.player, '收回了', backCards);
-
-                        //event.cards.remove(backCards);
-                        //if (event.cards.length) {
-                        //    player.gain(event.cards);
-                        //    player.$gain2(event.cards);
-                        //    game.log(player, '获得了', event.cards);
-                        //}
 
                         var gainCards = event.cards.filter(card => get.color(card) != color);
                         if (gainCards.length > 0) {
@@ -3505,7 +3501,374 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 }
             },
             //袁雨桢
-            ganxing: {},
+            ganxing: {
+                //出牌阶段, 你可指定一名其他角色并指定一个花色，观看手牌，然后你弃置其一张此花色的牌。
+                audio: 2,
+                enable: 'phaseUse',
+                usable: 1,
+                filterTarget: function (card, player, target) {
+                    return target != player && target.countCards('h');
+                },
+                content: function () {
+                    "step 0"
+                    player.chooseControl('heart2', 'diamond2', 'club2', 'spade2').set('ai', function (event) {
+                        switch (Math.floor(Math.random() * 6)) {
+                            case 1:
+                            case 4:
+                            case 0: return 'heart2';
+                            case 5: return 'diamond2';
+                            case 2: return 'club2';
+                            case 3: return 'spade2';
+                        }
+                    });
+                    "step 1"
+                    game.log(player, '选择了' + get.translation(result.control));
+                    "step 2"
+                    event.videoId = lib.status.videoId++;
+                    //目标有手牌
+                    var cards = target.getCards('h');
+                    if (player.isOnline2()) {
+                        player.send(function (cards, id) {
+                            ui.create.dialog('感性', cards).videoId = id;
+                        }, cards, event.videoId);
+                    }
+                    event.dialog = ui.create.dialog('感性', cards);
+                    event.dialog.videoId = event.videoId;
+                    if (!event.isMine()) {
+                        event.dialog.style.display = 'none';
+                    }
+                    player.chooseButton().set('filterButton', function (button) {
+                        return get.suit(button.link) == result.control;
+                    }).set('dialog', event.videoId);
+                    "step 3"
+                    if (result.bool) {
+                        event.card = result.links[0];
+                        var func = function (card, id) {
+                            var dialog = get.idDialog(id);
+                            if (dialog) {
+                                for (var i = 0; i < dialog.buttons.length; i++) {
+                                    if (dialog.buttons[i].link == card) {
+                                        dialog.buttons[i].classList.add('selectedx');
+                                    }
+                                    else {
+                                        dialog.buttons[i].classList.add('unselectable');
+                                    }
+                                }
+                            }
+                        }
+                        if (player.isOnline2()) {
+                            player.send(func, event.card, event.videoId);
+                        }
+                        else if (event.isMine()) {
+                            func(event.card, event.videoId);
+                        }
+                        player.chooseControl('ganxing_discard');
+                    }
+                    else {
+                        if (player.isOnline2()) {
+                            player.send('closeDialog', event.videoId);
+                        }
+                        event.dialog.close();
+                        event.finish();
+                    }
+                    "step 4"
+                    if (player.isOnline2()) {
+                        player.send('closeDialog', event.videoId);
+                    }
+                    event.dialog.close();
+                    target.discard(event.card);
+                    event.finish();
+                },
+                ai: {
+                    threaten: 1.5,
+                    result: {
+                        target: function (player, target) {
+                            return -target.countCards('h');
+                        }
+                    },
+                    order: 10,
+                    expose: 0.4,
+                }
+            },
+            huopo: {
+                //出牌阶段限一次，你可将一至三张手牌交给一名同势力角色，若你这么做，该角色的下个回合开始时，你摸等量的牌
+                //匡弼：出牌阶段限一次，你可以选择一名有牌的其他角色，该角色将其一至三张牌置于你的武将牌上。若如此做，你的下准备阶段，你获得武将牌上的所有牌，然后其摸等量的牌
+                enable: 'phaseUse',
+                usable: 1,
+                audio: 2,
+                filterTarget: function (card, player, target) {
+                    return target != player && target.group == player.group;
+                },
+                filter: function (event, player) {
+                    player.countCards('h') > 0;
+                },
+                content: function () {
+                    'step 0'
+                    player.chooseCard('h', [1, 3], '活泼：将1~3张牌交给' + get.translation(target), true).set('ai', function (card) {
+                        if (card.name == 'tao') return -10;
+                        if (card.name == 'jiu' && _status.event.player.hp == 1) return -10;
+                        return get.unuseful(card) + 2.5 * (5 - get.owner(card).hp);
+                    });
+                    'step 1'
+                    if (result.bool) {
+                        //target.$give(result.cards, player);
+                        //target.lose(result.cards, ui.special);
+                        //player.storage.kuangbi_draw = result.cards;
+                        //player.storage.kuangbi_draw_source = target;
+                        //player.syncStorage('kuangbi_draw');
+                        //player.addSkill('kuangbi_draw');
+                        target.gain(result.cards);
+                        target.$gain2(result.cards);
+
+                        player.storage.huopo_draw = result.cards;
+                        player.storage.huopo_target = target;
+                    }
+                },
+                ai: {
+                    order: 1,
+                    result: {
+                        target: function (player, target) {
+                            if (get.attitude(player, target) > 0) {
+                                return Math.sqrt(target.countCards('he'));
+                            }
+                            return 0;
+                        },
+                        player: 1
+                    }
+                },
+                subSkill: {
+                    draw: {
+                        trigger: { global: 'phaseBegin' },
+                        forced: true,
+                        mark: true,
+                        intro: {
+                            content: 'cards'
+                        },
+                        filter: function (event, player, target) {
+                            return target == player.storage.huopo_target
+                        },
+                        content: function () {
+                            var cards = player.storage.huopo_draw;
+                            if (cards) {
+                                player.draw(cards.length);
+                                //var target = player.storage.huopo_target;
+                                //if (target && target.isAlive()) {
+                                //    target.draw(cards.length);
+                                //}
+                            }
+                            delete player.storage.huopo_draw;
+                            delete player.storage.huopo_target;
+                            player.removeSkill('huopo_draw');
+                        }
+                    }
+                }
+            },
+            //赵晔
+            baofa: {
+                //锁定技。你的无懈可击视为杀。你的杀可指定的目标数等于你当前的攻击距离。
+                mod: {
+                    cardEnabled: function (card, player) {
+                        if (card.name == 'wuxie' && _status.event.skill != 'baofa') return false;
+                    },
+                    cardUsable: function (card, player) {
+                        if (card.name == 'wuxie' && _status.event.skill != 'baofa') return false;
+                    },
+                    cardRespondable: function (card, player) {
+                        if (card.name == 'wuxie' && _status.event.skill != 'baofa') return false;
+                    },
+                    selectTarget: function (card, player, range) {
+                        if (card.name != 'sha') return;
+                        if (range[1] == -1) return;
+
+                        range[1] += player.getAttackRange();
+                    }
+                },
+                enable: ['chooseToUse', 'chooseToRespond'],
+                filter: function (event, player) {
+                    return player.countCards('h', 'wuxie') > 0;
+                },
+                filterCard: { name: 'wuxie' },
+                viewAs: { name: 'sha' },
+                viewAsFilter: function (player) {
+                    if (!player.countCards('h', 'wuxie')) return false;
+                },
+                check: function () { return 1 },
+                ai: {
+                    skillTagFilter: function (player) {
+                        if (!player.countCards('h', 'wuxie')) return false;
+                    },
+                    respondSha: true,
+                    order: 4,
+                    useful: -1,
+                    value: -1
+                },
+            },
+            caihua: {
+                //你的杀造成伤害时，你可展示一张牌并进行一次判定，若颜色相同，你获得该判定牌
+                audio: 2,
+                trigger: { source: 'damageEnd' },
+                filter: function (event, player) {
+                    if (event._notrigger.contains(event.player)) return false;
+                    return (event.card && event.card.name == 'sha' &&
+                        event.player.classList.contains('dead') == false &&
+                        event.player.countCards('h') && player.countCards('h')) && event.player != player;
+                },
+                check: function (event, player) {
+                    return player.countCards('h') > 0;
+                },
+                priority: 5,
+                content: function () {
+                    "step 0"
+                    player.chooseCard('h', 1, true).ai = function (card) {
+                        if (_status.event.getRand() < 0.5) return Math.random();
+                        return get.value(card);
+                    };
+                    "step 1"
+                    event.dialog = ui.create.dialog(get.translation(target) + '展示的手牌', result.cards);
+                    event.videoId = lib.status.videoId++;
+
+                    game.broadcast('createDialog', event.videoId, get.translation(target) + '展示的手牌', result.cards);
+                    game.addVideo('cardDialog', null, [get.translation(target) + '展示的手牌', get.cardsInfo(result.cards), event.videoId]);
+                    event.card2 = result.cards[0];
+                    game.log(target, '展示了', event.card2);
+                    "step 2"
+                    player.judge()
+                    "step 3"
+                    if (get.color(result.card) == get.color(event.card2)) {
+                        player.gain(result.card);
+                        player.$gain2(result.card);
+                    }
+                }
+            },
+            //蒋芸
+            jingyan: {
+                audio: 2,
+                trigger: { player: 'phaseEnd' },
+                frequent: true,
+                content: function () {
+                    player.draw();
+                    player.chooseToDiscard('he', 1, true).set('ai', function (card) {
+                        if (card.name == 'tao') return -10;
+                        if (card.name == 'jiu' && _status.event.player.hp == 1) return -10;
+                        return get.unuseful(card) + 2.5 * (5 - get.owner(card).hp);
+                    });
+                },
+                group: 'yingzi'
+            },
+            qichang2: {
+                mod: {
+                    cardEnabled: function (card, player) {
+                        if (card.name == 'wuxie') return false;
+                    },
+                    cardUsable: function (card, player) {
+                        if (card.name == 'wuxie') return false;
+                    },
+                    cardRespondable: function (card, player) {
+                        if (card.name == 'wuxie') return false;
+                    },
+                }
+            },
+            qichang: {
+                enable: 'phaseUse',
+                usable: 1,
+                audio: 2,
+                filter: function (event, player) {
+                    return player.countCards('h') > 0
+                },
+                selectCard: 1,
+                selectTarget: -1,
+                content: function () {
+                    player.addTempSkill("qichang2");
+                },
+            },
+            duomian: {
+                enable: 'phaseUse',
+                usable: 1,
+                audio: 2,
+                filter: function (event, player) {
+                    return player.countCards('h') > 0
+                },
+                chooseButton: {
+                    dialog: function () {
+                        var list = ['taoyuan', 'wugu', 'juedou', 'huogong', 'jiedao', 'tiesuo', 'guohe', 'shunshou', 'wuzhong', 'wanjian', 'nanman'];
+                        //if (get.mode() == 'guozhan' || get.mode() == 'SNH48G')
+                        //    list.concat(['yuanjiao', 'yiyi', 'hezong', 'zengbin','shengdong'])
+                        for (var i = 0; i < list.length; i++) {
+                            list[i] = ['锦囊', '', list[i]];
+                        }
+                        return ui.create.dialog([list, 'vcard']);
+                    },
+                    filter: function (button, player) {
+                        return lib.filter.filterCard({ name: button.link[2] }, player, _status.event.getParent());
+                    },
+                    check: function (button) {
+                        var player = _status.event.player;
+                        var recover = 0, lose = 1, players = game.filterPlayer();
+                        for (var i = 0; i < players.length; i++) {
+                            if (!players[i].isOut()) {
+                                if (players[i].hp < players[i].maxHp) {
+                                    if (get.attitude(player, players[i]) > 0) {
+                                        if (players[i].hp < 2) {
+                                            lose--;
+                                            recover += 0.5;
+                                        }
+                                        lose--;
+                                        recover++;
+                                    }
+                                    else if (get.attitude(player, players[i]) < 0) {
+                                        if (players[i].hp < 2) {
+                                            lose++;
+                                            recover -= 0.5;
+                                        }
+                                        lose++;
+                                        recover--;
+                                    }
+                                }
+                                else {
+                                    if (get.attitude(player, players[i]) > 0) {
+                                        lose--;
+                                    }
+                                    else if (get.attitude(player, players[i]) < 0) {
+                                        lose++;
+                                    }
+                                }
+                            }
+                        }
+                        if (lose > recover && lose > 0) return (button.link[2] == 'nanman') ? 1 : -1;
+                        if (lose < recover && recover > 0) return (button.link[2] == 'taoyuan') ? 1 : -1;
+                        return (button.link[2] == 'wuzhong') ? 1 : -1;
+                    },
+                    backup: function (links, player) {
+                        return {
+                            filterCard: true,
+                            selectCard: 2,
+                            audio: 2,
+                            popname: true,
+                            viewAs: { name: links[0][2] },
+                        }
+                    },
+                    prompt: function (links, player) {
+                        return '将两张手牌当作' + get.translation(links[0][2]) + '使用';
+                    }
+                },
+                ai: {
+                    order: 1,
+                    result: {
+                        player: function (player) {
+                            var num = 0;
+                            var cards = player.getCards('h');
+                            if (cards.length >= 3 && player.hp >= 3) return 0;
+                            for (var i = 0; i < cards.length; i++) {
+                                num += Math.max(0, get.value(cards[i], player, 'raw'));
+                            }
+                            num /= cards.length;
+                            num *= Math.min(cards.length, player.hp);
+                            return 12 - num;
+                        }
+                    },
+                    threaten: 1.6,
+                }
+            }
         },
         translate: {
             //S
@@ -3533,8 +3896,9 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gxuzixuan: '徐子轩',
             SNH48Gyuandanni: '袁丹妮',
             SNH48Gyuanyuzhen: '袁雨桢',
-            SNH48Gzhaohanqian: '赵韩倩',
             SNH48Gzhangyuge: '张语格',
+            SNH48Gzhaohanqian: '赵韩倩',
+            SNH48Gzhaoye: '赵晔',
 
             SNH48Gzhaojiamin: '赵嘉敏',
 
@@ -3785,10 +4149,20 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             chengshu: '成熟',
             chengshu_info: '锁定技。你与所有体力值大于你的角色距离+1，与所有手牌数少于你的角色距离-1。（足够丰富的阅历是未来拼搏的资本）',
             ganxing: '感性',
+            ganxing_discard: '弃置',
             ganxing_info: '出牌阶段,若你有手牌，你可指定一名其他角色，你们互相观看手牌，然后你弃置其一张牌。（没有偶像包袱的时候，真我的性格一展无遗）',
             huopo: '活泼',
             huopo_info: '回合结束阶段，你可将一至三张手牌交给一名同势力角色，若你这么做，该角色的下个回合开始时，你摸等量的牌。（天生爱演也乐于表演，冷场的事咱不干）',
-
+            baofa: '爆发',
+            baofa_info: '锁定技。你不能使用或打出无懈可击。你的杀可指定的目标数等于你当前的攻击距离。（不开口则矣，一开口全是AOE）',
+            caihua: '才华',
+            caihua_info: '你的杀造成伤害时，你可展示一张牌并进行一次判定，若颜色相同，你获得该判定牌。（平时藏拙于内，用时经验四方）',
+            jingyan: '惊艳',
+            jingyan_info: '锁定技。摸牌阶段，你多摸一张牌，结束阶段开始时，你先摸一张牌，然后弃一张牌。',
+            qichang: '气场',
+            qichang_info: '出牌阶段限一次，你可以弃置一张牌，令所有玩家的“无懈可击”无法被使用或者打出，直至你的此回合结束',
+            duomian: '多面',
+            duomian_info:'出牌阶段限两次，你可以将两张手牌当做风标军争非延时锦囊使用',
         },
     };
 });

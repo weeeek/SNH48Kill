@@ -1721,7 +1721,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 selectTarget: 2,
                 multitarget: true,
                 content: function () {
-                    targets[1].useCard({ name: 'juedou' }, targets[0], 'noai').animate = false;
+                    targets[1].useCard({ name: 'juedou2' }, targets[0], 'noai').animate = false;
                     game.delay(0.5);
                 },
                 ai: {
@@ -1764,7 +1764,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				selectTarget:2,
 				multitarget:true,
 				content:function(){
-					targets[1].useCard({name:'juedou'},targets[0],'noai').animate=false;
+					targets[1].useCard({name:'juedou2'},targets[0],'noai').animate=false;
 					game.delay(0.5);
 				},
 				ai:{
