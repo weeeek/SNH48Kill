@@ -815,6 +815,28 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }
                 }
             },
+
+            wenrou: {
+                trigger: { global: 'damageEnd' },
+                locked:true,
+                forced: true,
+                frequent: true,
+                filter: function (event, player) {
+                    //伤害来源
+                    //event.source
+                    //受伤的
+                    //event.player
+                    //你
+                    //player
+                    return event.player.hp == player.hp;
+                },
+                content: function () {
+                    //受伤的
+                    trigger.player.draw();
+                    //你
+                    player.draw();
+                }
+            },
             //鞠婧祎
             dufei: {
                 unique: true,
@@ -2546,7 +2568,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 },
                 content: function () {
                     "step 1"
-                    trigger.player.judge();
+                    trigger.source.judge();
                     "step 2"
                     switch (get.color(result.card)) {
                         case 'black':
@@ -4002,6 +4024,9 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             zhanbu: '占卜',
             zhanbu_info: '准备阶段，你可以观看牌堆顶的x张牌，并将其以任意顺序置于牌堆项或牌堆底，x为存活角色个数且不超过5',
 
+            //初心不忘设计的技能
+            wenrou: '温柔',
+            wenrou_info:'每当有角色受到伤害后，若其体力值与你相同，你和他各摸一张牌',
             //丶Gone设计的技能
             luandance: '乱舞',
             luandance_info: '令除你外的所有SNH48G非官方角色依次对另一名角色使用一张【杀】，无法如此做者受到1点伤害。',
