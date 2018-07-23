@@ -46,19 +46,19 @@
 			<ul>
 				<li>
 					在character/SNH48G.js中，在character对象中定义武将（性别，阵营，体力上限，技能组），以“SNH48G”+ 名成拼音命名，名称不可和其它卡牌重复					
-					```
+					```javascript
 					SNH48Gjujingyi: ['female', 'N', 4, ['dufei', 'poisonousfog', 'jiedu', 'duzong']]
 					```
 				</li>
 				<li>
 					在character/SNH48G.js中，在characterIntro对象中定义武将的简介，名称同上面定义的武将名
-					```
+					```javascript
 					SNH48Gjujingyi: '明星殿堂 成员，SNH48二期生'
 					```
 				</li>
 				<li>
 					在character/SNH48G.js中，在skill对象中定义技能名称，名称不可和其它技能重复					
-					```
+					```javascript
 					poisonousfog: {
 						audio: 2,
 						enable: 'phaseUse',
@@ -95,7 +95,7 @@
 				</li>
 				<li>
 					在character/SNH48G.js中，在translate对象中定义技能显示名称，技能介绍（因“毒雾”拼音同“黩武”，故改为“poisonousfog”）
-					```
+					```javascript
 					dufei: '毒妃',
 					dufei_info: '锁定技：每当其他角色弃置、判定、拼点、使用后并进入弃牌堆的毒，你获得之。你每有一个“毒”，手牌上限+1。你使用毒时不会流失体力，反而会回复1点体力。',
 					poisonousfog: '毒雾',
