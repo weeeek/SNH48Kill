@@ -56,7 +56,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gzhangyi: ['female', 'N', 3, ['duwu', 'mashu']],
             SNH48Gzhangyuxin: ['female', 'N', 3, ['duwu', 'mashu']],
 
-            SNH48Gjujingyi: ['female', 'N', 3, ['dufei', 'poisonousfog', 'jiedu', 'duzong']],
+            SNH48Gjujingyi: ['female', 'N', 4, ['dufei', 'poisonousfog', 'jiedu', 'duzong']],
 
             //H
             SNH48Gfeiqinyuan: ['female', 'H', 4, ['yuanqi', 'fengfa']],
@@ -1000,7 +1000,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             jiedu: {
                 enable: 'chooseToUse',
                 filter: function (event, player) {
-                    return event.type == 'dying' && event.dying && event.dying.hp <= 0 && player.countCards('h', { name: 'du' }) > 0;
+                    return event.type == 'dying' &&
+                        event.dying && event.dying.hp <= 0 &&
+                        event.dying != player &&
+                        player.countCards('h', { name: 'du' }) > 0;
                 },
                 filterTarget: function (card, player, target) {
                     return target == _status.event.dying;
@@ -1051,8 +1054,6 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     player.update();
                     player.recover();
                     if (player.hasSkill('duzong')) {
-                        //失去技能“预言”
-                        //player.unmarkSkill('yuyan');
                         player.addSkill('xinxie');
                     }
                     else {
@@ -4009,9 +4010,9 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             poisonousfog: '毒雾',
             poisonousfog_info: '出牌阶段限一次，你可以弃置两张“毒”，若如此做，除你之外的所有角色失去1点体力',
             jiedu: '解毒',
-            jiedu_info: '其他角色失去体力濒死时，你可以弃置一张"毒"，使其回复至1点HP。然后你摸一张牌',
+            jiedu_info: '其他角色失去体力濒死时，你可以弃置一张"毒"，使其回复至1点体力。然后你摸一张牌',
             duzong: '毒宗',
-            duzong_info: '觉醒技：若你手中的“毒”超过两张，你体力上限-1并回复1点体力，永久获得技能“心血”',
+            duzong_info: '觉醒技：若你手中的“毒”大于等于两张，你体力上限-1并回复1点体力，永久获得技能“心血”',
             xinxie: '心血',
             xinxie_info: '你每次使用“毒”之后，摸1张牌；你的结束阶段，随机将一张手牌转化为毒。',
 
@@ -4162,7 +4163,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             qichang: '气场',
             qichang_info: '出牌阶段限一次，你可以弃置一张牌，令所有玩家的“无懈可击”无法被使用或者打出，直至你的此回合结束',
             duomian: '多面',
-            duomian_info:'出牌阶段限两次，你可以将两张手牌当做风标军争非延时锦囊使用',
+            duomian_info: '出牌阶段限两次，你可以将两张手牌当做风标军争非延时锦囊使用',
         },
     };
 });
