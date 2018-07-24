@@ -1709,14 +1709,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             },
             diandao: {
                 audio: 2,
-                trigger: { player: 'damageEnd' },
-                filter: function (event, player) {
-                    return (event.source != undefined);
+                trigger: { global: 'damageEnd' },
+                filter: function (event, player) {                    
+                    return event.player == player && player.classList.contains('dead') == false;
                 },
-                check: function (event, player) {
-                    return (get.attitude(player, event.source) <= 0);
-                },
-                logTarget: 'source',
+                logTarget: 'player',
                 content: function () {
                     "step 0"
                     player.judge();
@@ -1884,21 +1881,33 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 subSkill: {
                     yan: {
                         audio: 2,
-                        trigger: { source: 'damageBefore' },
+                        trigger: { source: 'damageBefore', player: 'damageBefore' },
                         forced: true,
                         priority: 15,
-                        filter: function (event, player) {
-                            return get.type(event.card, 'trick') == 'trick' && player != event.player;
+                        check: function (event, player) {
+                            if (player == event.player) return true;
+                            return false;
                         },
-                        content: function (event) {
-                            if (trigger.player.hasSkill("qiaoyan"))
-                                trigger.cancel();
+                        filter: function (event, player) {
+                            return get.type(event.card, 'trick') == 'trick' && get.color(event.card) == 'black';
+                        },
+                        content: function () {
+                            trigger.cancel();
                         },
                         ai: {
                             notrick: true,
                             notricksource: true,
                             effect: {
-
+                                target: function (card, player, target, current) {
+                                    if (get.type(card) == 'trick' && get.color(card) == 'black' && get.tag(card, 'damage')) {
+                                        return 'zeroplayertarget';
+                                    }
+                                },
+                                player: function (card, player, target, current) {
+                                    if (get.type(card) == 'trick' && get.color(card) == 'black' && get.tag(card, 'damage')) {
+                                        return 'zeroplayertarget';
+                                    }
+                                }
                             }
                         }
                     }
@@ -1996,7 +2005,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     player.storage.yuanzhen = true;
                 }
             },
-            //吕一，未完成
+            //吕一
             chengzhang: {
                 group: ['chengzhang1', 'chengzhang2', 'chengzhang3']
             },
@@ -2031,9 +2040,14 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             chengzhang2: {
                 trigger: { player: 'equipAfter' },
                 frequent: true,
-                content: function () {
+                content: function (trigger) {
+                    'step 0'
                     ++player.maxHp;
                     player.update();
+                    player.judge();
+                    'step 1'
+                    if (get.color(result.card) == get.color(trigger.card))
+                        player.recover();
                 }
             },
             chengzhang3: {
@@ -2042,7 +2056,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 popup: false,
                 derivation: ['wenrou', 'jianyi', 'haomai', 'meiren', 'huangguan'],
                 filter: function (event, player) {
-                    if (player.equiping) return false;                    
+                    if (player.equiping) return false;
                     if (player.additionalSkills.chengzhang3) {
                         return player.additionalSkills.chengzhang3.length != player.countCards('e');
                     }
@@ -2137,7 +2151,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     threaten: 1.6,
                 }
             },
-            //李宇琪
+            //李宇琪，未完成
             haomai: {
                 trigger: { source: 'damageBegin', player: 'damageBegin' },
                 filter: function (event) {
@@ -2153,10 +2167,42 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             },
             //许佳琪，未完成
             shishang: {
+                usable: 1,
                 trigger: { global: 'phaseUseBefore' },
-
+                filter: function (event, player) {
+                    return event.player != player && player.countCards('h') > 0 && event.player.countCards('h') > 0;
+                },
+                content: function (event) {
+                    'step 0'
+                    player.chooseToCompare(event.player);
+                    'step 1'
+                    if (result.bool)
+                        player.gainPlayerCard(get.prompt('shishang', event.player), event.player, get.buttonValue, 'he').set('logSkill', ['shishang', event.player]);
+                },
             },
-            shanggou: {},
+            shanggou: {
+                usable: 1,
+                enable: 'phaseUseBegin',
+                filterTarget: function (card, player, target) {
+                    return player != target;
+                },
+                selectTarget: 1,
+                content: function (event) {
+                    event.target.turnOver();
+                },
+                ai: {
+                    order: 10,
+                    result: {
+                        player: function (player) {
+                            return game.countPlayer(function (current) {
+                                if (current != player) {
+                                    return get.sgn(get.effect(current, player, player));
+                                }
+                            });
+                        }
+                    }
+                }
+            },
             meiren: {
                 group: ['yingzi', 'biyue'],
                 //锁定技
@@ -2401,7 +2447,6 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             tongyin4: {
                 enable: 'chooseToUse',
                 filter: function (event, player) {
-                    console.log(player.storage.tongyin.length);
                     return event.type == 'dying' && event.dying && event.dying.hp <= 0 && player.storage.tongyin.length > 0;
                 },
                 filterTarget: function (card, player, target) {
@@ -2412,7 +2457,9 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 selectTarget: -1,
                 content: function () {
                     "step 0"
-                    player.chooseCardButton(get.translation('tongyin'), player.storage.tongyin, true);
+                    player.chooseCardButton(player.storage.tongyin, get.translation('tongyin')).set('ai', function (button) {
+                        return 0;
+                    });
                     "step 1"
                     if (result.bool) {
                         player.logSkill('tongyin');
@@ -2675,7 +2722,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 direct: true,
                 content: function () {
                     "step 0"
-                    player.chooseTarget(get.prompt('dedication'), function (card, player, target) {
+                    player.chooseTarget(get.prompt('dedication'), 1, function (card, player, target) {
                         return player != target && _status.event.source != target;
                     }).set('ai', function (target) {
                         var num = get.attitude(_status.event.player, target);
@@ -2694,9 +2741,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         var target = result.targets[0];
                         player.logSkill('dedication', result.targets);
                         target.recover();
-                        for (var i = 0; i < result.targets.length; i++) {
-                            result.targets[i].draw(Math.min(5, result.targets[i].maxHp) - result.targets[i].countCards('h'));
-                        }
+                        target.draw(Math.min(5, target.maxHp) - target.countCards('h'));
                         target.addSkill('tongxin');
                     }
                 },
@@ -2902,7 +2947,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     player.chooseControl('摸牌', '弃牌').set('ai', function (event) {
                         //永远都为自己着想的AI
                         return 0
-                    });                    
+                    });
                     "step 1"
                     player.storage.jiaozhu = result.index;
                     var num = 0;
@@ -2928,7 +2973,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                             default:
                                 player.logSkill('relianying', result.targets);
                                 game.asyncDraw(result.targets);
-                        }                        
+                        }
                     }
                 },
                 ai: {
@@ -4177,7 +4222,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             kuaidao: '快刀',
             kuaidao_info: '使用杀指定目标后，你可以弃置其一张牌，若此牌与“杀”花色相同，此“杀”不可被“闪”响应；若此牌为装备牌，此杀伤害+1；此“杀”结算后，该角色获得此“杀”',
             qiaoyan: '巧盐',
-            qiaoyan_info: '你可以将黑色牌当借刀杀人使用，其他角色使用的伤害锦囊对你无效',
+            qiaoyan_info: '你可以将黑色牌当借刀杀人使用，锁定技，每当黑色锦囊牌造成伤害时，若你为伤害来源，你防止此伤害；锁定技，每当你受到黑色锦囊牌对你造成的伤害时，你防止此伤害。',
             rewu: '热舞',
             rewu_info: '出牌阶段限一次，你可弃置X张手牌并最多指定你当前体力值的角色各摸1张牌。（超强表现力的舞姿闪耀全场）',
             beifen: '辈分',
@@ -4185,7 +4230,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             yuanzhen: '圆阵',
             yuanzhen_info: '限定技，摸牌阶段，你可额外摸X张牌，减少1点体力上限，并回复1点体力（X为场上与你同势力角色数）（著名神秘仪式独此一家不可复制）',
             chengzhang: '成长',
-            chengzhang_info: '锁定技。装备区每多一张牌，体力上限+1。每失去一张装备区内的牌，体力上限-1。你根据装备区里牌的数量获得以下技能：1种或以上-温柔；2种或以上-坚毅；3种或以上-豪迈；4种或以上-美人；5种-皇冠。（青春是最任性的资本，次时代未来可期）',
+            chengzhang2: '成长',
+            chengzhang_info: '锁定技。装备区每多一张牌，体力上限+1并回复1点体力。每失去一张装备区内的牌，体力上限-1。你根据装备区里牌的数量获得以下技能：1种或以上-温柔；2种或以上-坚毅；3种或以上-豪迈；4种或以上-美人；5种-皇冠。（青春是最任性的资本，次时代未来可期）',
             yanji: '演技',
             yanji_info: '其他角色对你使用杀时，你可说出一种牌并将一张手牌背面朝上出示之，该角色可选择是否质疑，若不质疑，跳过当前结算阶段。若质疑则展示，若为真，对方给你一张装备牌或让你对其造成1点伤害；若为假，你失去1点体力，对方获得你展示的手牌。（丰富的表情包既能表达情绪也能掩盖心思）',
             haomai: '豪迈',
@@ -4205,8 +4251,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             longgong: '龙宫',
             longgong_info: '弃牌阶段开始前，你摸1+X张牌，X为场上与你同势力的角色数',
             tongyin: '痛饮',
-            tongyin_bg: '可乐',
-            tongyin_mark_bg: '可',
+            tongyin_bg: '可',
+            tongyin_mark_bg: '可乐',
             tongyin_info: '锁定技：每当其他角色弃置、判定、拼点、使用后的“酒”进入弃牌堆后，你可将其置于你的武将牌上，称为"可乐"。每当一名角色进入濒死状态，你可弃置一瓶可乐视为其使用“酒”。（阔落是力量之源也是解愁良药）',
             yonglie: '勇烈',
             yonglie_info: '出牌阶段，你可弃置所有可乐，指定最多不超过3名角色造成共计X点伤害(X为可乐数)，随机分配每名目标角色受到的伤害点数。（头铁偶像有着自己的成熟想法绝不向谣言屈服）',
@@ -4217,7 +4263,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             tongxin: '同心',
             tongxin_info: '每当与你势力相同的武将受到伤害时，你可失去X点体力并对伤害来源进行一次判定，若为黑色，视为你对其造成X点雷属性伤害；若为红色，视为你对其造成X点火属性伤害。（X为受到的伤害值）（温柔的内心必当理解队友受到的伤害，也绝不轻饶给队友造成伤害的人）',
             dedication: '奉献',
-            dedication_info: '你死亡时，你可令一名角色获得技能"同心"并将手牌补至体力上限。（即使自身处境险恶，依然希望用尽最后一份力量为团队作出贡献）',
+            dedication_info: '你死亡时，你可令一名角色获得技能"同心"并将手牌补至体力上限，最多5张。（即使自身处境险恶，依然希望用尽最后一份力量为团队作出贡献）',
             juxia: '聚虾',
             juxia_bg: '虾',
             juxia_mark_bg: '虾',
@@ -4240,7 +4286,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             complement_info: '每当一名同势力角色造成伤害时，你可向受伤角色使用一张杀，若此杀造成伤害，你可再出一张杀，每个角色的回合最多两次。（神奇的脑回路往往会产生炸裂的娱乐效果）',
             kuxuan: '酷炫',
             kuxuan2: '酷炫',
-            kuxuan_info: '摸牌阶段开始时，你可进行一次判定，并获得判定牌，你在你的回合内，可以将所有与判定牌相同颜色的手牌视为杀使用或打出。（努力追求的目标也许未必会达成，但努力本身必定有所收获）',
+            kuxuan_info: '摸牌阶段开始前，你可进行一次判定，获得判定牌，你在你的回合内，可以将所有与判定牌相同颜色的手牌视为杀使用或打出。（努力追求的目标也许未必会达成，但努力本身必定有所收获）',
             kuaiyan: '快言',
             kuaiyan_info: '出牌阶段仅一次，你可选择一名其他角色进行一次判定，若结果为黑色，其受到1点雷属性伤害。（每一句率直的话都是前辈心口的一道刀疤）',
             innocence: '无邪',
