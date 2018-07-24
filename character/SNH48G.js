@@ -13,7 +13,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gjiangyun: ['female', 'S', 3, ['jingyan', 'qichang', 'duomian']],
             SNH48Gkongxiaoyin: ['female', 'S', 4, ['shenhun', 'diandao', 'xinggan']],
             SNH48Glvyi: ['female', 'S', 4, ['chengzhang']],
-            SNH48Gliyuqi: ['female', 'S', 4, ['haomai', 'quanneng', 'qice']],
+            SNH48Gliyuqi: ['female', 'S', 3, ['haomai', 'quanneng', 'chongzhen']],
             SNH48Gliuzengyan: ['female', 'S', 4, ['tongyin', 'yonglie']],
             SNH48Gmohan: ['female', 'S', 3, ['shiyu', 'yuyan', 'ziqiang'], ['zhu']],
             SNH48Gpanyanqi: ['female', 'S', 4, ['tongxin', 'dedication']],
@@ -25,9 +25,9 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gwenjingjie: ['female', 'S', 4, ['talent', 'wenhe']],
             SNH48Gwuzhehan: ['female', 'S', 4, ['jiangshan', 'jiamian']],
             SNH48Gxuchenchen: ['female', 'S', 3, ['qiangyin', 'jinwu', 'chengshu']],
-            SNH48Gxujiaqi: ['female', 'S', 4, ['meiren']],
+            SNH48Gxujiaqi: ['female', 'S', 4, ['shengou', 'secret', 'meiren']],
             SNH48Gxuyiren: ['female', 'S', 4, ['tisu', 'fenfa']],
-            SNH48Gxuzixuan: ['female', 'S', 4, ['longgong', 'jianxiong']],
+            SNH48Gxuzixuan: ['female', 'S', 4, ['longgong', 'huangzi']],
             SNH48Gyuandanni: ['female', 'S', 4, ['complement', 'kuxuan']],
             SNH48Gyuanyuzhen: ['female', 'S', 4, ['ganxing', 'huopo']],
             SNH48Gzhangyuge: ['female', 'S', 3, ['guayan', 'xuanmu']],
@@ -1710,10 +1710,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             diandao: {
                 audio: 2,
                 trigger: { global: 'damageEnd' },
-                filter: function (event, player) {                    
+                filter: function (event, player) {
                     return event.player == player && player.classList.contains('dead') == false;
                 },
-                logTarget: 'player',
+                logTarget: 'target',
                 content: function () {
                     "step 0"
                     player.judge();
@@ -1818,13 +1818,12 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             kuaidao: {
                 trigger: { player: 'shaBegin' },
                 filter: function (event) {
-                    return event.target.countCards('he') > 0;
+                    return event.target.countCards('h') > 0;
                 },
                 direct: true,
                 content: function (event, trigger) {
-                    console.log(trigger)
                     'step 0'
-                    player.discardPlayerCard(trigger.target, get.prompt('kuaidao', trigger.target)).set('ai', function (button) {
+                    player.discardPlayerCard(trigger.target, 'h', get.prompt('kuaidao', trigger.target)).set('ai', function (button) {
                         if (!_status.event.att) return 0;
                         if (get.position(button.link) == 'e') return get.value(button.link);
                         return 1;
@@ -1837,6 +1836,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         }
                         //花色相同不能被响应
                         if (get.suit(result.links[0]) == get.suit(trigger.cards[0])) {
+                            console.log("花色相同不能被响应")
                             trigger.directHit = true;
                         }
                         if (trigger.cards) {
@@ -2165,22 +2165,25 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     damageBonus: true
                 }
             },
-            //许佳琪，未完成
-            shishang: {
+            //许佳琪,secret未完成
+            shengou: {
                 usable: 1,
                 trigger: { global: 'phaseUseBefore' },
                 filter: function (event, player) {
                     return event.player != player && player.countCards('h') > 0 && event.player.countCards('h') > 0;
                 },
-                content: function (event) {
+                logTarget: function (event) {
+                    return event.player;
+                },
+                content: function (event, trigger) {
                     'step 0'
-                    player.chooseToCompare(event.player);
+                    player.chooseToCompare(trigger.player);
                     'step 1'
                     if (result.bool)
-                        player.gainPlayerCard(get.prompt('shishang', event.player), event.player, get.buttonValue, 'he').set('logSkill', ['shishang', event.player]);
+                        player.gainPlayerCard(get.prompt('shengou', event.player), trigger.player, get.buttonValue, 'he').set('logSkill', ['shengou', trigger.player]);
                 },
             },
-            shanggou: {
+            secret: {
                 usable: 1,
                 enable: 'phaseUseBegin',
                 filterTarget: function (card, player, target) {
@@ -2348,18 +2351,52 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             },
             //徐子轩，未完成
             longgong: {
+                //回合结束时摸X张牌（X为场上与你相同势力的角色数量）
                 audio: 2,
-                trigger: { player: 'phaseDiscardBefore' },
+                trigger: { player: 'phaseEnd' },
                 direct: true,
                 filter: function (event, player) {
                     return true;
                 },
                 forced: true,
                 content: function () {
-                    player.draw(1 + game.countPlayer(function (current) {
-                        if (player != current && current.group == player.group)
+                    player.draw(game.countPlayer(function (current) {
+                        if (current.group == player.group)
                             return 1;
                     }))
+                }
+            },
+            huangzi: {
+                skillAnimation: true,
+                audio: 2,
+                unique: true,
+                keepSkill: true,
+                derivation: ['jiangshan', 'shengou'],
+                trigger: { player: 'phaseBegin' },
+                forced: true,
+                filter: function (event, player) {
+                    return player.hp * 10 <= player.maxHp * 5;
+                },
+                content: function () {
+                    player.maxHp--;
+                    player.update();
+                    player.recover();
+                    if (player.hasSkill('huangzi')) {
+                        //失去技能“预言”
+                        //player.unmarkSkill('yuyan');
+                        player.addSkill('jiangshan');
+                        player.addSkill('shengou');
+                    }
+                    else {
+                        player.addAdditionalSkill('huangzi', ['jiangshan', 'shengou']);
+                    }
+                    if (!player.isZhu) {
+                        player.storage.zhuSkill_huangzi = ['jiangshan', 'shengou'];
+                    }
+                    else {
+                        event.trigger('zhuUpdate');
+                    }
+                    player.awakenSkill('huangzi');
                 }
             },
             //刘增艳
@@ -2691,16 +2728,28 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             },
             //潘燕琦，有BUG
             tongxin: {
-                //每当与你势力相同的武将受到伤害时，你可对伤害来源进行一次判定，若为黑色，视为你对其造成X点雷属性伤害；若为红色，视为你对其造成X点火属性伤害，然后失去1点体力。（X为受到的伤害值）
+                //每当与你势力相同的武将受到伤害时，你可对伤害来源进行一次判定，若为黑色，视为你对其造成X点雷属性伤害；若为红色，视为你对其造成X点火属性伤害，然后再进行一次判定，若为黑色，失去1点体力，若为红色，弃1张牌。（X为受到的伤害值）
                 audio: 4,
                 trigger: { global: 'damageEnd' },
                 filter: function (event, player) {
-                    return event.player.group == player.group;
+                    //event.player.group == player.group && 
+                    if (event.source == player)
+                        return false;
+                    if (event.source.identity == 'zhong' && player.identity == 'zhu' ||
+                        event.source.identity == 'mingzhong' && player.identity == 'mingzhu' ||
+                        event.source.identity == 'zhu' && player.identity == 'zhong' ||
+                        event.source.identity == 'mingzhu' && player.identity == 'mingzhong' ||
+                        event.source.identity == 'fan' && player.identity == 'fan' ||
+                        event.source.identity == 'mingfan' && player.identity == 'mingfan'
+                    )
+                        return false;
+                    return true;
                 },
+                logTarget: 'source',
                 content: function () {
-                    "step 1"
+                    "step 0"
                     trigger.source.judge();
-                    "step 2"
+                    "step 1"
                     switch (get.color(result.card)) {
                         case 'black':
                             trigger.source.damage(trigger.num, 'thunder')
@@ -2710,7 +2759,21 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                             trigger.source.damage(trigger.num, 'fire')
                             break;
                     }
-                    player.loseHp();
+                    'step 2'
+                    player.judge();
+                    'step 3'
+                    switch (get.color(result.card)) {
+                        case 'black':
+                            player.loseHp();
+                            break;
+                        default:
+                        case 'red':
+                            if (player.countCards('he') > 0)
+                                player.chooseToDiscard('he', 1, true).set('ai', function (card) {
+                                    return 9 - get.value(card);
+                                })
+                            break;
+                    }
                 },
                 ai: {
                     expose: 0.3
@@ -3333,7 +3396,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     },
                     targetInRange: function (card, player, target, now) {
                         var type = get.type(card);
-                        if (type == 'trick' || type == 'delay')
+                        if (type == 'trick')
                             return true;
                     }
                 },
@@ -3855,10 +3918,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 audio: 2,
                 trigger: { source: 'damageEnd' },
                 filter: function (event, player) {
-                    if (event._notrigger.contains(event.player)) return false;
-                    return (event.card && event.card.name == 'sha' &&
-                        event.player.classList.contains('dead') == false &&
-                        event.player.countCards('h') && player.countCards('h')) && event.player != player;
+                    return event.card && event.card.name == 'sha' && player.countCards('h') > 0;
                 },
                 check: function (event, player) {
                     return player.countCards('h') > 0;
@@ -3912,17 +3972,13 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 filterTarget: function (card, player, target) {
                     return player != target;
                 },
+                filterCard: true,
                 selectTarget: -1,
+                selectCard: 1,
                 content: function (event, trigger) {
-                    'step 0'
-                    player.chooseToDiscard('h', [0, 1], '弃置一张牌，令所有玩家的“无懈可击”无法被使用或者打出，直至你的此回合结束', true).set('ai', function (button) {
-                        return 9 - get.value(card)
-                    });
-                    'step 1'
-                    if (result.cards > 0) {
-                        for (var i = 0; i < event.targets.length; i++) {
-                            event.targets[i].addTempSkill("qichang2");
-                        }
+                    console.log(event.targets);
+                    for (var i = 0; i < event.targets.length; i++) {
+                        event.targets[i].addTempSkill("qichang2");
                     }
                 },
                 ai: {
@@ -4220,7 +4276,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             meiyan: '美艳',
             meiyan_info: '出牌阶段限一次，你可弃置一张武将牌最上面的“音符”并指定一名角色，视为对该角色使用乐不思蜀。',
             kuaidao: '快刀',
-            kuaidao_info: '使用杀指定目标后，你可以弃置其一张牌，若此牌与“杀”花色相同，此“杀”不可被“闪”响应；若此牌为装备牌，此杀伤害+1；此“杀”结算后，该角色获得此“杀”',
+            kuaidao_info: '使用杀指定目标后，你可以弃置其一张手牌，若此牌与“杀”花色相同，此“杀”不可被“闪”响应；同时若此牌为装备牌，此杀伤害+1；此“杀”结算后，该角色获得此“杀”',
             qiaoyan: '巧盐',
             qiaoyan_info: '你可以将黑色牌当借刀杀人使用，锁定技，每当黑色锦囊牌造成伤害时，若你为伤害来源，你防止此伤害；锁定技，每当你受到黑色锦囊牌对你造成的伤害时，你防止此伤害。',
             rewu: '热舞',
@@ -4236,10 +4292,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             yanji_info: '其他角色对你使用杀时，你可说出一种牌并将一张手牌背面朝上出示之，该角色可选择是否质疑，若不质疑，跳过当前结算阶段。若质疑则展示，若为真，对方给你一张装备牌或让你对其造成1点伤害；若为假，你失去1点体力，对方获得你展示的手牌。（丰富的表情包既能表达情绪也能掩盖心思）',
             haomai: '豪迈',
             haomai_info: '锁定技：你受到和使用杀或决斗造成伤害时结算结束后伤害+1。（直率的个性有着别样的魅力）',
-            shishang: '时尚',
-            shishang_info: '你可在其它任意角色的出牌阶段开始时与其拼点，若你赢，你获得其一张牌。（风尚一姐的自信能带来无比的闪耀）',
-            shanggou: '上钩',
-            shanggou_info: '出牌阶段开始时，你可以选择跳过出牌阶段并弃置一张牌，若这么做，你令一名其他角色翻面。（撩人的神态堪称妖精却又不失风雅）',
+            shengou: '神钩',
+            shengou_info: '你可在其它任意角色的出牌阶段开始时与其拼点，若你赢，你获得其一张牌。（风尚一姐的自信能带来无比的闪耀）',
+            secret: '奥秘',
+            secret_info: '出牌阶段开始时，你可以选择跳过出牌阶段并弃置一张牌，若这么做，你令一名其他角色翻面。（撩人的神态堪称妖精却又不失风雅）',
             meiren: '美人',
             meiren_info: '锁定技：（英姿）摸牌阶段多摸一张牌，（闭月）回合结束阶段摸一张牌',
             jiangshan: '江山',
@@ -4250,6 +4306,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             huangguan_info: '出牌阶段限一次，你可弃置任意张手牌并指定不多于弃置手牌数的其他角色，视为你对这些角色随机造成X点伤害，随后你翻面（X为弃牌数量）。 （辉煌不仅停留在回忆，更是一种资本）',
             longgong: '龙宫',
             longgong_info: '弃牌阶段开始前，你摸1+X张牌，X为场上与你同势力的角色数',
+            huangzi: '皇子',
+            huangzi_info: '觉醒技，回合开始时，若你的体力值小于等于你的体力上限的一半，你失去1点体力上限，回复1点体力，并获得技能“江山”，“神钩”',
             tongyin: '痛饮',
             tongyin_bg: '可',
             tongyin_mark_bg: '可乐',
@@ -4261,7 +4319,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             nvwang: '女王',
             nvwang_info: '锁定技，若你对一名角色造成伤害，你可以选择终止该次伤害，目标角色进行三选一：1，弃置装备区内的所有牌并失去1点体力；2，弃置一张装备牌并失去1点体力上限,；3，失去1点体力和体力上限。（蜕变的女王有着压制性的强大）',
             tongxin: '同心',
-            tongxin_info: '每当与你势力相同的武将受到伤害时，你可失去X点体力并对伤害来源进行一次判定，若为黑色，视为你对其造成X点雷属性伤害；若为红色，视为你对其造成X点火属性伤害。（X为受到的伤害值）（温柔的内心必当理解队友受到的伤害，也绝不轻饶给队友造成伤害的人）',
+            tongxin_info: '每当与你势力相同的武将受到伤害时，你可失去X点体力并对伤害来源进行一次判定，若为黑色，视为你对其造成X点雷属性伤害；若为红色，视为你对其造成X点火属性伤害（X为受到的伤害值）；然后再进行一次判定，若为黑色，你失去1点体力，若为红色，你弃1张牌，如果有。（温柔的内心必当理解队友受到的伤害，也绝不轻饶给队友造成伤害的人）',
             dedication: '奉献',
             dedication_info: '你死亡时，你可令一名角色获得技能"同心"并将手牌补至体力上限，最多5张。（即使自身处境险恶，依然希望用尽最后一份力量为团队作出贡献）',
             juxia: '聚虾',
@@ -4296,7 +4354,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             wenhe: '温和',
             wenhe_info: '每当一名角色的判定牌生效前，你可打出一张牌替代之，若该牌与判定牌花色相同，你获得该判定牌。（温婉的性格在平缓队友急躁的心情的同时也能解决很多不必要的麻烦）',
             guayan: '寡言',
-            guayan_info: '你不能成为非延时类锦囊的目标，你使用非延时类锦囊无距离限制。（从活泼变沉稳，成长的收获是不被流言所左右的坚定）',
+            guayan_info: '你不能成为延时类锦囊的目标，你使用非延时类锦囊无距离限制。（从活泼变沉稳，成长的收获是不被流言所左右的坚定）',
             xuanmu: '炫目',
             xuanmu_info: '每当你受到1点伤害，你可随机获得每名其他角色区域内的一张牌。然后你翻面。（全身心的投入是为成为舞台中央的觉悟）',
             zanmei: '赞美',
@@ -4329,7 +4387,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             qichang: '气场',
             qichang2: '气场',
             qichang2_info: '“无懈可击”无法被使用或者打出',
-            qichang_info: '出牌阶段限一次，你可以弃置一张牌，令所有玩家的“无懈可击”无法被使用或者打出，直至你的下个回合开始',
+            qichang_info: '出牌阶段限一次，你可以弃置一张牌，令除自己外所有玩家的“无懈可击”无法被使用或者打出，直到回合结束',
             duomian: '多面',
             duomian_info: '出牌阶段限两次，你可以将两张手牌当做风标军争非延时锦囊使用',
         },
