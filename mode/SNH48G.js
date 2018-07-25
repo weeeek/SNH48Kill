@@ -176,17 +176,18 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
         },
         characterPack: {
             //国战版武将属性配置
-            mode_guozhan: {//S
-                SNH48Gchenguanhui: ['female', 'S', 4, ['biyue', 'guidao']],
+            mode_guozhan: {
+                //S
+                SNH48Gchenguanhui: ['female', 'S', 4, ['wenwan', 'fuhei']],
                 SNH48Gchengjue: ['female', 'S', 4, ['kuaidao', 'qiaoyan']],
                 SNH48Gchensi: ['female', 'S', 4, ['jingwu', 'tianyin']],
-                SNH48Gdaimeng: ['female', 'S', 4, ['dandang', 'jianyi', 'lingjun'], ['zhu']],
-                SNH48Gjiangyun: ['female', 'S', 3, ['leiji', 'guidao']],
+                SNH48Gdaimeng: ['female', 'S', 4, ['dandang', 'jianyi', 'new_lingjun']],
+                SNH48Gjiangyun: ['female', 'S', 3, ['jingyan', 'qichang', 'duomian']],
                 SNH48Gkongxiaoyin: ['female', 'S', 4, ['shenhun', 'diandao', 'xinggan']],
-                SNH48Glvyi: ['female', 'S', 3, ['chengzhang', 'yanji']],
-                SNH48Gliyuqi: ['female', 'S', 4, ['haomai', 'quanneng', 'qice']],
+                SNH48Glvyi: ['female', 'S', 4, ['chengzhang']],
+                SNH48Gliyuqi: ['female', 'S', 3, ['haomai', 'quanneng', 'chongzhen']],
                 SNH48Gliuzengyan: ['female', 'S', 4, ['tongyin', 'yonglie']],
-                SNH48Gmohan: ['female', 'S', 3, ['shiyu', 'yuyan', 'ziqiang'], ['zhu']],
+                SNH48Gmohan: ['female', 'S', 3, ['shiyu', 'yuyan', 'new_ziqiang']],
                 SNH48Gpanyanqi: ['female', 'S', 4, ['tongxin', 'dedication']],
                 SNH48Gqianbeiting: ['female', 'S', 4, ['juxia', 'qiangong']],
                 SNH48Gqiuxinyi: ['female', 'S', 4, ['meixi', 'nvwang']],
@@ -196,11 +197,11 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Gwenjingjie: ['female', 'S', 4, ['talent', 'wenhe']],
                 SNH48Gwuzhehan: ['female', 'S', 4, ['jiangshan', 'jiamian']],
                 SNH48Gxuchenchen: ['female', 'S', 3, ['qiangyin', 'jinwu', 'chengshu']],
-                SNH48Gxujiaqi: ['female', 'S', 4, ['meiren']],
+                SNH48Gxujiaqi: ['female', 'S', 4, ['shengou', 'secret', 'meiren']],
                 SNH48Gxuyiren: ['female', 'S', 4, ['tisu', 'fenfa']],
-                SNH48Gxuzixuan: ['female', 'S', 4, ['longgong', 'jianxiong']],
+                SNH48Gxuzixuan: ['female', 'S', 4, ['luogod', 'longgong', 'huangzi']],
                 SNH48Gyuandanni: ['female', 'S', 4, ['complement', 'kuxuan']],
-                SNH48Gyuanyuzhen: ['female', 'S', 4, ['duanliang']],
+                SNH48Gyuanyuzhen: ['female', 'S', 4, ['ganxing', 'huopo']],
                 SNH48Gzhangyuge: ['female', 'S', 3, ['guayan', 'xuanmu']],
                 SNH48Gzhaohanqian: ['female', 'S', 4, ['kuaiyan', 'innocence']],
                 SNH48Gzhaoye: ['female', 'S', 4, ['baofa', 'caihua']],
@@ -284,6 +285,53 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
         },
         skill: {
             //国战版技能
+            new_lingjun: {
+                audio: 2,
+                unique: true,
+                trigger: { target: 'taoBegin' },
+                zhuSkill: true,
+                forced: true,
+                filter: function (event, player) {
+                    //自己对自己不触发
+                    if (event.player == player) return false;
+                    //主公体力大于0不触发
+                    if (player.hp > 0) return false;
+                    if (event.player.group != player.group) return false;
+                    return true;
+                },
+                content: function (event, target) {
+                    player.recover();
+                    trigger.player.draw();
+                }
+            },
+            new_ziqiang: {
+                skillAnimation: 'legend',
+                audio: 2,
+                unique: true,
+                zhuSkill: true,
+                keepSkill: true,
+                derivation: 'mowang',
+                trigger: { player: 'phaseBegin' },
+                forced: true,
+                filter: function (event, player) {
+                    if (player.storage.new_ziqiang) return false;
+                    return player.isMinHp();
+                },
+                content: function () {
+                    player.storage.new_ziqiang = true;
+                    player.maxHp++;
+                    player.update();
+                    player.recover();
+                    if (player.hasSkill('new_ziqiang')) {
+                        player.addSkill('mowang');
+                    }
+                    else {
+                        player.addAdditionalSkill('new_ziqiang', 'mowang');
+                    }
+                    event.trigger('zhuUpdate');                    
+                    player.awakenSkill('new_ziqiang');
+                }
+            },
         },
         game: {
             getCharacterChoice: function (list, num) {
@@ -1056,6 +1104,10 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             mingzhizhujiang: '明置主将',
             mingzhifujiang: '明置副将',
             mode_guozhan_character_config: '国战武将',
+            new_lingjun: '领军',
+            new_lingjun_info: '当你陷入濒死状态时，与你同势力的角色对你使用的[桃]额外回复一点体力值。你以此法脱离濒死状态时，其可摸一张牌。（为队友付出必然能得到回应，每次陷入低谷再出发必将更进一步）',
+            new_ziqiang: '自强',
+            new_ziqiang_info: '主公技，觉醒技, 准备阶段，若你的体力为全场最低（或之一），你增加一点体力上限并回复1点体力，获得技能“魔王”',
         },
         junList: ['SNH48Gdaimeng', 'SNH48Gyijiaai', 'SNH48Gwanlina', 'SNH48lizhao'],
         guozhanPile: [
