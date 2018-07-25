@@ -1310,11 +1310,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             //附加游戏卡牌
 			['heart', 2, 'yingyuanbang'],
 			['spade', 2, 'antyvote'],
-
             ['club', 12, 'yongqizhichui'],
-            ['club', 13, 'yongqizhichui'],
-            ['club', 12, 'yongqizhichui'],
-            ['club', 13, 'yongqizhichui'],
         ],
         element: {
             content: {

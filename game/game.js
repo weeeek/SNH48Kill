@@ -9319,7 +9319,7 @@
             H: 'H',
             X: 'X',
             ye: '野',
-            guan:'官',
+            guan: '官',
             FT: 'Ft',
             wei: '魏',
             shu: '蜀',
@@ -9587,7 +9587,7 @@
                             numx = num(player);
                         }
                         player.directgain(get.cards(numx));
-                        if (player.singleHp === true && get.mode() != 'guozhan' && get.mode() != 'SNH48G') {
+                        if (player.singleHp === true && !get.is.guozhanMode()) {
                             player.doubleDraw();
                         }
                         player = player.next;
@@ -16701,7 +16701,6 @@
                     next.setContent('changeHp');
                     return next;
                 },
-
                 changeHujia: function (num, type) {
                     var next = game.createEvent('changeHujia');
                     if (typeof num != 'number') {
@@ -18332,15 +18331,21 @@
                     }
                     if (mode == 'identity') {
                         switch (player.identity) {
-                            case 'zhu': case 'zhong': case 'mingzhong': targets = game.filterPlayer(function (target) {
-                                if (func && !func(target)) return false;
-                                return ['zhu', 'zhong', 'mingzhong'].contains(target.identity);
-                            }); break;
+                            case 'zhu':
+                            case 'zhong':
+                            case 'mingzhong':
+                                targets = game.filterPlayer(function (target) {
+                                    if (func && !func(target)) return false;
+                                    return ['zhu', 'zhong', 'mingzhong'].contains(target.identity);
+                                });
+                                break;
                             case 'nei': targets = []; break;
-                            case 'fan': targets = game.filterPlayer(function (target) {
-                                if (func && !func(target)) return false;
-                                return target.identity == 'fan';
-                            }); break;
+                            case 'fan':
+                                targets = game.filterPlayer(function (target) {
+                                    if (func && !func(target)) return false;
+                                    return target.identity == 'fan';
+                                });
+                                break;
                         }
                     }
                     else if (mode == 'guozhan') {
@@ -18352,6 +18357,18 @@
                             targets = game.filterPlayer(function (target) {
                                 if (func && !func(target)) return false;
                                 return target.identity != 'ye' && lib.character[target.name1][1] == group;
+                            });
+                        }
+                    }
+                    else if (model == 'SNH48G') {
+                        if (player.identity == 'guan') {
+                            targets = [];
+                        }
+                        else {
+                            var group = lib.character[player.name1][1];
+                            targets = game.filterPlayer(function (target) {
+                                if (func && !func(target)) return false;
+                                return target.identity != 'guan' && lib.character[target.name1][1] == group;
                             });
                         }
                     }
@@ -18373,7 +18390,7 @@
                     return !this.isFriendOf.apply(this, arguments);
                 },
                 isFriendOf: function (player) {
-                    if (get.mode() == 'guozhan') {
+                    if (get.is.guozhanMode()) {
                         if (this == player) return true;
                         if (this.identity == 'unknown' || this.identity == 'ye') return false;
                         if (player.identity == 'unknown' || player.identity == 'ye') return false;
@@ -18587,7 +18604,7 @@
                         skill = sourceSkill.sourceSkill;
                     }
                     if (lib.skill.global.contains(skill)) return false;
-                    if (get.mode() != 'guozhan' && get.mode() != 'SNH48G' || game.expandSkills(this.getSkills()).contains(skill)) {
+                    if (!get.is.guozhanMode() || game.expandSkills(this.getSkills()).contains(skill)) {
                         if (showonly) {
                             return false;
                         }
@@ -21492,7 +21509,7 @@
                     if (lib.config.banned.contains(i)) return true;
                     if (lib.config.replacecharacter[i] && lib.character[lib.config.replacecharacter[i]]) return true;
                     var double_character = false;
-                    if (get.mode() == 'guozhan') {
+                    if (get.is.guozhanMode()) {
                         double_character = true;
                     }
                     else if (get.config('double_character') && (lib.config.mode == 'identity' || lib.config.mode == 'stone')) {
@@ -21912,7 +21929,7 @@
                                 }
                             }
                             var cfg = player.storage.dualside;
-                            if (get.mode() == 'guozhan') {
+                            if (get.is.guozhanMode()) {
                                 if (player.name1 == cfg[0]) {
                                     player.showCharacter(0);
                                 }
@@ -27239,7 +27256,7 @@
                 };
                 var modecharacters = lib.characterPack['mode_' + get.mode()];
                 if (modecharacters) {
-                    if (get.mode() == 'guozhan') {
+                    if (get.is.guozhanMode()) {
                         if (modecharacters[newvid.name1]) {
                             if (newvid.name1.indexOf('gz_shibing') == 0) {
                                 newvid.name1 = newvid.name1.slice(3, 11);
@@ -27810,7 +27827,7 @@
                 }
                 else {
                     var skills2;
-                    if (get.mode() == 'guozhan' && player.hasSkillTag('nomingzhi', false, null, true)) {
+                    if (get.is.guozhanMode() && player.hasSkillTag('nomingzhi', false, null, true)) {
                         skills2 = player.getSkills(false, true, false);
                     }
                     else {
@@ -29490,7 +29507,7 @@
                     else if (!player.isUnseen(1)) {
                         avatar = player.node.avatar2.cloneNode();
                     }
-                    else if (get.mode() == 'guozhan' && player.node && player.node.name_seat) {
+                    else if (get.is.guozhanMode() && player.node && player.node.name_seat) {
                         avatar = ui.create.div('.avatar.cardbg');
                         avatar.innerHTML = player.node.name_seat.innerHTML[0];
                     }
@@ -29535,7 +29552,7 @@
                 else if (!player.isUnseen(1)) {
                     avatar = player.node.avatar2.cloneNode();
                 }
-                else if (get.mode() == 'guozhan' && player.node && player.node.name_seat) {
+                else if (get.is.guozhanMode() && player.node && player.node.name_seat) {
                     avatar = ui.create.div('.avatar.cardbg');
                     avatar.innerHTML = player.node.name_seat.innerHTML[0];
                 }
@@ -29557,7 +29574,7 @@
                         else if (!player.isUnseen(1)) {
                             avatar2 = target.node.avatar2.cloneNode();
                         }
-                        else if (get.mode() == 'guozhan' && target.node && target.node.name_seat) {
+                        else if (get.is.guozhanMode() && target.node && target.node.name_seat) {
                             avatar2 = ui.create.div('.avatar.cardbg');
                             avatar2.innerHTML = target.node.name_seat.innerHTML[0];
                         }
@@ -37695,7 +37712,7 @@
                     }
                 }
                 if (!thisiscard) {
-                    var groups = get.mode() == 'SNH48G'? ['S','N','H','X','guan'] : ['wei', 'shu', 'wu', 'qun','ye'];
+                    var groups = get.mode() == 'SNH48G' ? ['S', 'N', 'H', 'X', 'guan'] : ['wei', 'shu', 'wu', 'qun', 'ye'];
                     for (var i in lib.character) {
                         if (lib.character[i][1] == 'shen') {
                             groups.add('shen'); break;
@@ -40049,7 +40066,7 @@
                     }
                     var rect = this.getBoundingClientRect();
                     this._customintro = function (uiintro) {
-                        if (get.mode() == 'guozhan') {
+                        if (get.is.guozhanMode()) {
                             uiintro.clickintro = true;
                         }
                         else {
@@ -40074,7 +40091,7 @@
                                 node.firstChild.style.fontSize = '24px';
                                 node.firstChild.style.lineHeight = '24px';
                             }
-                            if (get.mode() == 'guozhan') {
+                            if (get.is.guozhanMode()) {
                                 if (source._guozhanguess) {
                                     if (!source._guozhanguess.contains(i)) {
                                         node.classList.add('transparent');
@@ -43268,6 +43285,9 @@
 
     var get = {
         is: {
+            guozhanMode:function(){
+                return get.mode() == 'guozhan' || get.mode() == 'SNH48G'
+            },
             converted: function (event) {
                 return !(event.cards && event.card && event.cards.length == 1 && event.cards[0] == event.card);
             },
@@ -43342,7 +43362,7 @@
                 return select[0] == 1 && select[1] == 1;
             },
             jun: function (name) {
-                if (get.mode() == 'guozhan') {
+                if (get.is.guozhanMode()) {
                     if (name && typeof name == 'object') {
                         name = name.name1;
                     }
