@@ -12,7 +12,7 @@
 	<img width="1024" height="576" src="https://weeeek.github.io/SNH48Kill/image/screenshot/identityMode.jpg"/>
 	<div>身份模式：新增SNH48角色，自定义技能</div>
 </div>
------------
+<hr>
 ### 代码说明
 <ol>
 	<li>
