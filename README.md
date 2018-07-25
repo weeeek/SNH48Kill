@@ -1,18 +1,16 @@
-﻿# SNH48Kill
+# SNH48Kill
 ***[无名杀官方](http://noname.pub/)***
 -----------
 ***[SNH48女团大战版-在线游玩](https://weeeek.github.io/SNH48Kill/)***
 -----------
 ***[Zip压缩包下载](https://github.com/weeeek/SNH48Kill/archive/master.zip)***
 -----------
-## 系统截图
-<div align=center>
-	<img width="1024" height="576" src="https://weeeek.github.io/SNH48Kill/image/screenshot/selectMode.jpg"/>
-	<div>新增模式：SNH48国战</div>
-	<img width="1024" height="576" src="https://weeeek.github.io/SNH48Kill/image/screenshot/identityMode.jpg"/>
-	<div>身份模式：新增SNH48角色，自定义技能</div>
-</div>
-<hr>
+### 游戏截图
+------------
+#### 新增模式：SNH48国战
+![新增模式：SNH48国战](https://weeeek.github.io/SNH48Kill/image/screenshot/selectMode.jpg)	
+#### 身份模式：新增SNH48角色，自定义技能
+![身份模式：新增SNH48角色，自定义技能](https://weeeek.github.io/SNH48Kill/image/screenshot/identityMode.jpg)
 ### 代码说明
 <ol>
 	<li>
