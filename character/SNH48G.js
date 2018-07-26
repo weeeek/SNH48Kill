@@ -1909,7 +1909,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 }
             },
             //冯晓菲
-            rewu: {                
+            rewu: {
                 audio: 2,
                 enable: 'phaseUse',
                 usable: 1,
@@ -2331,19 +2331,13 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }
                 }
             },
-            //徐子轩
+            //徐子轩，AI测试OK
             longgong: {
-                //回合结束时摸X张牌（X为场上与你相同势力的角色数量）
                 audio: 2,
-                trigger: { player: 'phaseEnd' },
+                trigger: { player: 'phaseDiscardBegin' },
                 direct: true,
-                filter: function (event, player) {
-                    return game.countPlayer(function (current) {
-                        if (current.group == player.group)
-                            return 1;
-                    }) > 1;
-                },
                 forced: true,
+                frequent: true,
                 content: function () {
                     player.draw(game.countPlayer(function (current) {
                         if (current.group == player.group)
@@ -2760,7 +2754,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 //每当有角色受到伤害时，你可对伤害来源进行一次判定，若为黑色，视为你对其造成X点雷属性伤害；若为红色，视为你对其造成X点火属性伤害，然后再进行一次判定，若为黑色，失去1点体力，若为红色，弃1张牌。（X为受到的伤害值）
                 audio: 4,
                 trigger: { global: 'damageEnd' },
-                filter: function (event, player) {                    
+                filter: function (event, player) {
                     if (event.source == player)
                         return false;
                     return true;
@@ -3792,7 +3786,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }
                 }
             },
-            //袁雨桢
+            //袁雨桢，AI测试ok
             ganxing: {
                 audio: 2,
                 enable: 'phaseUse',
@@ -4372,9 +4366,9 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             huangguan: '皇冠',
             huangguan_info: '出牌阶段限一次，你可弃置任意张手牌并指定不多于弃置手牌数的其他角色，视为你对这些角色随机造成X点伤害，随后你翻面（X为弃牌数量）。 （辉煌不仅停留在回忆，更是一种资本）',
             longgong: '龙宫',
-            longgong_info: '弃牌阶段开始前，你摸1+X张牌，X为场上与你同势力的角色数',
+            longgong_info: '弃牌阶段开始前，你可摸X张牌，X为场上与你同势力的角色数',
             luogod: '络神',
-            luogod_info: '准备阶段，你可以进行一定判定，若为红色则可以继续判定，直到出现黑色。然后你获得所有红色的判定牌',
+            luogod_info: '你的准备阶段，可进行一定判定，若为红色则可以继续判定，直到出现黑色。然后你获得所有红色的判定牌',
             huangzi: '皇子',
             huangzi_info: '觉醒技，回合开始时，若你的体力值小于等于你的体力上限的一半，你失去1点体力上限，回复1点体力，并获得技能“江山”，“神钩”',
             tongyin: '痛饮',
