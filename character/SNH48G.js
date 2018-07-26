@@ -1212,6 +1212,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     if (trigger.source) {
                         trigger.source.chooseToDiscard('he', '弃置一张牌，否则造成伤害-1').set('ai', function (card) {
                             if (player.isFriendOf(trigger.source))
+                                //不弃牌
                                 return 0;
                             else
                                 return 7 - get.value(card);
@@ -1368,9 +1369,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 audio: 2,
                 trigger: { player: 'damageEnd' },
                 filter: function (event, player) {
-                    if (event.source.isFriendOf(player))
-                        return false;
-                    return (event.source != undefined);
+                    return event.source != undefined;
                 },
                 check: function (event, player) {
                     return (get.attitude(player, event.source) <= 0);
@@ -1397,6 +1396,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     maixie_defend: true,
                     effect: {
                         target: function (card, player, target) {
+                            if (player.isFriendOf(target))
+                                return false;
                             if (player.hasSkillTag('jueqing', false, target)) return [1, -1];
                             return 0.8;
                             // if(get.tag(card,'damage')&&get.damageEffect(target,player,player)>0) return [1,0,0,-1.5];
@@ -1650,7 +1651,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     player.removeAdditionalSkill('fuhei', ['fuhei2', 'fuhei3'])
                 }
             },
-            //孔肖吟
+            //孔肖吟，AI测试OK
             shenhun: {
                 audio: 2,
                 trigger: { player: 'judgeEnd' },
@@ -1700,7 +1701,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 audio: 2,
                 trigger: { global: 'damageEnd' },
                 filter: function (event, player) {
-                    return event.player == player && player.classList.contains('dead') == false;
+                    return event.source != undefined && event.player == player && player.classList.contains('dead') == false;
                 },
                 logTarget: 'target',
                 content: function () {
@@ -1722,7 +1723,12 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }
                 },
                 ai: {
-                    expose: 0.3
+                    effect: {
+                        target: function (card, player, target) {
+                            if (player.hasSkillTag('jueqing', false, target)) return [1, -1];
+                            return 0.8;
+                        }
+                    }
                 }
             },
             xinggan: {
@@ -1903,29 +1909,30 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 }
             },
             //冯晓菲
-            rewu: {
-                //出牌阶段限一次，你可弃置X张手牌，并最多指定除你之外当前体力值的角色，你摸X张牌，其他角色模你已损失体力值的牌。（超强表现力的舞姿闪耀全场）
+            rewu: {                
                 audio: 2,
                 enable: 'phaseUse',
                 usable: 1,
-                //h:手牌，e:装备牌
-                //position: 'he',
                 prompt: '弃置任意张手牌，你摸等同于你弃置的数量张牌，并可以最多指定至多X名角色，各摸1张牌（X为你当前已损失体力值）',
                 position: 'h',
                 filterCard: true,
                 selectCard: [1, Infinity],
-                selectTarget: function () {
-                    if (_status.event.player.maxHp == _status.event.player.hp)
-                        return 0;
-                    return [0, _status.event.player.maxHp - _status.event.player.hp];
-                },
-                filterTarget: function (target, player) {
-                    return player.isFriendOf(target);
-                },
                 content: function () {
+                    'step 0'
                     player.draw(cards.length);
-                    player.logSkill('rewu', targets);
-                    game.asyncDraw(targets);
+                    'step 1'
+                    if (player.maxHp > player.hp) {
+                        player.chooseTarget("选择至多" + (player.maxHp - player.hp) + "名角色，各摸一张牌", [0, player.maxHp - player.hp], function (target) {
+                            return true
+                        }).set('ai', function (target) {
+                            return player.isFriendOf(target) || get.attitude(player, target) >= 0;
+                        });
+                    }
+                    'step 2'
+                    if (result.bool) {
+                        player.logSkill('rewu', result.targets);
+                        game.asyncDraw(result.targets);
+                    }
                 },
                 ai: {
                     order: 1,
@@ -1933,7 +1940,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         player: 1
                     },
                     threaten: 1.5
-                },
+                }
             },
             beifen: {
                 audio: 2,
@@ -1951,8 +1958,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     return event.source != player && event.player == player;
                 },
                 filter: function (event, player) {
-                    if (get.type(event.card, 'trick') == 'trick' && get.tag(event.card, 'damage') && event.source.hp >= player.hp) {
-                        return event.source != player && event.player == player;;
+                    if (get.type(event.card, 'trick') == 'trick' && get.tag(event.card, 'damage') && event.source.hp > player.hp) {
+                        return event.source != player && event.player == player;
                     }
                     return false;
                 },
@@ -1962,42 +1969,28 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             },
             yuanzhen: {
                 audio: 2,
-                unique: true,
-                trigger: { player: 'phaseDrawBegin' },
+                trigger: { player: 'phaseBegin' },
                 filter: function (event, player) {
-                    return !player.storage.yuanzhen;
+                    return !player.storage.yuanzhen && player.maxHp > player.hp;
                 },
                 init: function (player) {
                     player.storage.yuanzhen = false;
                 },
                 mark: true,
+                unique: true,
                 intro: {
                     content: 'limited'
                 },
-                skillAnimation: true,
-                //被迫的。自动发动
-                //forced: true,
+                skillAnimation: 'epic',
+                animationColor: 'thunder',
                 content: function () {
                     game.countPlayer(function (current) {
                         if (current.group == player.group)
-                            trigger.num++;
+                            player.draw();
                     });
-                    player.maxHp--;
-                    player.update();
                     player.recover();
                     player.storage.yuanzhen = true;
-                },
-                ai: {
-                    basic: {
-                        order: 1
-                    },
-                    result: {
-                        player: function (player) {
-                            if (player.hp > 2 || player.hasJudge('lebu')) return -1;
-                            if (player.countCards('h') <= player.hp - 2) return 1;
-                            return 1;
-                        }
-                    }
+                    player.unmarkSkill('luanwu')
                 }
             },
             //吕一
@@ -2544,7 +2537,6 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         target.useCard({ name: 'jiu' }, target);
 
                         if (!player.storage.tongyin.length) {
-                            console.log("unmarkSkill('tongyin')")
                             player.unmarkSkill('tongyin');
                         }
                         else {
@@ -2763,18 +2755,20 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }
                 }
             },
-            //潘燕琦
+            //潘燕琦,AI测试OK
             tongxin: {
-                //每当与你势力相同的武将受到伤害时，你可对伤害来源进行一次判定，若为黑色，视为你对其造成X点雷属性伤害；若为红色，视为你对其造成X点火属性伤害，然后再进行一次判定，若为黑色，失去1点体力，若为红色，弃1张牌。（X为受到的伤害值）
+                //每当有角色受到伤害时，你可对伤害来源进行一次判定，若为黑色，视为你对其造成X点雷属性伤害；若为红色，视为你对其造成X点火属性伤害，然后再进行一次判定，若为黑色，失去1点体力，若为红色，弃1张牌。（X为受到的伤害值）
                 audio: 4,
                 trigger: { global: 'damageEnd' },
-                filter: function (event, player) {
-                    //event.player.group == player.group && 
+                filter: function (event, player) {                    
                     if (event.source == player)
                         return false;
-                    if (player.isFriendOf(event.source))
-                        return false;
                     return true;
+                },
+                check: function (event, player) {
+                    var att1 = get.attitude(player, event.player);
+                    var att2 = get.attitude(player, event.source);
+                    return att1 > 0 && att2 <= 0;
                 },
                 logTarget: 'source',
                 content: function () {
@@ -2807,7 +2801,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }
                 },
                 ai: {
-                    expose: 0.3
+                    damage: true,
+                    order: 8,
                 }
             },
             dedication: {
@@ -2836,14 +2831,14 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         player.logSkill('dedication', result.targets);
                         target.recover();
                         target.draw(Math.min(5, target.maxHp) - target.countCards('h'));
-                        target.addSkill('tongxin');
+                        target.addAdditionalSkill('dedication', ['tongxin']);
                     }
                 },
                 ai: {
                     expose: 0.5,
                 }
             },
-            //钱蓓婷
+            //钱蓓婷，AI测试ok
             juxia: {
                 audio: 2,
                 trigger: { player: 'useCard' },
@@ -3458,7 +3453,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }
                 }
             },
-            //张语格
+            //张语格，AI测试ok
             guayan: {
                 mod: {
                     targetEnabled: function (card, player, target, now) {
@@ -3549,9 +3544,9 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 content: function () {
                     'step 0'
                     player.chooseTarget('选择一个角色摸一张牌', 1, function (target) {
-                        if (player.isFriendOf(target))
-                            return true;
                         return target != player;
+                    }).set('ai', function (target) {
+                        return player.isFriendOf(target);
                     })
                     'step 1'
                     if (result.bool) {
@@ -3616,9 +3611,9 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     if (result.bool) {
                         player.storage.qigai_num = result.cards.length;
                         player.chooseTarget('令一名其他角色选择弃置相同数量的牌或失去1点体力', 1, function (target) {
-                            if (player.isFriendOf(trigger.player))
-                                return false
                             return target != player;
+                        }).set('ai', function (target) {
+                            return player.isEnemyOf(target)
                         })
                     }
                     'step 2'
@@ -4342,7 +4337,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             shenhun_mark_bg: '音符',
             shenhun_info: '你的判定牌生效时，你可将该判定牌置于你的武将牌上，称为"音符"。你的手牌上限+X（X为音符数）。（有趣的灵魂是成功的关键）',
             diandao: '颠倒',
-            diandao_info: '你的回合外每受到一次伤害可进行一次判定，判定结果为：♥该角色回复1点体力；♦︎该角色摸两张牌；♣伤害来源弃两张牌；♠伤害来源将其武将牌翻面。（好看的皮囊与呆萌的性格堪称完美的结合）',
+            diandao_info: '你的回合外每受到一次伤害可进行一次判定，判定结果为：♥你回复1点体力；♦︎你摸两张牌；♣伤害来源弃两张牌；♠伤害来源受到一点伤害。（好看的皮囊与呆萌的性格堪称完美的结合）',
             xinggan: '性感',
             xinggan_info: '觉醒技，你的回合内若音符数大于你体力值，你体力上限-1，获得技能"美艳"。（勾人心弦的魅力无人可挡）',
             meiyan: '美艳',
@@ -4356,7 +4351,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             beifen: '辈分',
             beifen_info: '锁定技，你不会受到体力值不低于你的角色使用锦囊时造成的伤害。（零期生的崛起之路谁人不服）',
             yuanzhen: '圆阵',
-            yuanzhen_info: '限定技，摸牌阶段，你可额外摸X张牌，减少1点体力上限，并回复1点体力（X为场上与你同势力角色数）（著名神秘仪式独此一家不可复制）',
+            yuanzhen_info: '限定技，回合开始时，若你已受伤，你可摸X张牌，并回复1点体力（X为场上与你同势力角色数）（著名神秘仪式独此一家不可复制）',
             chengzhang: '成长',
             chengzhang2: '成长',
             chengzhang_info: '锁定技。装备区每多一张牌，体力上限+1并回复1点体力。每失去一张装备区内的牌，体力上限-1。你根据装备区里牌的数量获得以下技能：1种或以上-温柔；2种或以上-坚毅；3种或以上-豪迈；4种或以上-美人；5种-皇冠。（青春是最任性的资本，次时代未来可期）',
