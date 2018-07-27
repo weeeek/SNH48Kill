@@ -53,7 +53,7 @@ window.config={
     //游戏声效0-10
 	volumn_audio:2,
 
-	connect_avatar:'weeeek',
+	connect_avatar:'TeamSII',
 	connect_nickname:'Gone',
 	config_menu:true,
 	auto_popped_config:true,

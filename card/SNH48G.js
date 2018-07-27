@@ -73,7 +73,7 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                     if (result.bool) {
                         target.damage(player);
                     }
-                    else {
+                    else {                        
                         player.damage(target);                        
                     }
                     event.finish();
@@ -126,6 +126,7 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                 filterTarget: function (card, player, target) {
                     if (target.hp >= target.maxHp)
                         return false;
+                    //子杰殿下表示不用给他打Call，打了他也不会接的。
                     if (target.sex == 'male')
                         return false;
                     if (target.group == 'S' || target.group == 'N' || target.group == 'H' || target.group == 'X')
@@ -161,6 +162,7 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                     //不能以自己为目标
                     if (player == target)
                         return false;
+                    //不能anty男的。子杰殿下，我只能帮你到这里了
                     if (target.sex == 'male')
                         return false;
                     if (target.group == 'S' || target.group == 'N' || target.group == 'H' || target.group == 'X')
@@ -215,7 +217,7 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
             antyvote: 'Anty票',
             antyvote_bg: '票',
             antyvote_skill: 'Anty',
-            antyvote_info: '出牌阶段，你可以弃置三张黑色牌视为对所有SNH48女性角色打出“万箭齐发”，每回合限一次',
+            antyvote_info: '出牌阶段，你可以弃置三张黑色牌视为对所有SNH48G女性角色打出“万箭齐发”，每回合限一次',
 
             yongqizhichui: '勇气之锤',
             yongqizhichui_bg: '锤',

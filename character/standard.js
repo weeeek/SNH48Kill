@@ -1696,50 +1696,6 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					}
 				}
             },
-
-            neidou: {
-                audio: 2,
-                enable: 'phaseUse',
-                usable: 1,
-                filter: function (event, player) {
-                    return game.countPlayer(function (current) {
-                        return current != player && current.sex == 'female';
-                    }) > 1;
-                },
-                check: function (card) { return 10 - get.value(card) },
-                filterCard: true,
-                position: 'he',
-                filterTarget: function (card, player, target) {
-                    if (player == target) return false;
-                    if (target.sex != 'female') return false;
-                    if (ui.selected.targets.length == 1) {
-                        return target.canUse({ name: 'juedou' }, ui.selected.targets[0]);
-                    }
-                    return true;
-                },
-                targetprompt: ['先出杀', '后出杀'],
-                selectTarget: 2,
-                multitarget: true,
-                content: function () {
-                    targets[1].useCard({ name: 'juedou2' }, targets[0], 'noai').animate = false;
-                    game.delay(0.5);
-                },
-                ai: {
-                    order: 8,
-                    result: {
-                        target: function (player, target) {
-                            if (ui.selected.targets.length == 0) {
-                                return -3;
-                            }
-                            else {
-                                return get.effect(target, { name: 'juedou' }, ui.selected.targets[0], target);
-                            }
-                        }
-                    },
-                    expose: 0.4,
-                    threaten: 3,
-                }
-            },
 			lijian:{
 				audio:2,
 				enable:'phaseUse',
