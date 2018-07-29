@@ -625,7 +625,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 			["heart",13,"wuxie"],
 			["spade",13,"wuxie"],
 			["spade",10,"bingliang"],
-			["club",4,"bingliang"],
+            ["club", 4, "bingliang"],
 		],
 	}
 });

@@ -14,11 +14,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gkongxiaoyin: ['female', 'S', 4, ['shenhun', 'diandao', 'xinggan']],
             SNH48Glvyi: ['female', 'S', 4, ['chengzhang']],
             SNH48Gliyuqi: ['female', 'S', 3, ['haomai', 'quanneng', 'chongzhen']],
-            SNH48Gliuzengyan: ['female', 'S', 4, ['tongyin', 'yonglie']],
+            SNH48Gliuzengyan: ['female', 'S', 4, ['tongyin', 'ganbei', 'yonglie']],
             SNH48Gmohan: ['female', 'S', 3, ['shiyu', 'yuyan', 'ziqiang'], ['zhu']],
             SNH48Gpanyanqi: ['female', 'S', 4, ['tongxin', 'dedication']],
             SNH48Gqianbeiting: ['female', 'S', 4, ['juxia', 'qiangong']],
-            SNH48Gqiuxinyi: ['female', 'S', 4, ['meixi', 'nvwang']],
+            SNH48Gqiuxinyi: ['female', 'S', 4, ['meixi', 'nvwang', 'laydown']],
             SNH48Gsunrui: ['female', 'S', 3, ['qigai', 'rexin']],
             SNH48Gshaoxuecong: ['female', 'S', 4, ['yibing', 'tianpin', 'jiaozhu']],
             SNH48Gshenzhilin: ['female', 'S', 4, ['zanmei', 'luanyin', 'luansheng']],
@@ -86,7 +86,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             ////X
             //SNH48Gchenlin: ['female', 'X', 4, ['wushuang', 'mashu']],
             //SNH48Gchenyunling: ['female', 'X', 4, ['wushuang', 'mashu']],
-            SNH48Gfengxiaofei: ['female', 'X', 4, ['rewu', 'beifen', 'yuanzhen']],
+            SNH48Gfengxiaofei: ['female', 'X', 4, ['chongaaaa', 'beifen', 'yuanzhen']],
             //SNH48Glizhao: ['female', 'X', 4, ['wushuang', 'mashu']],
             //SNH48Gpanyingqi: ['female', 'X', 4, ['wushuang', 'mashu']],
             //SNH48Gqijing: ['female', 'X', 4, ['wushuang', 'mashu']],
@@ -898,7 +898,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     player.draw();
                 }
             },
-            //鞠婧祎
+            //鞠婧祎，AI测试ok
             dufei: {
                 unique: true,
                 gainable: true,
@@ -1028,6 +1028,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             dufei6: {
                 audio: 2,
                 trigger: { global: ['chooseToCompareAfter', 'compareMultipleAfter'] },
+                frequent: true,
                 filter: function (event, player) {
                     return event.card2.name == 'du' || event.card1.name == 'du';
                 },
@@ -1091,19 +1092,17 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 direct: true,
                 delay: 0,
                 selectTarget: -1,
+                selectCard: 1,
+                filterCard: function (card) {
+                    return card.name == 'du'
+                },
                 content: function (event) {
-                    "step 0"
-                    player.chooseToDiscard('he', 1, get.prompt('jiedu'), function (card) { return card.name == 'du' })
-                        .set('ai', function (target) {
-                            return player.isFriendOf(target);
-                        });
-                    "step 1"
-                    if (result.bool) {
-                        for (var i = 0; i < 1 - target.hp; i++) {
-                            target.recover();
-                        }
-                        player.draw();
+                    for (var i = 0; i < 1 - target.hp; i++) {
+                        target.recover();
+                        target.update();
+                        game.delay();
                     }
+                    player.draw();
                     //if (player.hasSkill('xinxie'))
                     //    player.draw(2);
                 },
@@ -1310,10 +1309,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         return true;
                     return (event.card && event.card.name == 'sha' &&
                         event.player.classList.contains('dead') == false &&
-                        event.player.countCards('h') && player.countCards('h')) && event.player != player;
+                        event.player.countCards('h') > 0 && player.countCards('h') > 0) && event.player != player;
                 },
                 check: function (event, player) {
-                    return get.attitude(player, event.player) < 0 && player.countCards('h') > 1 && event.player.isEnemyOf(player);
+                    return get.attitude(player, event.player) < 0
+                        && player.countCards('h') > 0 && event.player.countCards('h') > 0 && event.player.isEnemyOf(player);
                 },
                 priority: 5,
                 content: function () {
@@ -1912,7 +1912,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 }
             },
             //冯晓菲，AI测试ok
-            rewu: {
+            chongaaaa: {
                 audio: 2,
                 enable: 'phaseUse',
                 usable: 1,
@@ -1933,7 +1933,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }
                     'step 2'
                     if (result.bool) {
-                        player.logSkill('rewu', result.targets);
+                        player.logSkill('chongaaaa', result.targets);
                         game.asyncDraw(result.targets);
                     }
                 },
@@ -2156,15 +2156,15 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     damageBonus: true
                 }
             },
-            //许佳琪
+            //许佳琪,AI测试ok
             shengou: {
                 usable: 1,
                 trigger: { global: 'phaseUseBefore' },
                 filter: function (event, player) {
-                    return event.player != player && player.countCards('h') > 0 && event.player.countCards('h') > 0 && player.isEnemyOf(event.player);
+                    return event.player != player && player.countCards('h') > 0 && event.player.countCards('h') > 0;
                 },
                 check: function (event, player) {
-                    return event.player.isEnemyOf(player);
+                    return get.attitude(player, event.player) < 0 && player.countCards('h') > 1;
                 },
                 logTarget: function (event) {
                     return event.player;
@@ -2178,28 +2178,34 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 }
             },
             secret: {
-                usable: 1,
-                enable: 'phaseUse',
-                filterTarget: function (card, player, target) {
-                    return player != target;
+                trigger: { player: 'phaseAfter' },
+                direct: true,
+                filter: function (event, player) {
+                    return !player.isTurnedOver();
                 },
-                selectTarget: 1,
-                filterCard: true,
-                selectCard: 2,
-                complexCard: true,
-                content: function (event, trigger) {
-                    event.target.turnOver();
+                content: function () {
+                    "step 0"
+                    player.chooseTarget(get.prompt('secret'), function (card, player, target) {
+                        return player != target;
+                    }).ai = function (target) {
+                        if (target.hasSkillTag('noturn')) return 0;
+                        return Math.max(0, -get.attitude(player, target) - 2);
+                    };
+                    "step 1"
+                    if (result.bool) {
+                        player.logSkill('secret', result.targets);
+                        player.turnOver();
+                        result.targets[0].turnOver();
+                        game.asyncDraw([player, result.targets[0]], 2);
+                    }
                 },
-                ai: {
-                    threaten: 1.5
-                }
             },
             meiren: {
                 group: ['yingzi', 'biyue'],
                 //锁定技
                 forced: true
             },
-            //吴哲晗
+            //吴哲晗,AI测试ok
             jiangshan: {
                 audio: 2,
                 trigger: { player: 'phaseDrawBefore' },
@@ -2287,34 +2293,31 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 usable: 1,
                 enable: 'phaseUse',
                 prompt: '弃置任意张手牌并指定不多于弃置手牌数的其他角色，造成弃牌数的伤害随机分配在这些角色上，随后你翻面（X为弃牌数量）',
-                direct: true,
+                direct: true, position: 'h',
+                filterCard: true,
+                selectCard: [1, Infinity],
                 content: function () {
                     'step 0'
-                    player.chooseToDiscard('h', [1, player.countCards('h')], get.prompt('huangguan'), true).set('ai', function (target) {
-                        return _status.currentPhase != player;
-                    });
-                    'step 1'
-                    //var damageCount = result.cards.length;
-                    if (result.bool) {
-                        player.storage.huangguanDamageCount = result.cards.length;
-
-                        player.chooseTarget('选择角色随机造成' + player.storage.huangguanDamageCount + '点伤害', [1, player.storage.huangguanDamageCount], function (target) {
-                            return target != player;
-                        }).set('ai', function (target) {
-                            return target != player;
+                    player.storage.huangguanDamageCount = cards.length;
+                    player.chooseTarget('选择角色随机造成' + player.storage.huangguanDamageCount + '点伤害', [1, player.storage.huangguanDamageCount])
+                        .set('ai', function (target) {
+                            return get.sgn(get.damageEffect(target, player, player));
                         });
-                    } else {
-                        player.storage.huangguanDamageCount = 0;
-                    }
-                    'step 2'
+                    'step 1'
                     if (result.bool) {
                         player.logSkill('huangguan', result.targets);
                         if (result.targets.length == 1) {
                             result.targets[0].damage(player.storage.huangguanDamageCount);
                         } else {
+                            var targetsDamage = new Array(player.storage.huangguanDamageCount);
                             for (var i = 0; i < player.storage.huangguanDamageCount; i++) {
                                 var randomTarget = Math.floor(Math.random() * result.targets.length);//随机目标
-                                result.targets[randomTarget].damage();
+                                targetsDamage[randomTarget] = targetsDamage[randomTarget] ? (++targetsDamage[randomTarget]) : 1;
+                            }
+                            for (var i = 0; i < player.storage.huangguanDamageCount; i++) {
+                                if (targetsDamage[i]) {
+                                    result.targets[i].damage(targetsDamage[i]);
+                                }
                             }
                         }
                         player.turnOver();
@@ -2425,7 +2428,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }
                 }
             },
-            //刘增艳
+            //刘增艳，AI测试ok
             tongyin: {
                 unique: true,
                 gainable: true,
@@ -2435,17 +2438,19 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 intro: {
                     content: 'cards'
                 },
-                group: ['tongyin1', 'tongyin2', 'tongyin3', 'tongyin4', 'tongyin5', 'tongyin6'],
+                group: ['tongyin1', 'tongyin2', 'tongyin3', 'tongyin4', 'tongyin5'],
                 ai: {
                     nodiscard: true,
                     nolose: true
                 }
             },
             tongyin1: {
-                //弃牌酒，获得之
+                //弃牌酒，获得之，自己弃牌不算
                 audio: 2,
                 trigger: { global: 'discardAfter' },
                 filter: function (event, player) {
+                    if (event.player == player)
+                        return false;
                     for (var i = 0; i < event.cards.length; i++) {
                         return event.cards[i].name == 'jiu' && get.position(event.cards[i]) == 'd';
                     }
@@ -2462,11 +2467,12 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     "step 1"
                     for (var i = 0; i < trigger.cards.length; i++) {
                         if (trigger.cards[i].name == 'jiu' && get.position(trigger.cards[i]) == 'd') {
-                            player.logSkill('tongyin');
                             player.storage.tongyin.push(trigger.cards[i]);
-                            player.syncStorage('tongyin');
                         }
                     }
+                    player.logSkill('tongyin');
+                    player.syncStorage('tongyin');
+                    player.markSkill('tongyin');
                 },
             },
             tongyin2: {
@@ -2491,12 +2497,12 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 }
             },
             tongyin3: {
-                //使用9
+                //使用9，自己用酒不算，且目标状态不是濒死
                 trigger: { global: 'useCardAfter' },
                 audio: 2,
                 forced: true,
                 filter: function (event, player) {
-                    return event.card.name == 'jiu';
+                    return event.card.name == 'jiu' && event.player != player && event.player.type != 'dying';
                 },
                 content: function (card) {
                     if (player.storage.tongyin == undefined)
@@ -2508,51 +2514,6 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 }
             },
             tongyin4: {
-                enable: 'chooseToUse',
-                filter: function (event, player) {
-                    return event.type == 'dying' && event.dying && event.dying.hp <= 0 && player.storage.tongyin.length > 0;
-                },
-                filterTarget: function (card, player, target) {
-                    return target == _status.event.dying;
-                },
-                direct: true,
-                delay: 0,
-                selectTarget: -1,
-                content: function () {
-                    "step 0"
-                    player.chooseCardButton(player.storage.tongyin, get.translation('tongyin')).set('ai', function (button) {
-                        return 0;
-                    });
-                    "step 1"
-                    if (result.bool) {
-                        player.logSkill('tongyin');
-                        player.$throw(result.links);
-                        player.storage.tongyin.remove(result.links[0]);
-                        result.links[0].discard();
-                        player.syncStorage('tongyin');
-                        target.useCard({ name: 'jiu' }, target);
-
-                        if (!player.storage.tongyin.length) {
-                            player.unmarkSkill('tongyin');
-                        }
-                        else {
-                            player.markSkill('tongyin');
-                        }
-                    }
-                },
-                ai: {
-                    order: 6,
-                    skillTagFilter: function (player) {
-                        return player.storage.tongyin.length > 0;
-                    },
-                    save: true,
-                    result: {
-                        target: 3
-                    },
-                    threaten: 1.6
-                },
-            },
-            tongyin5: {
                 audio: 2,
                 unique: true,
                 gainable: true,
@@ -2575,19 +2536,21 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     var cards = trigger.playerCards.filter(card => card.name == 'jiu' && get.position(card) == 'd');
                     for (var i = 0; i < trigger.playerCards.length; i++) {
                         if (trigger.playerCards[i].name == 'jiu' && get.position(trigger.playerCards[i]) == 'd') {
-                            player.logSkill('tongyin');
                             player.storage.tongyin.push(cards[i]);
-                            player.syncStorage('tongyin');
-                            player.markSkill('tongyin');
                             trigger.cards.remove(trigger.playerCards[i]);
                         }
                     }
+                    player.logSkill('tongyin');
+                    player.syncStorage('tongyin');
+                    player.markSkill('tongyin');
                     trigger.playerCards.length = 0;
                 }
             },
-            tongyin6: {
+            tongyin5: {
                 audio: 2,
                 trigger: { global: ['chooseToCompareAfter', 'compareMultipleAfter'] },
+                frequent: true,
+                forced: true,
                 filter: function (event, player) {
                     return event.card2.name == 'jiu' || event.card1.name == 'jiu';
                 },
@@ -2599,62 +2562,167 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     game.delay(2);
                     'step 1'
                     if (trigger.card1.name == 'jiu' && get.position(trigger.card1) == 'd') {
-                        player.logSkill('tongyin');
                         player.storage.tongyin.push(trigger.card1);
-                        player.syncStorage('tongyin');
-                        player.markSkill('tongyin');
                     }
                     if (trigger.card2.name == 'jiu' && get.position(trigger.card2) == 'd') {
-                        player.logSkill('tongyin');
                         player.storage.tongyin.push(trigger.card2);
-                        player.syncStorage('tongyin');
-                        player.markSkill('tongyin');
                     }
+                    player.logSkill('tongyin');
+                    player.syncStorage('tongyin');
+                    player.markSkill('tongyin');
                 }
+            },
+            ganbei: {
+                enable: 'chooseToUse',
+                filter: function (event, player) {
+                    return event.type == 'dying' && event.dying && event.dying.hp <= 0 && player.storage.tongyin.length > 0;
+                },
+                filterTarget: function (card, player, target) {
+                    return target == _status.event.dying;
+                },
+                check: function () {
+                    return player.storage.tongyin.length > 0;
+                },
+                direct: true,
+                delay: 0,
+                selectTarget: -1,
+                content: function () {
+                    "step 0"
+                    player.chooseCardButton(get.translation('ganbei'), player.storage.tongyin, true)
+                        .set('ai', function (button) {
+                            return button.link == 0
+                        });
+                    "step 1"
+                    if (result.bool) {
+                        player.logSkill('ganbei');
+                        player.$throw(result.links);
+                        player.storage.tongyin.remove(result.links[0]);
+
+                        player.syncStorage('tongyin');
+                        target.recover();
+
+                        game.broadcastAll(function (target, card, gain2) {
+                            player.addAdditionalSkill('kele', ['kele']);
+                            if (!player.node.kele) {
+                                player.node.kele = ui.create.div('.playerkele', player.node.avatar);
+                                player.node.kele2 = ui.create.div('.playerkele', player.node.avatar2);
+                            }
+                        }, target, card, target == targets[0]);
+                    }
+                },
+                ai: {
+                    order: 6,
+                    skillTagFilter: function (player) {
+                        return player.storage.tongyin.length > 0;
+                    },
+                    save: true,
+                    result: {
+                        target: 3
+                    },
+                    threaten: 1.6
+                },
             },
             yonglie: {
                 audio: 2,
                 enable: 'phaseUse',
-                useable: 1,
+                usable: 1,
                 filter: function (event, player) {
-                    return player.storage.tongyin.length > 0;
-                },
-                check: function (event, player) {
                     return player.storage.tongyin.length > 0;
                 },
                 content: function () {
                     'step 0'
                     player.chooseTarget('选择角色随机造成' + player.storage.tongyin.length + '点伤害', [1, 3], function (target) {
-                        return target != player;
-                    }).set('ai', function (target) {
-                        return target != player;
-                    });
+                        return target != player
+                    })
+                        .set('ai', function (target) {
+                            return get.sgn(get.damageEffect(target, player, player));
+                        });
                     'step 1'
                     if (result.bool) {
                         player.logSkill('yonglie', result.targets);
                         if (result.targets.length == 1) {
                             result.targets[0].damage(player.storage.tongyin.length);
                         } else {
+                            var targetsDamage = new Array(result.targets.length);
+
                             for (var i = 0; i < player.storage.tongyin.length; i++) {
                                 var randomTarget = Math.floor(Math.random() * result.targets.length);//随机目标
-                                result.targets[randomTarget].damage();
+                                targetsDamage[randomTarget] = targetsDamage[randomTarget] ? (++targetsDamage[randomTarget]) : 1;
+                            }
+                            for (var i = 0; i < targetsDamage.length; i++) {
+                                if (targetsDamage[i]) {
+                                    result.targets[i].damage(targetsDamage[i]);
+                                }
                             }
                         }
-
                         player.storage.tongyin = [];
-                        player.syncStorage('chunlao');
+                        player.syncStorage('tongyin');
                     }
                 },
+                //ai: {
+                //    order: 1,
+                //    result: {
+                //        target: function (player, target) {
+                //            return game.countPlayer(function (current) {
+                //                if (current != player) {
+                //                    return get.sgn(get.damageEffect(current, player, player));
+                //                }
+                //            });
+                //        }
+                //    }
+                //},
                 ai: {
-                    order: 1,
+                    order: 10,
                     result: {
-                        target: function (player, target) {
-                            if (lib.config.mode == 'versus') return -1;
-                            if (player.hasUnknown()) return 0;
-                            return get.damageEffect(target, player);
+                        player: function (player) {
+                            return game.countPlayer(function (current) {
+                                if (current != player) {
+                                    return get.sgn(get.damageEffect(current, player, player));
+                                }
+                            });
                         }
                     }
                 }
+            },
+            kele: {
+                trigger: { source: 'damageBegin' },
+                filter: function (event) {
+                    return event.card && event.card.name == 'sha' && event.notLink();
+                },
+                forced: true,
+                content: function () {
+                    trigger.num++;
+                },
+                temp: true,
+                vanish: true,
+                onremove: function (player) {
+                    if (player.node.kele) {
+                        player.node.kele.delete();
+                        player.node.kele2.delete();
+                        delete player.node.kele;
+                        delete player.node.kele2;
+                    }
+                },
+                ai: {
+                    damageBonus: true
+                },
+                group: 'kele2'
+            },
+            kele2: {
+                trigger: { player: 'useCardAfter', player: 'phaseAfter' },
+                priority: 2,
+                filter: function (event) {
+                    if (event.name == 'useCard') return (event.card && (event.card.name == 'sha'));
+                    return true;
+                },
+                forced: true,
+                popup: false,
+                audio: false,
+                content: function () {
+                    game.broadcastAll(function (player) {
+                        player.removeAdditionalSkill('kele');
+                    }, player);
+                },
             },
             //邱欣怡
             meixi: {
@@ -2695,31 +2763,16 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             nvwang: {
                 trigger: { source: 'damageBefore' },
                 filter: function (event, player) {
-                    if (_status.currentPhase != player) return false;
-                    if (!_status.event.getParent('phaseUse')) return false;
-                    if (event.player.maxHp == 1) return false;
-
-                    var info = lib.character[event.player.name];
-                    if (!info) return false;
-                    var skills = event.player.getSkills();
-                    for (var i = 0; i < info[3].length; i++) {
-                        if (lib.skill[info[3][i]].fixed) continue;
-                        if (skills.contains(info[3][i])) return true;
-                    }
-                    return false;
+                    return event.player.maxHp > 2 && event.card.name == 'sha';
                 },
                 logTarget: 'player',
                 check: function (event, player) {
-                    if (get.attitude(player, event.player) < 0) {
-                        if (event.player.hp == 1) return false;
-                        return true;
-                    }
-                    return false;
+                    if (event.player.maxHp <= 2) return false;
+                    return true;
                 },
                 content: function () {
                     if (trigger.player.maxHp > 1) {
                         'step 0'
-                        trigger.cancel();
                         if (trigger.player.countCards('he')) {
                             trigger.player.chooseControl(function (event, player) {
                                 if (player.maxHp == player.hp && player.countCards('e', { type: 'equip' }) > 0) return 0;
@@ -2734,30 +2787,53 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         switch (result.index) {
                             case 0:
                                 //弃置装备区内的所有牌并失去1点体力
+                                trigger.cancel();
                                 trigger.player.discard(trigger.player.getCards('e'));
                                 trigger.player.loseHp();
                                 break;
                             case 1:
                                 //弃置一张装备牌并失去1点体力上限
-                                trigger.player.discard(1, trigger.player.getCards('e'));
+                                trigger.cancel();
+                                trigger.player.discard(1, function (card) {
+                                    return get.type(card) == 'equip'
+                                });
                                 --trigger.player.maxHp;
                                 break;
                             default:
                             case 2:
-                                trigger.player.loseHp();
                                 --trigger.player.maxHp;
                                 break;
                         }
+                        'step 2'
+                        trigger.player.update();
                     }
+                }
+            },
+            laydown: {
+                trigger: { player: 'shaBegin' },
+                priority: 5,
+                audio: true,
+                logTarget: 'target',
+                filter: function (event, player) {
+                    return event.target.sex == 'male'
+                },
+                content: function () {
+                    "step 0"
+                    trigger.target.chooseToDiscard('弃置一张手牌，或令' + get.translation(player) + '摸一张牌').set('ai', function (card) {
+                        var trigger = _status.event.getTrigger();
+                        return -get.attitude(trigger.target, trigger.player) - get.value(card);
+                    });
+                    "step 1"
+                    if (result.bool == false) player.draw();
                 }
             },
             //潘燕琦,AI测试OK
             tongxin: {
-                //每当有角色受到伤害时，你可对伤害来源进行一次判定，若为黑色，视为你对其造成X点雷属性伤害；若为红色，视为你对其造成X点火属性伤害，然后再进行一次判定，若为黑色，失去1点体力，若为红色，弃1张牌。（X为受到的伤害值）
+                //除你之外每当有角色受到伤害时，你可对伤害来源进行一次判定，若为黑色，视为你对其造成X点雷属性伤害；若为红色，视为你对其造成X点火属性伤害，然后再进行一次判定，若为黑色，失去1点体力，若为红色，弃1张牌。（X为受到的伤害值）
                 audio: 4,
                 trigger: { global: 'damageEnd' },
                 filter: function (event, player) {
-                    if (event.source == player)
+                    if (event.source == player || event.player == player)
                         return false;
                     return true;
                 },
@@ -2964,7 +3040,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     value: -1
                 }
             },
-            //邵雪聪
+            //邵雪聪,AI测试ok
             yibing: {
                 trigger: { player: 'damageBegin' },
                 direct: true,
@@ -2991,13 +3067,12 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 content: function () {
                     target.recover();
                     if (player == target)
-                        player.discardPlayerCard(player, 1, 'h').set('ai', function (button) {
+                        player.discardPlayerCard(player, 1, 'h').set('ai', function (card) {
                             return 9 - get.value(card)
                         });
-                    player.discardPlayerCard(target, 1, 'j').set('ai', function (button) {
+                    player.discardPlayerCard(target, 1, 'j').set('ai', function (card) {
                         return 9 - get.value(card)
                     });
-
                 },
                 ai: {
                     order: 9,
@@ -3069,17 +3144,42 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     noh: true,
                 }
             },
-            //徐伊人
+            //徐伊人，AI测试OK
             tisu: {
                 trigger: { player: 'shaMiss' },
+                forced: true,
+                mark: true,
                 direct: true,
+                init: function (player) {
+                    player.storage.sudu = 0;
+                },
+                intro: {
+                    content: 'mark'
+                },
                 filter: function (event, player) {
                     return player.canUse('sha', event.target) && player.hasSha();
                 },
                 prompt: '额外对其使用一张杀',
                 content: function () {
-                    player.chooseToUse(get.prompt('tisu'), { name: 'sha' }, trigger.target, -1).set('addCount', false).logSkill = 'tisu';
-                }
+                    player.storage.sudu += 1;
+                    //player.syncStorage('sudu');
+                    player.chooseToUse(get.prompt('tisu'), { name: 'sha' }, trigger.target, -1)
+                        .set('addCount', false).logSkill = 'tisu';
+                }, group: 'tisu2'
+            },
+            tisu2: {
+                trigger: { source: 'damageBegin' },
+                filter: function (event,player) {
+                    return player.storage.sudu > 0 &&  event.card && event.card.name == 'sha' && event.notLink();
+                },
+                forced: true,
+                content: function (player) {
+                    trigger.num += player.storage.sudu;
+                    player.storage.sudu = 0;
+                },
+                ai: {
+                    damageBonus: true
+                },
             },
             fenfa: {
                 //其他角色弃牌杀，获得之
@@ -3327,29 +3427,15 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     'step 2'
                     if (result.bool) {
                         //拼点获胜，选择弃其两张牌或你对其造成1点伤害
-                        target.chooseControl(function (event, player) {
-                            if (target.countCards('he') > 1) return 0;
-                            return 1;
-                        })
-                            .set('choiceList', [get.translation(player.name) + '弃置你两张牌', '受到来自' + get.translation(player.name) + '的1点伤害'])
-                            .set('ai', function () {
-                                var eff = get.damageEffect(target, player, player);
-                                if (get.attitude(player, target) > 0) {
-                                    if (eff >= 0) return false;
-                                    return 10 - get.buttonValue(button);
-                                }
-                                if (eff <= 0) return get.buttonValue(button);
-                                if (target.hp == 1) return false;
-                                if (player.hasSkill('jiu') || player.hasSkill('tianxianjiu') ||
-                                    player.hasSkill('luoyi2') || player.hasSkill('reluoyi2')) return -1;
-                                if (_status.event.dialog.buttons.length < 2) return -1;
-                                var num = 0;
-                                for (var i = 0; i < _status.event.dialog.buttons.length; i++) {
-                                    if (get.buttonValue(_status.event.dialog.buttons[i]) > 1.5) num++;
-                                }
-                                if (num >= 2) return get.buttonValue(button) - 1.5;
-                            });
-
+                        target.chooseControl('弃置两张牌', '受到1点伤害').set('ai', function () {
+                            if (get.damageEffect(player, event.player, player) >= 0) {
+                                return 0;
+                            }
+                            if (player.hp >= 3 && player.countCards('he') >= 2) {
+                                return 1;
+                            }
+                            return 0;
+                        });
                     }
                     else {
                         trigger.cancel();
@@ -3498,8 +3584,6 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     player.turnOver();
                 },
                 ai: {
-                    maixie: true,
-                    maixie_hp: true,
                     threaten: function (player, target) {
                         if (target.hp == 1) return 2.5;
                         return 1;
@@ -4278,6 +4362,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             wenrou: '温柔',
             wenrou_info: '每当有角色受到伤害后，若其体力值与你相同，你选择你或他摸一张牌',
             //丶Gone设计的技能
+            //鞠婧祎篇
             luandance: '乱舞',
             luandance_info: '令除你外的所有SNH48G非官方角色依次对另一名角色使用一张【杀】，无法如此做者受到1点伤害。',
             dufei: '毒妃',
@@ -4290,6 +4375,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             duzong_info: '觉醒技：若你手中的“毒”大于等于两张，你体力上限-1并回复1点体力，永久获得技能“心血”',
             xinxie: '心血',
             xinxie_info: '你每次使用“毒”之后，摸1张牌；你的结束阶段，随机将一张手牌转化为毒。',
+            //赵嘉敏篇
+
 
             //参考   北极瑞风HZYQ设计的技能
             dandang: '担当',
@@ -4337,8 +4424,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             kuaidao_info: '使用杀指定目标后，你可以弃置其一张手牌，若此牌与“杀”花色相同，此“杀”不可被“闪”响应；同时若此牌为装备牌，此杀伤害+1；此“杀”结算后，该角色获得此“杀”',
             qiaoyan: '巧盐',
             qiaoyan_info: '你可以将黑色牌当借刀杀人使用，锁定技，每当黑色锦囊牌造成伤害时，若你为伤害来源，你防止此伤害；锁定技，每当你受到黑色锦囊牌对你造成的伤害时，你防止此伤害。',
-            rewu: '热舞',
-            rewu_info: '出牌阶段限一次，你可弃置X张手牌并最多指定你当前体力值的角色各摸1张牌。（超强表现力的舞姿闪耀全场）',
+            chongaaaa: '冲啊',
+            chongaaaa_info: '出牌阶段限一次，你可弃置X张手牌并最多指定你当前体力值的角色各摸1张牌。（超强表现力的舞姿闪耀全场）',
             beifen: '辈分',
             beifen_info: '锁定技，你不会受到体力值不低于你的角色使用锦囊时造成的伤害。（零期生的崛起之路谁人不服）',
             yuanzhen: '圆阵',
@@ -4353,7 +4440,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             shengou: '神钩',
             shengou_info: '你可在其它任意角色的出牌阶段开始时与其拼点，若你赢，你获得其一张牌。（风尚一姐的自信能带来无比的闪耀）',
             secret: '奥秘',
-            secret_info: '出牌阶段限一次，你弃置两张同花色牌，令一名其他角色翻面。（撩人的神态堪称妖精却又不失风雅）',
+            secret_info: '回合结束后，若你的武将牌正面朝上，你可以与一名其他角色同时翻面，然后各摸两张牌。（撩人的神态堪称妖精却又不失风雅）',
             meiren: '美人',
             meiren_info: '锁定技：（英姿）摸牌阶段多摸一张牌，（闭月）回合结束阶段摸一张牌',
             jiangshan: '江山',
@@ -4369,17 +4456,23 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             huangzi: '皇子',
             huangzi_info: '觉醒技，回合开始时，若你的体力值小于等于你的体力上限的一半，你失去1点体力上限，回复1点体力，并获得技能“江山”，“神钩”',
             tongyin: '痛饮',
+            ganbei: '干杯',
+            ganbei_info: '每当一名角色进入濒死状态，你可弃置一瓶可乐为其回复1点体力，并且自己也获得“酒”的效果。（阔落是力量之源也是解愁良药）',
+            kele: '可乐',
+            kele_info: '下一次使用杀造成的伤害+1，可与“酒”叠加，此效果持续到你的回合结束或使用杀结算后。',
             tongyin_bg: '可',
             tongyin_mark_bg: '可乐',
-            tongyin_info: '锁定技：每当其他角色弃置、判定、拼点、使用后的“酒”进入弃牌堆后，你可将其置于你的武将牌上，称为"可乐"。每当一名角色进入濒死状态，你可弃置一瓶可乐视为其使用“酒”。（阔落是力量之源也是解愁良药）',
+            tongyin_info: '锁定技：每当其他角色弃置、判定、拼点、使用后的“酒”进入弃牌堆后，你可将其置于你的武将牌上，称为"可乐"。',
             yonglie: '涌烈',
             yonglie_info: '出牌阶段，你可弃置所有可乐，指定最多不超过3名角色造成共计X点伤害(X为可乐数)，随机分配每名目标角色受到的伤害点数。（头铁偶像有着自己的成熟想法绝不向谣言屈服）',
             meixi: '妹系',
-            meixi_info: '锁定技，没有装备防具时视为装备“白银狮子”（你每次受到伤害时，最多承受1点伤害（防止多余的伤害）；当你失去装备区里的【白银狮子】时，你回复1点体力）',
+            meixi_info: '锁定技，没有装备防具时视为装备“白银狮子”（你每次受到伤害时，最多承受1点伤害（防止多余的伤害）；没有装备防具时装备一个防具，你回复1点体力）',
             nvwang: '女王',
-            nvwang_info: '锁定技，若你对一名角色造成伤害，你可以选择终止该次伤害，目标角色进行三选一：1，弃置装备区内的所有牌并失去1点体力；2，弃置一张装备牌并失去1点体力上限,；3，失去1点体力和体力上限。（蜕变的女王有着压制性的强大）',
+            laydown: '雷当',
+            laydown_info: '对男性角色使用杀后，你可以令其选择一项：1.弃置一张手牌；2.令你摸一张牌。',
+            nvwang_info: '锁定技，你使用杀对一名体力上限大于2的角色造成伤害时，你可以使目标角色进行三选一：1，终止该次伤害，弃置装备区内的所有牌并失去1点体力；2，终止该次伤害，弃置一张装备牌并失去1点体力上限,；3，失去1点体力上限，并依然承受该次伤害。（蜕变的女王有着压制性的强大）',
             tongxin: '同心',
-            tongxin_info: '每当与你势力相同的武将受到伤害时，你可失去X点体力并对伤害来源进行一次判定，若为黑色，视为你对其造成X点雷属性伤害；若为红色，视为你对其造成X点火属性伤害（X为受到的伤害值）；然后再进行一次判定，若为黑色，你失去1点体力，若为红色，你弃1张牌，如果有。（温柔的内心必当理解队友受到的伤害，也绝不轻饶给队友造成伤害的人）',
+            tongxin_info: '除你之外每当与你势力相同的武将受到伤害时，你可失去X点体力并对伤害来源进行一次判定，若为黑色，视为你对其造成X点雷属性伤害；若为红色，视为你对其造成X点火属性伤害（X为受到的伤害值）；然后再进行一次判定，若为黑色，你失去1点体力，若为红色，你弃1张牌，如果有。（温柔的内心必当理解队友受到的伤害，也绝不轻饶给队友造成伤害的人）',
             dedication: '奉献',
             dedication_info: '你死亡时，你可令一名角色获得技能"同心"并将手牌补至体力上限，最多5张。（即使自身处境险恶，依然希望用尽最后一份力量为团队作出贡献）',
             juxia: '聚虾',
@@ -4397,7 +4490,9 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             jiaozhu: '教主',
             jiaozhu_info: '当你失去最后一张手牌时，你可选择一名角色令其摸一张牌或弃一张牌。（多年的努力打造出独特的人格魅力）',
             tisu: '提速',
-            tisu_info: '每当一名角色使用闪抵消你的杀时，你可再对其一张杀，视为对该角色再使用一张杀，并且保持酒的效果。（老司机发车最为迅速）',
+            tisu_bg: '速',
+            tisu_mark_bg: '速度',
+            tisu_info: '每当一名角色使用闪抵消你的杀时，你可再对其一张杀，并且获得一枚速度标记；你每有一个速度标记，杀额外造成1点伤害，杀结算后，移除所有速度标记。（老司机发车最为迅速）',
             fenfa: '奋发',
             fenfa_info: '锁定技。每当一名其他角色弃置的杀进入弃牌堆时，你将其加入手牌。（自省且谦虚是伊姐好人缘的重要原因）',
             complement: '补刀',
