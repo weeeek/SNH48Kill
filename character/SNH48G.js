@@ -3169,8 +3169,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             },
             tisu2: {
                 trigger: { source: 'damageBegin' },
-                filter: function (event,player) {
-                    return player.storage.sudu > 0 &&  event.card && event.card.name == 'sha' && event.notLink();
+                filter: function (event, player) {
+                    return player.storage.sudu > 0 && event.card && event.card.name == 'sha' && event.notLink();
                 },
                 forced: true,
                 content: function (player) {
@@ -3216,15 +3216,12 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }
                 },
             },
-            //袁丹妮
+            //袁丹妮，AI测试OK
             complement: {
-                usable: 2,
+                usable: 1,
                 trigger: { global: 'damageEnd' },
                 filter: function (event, player) {
                     //修复补刀能鞭尸的BUG：死了就别鞭尸了。。。
-                    if (get.is.guozhanMode())
-                        return player.isFriendOf(event.source);
-
                     return event.player != player && event.player.hp > 0 &&
                         event.player.classList.contains('dead') == false &&
                         player.countCards('h', { name: 'sha' }) > 0
@@ -3242,9 +3239,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 audio: true,
                 trigger: { player: 'phaseDrawBefore' },
                 check: function (event, player) {
-                    if (player.countCards('h') > player.hp) return true;
-                    if (player.countCards('h') > 3) return true;
-                    return false;
+                    return true;
                 },
                 content: function () {
                     "step 0"
@@ -3291,7 +3286,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     value: -1
                 }
             },
-            //赵韩倩
+            //赵韩倩，AI测试OK
             kuaiyan: {
                 //选择一名其他角色进行一次判定，若结果为黑色，其受到1点雷属性伤害
                 usable: 1,
@@ -3381,40 +3376,26 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     player.$gain2(trigger.result.card);
                 }
             },
-            //温晶婕
+            //温晶婕，AI测试OK
             talent: {
-                trigger: { player: 'phaseUseBegin' },
-                direct: true,
-                priority: 15,
+                enable: 'phaseUse',
+                usable: 1,
+                filterTarget: function (card, player, target) {
+                    return player != target && target.countCards('h') > 0;
+                },
+                filter: function (event, player) {
+                    return player.countCards('h') > 0;
+                },
+                selectTarget: 1,
                 content: function () {
                     'step 0'
-                    var goon;
-                    if (player.needsToDiscard() > 1) {
-                        goon = player.hasCard(function (card) {
-                            return card.number > 10 && get.value(card) <= 5;
-                        });
-                    }
-                    else {
-                        goon = player.hasCard(function (card) {
-                            return (card.number >= 9 && get.value(card) <= 5) || get.value(card) <= 3;
-                        });
-                    }
-                    player.chooseTarget(get.prompt('talent'), function (card, player, target) {
-                        return target != player && target.countCards('h');
-                    }).set('ai', function (target) {
-                        var player = _status.event.player;
-                        if (_status.event.goon && get.attitude(player, target) < 0) {
-                            return get.effect(target, { name: 'sha' }, player, player);
-                        }
-                        return 0;
-                    }).set('goon', goon);
+                    player.chooseToCompare(target);
                     'step 1'
                     if (result.bool) {
-                        //发动技能
-                        var target = result.targets[0];
-                        event.target = target;
-                        player.logSkill('talent', target);
-                        player.chooseToCompare(target);
+                        //拼点获胜，选择弃其两张牌或你对其造成1点伤害
+                        target.chooseControl('弃置两张牌', '受到1点伤害').set('ai', function (event, target) {
+                            return target.countCards('he') >= 2 ? 0 : 0
+                        });
                     }
                     else {
                         //没赢跳过出牌阶段
@@ -3425,30 +3406,14 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         event.finish();
                     }
                     'step 2'
-                    if (result.bool) {
-                        //拼点获胜，选择弃其两张牌或你对其造成1点伤害
-                        target.chooseControl('弃置两张牌', '受到1点伤害').set('ai', function () {
-                            if (get.damageEffect(player, event.player, player) >= 0) {
-                                return 0;
-                            }
-                            if (player.hp >= 3 && player.countCards('he') >= 2) {
-                                return 1;
-                            }
-                            return 0;
-                        });
-                    }
-                    else {
-                        trigger.cancel();
-                        event.finish();
-                    }
-                    'step 3'
                     switch (result.index) {
                         case 0:
-                            player.discardPlayerCard(target, 2, 'he').set('ai', function (button) {
+                            target.chooseToDiscard('he', 2, true).set('ai', function (card) {
                                 return 9 - get.value(card)
                             });
                             break;
                         case 1:
+                        default:
                             target.damage(1);
                             break;
                     }
@@ -3456,18 +3421,18 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 ai: {
                     order: 2.8,
                     result: {
-                        target: function (player, target) {
+                        player: function (player, target) {
                             if (get.attitude(player, target) < 0 && player.hasCard(function (card) {
-                                //点数不小于9的，价值不大于5的，或者价值不大于3的（大概只有毒了）
                                 return (card.number >= 9 && get.value(card) <= 5) || get.value(card) <= 3;
                             })) {
-                                return get.effect(target, { name: 'sha' }, player, target);
+                                return get.sgn(get.damageEffect(target, player, player));
                             }
                             else {
                                 return 0;
                             }
                         }
-                    }
+                    },
+                    threaten: 1.3
                 },
             },
             wenhe: {
@@ -3609,7 +3574,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }
                 }
             },
-            //沈之琳
+            //沈之琳，AI测试OK
             zanmei: {
                 audio: 2,
                 trigger: { player: 'phaseDrawBegin' },
@@ -3657,7 +3622,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     });
                 }
             },
-            //孙芮
+            //孙芮，AI测试OK
             qigai: {
                 audio: 2,
                 enable: 'phaseUse',
@@ -3733,8 +3698,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 gainable: true,
                 trigger: { global: 'discardAfter' },
                 filter: function (event, player) {
-                    if (event.player != player && event.player.classList.contains('dead') == false &&
-                        event.cards && event.cards.length && event.getParent(2).name == 'phaseDiscard') {
+                    if (event.player != player &&
+                        event.player.classList.contains('dead') == false &&
+                        event.cards && event.cards.length &&
+                        event.getParent(2).name == 'phaseDiscard') {
                         for (var i = 0; i < event.cards.length; i++) {
                             if (get.position(event.cards[i]) == 'd') {
                                 return true;
@@ -3766,6 +3733,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 direct: true,
                 content: function () {
                     "step 0"
+                    //copy弃牌数组
                     event.cards = trigger.cards.slice(0);
                     for (var i = 0; i < event.cards.length; i++) {
                         if (get.position(event.cards[i]) != 'd') {
@@ -3777,30 +3745,41 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         return;
                     }
                     var check = lib.skill.rexin.checkx(trigger, player);
-                    player.chooseCardButton(event.cards, '热心：选择令' + get.translation(trigger.player) + '收回的牌').set('ai', function (button) {
-                        if (_status.event.check) {
+
+                    var dialog = ui.create.dialog('热心：选择令' + get.translation(trigger.player) + '收回的牌', event.cards);
+                    player.chooseButton([1, event.cards.length], dialog, true)
+                        .set('ai', function (button) {
                             return 20 - get.value(button.link);
+                        }).filterButton = function (button) {
+                            for (var i = 0; i < ui.selected.buttons.length; i++) {
+                                if (get.color(button.link) == get.color(ui.selected.buttons[i].link)) return true;
+                            }
+                            return false;
                         }
-                        return 0;
-                    }).set('check', check);
                     "step 1"
                     if (result.bool) {
                         game.delay(0.5);
                         player.logSkill('rexin', trigger.player);
+                        //回收的卡
+                        var backCards = [];
 
-                        var color = get.color(result.links[0]);
-                        var backCards = event.cards.filter(card => get.color(card) == color);
+                        for (var i = 0; i < result.buttons.length; i++) {
+                            backCards.push(result.buttons[i].link);
+                            cards.remove(result.buttons[i].link);
+                        }
 
                         trigger.player.gain(backCards);
                         trigger.player.$gain2(backCards);
 
+                        console.log('收回', backCards);
+                        console.log('获得', cards);
+
                         game.log(trigger.player, '收回了', backCards);
 
-                        var gainCards = event.cards.filter(card => get.color(card) != color);
-                        if (gainCards.length > 0) {
-                            player.gain(gainCards);
-                            player.$gain2(gainCards);
-                            game.log(player, '获得了', gainCards);
+                        if (cards.length > 0) {
+                            player.gain(cards);
+                            player.$gain2(cards);
+                            game.log(player, '获得了', cards);
                         }
                         game.delay();
                     }
@@ -4496,7 +4475,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             fenfa: '奋发',
             fenfa_info: '锁定技。每当一名其他角色弃置的杀进入弃牌堆时，你将其加入手牌。（自省且谦虚是伊姐好人缘的重要原因）',
             complement: '补刀',
-            complement_info: '每当一名角色造成伤害时，你可向受伤角色使用一张杀，若此杀造成伤害，你可再出一张杀，每个角色的回合最多两次。（神奇的脑回路往往会产生炸裂的娱乐效果）',
+            complement_info: '每当一名角色造成伤害时，你可向受伤角色使用一张杀，补刀杀不计入使用限制。（神奇的脑回路往往会产生炸裂的娱乐效果）',
             kuxuan: '酷炫',
             kuxuan2: '酷炫',
             kuxuan_info: '摸牌阶段开始前，你可进行一次判定，获得判定牌，你在你的回合内，可以将所有与判定牌相同颜色的手牌视为杀使用或打出。（努力追求的目标也许未必会达成，但努力本身必定有所收获）',
