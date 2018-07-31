@@ -181,16 +181,16 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Gchenguanhui: ['female', 'S', 4, ['wenwan', 'fuhei']],
                 SNH48Gchengjue: ['female', 'S', 4, ['kuaidao', 'qiaoyan']],
                 SNH48Gchensi: ['female', 'S', 4, ['jingwu', 'tianyin']],
-                SNH48Gdaimeng: ['female', 'S', 4, ['dandang', 'jianyi', 'new_lingjun']],
+                SNH48Gdaimeng: ['female', 'S', 4, ['dandang', 'jianyi', 'lingjun'], ['zhu']],
                 SNH48Gjiangyun: ['female', 'S', 3, ['jingyan', 'qichang', 'duomian']],
                 SNH48Gkongxiaoyin: ['female', 'S', 4, ['shenhun', 'diandao', 'xinggan']],
                 SNH48Glvyi: ['female', 'S', 4, ['chengzhang']],
                 SNH48Gliyuqi: ['female', 'S', 3, ['haomai', 'quanneng', 'chongzhen']],
-                SNH48Gliuzengyan: ['female', 'S', 4, ['tongyin', 'yonglie']],
-                SNH48Gmohan: ['female', 'S', 3, ['shiyu', 'yuyan', 'new_ziqiang']],
+                SNH48Gliuzengyan: ['female', 'S', 4, ['tongyin', 'ganbei', 'yonglie']],
+                SNH48Gmohan: ['female', 'S', 3, ['shiyu', 'yuyan', 'ziqiang'], ['zhu']],
                 SNH48Gpanyanqi: ['female', 'S', 4, ['tongxin', 'dedication']],
                 SNH48Gqianbeiting: ['female', 'S', 4, ['juxia', 'qiangong']],
-                SNH48Gqiuxinyi: ['female', 'S', 4, ['meixi', 'nvwang']],
+                SNH48Gqiuxinyi: ['female', 'S', 4, ['meixi', 'nvwang', 'laydown']],
                 SNH48Gsunrui: ['female', 'S', 3, ['qigai', 'rexin']],
                 SNH48Gshaoxuecong: ['female', 'S', 4, ['yibing', 'tianpin', 'jiaozhu']],
                 SNH48Gshenzhilin: ['female', 'S', 4, ['zanmei', 'luanyin', 'luansheng']],
@@ -206,7 +206,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Gzhaohanqian: ['female', 'S', 4, ['kuaiyan', 'innocence']],
                 SNH48Gzhaoye: ['female', 'S', 4, ['baofa', 'caihua']],
 
-                SNH48Gzhaojiamin: ['female', 'S', 3, ['fankui', 'tiandu']],
+                SNH48Gzhaojiamin: ['female', 'S', 4, ['shuangfa', 'buzhuang']],
 
                 //N
                 SNH48Gchenjiaying: ['female', 'N', 3, ['zhiheng']],
@@ -220,9 +220,9 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Gjiangzhenyi: ['female', 'N', 3, ['rende', 'yingzi']],
                 SNH48Gliujuzi: ['female', 'N', 3, ['rende', 'yingzi']],
                 SNH48Gliupeixin: ['female', 'N', 3, ['rende', 'yingzi']],
-                SNH48Gluting: ['female', 'N', 3, ['biyue', 'neidou']],
-                SNH48Gtaoboer: ['female', 'N', 3, ['biyue', 'neidou']],
-                SNH48Gxieni: ['female', 'N', 3, ['biyue', 'neidou']],
+                SNH48Gluting: ['female', 'N', 3, ['biyue', 'longdan']],
+                SNH48Gtaoboer: ['female', 'N', 3, ['biyue', 'paoxiao']],
+                SNH48Gxieni: ['female', 'N', 3, ['biyue', 'liuli']],
                 SNH48Gyijiaai: ['female', 'N', 3, ['duwu', 'mashu']],
                 SNH48Gzhaoyue: ['female', 'N', 3, ['duwu', 'mashu']],
                 SNH48Gzhangyi: ['female', 'N', 3, ['duwu', 'mashu']],
@@ -238,7 +238,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Glijiaen: ['female', 'H', 4, ['jiang', 'luanji']],
                 SNH48Glinnan: ['female', 'H', 4, ['jiang', 'biyue']],
                 SNH48Glinsiyi: ['female', 'H', 3, ['luoshen', 'qingguo']],
-                SNH48Gliyitong: ['female', 'H', 3, ['kurou', 'neidou']],
+                SNH48Gliyitong: ['female', 'H', 3, ['kurou', 'wusheng']],
                 SNH48Gqiyuzhu: ['female', 'H', 3, ['kurou', 'biyue']],
                 SNH48Gshenmengyao: ['female', 'H', 3, ['luoshen', 'qingguo']],
                 SNH48Gsongyushan: ['female', 'H', 3, ['paoxiao', 'longdan']],
@@ -258,7 +258,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 //X
                 SNH48Gchenlin: ['female', 'X', 4, ['wushuang', 'mashu']],
                 SNH48Gchenyunling: ['female', 'X', 4, ['wushuang', 'mashu']],
-                SNH48Gfengxiaofei: ['female', 'X', 4, ['wushuang', 'mashu']],
+                SNH48Gfengxiaofei: ['female', 'X', 4, ['chongaaaa', 'beifen', 'yuanzhen']],
                 SNH48Glizhao: ['female', 'X', 4, ['wushuang', 'mashu']],
                 SNH48Gpanyingqi: ['female', 'X', 4, ['wushuang', 'mashu']],
                 SNH48Gqijing: ['female', 'X', 4, ['wushuang', 'mashu']],
@@ -275,7 +275,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Gzhangjiayu: ['female', 'X', 4, ['wushuang', 'mashu']],
 
                 SNH48Glijing: ['female', 'X', 4, ['guanxing', 'danlao']],
-                
+
                 SNH48Gwangzijie: ['male', 'guan', 1, ['longdan', 'chongzhen', 'paoxiao', 'jiang', 'linglong']],
                 SNH48Gaji: ['male', 'guan', 1, ['buqu', 'yingzi', 'kuaihuo', 'yiji', 'jizhi']],
                 SNH48Gyegou: ['male', 'guan', 1, ['zhiheng', 'paoxiao', 'wansha', 'weimu', 'luanwu']],
@@ -328,7 +328,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     else {
                         player.addAdditionalSkill('new_ziqiang', 'mowang');
                     }
-                    event.trigger('zhuUpdate');                    
+                    event.trigger('zhuUpdate');
                     player.awakenSkill('new_ziqiang');
                 }
             },
@@ -342,7 +342,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     N: [],
                     H: [],
                     X: [],
-                    guan:[]
+                    guan: []
                 };
                 for (var i = 0; i < choice.length; i++) {
                     var group = lib.character[choice[i]][1];
@@ -1308,8 +1308,8 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             ['heart', 3, 'taipingyaoshu'],
 
             //附加游戏卡牌
-			['heart', 2, 'yingyuanbang'],
-			['spade', 2, 'antyvote'],
+            ['heart', 2, 'yingyuanbang'],
+            ['spade', 2, 'antyvote'],
             ['club', 12, 'yongqizhichui'],
         ],
         element: {
