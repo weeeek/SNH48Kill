@@ -24,7 +24,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gshenzhilin: ['female', 'S', 4, ['zanmei', 'luanyin', 'luansheng']],
             SNH48Gwenjingjie: ['female', 'S', 4, ['talent', 'wenhe']],
             SNH48Gwuzhehan: ['female', 'S', 4, ['jiangshan', 'jiamian']],
-            SNH48Gxuchenchen: ['female', 'S', 3, ['qiangyin', 'jinwu', 'chengshu']],
+            SNH48Gxuchenchen: ['female', 'S', 4, ['qiangyin', 'jinwu', 'chengshu']],
             SNH48Gxujiaqi: ['female', 'S', 4, ['shengou', 'secret', 'meiren']],
             SNH48Gxuyiren: ['female', 'S', 4, ['tisu', 'fenfa']],
             SNH48Gxuzixuan: ['female', 'S', 4, ['luogod', 'longgong', 'huangzi']],
@@ -3898,18 +3898,58 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     'step 1'
                     player.loseHp();
                 },
+                //ai: {
+                //    order: 10,
+                //    result: {
+                //        player: function (player) {
+                //            return game.countPlayer(function (current) {
+                //                if (current != player) {
+                //                    //为反时，主-8，忠-7，内-2，反5，未知0
+                //                    console.log(current + ":" + get.attitude(player, current))
+                //                    return get.attitude(player, current) < 0;
+                //                    //为忠时，主10，忠4，内1，反-8，未知0
+                //                }
+                //            });
+                //        }
+                //    }
+                //}
                 ai: {
-                    order: 10,
+                    basic: {
+                        order: 9,
+                        useful: 1,
+                        value: 5,
+                    },
                     result: {
-                        player: function (player) {
-                            return game.countPlayer(function (current) {
-                                if (current != player) {
-                                    //为反时，主-8，忠-7，内-2，反5，未知0
-                                    return get.attitude(player, current) < 0;
-                                    //为忠时，主10，忠4，内1，反-8，未知0
+                        target: function (player, target) {
+                            var att = get.attitude(player, target);
+                            var nh = target.countCards('h');
+                            if (att > 0) {
+                                var js = target.getCards('j');
+                                if (js.length) {
+                                    var jj = js[0].viewAs ? { name: js[0].viewAs } : js[0];
+                                    if (jj.name == 'guohe' || js.length > 1 || get.effect(target, jj, target, player) < 0) {
+                                        return 2;
+                                    }
                                 }
-                            });
-                        }
+                                if (target.getEquip('baiyin') && target.isDamaged() &&
+                                    get.recoverEffect(target, player, player) > 0) {
+                                    if (target.hp == 1 && !target.hujia) return 1.6;
+                                    if (target.hp == 2) return 0.01;
+                                    return 0;
+                                }
+                            }
+                            var es = target.getCards('e');
+                            var noe = (es.length == 0 || target.hasSkillTag('noe'));
+                            var noe2 = (es.length == 1 && es[0].name == 'baiyin' && target.isDamaged());
+                            var noh = (nh == 0 || target.hasSkillTag('noh'));
+                            if (noh && (noe || noe2)) return 0;
+                            if (att <= 0 && !target.countCards('he')) return 1.5;
+                            return -1.5;
+                        },
+                    },
+                    tag: {
+                        loseCard: 1,
+                        discard: 1
                     }
                 }
             },
@@ -4217,7 +4257,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     dialog: function () {
                         var list = ['taoyuan', 'wugu', 'juedou', 'huogong', 'jiedao', 'tiesuo', 'guohe', 'shunshou', 'wuzhong', 'wanjian', 'nanman'];
                         if (get.is.guozhanMode())
-                            list.concat(['yuanjiao', 'yiyi', 'hezong', 'zengbin','shengdong'])
+                            list.concat(['yuanjiao', 'yiyi', 'hezong', 'zengbin', 'shengdong'])
                         for (var i = 0; i < list.length; i++) {
                             list[i] = ['锦囊', '', list[i]];
                         }
