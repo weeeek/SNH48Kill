@@ -3157,15 +3157,23 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             },
             //邵雪聪,AI测试ok
             yibing: {
-                trigger: { player: 'damageBegin' },
-                direct: true,
+                trigger: { player: 'damageBefore' },
                 forced: true,
                 filter: function (event, player) {
-                    return player.countCards('h') <= 1;
+                    return player.countCards('h') <= 1 && !event.nature;
                 },
                 content: function () {
-                    if (!trigger.card.nature)
-                        trigger.cancel();
+                    trigger.cancel();
+                },
+                ai: {
+                    nofire: false,
+                    nothunder: false,
+                    effect: {
+                        target: function (card, player, target, current) {                            
+                            if (!get.tag(card, 'natureDamage'))
+                                return 'zerotarget';
+                        }
+                    }
                 }
             },
             tianpin: {
@@ -4602,7 +4610,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             chengta: '成塔',
             chengta_info: '出牌阶段限两次，你可以使用“虾”中的牌，可再次触发“聚虾”。（积少成多而稳步前行必能创造奇迹）',
             yibing: '异禀',
-            yibing_info: '锁定技，若你手牌数小于等于1，任何无属性伤害对你无效。 （出道的天资已是无人可及）',
+            yibing_info: '锁定技，若你手牌数小于等于1，任何无属性的伤害对你无效。 （出道的天资已是无人可及）',
             tianpin: '甜品',
             tianpin_info: '出牌阶段限两次，你可以弃置1张牌，令一名角色回复1点体力并可以弃置其判定区的一张牌，如果目标是自己，弃一张牌。（甜美的外形与善良的内心相映成辉）',
             jiaozhu: '教主',
