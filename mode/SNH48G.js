@@ -305,16 +305,17 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 }
             },
             new_ziqiang: {
+                priority: 15,
                 skillAnimation: 'legend',
                 audio: 2,
                 unique: true,
-                zhuSkill: true,
                 keepSkill: true,
                 derivation: 'mowang',
                 trigger: { player: 'phaseBegin' },
                 forced: true,
                 filter: function (event, player) {
-                    if (player.storage.new_ziqiang) return false;
+                    if (player.storage.new_ziqiang)
+                        return false;
                     return player.isMinHp();
                 },
                 content: function () {
@@ -326,9 +327,9 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                         player.addSkill('mowang');
                     }
                     else {
-                        player.addAdditionalSkill('new_ziqiang', 'mowang');
+                        player.addAdditionalSkill('new_ziqiang', ['mowang']);
                     }
-                    event.trigger('zhuUpdate');
+                    //event.trigger('update');                    
                     player.awakenSkill('new_ziqiang');
                 }
             },
@@ -1107,7 +1108,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             new_lingjun: '领军',
             new_lingjun_info: '当你陷入濒死状态时，与你同势力的角色对你使用的[桃]额外回复一点体力值。你以此法脱离濒死状态时，其可摸一张牌。（为队友付出必然能得到回应，每次陷入低谷再出发必将更进一步）',
             new_ziqiang: '自强',
-            new_ziqiang_info: '主公技，觉醒技, 准备阶段，若你的体力为全场最低（或之一），你增加一点体力上限并回复1点体力，获得技能“魔王”',
+            new_ziqiang_info: '觉醒技, 准备阶段，若你的体力为全场最低（或之一），你增加一点体力上限并回复1点体力，获得技能“魔王”',
         },
         junList: ['SNH48Gdaimeng', 'SNH48Gyijiaai', 'SNH48Gwanlina', 'SNH48lizhao'],
         guozhanPile: [

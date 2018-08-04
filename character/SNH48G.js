@@ -1429,16 +1429,15 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 audio: 2,
                 trigger: { source: 'damageEnd' },
                 filter: function (event, player) {
-                    if (event._notrigger.contains(event.player)) return false;
-                    if (player.isEnemyOf(event.player))
-                        return true;
+                    if (event._notrigger.contains(event.player))
+                        return false;
                     return (event.card && event.card.name == 'sha' &&
                         event.player.classList.contains('dead') == false &&
                         event.player.countCards('h') > 0 && player.countCards('h') > 0) && event.player != player;
                 },
                 check: function (event, player) {
                     return get.attitude(player, event.player) < 0
-                        && player.countCards('h') > 0 && event.player.countCards('h') > 0 && event.player.isEnemyOf(player);
+                        && player.countCards('h') > 0 && event.player.countCards('h') > 0;
                 },
                 priority: 5,
                 content: function () {
@@ -1568,14 +1567,12 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         trigger.source.damage(player.maxHp - player.hp);
                 },
                 ai: {
-                    maixie_defend: true,
                     effect: {
                         target: function (card, player, target) {
-                            if (player.isFriendOf(target))
-                                return false;
                             if (player.hasSkillTag('jueqing', false, target)) return [1, -1];
-                            return 0.8;
-                            // if(get.tag(card,'damage')&&get.damageEffect(target,player,player)>0) return [1,0,0,-1.5];
+                            //敌人
+                            if (get.attitude(player, target) < 0)
+                                return [get.damageEffect(target, player, player) > 0 ? 1 : -1, 0, 0];
                         }
                     }
                 }
@@ -1684,7 +1681,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     if (player.hp % 2 == 1) {
                         player.draw(2);
                     } else {
-                        if (!trigger.source.hasSkill('qianxun') && player.isEnemyOf(trigger.source)) {
+                        if (!trigger.source.hasSkill('qianxun')) {
                             //体力值为双数：该闪结算后，将一张乐不思蜀置于伤害来源的判定区
                             if (!trigger.source.hasJudge('lebu')) {
                                 trigger.source.addJudge(game.createCard('lebu'));
@@ -1852,8 +1849,12 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 ai: {
                     effect: {
                         target: function (card, player, target) {
-                            if (player.hasSkillTag('jueqing', false, target)) return [1, -1];
-                            return 0.8;
+                            if (player.hasSkillTag('jueqing', false, target))
+                                return [1, -1];
+                            //为反时，主-8，忠-7，内-2，反5，未知0
+                            return get.attitude(player, target) < 0;
+                            //为忠时，主10，忠4，内1，反-8，未知0
+                            //return 0.8;
                         }
                     }
                 }
@@ -2053,7 +2054,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         player.chooseTarget("选择至多" + (player.maxHp - player.hp) + "名角色，各摸一张牌", [0, player.maxHp - player.hp], function (target) {
                             return true
                         }).set('ai', function (target) {
-                            return player.isFriendOf(target) || get.attitude(player, target) >= 0;
+                            get.attitude(player, target) >= 0;
                         });
                     }
                     'step 2'
@@ -3169,7 +3170,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     nofire: false,
                     nothunder: false,
                     effect: {
-                        target: function (card, player, target, current) {                            
+                        target: function (card, player, target, current) {
                             if (!get.tag(card, 'natureDamage'))
                                 return 'zerotarget';
                         }
@@ -3180,7 +3181,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 audio: 2,
                 enable: 'phaseUse',
                 filterCard: true,
-                usable: 2,
+                usable: 1,
                 check: function (card) {
                     return 9 - get.value(card)
                 },
@@ -3288,7 +3289,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     //player.syncStorage('sudu');
                     player.chooseToUse(get.prompt('tisu'), { name: 'sha' }, trigger.target, -1)
                         .set('addCount', false).logSkill = 'tisu';
-                }, group: 'tisu2'
+                }, group: ['tisu2','tisu3']
             },
             tisu2: {
                 trigger: { source: 'damageBegin' },
@@ -3303,6 +3304,15 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 ai: {
                     damageBonus: true
                 },
+            },
+            tisu3: {
+                trigger: { player: 'phaseEnd' },
+                forced: true,
+                frequent:true,
+                direct:true,
+                content: function (player) {
+                    player.storage.sudu = 0;
+                }
             },
             fenfa: {
                 //其他角色弃牌杀，获得之
@@ -3350,7 +3360,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         player.countCards('h', { name: 'sha' }) > 0
                 },
                 content: function (event) {
-                    player.chooseToUse('对' + get.translation(trigger.player.name) + '使用杀', { name: 'sha' }, trigger.player, -1).set('addCount', false).logSkill = 'complement';
+                    player.chooseToUse('对' + get.translation(trigger.player.name) + '使用杀', { name: 'sha' }, trigger.player, -1)
+                        .set('addCount', false).logSkill = 'complement';
                 },
                 ai: {
                     basic: {
@@ -3404,8 +3415,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         if (!player.countCards('h', { color: player.storage.kuxuan })) return false;
                     },
                     respondSha: true,
-                    order: 4,
                     useful: -1,
+                    order: 4,
                     value: -1
                 }
             },
@@ -4256,7 +4267,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             },
             duomian: {
                 enable: 'phaseUse',
-                usable: 1,
+                usable: 2,
                 audio: 2,
                 filter: function (event, player) {
                     return player.countCards('h') > 0
@@ -4612,7 +4623,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             yibing: '异禀',
             yibing_info: '锁定技，若你手牌数小于等于1，任何无属性的伤害对你无效。 （出道的天资已是无人可及）',
             tianpin: '甜品',
-            tianpin_info: '出牌阶段限两次，你可以弃置1张牌，令一名角色回复1点体力并可以弃置其判定区的一张牌，如果目标是自己，弃一张牌。（甜美的外形与善良的内心相映成辉）',
+            tianpin_info: '出牌阶段限一次，你可以弃置1张牌，令一名角色回复1点体力并可以弃置其判定区的一张牌，如果目标是自己，弃一张牌。（甜美的外形与善良的内心相映成辉）',
             jiaozhu: '教主',
             jiaozhu_info: '当你失去最后一张手牌时，你可选择一名角色令其摸一张牌或弃一张牌。（多年的努力打造出独特的人格魅力）',
             tisu: '提速',
@@ -4625,7 +4636,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             complement_info: '每当一名角色造成伤害时，你可向受伤角色使用一张杀，补刀杀不计入使用限制。（神奇的脑回路往往会产生炸裂的娱乐效果）',
             kuxuan: '酷炫',
             kuxuan2: '酷炫',
-            kuxuan_info: '摸牌阶段开始前，你可进行一次判定，获得判定牌，你在你的回合内，可以将所有与判定牌相同颜色的手牌视为杀使用或打出。（努力追求的目标也许未必会达成，但努力本身必定有所收获）',
+            kuxuan_info: '摸牌阶段开始前，你可进行一次判定，获得判定牌，你在你的回合内，可以将所有与判定牌相同颜色的手牌视为杀使用或打出，并且此类杀不计入使用次数限制。（努力追求的目标也许未必会达成，但努力本身必定有所收获）',
             kuaiyan: '快言',
             kuaiyan_info: '出牌阶段仅一次，你可选择一名其他角色进行一次判定，若结果为黑色，其受到1点雷属性伤害。（每一句率直的话都是前辈心口的一道刀疤）',
             innocence: '无邪',
@@ -4662,7 +4673,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             huopo_info: '回合结束阶段，你可将任意张手牌交给一名其它角色，若你这么做，该角色的下个回合开始时，你摸等量的牌。（天生爱演也乐于表演，冷场的事咱不干）',
             huopo2_info: '回合开始时，袁雨桢摸刚刚交给你的数量的牌',
             baofa: '爆发',
-            baofa_info: '锁定技。你不能使用或打出无懈可击。你可将无懈可击当杀使用或打出。你的杀可指定的目标数等于你当前的攻击距离。（不开口则矣，一开口全是AOE）',
+            baofa_info: '锁定技。你不能使用或打出无懈可击。你可将无懈可击当杀使用或打出，并且此类杀不计入使用次数限制。你的杀可指定的目标数等于你当前的攻击距离。（不开口则矣，一开口全是AOE）',
             caihua: '才华',
             caihua_info: '你的杀造成伤害时，你可展示一张牌并进行一次判定，若颜色相同，你获得该判定牌。（平时藏拙于内，用时经验四方）',
             jingyan: '惊艳',
