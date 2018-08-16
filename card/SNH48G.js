@@ -81,19 +81,15 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                 ai: {
                     order: function (name, player) {
                         var cards = player.getCards('h');
-                        if (player.countCards('h', 'sha') == 0) {
-                            return 1;
-                        }
                         for (var i = 0; i < cards.length; i++) {
-                            if (cards[i].name != 'sha' && cards[i].number > 11 && get.value(cards[i]) < 7) {
+                            if (cards[i].number > 11 && get.value(cards[i]) < 7) {
                                 return 9;
                             }
                         }
                         return get.order({ name: 'sha' }) - 1;
                     },
                     result: {
-                        player: function (player) {
-                            if (player.countCards('h', 'sha') > 0) return 0.6;
+                        player: function (player) {                            
                             var num = player.countCards('h');
                             if (num > player.hp) return 0;
                             if (num == 1) return -2;
