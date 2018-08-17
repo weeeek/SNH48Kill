@@ -540,7 +540,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 audioname: ['boss_qinglong'],
                 trigger: { player: 'respond' },
                 filter: function (event, player) {
-                    return event.card.name == 'shan';
+                    return event.card && event.card.name == 'shan';
                 },
                 direct: true,
                 content: function () {
@@ -634,7 +634,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 audio: 2,
                 trigger: { player: ['shaBefore', 'juedouBefore'], target: ['shaBefore', 'juedouBefore'] },
                 filter: function (event, player) {
-                    if (event.card.name == 'juedou') return true;
+                    if (event.card && event.card.name == 'juedou') return true;
                     return get.color(event.card) == 'red';
                 },
                 frequent: true,
@@ -1276,15 +1276,14 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     return true;
                 },
                 check: function (event, player) {
-                    console.log("shuangfa:" + event.card.name);
-                    if (event.card.name == 'tiesuo') return false;
-                    if (event.card.name == 'zhibi') return false;
-                    if (event.card.name == 'xieling') return false;
-                    if (event.card.name == 'diaohulishan') return false;
-                    if (event.card.name == 'chiling') return false;
-                    if (event.card.name == 'wuxie') return false;
-                    if (event.card.name == 'jiu') return false;
-                    if (event.card.name == 'du') return false;
+                    if (event.card && event.card.name == 'tiesuo') return false;
+                    if (event.card && event.card.name == 'zhibi') return false;
+                    if (event.card && event.card.name == 'xieling') return false;
+                    if (event.card && event.card.name == 'diaohulishan') return false;
+                    if (event.card && event.card.name == 'chiling') return false;
+                    if (event.card && event.card.name == 'wuxie') return false;
+                    if (event.card && event.card.name == 'jiu') return false;
+                    if (event.card && event.card.name == 'du') return false;
                     return true;
                 },
                 content: function () {
@@ -1696,7 +1695,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 audio: 2,
                 trigger: { player: 'respond' },
                 filter: function (event, player) {
-                    return event.card.name == 'shan';
+                    return event.card && event.card.name == 'shan';
                 },
                 direct: true,
                 content: function (player, target, event) {
@@ -4607,7 +4606,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 priority: 6,
                 audio: true,
                 filter: function (event, player) {
-                    return event.player.countCards('h') < player.countCards('h') && event.card.name == 'sha'
+                    return event.player.countCards('h') < player.countCards('h') && event.card && event.card.name == 'sha'
                 },
                 content: function () {
                     trigger.cancel();
@@ -4904,7 +4903,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 audio: 2,
                 trigger: { player: ['shaBefore'], target: ['shaBefore'] },
                 filter: function (event, player) {
-                    return event.card.name == 'sha'
+                    return event.card && event.card.name == 'sha'
                 },
                 frequent: true,
                 content: function () {
