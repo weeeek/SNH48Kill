@@ -2903,7 +2903,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             nvwang: {
                 trigger: { source: 'damageBefore' },
                 filter: function (event, player) {
-                    return event.player.maxHp > 2 && event.card.name == 'sha';
+                    return event.player.maxHp > 2 && event.card && event.card.name == 'sha';
                 },
                 logTarget: 'player',
                 check: function (event, player) {
