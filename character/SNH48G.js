@@ -39,9 +39,9 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //N
             //SNH48Gchenjiaying: ['female', 'N', 3, ['zhiheng']],
             //SNH48Gchenwenyan: ['female', 'N', 3, ['zhiheng']],
-            //SNH48Gfengxinduo: ['female', 'N', 3, ['zhiheng']],
+            SNH48Gfengxinduo: ['female', 'N', 4, ['pupu', 'hainv']],
             //SNH48Gguoqianyun: ['female', 'N', 3, ['zhiheng']],
-            //SNH48Ghuangtingting: ['female', 'N', 3, ['rende', 'yingzi']],
+            SNH48Ghuangtingting: ['female', 'N', 4, ['yancang', 'jiezou']],
             //SNH48Ghaowanqing: ['female', 'N', 3, ['rende', 'yingzi']],
             //SNH48Ghexiaoyu: ['female', 'N', 3, ['rende', 'yingzi']],
             //SNH48Gjinyingyue: ['female', 'N', 3, ['rende', 'yingzi']],
@@ -66,12 +66,12 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //SNH48Glijiaen: ['female', 'H', 4, ['jiang', 'luanji']],
             //SNH48Glinnan: ['female', 'H', 4, ['jiang', 'biyue']],
             //SNH48Glinsiyi: ['female', 'H', 3, ['luoshen', 'qingguo']],
-            //SNH48Gliyitong: ['female', 'H', 3, ['kurou', 'wusheng']],
+            SNH48Gliyitong: ['female', 'H', 4, ['jizhi', 'haibao']],
             //SNH48Gqiyuzhu: ['female', 'H', 3, ['kurou', 'biyue']],
             //SNH48Gshenmengyao: ['female', 'H', 3, ['luoshen', 'qingguo']],
             //SNH48Gsongyushan: ['female', 'H', 3, ['paoxiao', 'longdan']],
             SNH48Gsunzhenni: ['female', 'H', 4, ['pengyue', 'haosi']],
-            //SNH48Gwanlina: ['female', 'H', 3, ['paoxiao', 'longdan']],
+            SNH48Gwanlina: ['female', 'H', 4, ['tiequan']],
             //SNH48Gwangyi: ['female', 'H', 3, ['paoxiao', 'longdan']],
             //SNH48Gxuhan: ['female', 'H', 3, ['paoxiao', 'longdan']],
             //SNH48Gxiongqinxian: ['female', 'H', 3, ['paoxiao', 'longdan']],
@@ -85,14 +85,14 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //SNH48Gliujiongran: ['female', 'H', 3, ['luoshen', 'biyue']],
             ////X
             //SNH48Gchenlin: ['female', 'X', 4, ['wushuang', 'mashu']],
-            //SNH48Gchenyunling: ['female', 'X', 4, ['wushuang', 'mashu']],
+            SNH48Gchenyunling: ['female', 'X', 4, ['taowa', 'quanhuang']],
             SNH48Gfengxiaofei: ['female', 'X', 4, ['chongaaaa', 'beifen', 'yuanzhen']],
             //SNH48Glizhao: ['female', 'X', 4, ['wushuang', 'mashu']],
             //SNH48Gpanyingqi: ['female', 'X', 4, ['wushuang', 'mashu']],
             //SNH48Gqijing: ['female', 'X', 4, ['wushuang', 'mashu']],
             //SNH48Gsongxinran: ['female', 'X', 4, ['wushuang', 'mashu']],
             //SNH48Gsunxinwen: ['female', 'X', 4, ['wushuang', 'mashu']],
-            //SNH48Gwangjialing: ['female', 'X', 4, ['wushuang', 'mashu']],
+            SNH48Gwangjialing: ['female', 'X', 4, ['jiujiu']],
             //SNH48Gwangshu: ['female', 'X', 4, ['wushuang', 'mashu']],
             //SNH48Gwangxiaojia: ['female', 'X', 4, ['zhanbu', 'yezhan']],
             //SNH48Gxushiqi: ['female', 'X', 4, ['wushuang', 'mashu']],
@@ -245,7 +245,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 audio: 2,
                 enable: 'phaseUse',
                 viewAs: { name: 'wanjian' },
-                filter: function (player) {
+                filter: function (event, player) {
                     return player.countCards('h') >= 2;
                 },
                 filterCard: function (card, player) {
@@ -1527,7 +1527,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 }
             },
             ziqiang: {
-                skillAnimation: true,
+                skillAnimation: 'legend',
                 audio: 2,
                 unique: true,
                 zhuSkill: true,
@@ -1651,10 +1651,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         if (card.name == 'sha') return num + 1;
                     }
                 },
-                ai: {
-                    //无视防具
-                    unequip: true
-                }
+                group: 'qinggang_skill'
+                //ai: {
+                //    //无视防具
+                //    unequip: true
+                //}
             },
             tianyin: {
                 audio: 2,
@@ -1881,7 +1882,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 }
             },
             xinggan: {
-                skillAnimation: true,
+                skillAnimation: 'legend',
                 audio: 2,
                 unique: true,
                 keepSkill: true,
@@ -1899,8 +1900,6 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     player.update();
                     player.recover();
                     if (player.hasSkill('xinggan')) {
-                        //失去技能“预言”
-                        //player.unmarkSkill('yuyan');
                         player.addSkill('meiyan');
                     }
                     else {
@@ -2399,7 +2398,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 }
             },
             jiamian: {
-                skillAnimation: true,
+                skillAnimation: 'legend',
                 audio: 2,
                 unique: true,
                 keepSkill: true,
@@ -2498,7 +2497,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 }
             },
             huangzi: {
-                skillAnimation: true,
+                skillAnimation: 'legend',
                 audio: 2,
                 unique: true,
                 keepSkill: true,
@@ -3101,7 +3100,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             },
             qiangong: {
                 //觉醒技，回合开始阶段，若你手牌数小于虾，你加1点体力上限并回复1点体力，然后获得技能“成塔”。
-                skillAnimation: true,
+                skillAnimation: 'legend',
                 audio: 2,
                 unique: true,
                 keepSkill: true,
@@ -4333,7 +4332,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     content: 'mark'
                 },
                 trigger: { source: 'damageBegin' },
-                filter: function (event,player) {
+                filter: function (event, player) {
                     return event.card && (get.type(event.card) == 'trick' && get.tag(event.card, 'damage'));
                 },
                 forced: true,
@@ -4343,12 +4342,12 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 ai: {
                     damageBonus: true
                 },
-                group:'mirai2'
+                group: 'mirai2'
             },
             mirai2: {
                 trigger: { player: 'phaseDiscardBegin' },
                 direct: true,
-                frequent:true,
+                frequent: true,
                 content: function () {
                     player.removeAdditionalSkill('jingyan', ['mirai']);
                     player.storage.mirai = [];
@@ -4621,6 +4620,35 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                             }
                         }
                     }
+                },
+                group: 'dage2'
+            },
+            dage2: {
+                skillAnimation: 'legend',
+                audio: 2,
+                unique: true,
+                zhuSkill: true,
+                keepSkill: true,
+                derivation: 'lianglong',
+                trigger: { player: 'phaseBegin' },
+                forced: true,
+                filter: function (event, player) {
+                    if (!player.hasZhuSkill('dage')) return false;
+                    if (player.storage.dage) return false;
+                    return player.isMinHp();
+                },
+                content: function () {
+                    player.storage.dage = true;
+                    --player.maxHp;
+                    player.update();
+                    player.recover();
+                    if (player.hasSkill('dage')) {
+                        player.addSkill('lianglong');
+                    }
+                    else {
+                        player.addAdditionalSkill('dage', 'lianglong');
+                    }
+                    player.awakenSkill('dage');
                 }
             },
             kongchang: {
@@ -4699,7 +4727,63 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }
                 }
             },
+            lianglong: {
+                mod: {
+                    //无视距离
+                    targetInRange: function (card, player, target, now) {
+                        return true;
+                    }
+                },
+                group: 'paoxiao'
+            },
+            //冯薪朵
+            hainv: {
+                mod: {
+                    targetEnabled: function (card, player, target, now) {
+                        if (card.name == 'shuiyanqijun')
+                            return false;
+                    }
+                },
+                group: 'hainv1'
+            },
+            hainv1: {
+                audio: 4,
+                enable: 'chooseToUse',
+                filterCard: function (card) {
+                    return get.color(card) == 'red';
+                },
+                position: 'he',
+                viewAs: { name: 'shuiyanqijun' },
+                viewAsFilter: function (player) {
+                    if (!player.countCards('he', { color: 'red' })) return false;
+                },
+                prompt: '将一张黑色牌当水淹七军使用',
+                check: function (card) { return 4 - get.value(card) }
+            },
+            pupu: {
+                trigger: { source: 'damageEnd' },
+                frequent: true,
+                content: function (player) {
+                    player.draw()
+                }
+            },
+            //黄婷婷
+            yancang: {
+                audio: 2,
+                trigger: { player: 'phaseJudgeBefore' },
+                direct: true,
+                frequent: true,
+                filter: function () { return true },
+                content: function () {
+                    trigger.cancel();
+                }
+            },
+            jiezou: {
+                audio: 2,
+                group: 'neidou'
+            },
             //H
+            //姜杉
             yonggu: {
                 audio: 2,
                 trigger: { player: 'phaseBegin' },
@@ -4740,6 +4824,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }
                 }
             },
+            //孙珍妮
             pengyue: {
                 //其他角色弃置的装备牌，获得之
                 audio: 2,
@@ -4805,6 +4890,266 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     player.chooseToDiscard(player.countCards('e'), 'he', true);
                 }
             },
+            //李艺彤
+            haibao: {
+                mod: {
+                    suit: function (card, suit) {
+                        if (suit == 'heart') return 'spade';
+                        if (suit == 'diamond') return 'club'
+                    }
+                }
+            },
+            //万丽娜
+            tiequan: {
+                audio: 2,
+                trigger: { player: ['shaBefore'], target: ['shaBefore'] },
+                filter: function (event, player) {
+                    return event.card.name == 'sha'
+                },
+                frequent: true,
+                content: function () {
+                    player.draw();
+                },
+                ai: {
+                    effect: {
+                        target: function (card, player, target) {
+                            if (card.name == 'sha') return [1, 0.6];
+                        },
+                        player: function (card, player, target) {
+                            if (card.name == 'sha') return [1, 1];
+                        }
+                    }
+                },
+                group: 'qinggang_skill'
+            },
+            //X
+            //汪佳翎
+            jiujiu: {
+                trigger: { player: 'damageEnd' },
+                direct: true,
+                audio: 2,
+                content: function () {
+                    'step 0'
+                    event.cards = get.cards(9);
+                    event.videoId = lib.status.videoId++;
+                    game.broadcastAll(function (player, id, cards) {
+                        var str;
+                        if (player == game.me && !_status.auto) {
+                            str = '九九：选择任意张点数不小于9的牌';
+                        }
+                        else {
+                            str = '九九';
+                        }
+                        var dialog = ui.create.dialog(str, cards);
+                        dialog.videoId = id;
+                    }, player, event.videoId, event.cards);
+                    event.time = get.utc();
+                    game.addVideo('showCards', player, ['九九', get.cardsInfo(event.cards)]);
+                    game.addVideo('delay', null, 2);
+                    'step 1'
+                    var next = player.chooseButton([0, 9]);
+                    next.set('dialog', event.videoId);
+                    next.set('filterButton', function (button) {
+                        return get.number(button.link) >= 9;
+                    });
+                    next.set('ai', function (button) {
+                        return get.value(button.link, _status.event.player);
+                    });
+                    "step 2"
+                    if (result.bool && result.links) {
+                        player.logSkill('jiujiu');
+                        var cards2 = [];
+                        for (var i = 0; i < result.links.length; i++) {
+                            cards2.push(result.links[i]);
+                            cards.remove(result.links[i]);
+                        }
+                        for (var i = 0; i < cards.length; i++) {
+                            cards[i].discard();
+                        }
+                        event.cards2 = cards2;
+                    }
+                    else {
+                        event.finish();
+                    }
+                    var time = 1000 - (get.utc() - event.time);
+                    if (time > 0) {
+                        game.delay(0, time);
+                    }
+                    "step 3"
+                    game.broadcastAll('closeDialog', event.videoId);
+                    var cards2 = event.cards2;
+                    player.gain(cards2, 'log');
+                    player.$draw(cards2);
+                    game.delay();
+                },
+                ai: {
+                    effect: {
+                        target: function (card, player, target) {
+                            if (get.tag(card, 'damage')) {
+                                if (player.hasSkillTag('jueqing', false, target)) return [1, -2];
+                                if (!target.hasFriend()) return;
+                                if (target.hp >= 4) return [1, 2];
+                                if (target.hp == 3) return [1, 1.5];
+                                if (target.hp == 2) return [1, 0.5];
+                            }
+                        }
+                    }
+                },
+                group: 'jiujiu2'
+            },
+            jiujiu2: {
+                trigger: { player: 'compare', target: 'compare' },
+                frequent: true,
+                silent: true,
+                content: function () {
+                    game.log(player, '拼点牌点数视为', '9');
+                    if (player == trigger.player) {
+                        if (trigger.num1 < 9)
+                            trigger.num1 = 9;
+                    }
+                    else {
+                        if (trigger.num2 < 9)
+                            trigger.num2 = 9;
+                    }
+                }
+            },
+            //陈韫凌
+            quanhuang: {
+                trigger: { player: 'compare', target: 'compare' },
+                frequent: true,
+                silent: true,
+                content: function () {
+                    game.log(player, '拼点牌点数视为', '#y13');
+                    if (player == trigger.player) {
+                        trigger.num1 = 13;
+                    }
+                    else {
+                        trigger.num2 = 13;
+                    }
+                }
+            },
+            taowa: {
+                audio: 2,
+                trigger: { player: 'loseEnd' },
+                frequent: true,
+                filter: function (event, player) {
+                    if (player == _status.currentPhase) return false;
+                    for (var i = 0; i < event.cards.length; i++) {
+                        if (event.cards[i].original && event.cards[i].original != 'j') return true;
+                    }
+                    return false;
+                },
+                content: function () {
+                    player.draw();
+                },
+                group: 'taowa2'
+            },
+            taowa2: {
+                enable: 'chooseToUse',
+                filter: function (event, player) {
+                    if (event.type != 'dying') return false;
+                    if (player != event.dying) return false;
+                    if (player.maxHp <= 1) return false;
+                    if (player.countCards('h') == 0) return false;
+                    return true;
+                },
+                alter: true,
+                filterTarget: function (card, player, target) {
+                    return target != player && target.countCards('h') > 0;
+                },
+                content: function () {
+                    'step 0'
+                    player.chooseToCompare(target);
+                    'step 1'
+                    if (!result.bool) {
+                        player.die();
+                        event.finish();
+                    }
+                    else {
+                        --player.maxHp;
+                        for (var i = 0; i < 1 - player.hp; i++) {
+                            target.recover();
+                            target.update();
+                            game.delay();
+                        }
+                    }
+                },
+                ai: {
+                    order: 1,
+                    skillTagFilter: function (player) {
+                        if (player.maxHp <= 1) return false;
+                        if (player.hp > 0) return false;
+                        if (player.countCards('h') == 0) return false;
+                    },
+                    save: true,
+                    result: {
+                        target: -1,
+                        player: 1
+                    },
+                    threaten: 2
+                },
+            },
+            //wushen: {
+            //             mod: {
+            //                 targetInRange: function (card) {
+            //                     if (get.suit(card) == 'heart')
+            //                         return true;
+            //                 }
+            //             },
+            //             audio: 2,
+            //             enable: ['chooseToUse', 'chooseToRespond'],
+            //             filterCard: { suit: 'heart' },
+            //             viewAs: { name: 'sha' },
+            //             check: function () { return 1 },
+            //             ai: {
+            //                 effect: {
+            //                     target: function (card, player, target, current) {
+            //                         if (get.tag(card, 'respondSha') && current < 0) return 0.6
+            //                     }
+            //                 },
+            //                 respondSha: true,
+            //                 order: 4,
+            //                 useful: -1,
+            //                 value: -1
+            //             }
+            //         },
+            //         wuhun: {
+            //             trigger: { player: 'dieBegin' },
+            //             forced: true,
+            //             popup: false,
+            //             filter: function (event) {
+            //                 return event.source != undefined;
+            //             },
+            //             content: function () {
+            //                 trigger.source.addSkill('wuhun2');
+            //             },
+            //             ai: {
+            //                 threaten: function (player, target) {
+            //                     if (target.hp == 1) return 0.5;
+            //                 },
+            //                 effect: {
+            //                     target: function (card, player, target, current) {
+            //                         if (target.hp <= 1 && get.tag(card, 'damage')) {
+            //                             if (player.hasSkillTag('jueqing', false, target)) return [1, -5];
+            //                             if (!target.hasFriend()) return;
+            //                             if (player.hp > 2 && get.attitude(player, target) <= 0) return [0, 2];
+            //                             return [1, 0, 0, -player.hp];
+            //                         }
+            //                     }
+            //                 }
+            //             }
+            //         },
+            //         wuhun2: {
+            //             audio: 3,
+            //             trigger: { global: 'dieAfter' },
+            //             forced: true,
+            //             content: function () {
+            //                 if (player.hp < Infinity) {
+            //                     player.loseHp(player.hp);
+            //                 }
+            //                 player.removeSkill('wuhun2');
+            //             }
+            //         },
         },
         translate: {
             //S
@@ -4923,7 +5268,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             letian: '乐天',
             letian_info: '你可以立即获得你的判定牌',
             modi: '魔笛',
-            modi_info: '锁定技，你的防御距离+1',
+            modi_info: '锁定技：你的防御距离+1',
             zhanwu: '战舞',
             zhanwu_info: '出牌阶段，你可以交给任一其他角色一张装备牌或【杀】，该角色进行二选一：1. 视为对其攻击范围内的另一名由你指定的角色使用一张【杀】。2. 摸一张牌。每回合限一次。',
             tianlai: '天籁',
@@ -5006,11 +5351,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             kuaidao: '快刀',
             kuaidao_info: '使用杀指定目标后，你可以弃置其一张手牌，若此牌与“杀”花色相同，此“杀”不可被“闪”响应；同时若此牌为装备牌，此杀伤害+1；此“杀”结算后，该角色获得此“杀”',
             qiaoyan: '巧盐',
-            qiaoyan_info: '你可以将黑色牌当借刀杀人使用，锁定技，每当黑色锦囊牌造成伤害时，若你为伤害来源，你防止此伤害；锁定技，每当你受到黑色锦囊牌对你造成的伤害时，你防止此伤害。',
+            qiaoyan_info: '你可以将黑色牌当借刀杀人使用，锁定技：每当黑色锦囊牌造成伤害时，若你为伤害来源，你防止此伤害；锁定技：每当你受到黑色锦囊牌对你造成的伤害时，你防止此伤害。',
             chongaaaa: '冲啊',
             chongaaaa_info: '出牌阶段限一次，你可弃置X张手牌并最多指定你当前体力值的角色各摸1张牌。（超强表现力的舞姿闪耀全场）',
             beifen: '辈分',
-            beifen_info: '锁定技，你不会受到体力值不低于你的角色使用锦囊时造成的伤害。（零期生的崛起之路谁人不服）',
+            beifen_info: '锁定技：你不会受到体力值不低于你的角色使用锦囊时造成的伤害。（零期生的崛起之路谁人不服）',
             yuanzhen: '圆阵',
             yuanzhen_info: '限定技，回合开始时，若你已受伤，你可摸X张牌，并回复1点体力（X为场上与你同势力角色数）（著名神秘仪式独此一家不可复制）',
             chengzhang: '成长',
@@ -5049,9 +5394,9 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             yonglie: '涌烈',
             yonglie_info: '出牌阶段，你可弃置所有可乐，指定最多不超过3名角色造成共计X点伤害(X为可乐数)，随机分配每名目标角色受到的伤害点数。（头铁偶像有着自己的成熟想法绝不向谣言屈服）',
             meixi: '妹系',
-            meixi_info: '锁定技，没有装备防具时视为装备“白银狮子”（你每次受到伤害时，最多承受1点伤害（防止多余的伤害）；没有装备防具时装备一个防具，你回复1点体力）',
+            meixi_info: '锁定技：没有装备防具时视为装备“白银狮子”（你每次受到伤害时，最多承受1点伤害（防止多余的伤害）；没有装备防具时装备一个防具，你回复1点体力）',
             nvwang: '女王',
-            nvwang_info: '锁定技，你使用杀对一名体力上限大于2的角色造成伤害时，你可以使目标角色进行三选一：1，终止该次伤害，弃置装备区内的所有牌并失去1点体力；2，终止该次伤害，弃置一张装备牌并失去1点体力上限,；3，失去1点体力上限，并依然承受该次伤害。（蜕变的女王有着压制性的强大）',
+            nvwang_info: '锁定技：你使用杀对一名体力上限大于2的角色造成伤害时，你可以使目标角色进行三选一：1，终止该次伤害，弃置装备区内的所有牌并失去1点体力；2，终止该次伤害，弃置一张装备牌并失去1点体力上限,；3，失去1点体力上限，并依然承受该次伤害。（蜕变的女王有着压制性的强大）',
             laydown: '雷当',
             laydown_info: '对男性角色使用杀后（SNH48模式无性别限制），你可以令其选择一项：1.弃置一张手牌；2.令你摸一张牌。',
             tongxin: '同心',
@@ -5067,7 +5412,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             chengta: '成塔',
             chengta_info: '出牌阶段限两次，你可以使用“虾”中的牌，可再次触发“聚虾”。（积少成多而稳步前行必能创造奇迹）',
             yibing: '异禀',
-            yibing_info: '锁定技，若你手牌数小于等于1，任何无属性的伤害对你无效。 （出道的天资已是无人可及）',
+            yibing_info: '锁定技：若你手牌数小于等于1，任何无属性的伤害对你无效。 （出道的天资已是无人可及）',
             tianpin: '甜品',
             tianpin_info: '出牌阶段限一次，你可以弃置1张牌，令一名角色回复1点体力并可以弃置其判定区的一张牌，如果目标是自己，弃一张牌（没有则不弃）。（甜美的外形与善良的内心相映成辉）',
             jiaozhu: '教主',
@@ -5141,18 +5486,41 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             huobing: '火并',
             huobing_info: '出牌阶段限一次，你与一名其他角色拼点，若你赢，视为你对其使用“决斗”，若你没赢，视为其对你使用“决斗”。此“决斗”不能被“无懈可击”响应',
             renwu: '刃舞',
-            renwu_info: '锁定技，所有角色的回合结束后，若你的武将牌背面朝上，翻回正面。',
+            renwu_info: '锁定技：所有角色的回合结束后，若你的武将牌背面朝上，翻回正面。',
             dage: '大哥',
-            dage_info: '锁定技，手牌数小于你的角色对你使用杀无效',
+            dage_info: '锁定技：手牌数小于你的角色对你使用杀无效。觉醒技，你的回合开始时，若你的体力全场最低，你失去1点体力上限，回复1点体力，并获得技能“亮龙”',
             kongchang: '控场',
             kongchang_info: '每次受到伤害后，展示牌堆顶的X张牌，并将其交给任意1~X名角色（X为当前场上存活的角色数量，且最大为4）',
+            lianglong: '亮龙',
+            lianglong_info: '“杀”无距离限制，且可以无限出杀。',
+            hainv: '海女',
+            hainv_info: '你可将红色手牌当做“水淹七军”使用。锁定技：“水淹七军”对你无效',
+            pupu: '卟卟',
+            pupu_info: '锁定技：每当你受到一次伤害，从牌堆摸一张牌',
+            yancang: '盐仓',
+            yancang_info: '锁定技：你跳过你的判定阶段。',
+            jiezou: '节奏',
+            jiezou_info: '出牌阶段，你可以弃一张牌，视为一名SNH48角色对另一名SNH48角色使用一张[决斗]，每阶段限一次（此决斗不可被无懈可击响应）',
             //H
             yonggu: '永固',
             yonggu_info: '你的准备阶段，若你的体力值全场最低，可令所有体力值大于你的角色选择一项：1，弃置一张牌，然后你回复1点体力；2，摸一张牌，然后武将牌翻面',
             pengyue: '捧月',
             pengyue_info: '其他角色弃置的装备牌进入弃牌堆后，你获得之。每当你装备一张装备牌，摸一张牌',
             haosi: '壕肆',
-            haosi_info: '摸牌阶段额外摸你装备区数量的牌，弃牌阶段开始时弃你装备区数量的牌。'
+            haosi_info: '摸牌阶段额外摸你装备区数量的牌，弃牌阶段开始时弃你装备区数量的牌。',
+            haibao: '海豹',
+            haibao_info: '你的♥均视为♠；你的♦︎均视为♣',
+            tiequan: '铁拳',
+            tiequan_info: '锁定技：你的“杀”无视防具，使用“杀”指定目标或成为“杀”的目标后，摸一张牌。',
+            //X
+            jiujiu: '九九',
+            jiujiu_info: '每当你受到伤害，你亮出牌堆顶的9张牌，获得其中所有点数不小于9的牌。你点数小于9的拼点牌点数视为9。',
+            taowa: '套娃',
+            taowa_info: '你的回合外失去牌时，可立即摸一张牌。濒死状态时，你可以与其他角色拼点，若你赢，你减少1点体力上限，回复体力至1点。若你没赢，你立即死亡。',
+            taowa2: '套娃',
+            taowa2_info: '濒死状态时，你可以与其他角色拼点，若你赢，你减少1点体力上限，回复体力至1点。若你没赢，你立即死亡。',
+            quanhuang: '拳皇',
+            quanhuang_info: '锁定技：你的拼点牌点数视为K。',
         },
     };
 });
