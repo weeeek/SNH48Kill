@@ -1823,7 +1823,6 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			wushuang1:'无双',
             wushuang2: '无双',
             lijian: '离间',
-            neidou: '内斗',
 			biyue:'闭月',
 			pileTop:'牌堆顶',
 			pileBottom:'牌堆底',
@@ -1867,7 +1866,6 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			jijiu_info:'回合外，你可以将一张红色牌当[桃]使用',
             wushuang_info: '锁定技，你使用的【杀】或【决斗】需要两张【闪】或【杀】响应',
             lijian_info: '出牌阶段，你可以弃一张牌，视为一名男性角色对另一名男性角色使用一张[决斗]，每阶段限一次',
-            neidou_info: '出牌阶段，你可以弃一张牌，视为一名女性角色对另一名女性角色使用一张[决斗]，每阶段限一次',
 			biyue_info:'结束阶段，你可以摸一张牌',
 		},
 	};

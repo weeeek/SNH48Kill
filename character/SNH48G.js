@@ -89,7 +89,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gfengxiaofei: ['female', 'X', 4, ['chongaaaa', 'beifen', 'yuanzhen']],
             //SNH48Glizhao: ['female', 'X', 4, ['wushuang', 'mashu']],
             //SNH48Gpanyingqi: ['female', 'X', 4, ['wushuang', 'mashu']],
-            //SNH48Gqijing: ['female', 'X', 4, ['wushuang', 'mashu']],
+            SNH48Gqijing: ['female', 'X', 4, ['lianer', 'jingjing']],
             //SNH48Gsongxinran: ['female', 'X', 4, ['wushuang', 'mashu']],
             //SNH48Gsunxinwen: ['female', 'X', 4, ['wushuang', 'mashu']],
             SNH48Gwangjialing: ['female', 'X', 4, ['jiujiu']],
@@ -736,12 +736,15 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     guanxing: true
                 }
             },
-            neidou: {
+            tiaosuo: {
                 audio: 2,
                 enable: 'phaseUse',
                 usable: 1,
                 filter: function (event, player) {
                     return game.countPlayer(function (current) {
+                        if (get.is.guozhanMode()) {
+                            return current != player && current.sex == 'female' && get.is.SNH48G(current);
+                        }
                         return current != player && current.sex == 'female';
                     }) > 1;
                 },
@@ -1405,7 +1408,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     "step 0"
                     if (trigger.source) {
                         trigger.source.chooseToDiscard('he', '弃置一张牌，否则造成伤害-1').set('ai', function (card) {
-                            if (player.isFriendOf(trigger.source))
+                            if (get.attitude(player, trigger.source) > 0)
                                 //不弃牌
                                 return 0;
                             else
@@ -2917,7 +2920,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                                 if (player.maxHp == player.hp && player.countCards('e', { type: 'equip' }) > 0) return 0;
                                 if (player.maxHp > player.hp && player.maxHp > 1 && player.countCards('he', { type: 'equip' }) > 0) return 1;
                                 return 2;
-                            }).set('choiceList', ['弃置装备区内的所有牌并失去1点体力', '弃置一张装备牌并失去1点体力上限', '失去1点体力和体力上限']);
+                            }).set('choiceList', ['防止伤害，弃置装备区内的所有牌并失去1点体力', '防止伤害，弃置一张装备牌并失去1点体力上限', '失去1点体力上限，然后伤害照常计算']);
                         }
                         else {
                             event._result = { index: 2 };
@@ -4748,6 +4751,14 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             hainv1: {
                 audio: 4,
                 enable: 'chooseToUse',
+                filter: function (player) {
+                    var players = game.filterPlayer();
+                    for (var i = 0; i < players.length; i++) {
+                        if (players[i] != player && players[i].countCards('e') > 0)
+                            return true;
+                    }
+                    return false;
+                },
                 filterCard: function (card) {
                     return get.color(card) == 'red';
                 },
@@ -4756,11 +4767,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 viewAsFilter: function (player) {
                     if (!player.countCards('he', { color: 'red' })) return false;
                 },
-                prompt: '将一张黑色牌当水淹七军使用',
+                prompt: '将一张红色牌当水淹七军使用',
                 check: function (card) { return 4 - get.value(card) }
             },
             pupu: {
-                trigger: { source: 'damageEnd' },
+                trigger: { source: 'damageEnd', player: 'damageEnd' },
                 frequent: true,
                 content: function (player) {
                     player.draw()
@@ -4779,7 +4790,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             },
             jiezou: {
                 audio: 2,
-                group: 'neidou'
+                group: ['tiaosuo', 'tiaoxin']
             },
             //H
             //姜杉
@@ -5088,6 +5099,86 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     threaten: 2
                 },
             },
+            //祁静
+            lianer: {
+                trigger: { player: 'damageBegin' },
+                frequent: true,
+                filter: function () {
+                    return true;
+                },
+                content: function () {
+                    if (trigger.num > 1) {
+                        trigger.num--;
+                        var targets = game.filterPlayer();
+                        targets.remove(player);
+                        for (var i = 0; i < targets.length; i++) {
+                            if (get.distance(player, event.player) <= 1)
+                                targets[i].damage(1, trigger.nature)
+                        }
+                    }
+                }
+            },
+            jingjing: {
+                trigger: { player: 'phaseEnd' },
+                filter: function (event, player) {
+                    return player.countCards('h') > 1;
+                },
+                audio: 2,
+                content: function () {
+                    'step 0'
+                    player.chooseToDiscard(true, 2, 'h');
+                    'step 1'
+                    if (result.bool) {
+                        player.addSkill('jingjing2');
+                        player.logSkill('jingjing', player, 'thunder');
+                    }
+                },
+                ai: {
+                    effect: {
+                        player: function (card, player) {
+                            if (player.isMin())
+                                return 0;
+                            return -1;
+                        }
+                    }
+                },
+                group: 'jingjing3'
+            },
+            jingjing2: {
+                trigger: { player: 'damageBefore' },
+                filter: function (event) {
+                    if (event.nature != 'thunder') return true;
+                    return false;
+                },
+                mark: true,
+                forced: true,
+                content: function () {
+                    trigger.cancel();
+                },
+                ai: {
+                    nofire: true,
+                    nodamage: true,
+                    effect: {
+                        target: function (card, player, target, current) {
+                            if (get.tag(card, 'damage') && !get.tag(card, 'thunderDamage')) return [0, 0];
+                        }
+                    },
+                },
+                intro: {
+                    content: '我想静静'
+                }
+            },
+            jingjing3: {
+                trigger: { player: 'phaseBegin' },
+                silent: true,
+                filter: function (event, player) {
+                    return player.hasSkill('jingjing2');
+                },
+                content: function () {
+                    player.removeSkill('jingjing2');
+                    player.popup('jingjing2');
+                }
+            },
             //wushen: {
             //             mod: {
             //                 targetInRange: function (card) {
@@ -5287,6 +5378,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //丶Gone设计的技能
             luandance: '乱舞',
             luandance_info: '令除你外的所有SNH48G非官方角色依次对另一名角色使用一张【杀】，无法如此做者受到1点伤害。',
+            tiaosuo: '挑唆',
+            tiaosuo_info: '出牌阶段，你可以弃一张牌，视为一名SNH48角色对另一名SNH48角色使用一张[决斗]，每阶段限一次',
 
             //鞠婧祎篇
             dufei: '毒妃',
@@ -5493,13 +5586,14 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             lianglong: '亮龙',
             lianglong_info: '“杀”无距离限制，且可以无限出杀。',
             hainv: '海女',
+            hainv1: '海女',
             hainv_info: '你可将红色手牌当做“水淹七军”使用。锁定技：“水淹七军”对你无效',
             pupu: '卟卟',
-            pupu_info: '锁定技：每当你受到一次伤害，从牌堆摸一张牌',
+            pupu_info: '锁定技：每当你受到或造成一次伤害，从牌堆摸一张牌',
             yancang: '盐仓',
             yancang_info: '锁定技：你跳过你的判定阶段。',
             jiezou: '节奏',
-            jiezou_info: '出牌阶段，你可以弃一张牌，视为一名SNH48角色对另一名SNH48角色使用一张[决斗]，每阶段限一次（此决斗不可被无懈可击响应）',
+            jiezou_info: '出牌阶段，你可以：1（挑衅），指定一名使用【杀】能攻击到你的角色，该角色需对你使用一张【杀】，若该角色不如此做，你弃掉他的一张牌；2（挑唆），弃一张牌，视为一名SNH48角色对另一名SNH48角色使用一张[决斗]，每阶段限一次（此决斗不可被无懈可击响应）',
             //H
             yonggu: '永固',
             yonggu_info: '你的准备阶段，若你的体力值全场最低，可令所有体力值大于你的角色选择一项：1，弃置一张牌，然后你回复1点体力；2，摸一张牌，然后武将牌翻面',
@@ -5520,6 +5614,13 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             taowa2_info: '濒死状态时，你可以与其他角色拼点，若你赢，你减少1点体力上限，回复体力至1点。若你没赢，你立即死亡。',
             quanhuang: '拳皇',
             quanhuang_info: '锁定技：你的拼点牌点数视为K。',
+            lianer: '莲儿',
+            lianer_info: '锁定技：你将要受到大于1点的伤害时，令此伤害-1，然后与你距离不大于1的角色，各受到你造成的1点伤害。',
+            jingjing: '静静',
+            jingjing2_bg: '静',
+            jingjing2: '静静',
+            jingjing3: '静静',
+            jingjing_info: '弃置2张手牌，直到你的下回合开始，防止你受到的除雷电伤害外的一切伤害。',
         },
     };
 });

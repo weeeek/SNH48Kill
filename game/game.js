@@ -43287,6 +43287,10 @@
             guozhanMode:function(){
                 return get.mode() == 'guozhan' || get.mode() == 'SNH48G'
             },
+            SNH48G:function(player){
+                var SNH48G = ['S','N','H','X','guan','fen'];
+                return SNH48G.indexOf(player.group) > -1;
+            },
             converted: function (event) {
                 return !(event.cards && event.card && event.cards.length == 1 && event.cards[0] == event.card);
             },
