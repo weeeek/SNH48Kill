@@ -66,7 +66,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //SNH48Glijiaen: ['female', 'H', 4, ['jiang', 'luanji']],
             //SNH48Glinnan: ['female', 'H', 4, ['jiang', 'biyue']],
             //SNH48Glinsiyi: ['female', 'H', 3, ['luoshen', 'qingguo']],
-            SNH48Gliyitong: ['female', 'H', 4, ['jizhi', 'haibao']],
+            SNH48Gliyitong: ['female', 'H', 4, ['jizhi', 'haibao','']],
             //SNH48Gqiyuzhu: ['female', 'H', 3, ['kurou', 'biyue']],
             //SNH48Gshenmengyao: ['female', 'H', 3, ['luoshen', 'qingguo']],
             //SNH48Gsongyushan: ['female', 'H', 3, ['paoxiao', 'longdan']],
@@ -4914,6 +4914,19 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 }
             },
             //李艺彤
+            jianfeng: {
+                trigger: { source: 'damageBegin' },
+                filter: function (event) {
+                    return event.card && event.card.name == 'sha' && event.notLink();
+                },
+                frequent: true,
+                content: function (player, event) {
+                    if (event.player != player && trigger.num > 1) {
+                        event.player.pre.damage(trigger.num - 1, trigger.nature)
+                        event.player.next.damage(trigger.num - 1, trigger.nature)
+                    }
+                },
+            },
             haibao: {
                 mod: {
                     suit: function (card, suit) {
@@ -5193,25 +5206,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 }
             },
             tiancao: {
-                mod: {
-                    globalFrom: function (from, to, distance) {
-                        return distance - player.storage.tiancao;
-                    }
-                },
-                group: ['tiancao1', 'tiancao2']
-            },
-            tiancao1: {
-                trigger: { player: 'phaseBegin' },
-                forced: true,
-                mark: true,
+                trigger: { player: 'damageBegin' },
+                frequent: true,
                 audio: 2,
-                unique: true,
                 filter: function (event) {
                     return event.num > 0;
-                },
-                init: function (player) {
-                    player.storage.tiancao = 2;
-                    game.addVideo('storage', player, ['tiancao', player.storage.tiancao]);
                 },
                 content: function () {
                     player.storage.tiancao++;
@@ -5222,13 +5221,38 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 },
                 ai: {
                     combo: 'dianyan'
+                },
+                mark: true,
+                marktext: '艹',
+                init: function (player) {
+                    if (player.storage.tiancao == undefined)
+                        player.storage.tiancao = 2;
+                    game.addVideo('storage', player, ['tiancao', player.storage.tiancao]);
+                },
+                mod: {
+                    globalFrom: function (from, to, distance) {
+                        return distance - from.storage.tiancao;
+                    }
+                },
+                group: ['tiancao1', 'tiancao2']
+            },
+            tiancao1: {
+                trigger: { global: 'gameStart', player: 'enterGame' },
+                forced: true,
+                init: function (player) {
+                    if (player.storage.tiancao == undefined)
+                        player.storage.tiancao = 2;
+                    game.addVideo('storage', player, ['tiancao', player.storage.tiancao]);
+                },
+                content: function () {
+
                 }
             },
             tiancao2: {
                 audio: 2,
                 enable: 'phaseUse',
                 usable: 1,
-                filter: function (player) {
+                filter: function (event, player) {
                     return player.storage.tiancao > 0;
                 },
                 content: function () {
@@ -5248,7 +5272,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 audio: 2,
                 enable: 'phaseUse',
                 usable: 1,
-                filter: function (player) {
+                filter: function (event, player) {
                     return player.storage.tiancao > 1;
                 },
                 content: function () {
@@ -5325,7 +5349,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     content: '不能使用或打出伤害类锦囊和“杀”'
                 }
             },
-            
+
             //wushen: {
             //             mod: {
             //                 targetInRange: function (card) {
@@ -5749,7 +5773,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             haosi: '壕肆',
             haosi_info: '摸牌阶段额外摸你装备区数量的牌，弃牌阶段开始时弃你装备区数量的牌。',
             jianfeng: '剑锋',
-            jianfeng_info:'锁定技：当你对一个目标造成大于1点的伤害时，目标相邻且距离为1的角色也同样会受到伤害，但伤害-1',
+            jianfeng_info: '锁定技：当你对一个目标造成大于1点的伤害时，目标相邻且距离为1的角色也同样会受到伤害，但伤害-1',
             haibao: '海豹',
             haibao_info: '你的♥均视为♠；你的♦︎均视为♣',
             tiequan: '铁拳',
@@ -5771,11 +5795,14 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             jingjing3: '静静',
             jingjing_info: '弃置2张手牌，直到你的下回合开始，防止你受到的除雷电伤害外的一切伤害。',
             tiancao: '天草',
-            tiancao_info: '你每个回合开始时获得一枚“草”标记，每有一个“草”，你的进攻距离+1。出牌阶段限一次，你可以弃置一枚“草”标记，摸两张牌。',
+            tiancao2: '天草',
+            tiancao_info: '游戏开始时你获得两枚“草”标记；你每次受到伤害，获得一枚“草”标记；每有一个“草”，你的进攻距离+1。出牌阶段限一次，你可以弃置一枚“草”标记，摸两张牌。',
             dianyan: '电眼',
             dianyan_info: '出牌阶段，你可以弃置两枚“草”标记，若如此做，在本回合中，你的“杀”伤害+1，额外目标+1，无视防具。若此“杀”造成伤害，获得一枚“草”标记',
             icefeng: '冰封',
             icefeng_info: '锁定技：你的“杀”造成伤害后，目标不能使用“杀”和伤害类型的锦囊，直到他的回合结束。',
+            muwang: '沐王',
+            muwang_info: '',
 
         },
     };
