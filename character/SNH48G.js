@@ -94,10 +94,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //SNH48Gsunxinwen: ['female', 'X', 4, ['wushuang', 'mashu']],
             SNH48Gwangjialing: ['female', 'X', 4, ['jiujiu']],
             //SNH48Gwangshu: ['female', 'X', 4, ['wushuang', 'mashu']],
-            //SNH48Gwangxiaojia: ['female', 'X', 4, ['zhanbu', 'yezhan']],
+            SNH48Gwangxiaojia: ['female', 'X', 4, ['tiancao', 'dianyan']],
             //SNH48Gxushiqi: ['female', 'X', 4, ['wushuang', 'mashu']],
             //SNH48Gxietianyi: ['female', 'X', 4, ['wushuang', 'mashu']],
-            //SNH48Gyangbingyi: ['female', 'X', 4, ['wushuang', 'mashu']],
+            SNH48Gyangbingyi: ['female', 'X', 4, ['icefeng']],
             //SNH48Gyangyunyu: ['female', 'X', 4, ['wushuang', 'mashu']],
             //SNH48Gzhangdansan: ['female', 'X', 4, ['wushuang', 'mashu']],
             //SNH48Gzhangjiayu: ['female', 'X', 4, ['wushuang', 'mashu']],
@@ -236,6 +236,19 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
         },
         skill: {
             shaDisabled: { mod: { cardEnabled: function (card) { return card.name != 'sha' } } },
+            shaDamageMore: {
+                trigger: { source: 'damageBegin' },
+                filter: function (event) {
+                    return event.card && event.card.name == 'sha' && event.notLink();
+                },
+                forced: true,
+                content: function () {
+                    trigger.num++;
+                },
+                ai: {
+                    damageBonus: true
+                }
+            },
             shanDisabled: { mod: { cardEnabled: function (card) { return card.name != 'shan' } } },
             basicDisabled: { mod: { cardEnabled: function (card) { return get.type(card) != 'basic' } } },
             triggerDisabled: { mod: { cardEnabled: function (card) { return get.type(card) != 'trigger' } } },
@@ -5179,6 +5192,140 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     player.popup('jingjing2');
                 }
             },
+            tiancao: {
+                mod: {
+                    globalFrom: function (from, to, distance) {
+                        return distance - player.storage.tiancao;
+                    }
+                },
+                group: ['tiancao1', 'tiancao2']
+            },
+            tiancao1: {
+                trigger: { player: 'phaseBegin' },
+                forced: true,
+                mark: true,
+                audio: 2,
+                unique: true,
+                filter: function (event) {
+                    return event.num > 0;
+                },
+                init: function (player) {
+                    player.storage.tiancao = 2;
+                    game.addVideo('storage', player, ['tiancao', player.storage.tiancao]);
+                },
+                content: function () {
+                    player.storage.tiancao++;
+                    game.addVideo('storage', player, ['tiancao', player.storage.tiancao]);
+                },
+                intro: {
+                    content: 'mark'
+                },
+                ai: {
+                    combo: 'dianyan'
+                }
+            },
+            tiancao2: {
+                audio: 2,
+                enable: 'phaseUse',
+                usable: 1,
+                filter: function (player) {
+                    return player.storage.tiancao > 0;
+                },
+                content: function () {
+                    --player.storage.tiancao;
+                    game.addVideo('storage', player, ['tiancao', player.storage.tiancao]);
+                    player.draw(2);
+                },
+                ai: {
+                    order: 1,
+                    result: {
+                        player: 1
+                    },
+                    threaten: 1.5
+                },
+            },
+            dianyan: {
+                audio: 2,
+                enable: 'phaseUse',
+                usable: 1,
+                filter: function (player) {
+                    return player.storage.tiancao > 1;
+                },
+                content: function () {
+                    player.storage.tiancao -= 2;
+                    game.addVideo('storage', player, ['tiancao', player.storage.tiancao]);
+                    player.addTempSkill('dianyan1');
+                },
+                ai: {
+                    order: 5,
+                    result: {
+                        player: function (player) {
+                            if (!player.storage.tiancao) return 0;
+                            var cards = player.getCards('h', 'sha');
+                            if (cards.length) {
+                                if (game.hasPlayer(function (current) {
+                                    return (player.canUse('sha', current) && get.effect(current, cards[0], player, player) > 0);
+                                })) {
+                                    return 1;
+                                }
+                            }
+                            return 0;
+                        }
+                    }
+                }
+            },
+            dianyan1: {
+                mod: {
+                    //杀额外指定1个目标
+                    selectTarget: function (card, player, range) {
+                        if (card.name != 'sha') return;
+                        if (range[1] == -1) return;
+                        var cards = player.getCards('h');
+                        range[1] += 1;
+                    }
+                },
+                group: ['qinggang_skill', 'shaDamageMore', 'dianyan2']
+            },
+            dianyan2: {
+                trigger: { source: 'damageBegin' },
+                filter: function (event) {
+                    return event.card && event.card.name == 'sha' && event.notLink();
+                },
+                frequent: true,
+                content: function (player) {
+                    player.storage.tiancao++;
+                    game.addVideo('storage', player, ['tiancao', player.storage.tiancao]);
+                },
+            },
+            icefeng: {
+                trigger: { source: 'damageBegin' },
+                filter: function (event) {
+                    return event.card && event.card.name == 'sha' && event.notLink();
+                },
+                frequent: true,
+                content: function (player, event) {
+                    event.player.addTempSkill("icefeng2");
+                },
+            },
+            icefeng2: {
+                mark: true,
+                mod: {
+                    cardEnabled: function (card) {
+                        if (card.name == 'sha' || (get.type(card) == 'trick' && get.tag(card, 'damage')))
+                            return false;
+                        return true;
+                    },
+                    cardUsable: function (card) {
+                        if (card.name == 'sha' || (get.type(card) == 'trick' && get.tag(card, 'damage')))
+                            return false;
+                        return true;
+                    }
+                },
+                intro: {
+                    content: '不能使用或打出伤害类锦囊和“杀”'
+                }
+            },
+            
             //wushen: {
             //             mod: {
             //                 targetInRange: function (card) {
@@ -5601,6 +5748,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             pengyue_info: '其他角色弃置的装备牌进入弃牌堆后，你获得之。每当你装备一张装备牌，摸一张牌',
             haosi: '壕肆',
             haosi_info: '摸牌阶段额外摸你装备区数量的牌，弃牌阶段开始时弃你装备区数量的牌。',
+            jianfeng: '剑锋',
+            jianfeng_info:'锁定技：当你对一个目标造成大于1点的伤害时，目标相邻且距离为1的角色也同样会受到伤害，但伤害-1',
             haibao: '海豹',
             haibao_info: '你的♥均视为♠；你的♦︎均视为♣',
             tiequan: '铁拳',
@@ -5621,6 +5770,13 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             jingjing2: '静静',
             jingjing3: '静静',
             jingjing_info: '弃置2张手牌，直到你的下回合开始，防止你受到的除雷电伤害外的一切伤害。',
+            tiancao: '天草',
+            tiancao_info: '你每个回合开始时获得一枚“草”标记，每有一个“草”，你的进攻距离+1。出牌阶段限一次，你可以弃置一枚“草”标记，摸两张牌。',
+            dianyan: '电眼',
+            dianyan_info: '出牌阶段，你可以弃置两枚“草”标记，若如此做，在本回合中，你的“杀”伤害+1，额外目标+1，无视防具。若此“杀”造成伤害，获得一枚“草”标记',
+            icefeng: '冰封',
+            icefeng_info: '锁定技：你的“杀”造成伤害后，目标不能使用“杀”和伤害类型的锦囊，直到他的回合结束。',
+
         },
     };
 });

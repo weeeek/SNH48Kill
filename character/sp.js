@@ -10283,7 +10283,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             kuangfu: '狂斧',
             kuangfu_info: '每当你使用杀造成伤害，可以将对方的一张装备牌移到你的装备区',
             xintan: '心惔',
-            xintan_info: '出牌阶段限一次，你可以移去两张“焚”并选择一名角色，该角色失去一点体',
+            xintan_info: '出牌阶段限一次，你可以移去两张“焚”并选择一名角色，该角色失去一点体力',
             fentian: '焚天',
             fentian_info: '锁定技，结束阶段开始时，若你的手牌数少于体力值，你须选择一名攻击范围内的角色，将其一张牌置于你的武将牌上，称为“焚”。锁定技，你的攻击范围+X（X为“焚”的数量）',
             zhiri: '炙日',
