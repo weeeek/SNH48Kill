@@ -66,7 +66,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //SNH48Glijiaen: ['female', 'H', 4, ['jiang', 'luanji']],
             //SNH48Glinnan: ['female', 'H', 4, ['jiang', 'biyue']],
             //SNH48Glinsiyi: ['female', 'H', 3, ['luoshen', 'qingguo']],
-            SNH48Gliyitong: ['female', 'H', 4, ['jizhi', 'haibao','']],
+            SNH48Gliyitong: ['female', 'H', 4, ['jizhi', 'haibao', '']],
             //SNH48Gqiyuzhu: ['female', 'H', 3, ['kurou', 'biyue']],
             //SNH48Gshenmengyao: ['female', 'H', 3, ['luoshen', 'qingguo']],
             //SNH48Gsongyushan: ['female', 'H', 3, ['paoxiao', 'longdan']],
@@ -87,13 +87,13 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //SNH48Gchenlin: ['female', 'X', 4, ['wushuang', 'mashu']],
             SNH48Gchenyunling: ['female', 'X', 4, ['taowa', 'quanhuang']],
             SNH48Gfengxiaofei: ['female', 'X', 4, ['chongaaaa', 'beifen', 'yuanzhen']],
-            //SNH48Glizhao: ['female', 'X', 4, ['wushuang', 'mashu']],
+            SNH48Glizhao: ['female', 'X', 4, ['mitao', 'taobao']],
             //SNH48Gpanyingqi: ['female', 'X', 4, ['wushuang', 'mashu']],
             SNH48Gqijing: ['female', 'X', 4, ['lianer', 'jingjing']],
             //SNH48Gsongxinran: ['female', 'X', 4, ['wushuang', 'mashu']],
             //SNH48Gsunxinwen: ['female', 'X', 4, ['wushuang', 'mashu']],
             SNH48Gwangjialing: ['female', 'X', 4, ['jiujiu']],
-            //SNH48Gwangshu: ['female', 'X', 4, ['wushuang', 'mashu']],
+            SNH48Gwangshu: ['female', 'X', 4, ['chemistry', 'neighbor']],
             SNH48Gwangxiaojia: ['female', 'X', 4, ['tiancao', 'dianyan']],
             //SNH48Gxushiqi: ['female', 'X', 4, ['wushuang', 'mashu']],
             //SNH48Gxietianyi: ['female', 'X', 4, ['wushuang', 'mashu']],
@@ -1264,7 +1264,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     //铁锁连环不触发
                     if (event.card && event.card.name == 'tiesuo') return false;
                     //挟天子令诸侯不触发
-                    if (event.card && event.card.name == 'xieling') return false;
+                    if (event.card && event.card.name == 'xietianzi') return false;
                     //调虎离山不触发
                     if (event.card && event.card.name == 'diaohulishan') return false;
                     //敕令不触发
@@ -1860,9 +1860,16 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             },
             diandao: {
                 audio: 2,
-                trigger: { global: 'damageEnd' },
+                trigger: { player: 'damageEnd' },
                 filter: function (event, player) {
-                    return event.source != undefined && event.player == player && player.classList.contains('dead') == false;
+                    if (event.source == undefined)
+                        return false;
+                    if (event.player == player || event.source == player)
+                        return false;
+                    if (event.player.classList.contains('dead'))
+                        return false;
+                    return true;
+                    //return event.source != undefined && event.player == player && player.classList.contains('dead') == false;
                 },
                 logTarget: 'target',
                 content: function () {
@@ -2089,7 +2096,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         player.chooseTarget("选择至多" + (player.maxHp - player.hp) + "名角色，各摸一张牌", [0, player.maxHp - player.hp], function (target) {
                             return true
                         }).set('ai', function (target) {
-                            get.attitude(player, target) >= 0;
+                            return get.attitude(player, target) >= 0;
                         });
                     }
                     'step 2'
@@ -3341,6 +3348,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 content: function (player) {
                     trigger.num += player.storage.sudu;
                     player.storage.sudu = 0;
+                    game.addVideo('storage', player, ['sudu', player.storage.sudu]);
                 },
                 ai: {
                     damageBonus: true
@@ -3353,6 +3361,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 direct: true,
                 content: function (player) {
                     player.storage.sudu = 0;
+                    game.addVideo('storage', player, ['sudu', player.storage.sudu]);
                 }
             },
             fenfa: {
@@ -3919,6 +3928,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         }
                         return false;
                     }
+                    return true;
                 },
                 checkx: function (event, player) {
                     var du = false;
@@ -4403,7 +4413,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     dialog: function () {
                         var list = ['taoyuan', 'wugu', 'juedou', 'huogong', 'jiedao', 'tiesuo', 'guohe', 'shunshou', 'wuzhong', 'wanjian', 'nanman'];
                         if (get.is.guozhanMode())
-                            list.concat(['yuanjiao', 'yiyi', 'hezong', 'zengbin', 'shengdong'])
+                            list.concat(['yuanjiao', 'yiyi', 'zengbin', 'shengdong'])
                         for (var i = 0; i < list.length; i++) {
                             list[i] = ['锦囊', '', list[i]];
                         }
@@ -4916,14 +4926,34 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //李艺彤
             jianfeng: {
                 trigger: { source: 'damageBegin' },
-                filter: function (event) {
-                    return event.card && event.card.name == 'sha' && event.notLink();
+                filter: function (event, player) {
+                    return event.player != player && event.card && event.card.name == 'sha' && event.notLink();
                 },
                 frequent: true,
                 content: function (player, event) {
-                    if (event.player != player && trigger.num > 1) {
-                        event.player.pre.damage(trigger.num - 1, trigger.nature)
-                        event.player.next.damage(trigger.num - 1, trigger.nature)
+                    if (trigger.player != player && trigger.num > 1) {
+                        //两方向递减波及
+                        //var previous = trigger.player.previous;
+                        //var next = trigger.player.next;
+                        //for (var i = trigger.num - 1; i > 0; i--) {
+                        //    if (previous != player) {
+                        //        previous.damage(i, trigger.nature);
+                        //        previous = previous.previous;
+                        //    }
+                        //    if (next != player) {
+                        //        next.damage(i, trigger.nature);
+                        //        next = next.next;
+                        //    }
+                        //}
+                        //溅射距离为1
+                        var previous = trigger.player.previous;
+                        var next = trigger.player.next;
+                        if (previous != player && get.distance(trigger.player, previous) <= 1) {
+                            previous.damage(trigger.num - 1, trigger.nature);
+                        }
+                        if (next != player && get.distance(trigger.player, next) <= 1) {
+                            next.damage(trigger.num - 1, trigger.nature);
+                        }
                     }
                 },
             },
@@ -4956,8 +4986,101 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         }
                     }
                 },
-                group: 'qinggang_skill'
+                group: ['qinggang_skill', 'shaDamageMore']
             },
+            //费沁源
+            //tianxuan: {
+            //    audio: 2,
+            //    enable: 'chooseToUse',
+            //    usable:1,
+            //    filter: function (player) {
+            //        return player.countCards('h', { color: 'black' }) > 0;
+            //    },
+            //    filterCard: function (card) {
+            //        return get.color(card) == 'black';
+            //    },
+            //    position: 'h',
+            //    viewAs: { name: 'xietianzi' },
+            //    viewAsFilter: function (player) {
+            //        if (!player.countCards('h', { color: 'black' })) return false;
+            //    },
+            //    prompt: '将一张黑色手牌当“挟天子以令诸侯”使用',
+            //    check: function (card) {
+            //        return 4 - get.value(card)
+            //    }
+            //},
+            tianxuan: {
+                trigger: { player: 'phaseAfter' },
+                forced: true,
+                popup: false,
+                audio: false,
+                priority: -50,
+                filter: function (event, player) {
+                    return player.countCards('h', { color: 'black' }) > 0
+                },
+                content: function () {
+                    "step 0"
+                    player.chooseToDiscard(true, 'h', { color: 'black' });
+                    "step 1"
+                    var target = player.storage.tianxuan;
+                    target.markSkillCharacter('tianxuan', player, '放权', '进行一个额外回合');
+                    target.insertPhase();
+                    target.addSkill('tianxuan3');
+                    player.removeSkill('tianxuan2');
+                    delete player.storage.tianxuan;
+                }
+            },
+            tianxuan3: {
+                trigger: { player: ['phaseAfter', 'phaseCancelled'] },
+                forced: true,
+                popup: false,
+                audio: false,
+                content: function () {
+                    player.unmarkSkill('tianxuan');
+                    player.removeSkill('tianxuan3');
+                }
+            },
+            taizi: {
+                audio: 2,
+                enable: 'chooseToUse',
+                usable: 1,
+                filter: function (player) {
+                    return player.countCards('h', { color: 'red' }) > 0;
+                },
+                filterCard: function (card) {
+                    return get.color(card) == 'red';
+                },
+                position: 'h',
+                viewAs: { name: 'yiyi' },
+                viewAsFilter: function (player) {
+                    if (!player.countCards('h', { color: 'red' })) return false;
+                },
+                prompt: '将一张红色手牌当“以逸待劳”使用',
+                check: function (card) {
+                    return 4 - get.value(card)
+                }
+            },
+            jiaoyi: {
+                audio: 2,
+                enable: 'chooseToUse',
+                usable: 1,
+                filter: function (player) {
+                    return player.countCards('h', { color: 'red' }) > 0;
+                },
+                filterCard: function (card) {
+                    return get.color(card) == 'red';
+                },
+                position: 'h',
+                viewAs: { name: 'yuanjiao' },
+                viewAsFilter: function (player) {
+                    if (!player.countCards('h', { color: 'red' })) return false;
+                },
+                prompt: '将一张红色手牌当“远交近攻”使用',
+                check: function (card) {
+                    return 4 - get.value(card)
+                }
+            },
+            //洪佩云
             //X
             //汪佳翎
             jiujiu: {
@@ -5102,12 +5225,13 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         event.finish();
                     }
                     else {
-                        --player.maxHp;
+
                         for (var i = 0; i < 1 - player.hp; i++) {
-                            target.recover();
-                            target.update();
+                            player.recover();
                             game.delay();
                         }
+                        --player.maxHp;
+                        player.update();
                     }
                 },
                 ai: {
@@ -5205,6 +5329,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     player.popup('jingjing2');
                 }
             },
+            //王晓佳
             tiancao: {
                 trigger: { player: 'damageBegin' },
                 frequent: true,
@@ -5237,15 +5362,12 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 group: ['tiancao1', 'tiancao2']
             },
             tiancao1: {
-                trigger: { global: 'gameStart', player: 'enterGame' },
+                trigger: { player: 'phaseBegin' },
                 forced: true,
                 init: function (player) {
                     if (player.storage.tiancao == undefined)
                         player.storage.tiancao = 2;
                     game.addVideo('storage', player, ['tiancao', player.storage.tiancao]);
-                },
-                content: function () {
-
                 }
             },
             tiancao2: {
@@ -5321,6 +5443,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     game.addVideo('storage', player, ['tiancao', player.storage.tiancao]);
                 },
             },
+            //杨冰怡
             icefeng: {
                 trigger: { source: 'damageBegin' },
                 filter: function (event) {
@@ -5349,7 +5472,188 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     content: '不能使用或打出伤害类锦囊和“杀”'
                 }
             },
+            //李钊
+            mitao: {
+                enable: 'phaseUse',
+                usable: 1,
+                selectCard: 1,
+                filterCard: function (card) {
+                    return card.name == 'tao';
+                },
+                selectTarget: -1,
+                filterTarget: function (target) {
+                    return target.hp < target.maxHp;
+                },
+                content: function () {
+                    var players = game.filterPlayer;
+                    for (var i = 0; i < players.length; i++) {
+                        players[i].recover();
+                    }
+                },
+                ai: {
+                    basic: {
+                        order: 1,
+                        useful: [3, 1],
+                        value: 0
+                    },
+                    result: {
+                        target: function (player, target) {
+                            return (target.hp < target.maxHp) ? 2 : 0;
+                        }
+                    },
+                    tag: {
+                        recover: 0.5,
+                        multitarget: 1
+                    }
+                }
+            },
+            taobao: {
+                group: ['taobao1', 'taobao2']
+            },
+            taobao1: {
+                trigger: { player: 'recoverEnd' },
+                forced: true,
+                audio: 2,
+                filter: function (event, player) {
+                    return event.source && event.source != player;
+                },
+                content: function () {
+                    trigger.source.draw();
+                }
+            },
+            taobao2: {
+                trigger: { player: 'recoverEnd' },
+                forced: true,
+                audio: 2,
+                filter: function (event, player) {
+                    return true;
+                },
+                content: function () {
+                    player.draw();
+                }
+            },
+            //汪束
+            neighbor: {
+                audio: 2,
+                trigger: { player: 'phaseDrawBegin' },
+                frequent: true,
+                content: function () {
+                    var players = game.filterPlayer();
+                    for (var i = 0; i < players.length; i++) {
+                        if (players[i] != player && get.distance(player, players[i]) <= 1)
+                            trigger.num++;
+                    }
+                },
+                ai: {
+                    threaten: 1.3
+                },
+                group: 'neighbor1'
+            },
+            neighbor1: {
+                mod: {
+                    targetInRange: function (card) {
+                        if (card.name == 'sha' || card.name == 'shunshou')
+                            return true;
+                    }
+                }
+            },
+            chemistry: {
+                audio: 2,
+                trigger: { player: 'phaseEnd' },
+                frequent: true,
+                forced: true,
+                init: function (player) {
+                    player.storage.chemistry = [];
+                },
+                intro: {
+                    content: 'cards'
+                },
+                filter: function (event) {
+                    return true;
+                },
+                content: function () {
+                    'step 0'
+                    player.storage.chemistry = [];
+                    player.syncStorage('chemistry');
 
+                    var cards = [];
+                    cards.push(game.createCard('tao'))
+                    cards.push(game.createCard('sha'))
+                    cards.push(game.createCard('sha', { nature: 'fire' }));
+                    cards.push(game.createCard('sha', { nature: 'thunder' }));
+                    cards.push(game.createCard('jiu'))
+
+                    cards.push(game.createCard('taoyuan'));
+                    cards.push(game.createCard('wugu'));
+                    cards.push(game.createCard('juedou'));
+                    cards.push(game.createCard('huogong'));
+                    cards.push(game.createCard('jiedao'));
+                    cards.push(game.createCard('tiesuo'));
+                    cards.push(game.createCard('guohe'));
+                    cards.push(game.createCard('shunshou'));
+                    cards.push(game.createCard('wuzhong'));
+                    cards.push(game.createCard('wanjian'));
+                    cards.push(game.createCard('nanman'));
+                    if (get.is.guozhanMode()) {
+                        cards.push(game.createCard('yuanjiao'));
+                        cards.push(game.createCard('yiyi'));
+                        cards.push(game.createCard('zengbin'));
+                        cards.push(game.createCard('shengdong'))
+                    }
+                    player.chooseCardButton('选择并声明一种牌，下一个回合开始时，随机将你的一张手牌变换成此牌', true, cards, 1).set('ai', function (button) {
+                        //优先桃
+                        if (player.maxHp - player.hp > 1)
+                            return 0;
+                        //没满牌无中生有
+                        if (player.countCards('h') < player.maxHp)
+                            return 13;
+                        //满状态没有杀
+                        if (player.countCards('h', { name: 'sha' }))
+                            return 2;
+                        //满状态也有杀，万箭齐发
+                        return 14;
+                    });
+                    'step 1'
+                    if (result.bool) {
+                        player.storage.chemistry.push(result.links[0]);
+                        player.logSkill('chemistry');
+                        player.syncStorage('chemistry');
+                        player.markSkill('chemistry');
+                    }
+                },
+                ai: {
+                    order: 1,
+                    threaten: 1.6,
+                },
+                group: 'chemistry2'
+            },
+            chemistry2: {
+                trigger: { player: 'phaseBegin' },
+                forced: true,
+                filter: function (event, player) {
+                    return player.countCards('h') > 0 && player.storage.chemistry.length > 0;
+                },
+                content: function () {
+                    var hs = player.getCards('h');
+                    if (hs.length) {
+                        var card = hs.randomGet();
+                        card.init([card.suit, card.number, player.storage.chemistry[0].name]);
+                        game.log(player, '将一张手牌转化为', { name: player.storage.chemistry[0].name });
+                    }
+                }
+            },
+            nvzun: {
+                mod: {
+                    globalFrom: function (from, to, distance) {
+                        if (to.sex == 'female')
+                            return distance - 1;
+                    },
+                    globalTo: function (from, to, distance) {
+                        if (from.sex == 'male')
+                            return distance + 1;
+                    }
+                }
+            }
             //wushen: {
             //             mod: {
             //                 targetInRange: function (card) {
@@ -5775,16 +6079,24 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             jianfeng: '剑锋',
             jianfeng_info: '锁定技：当你对一个目标造成大于1点的伤害时，目标相邻且距离为1的角色也同样会受到伤害，但伤害-1',
             haibao: '海豹',
-            haibao_info: '你的♥均视为♠；你的♦︎均视为♣',
+            haibao_info: '锁定技：你的♥均视为♠；你的♦︎均视为♣',
             tiequan: '铁拳',
             tiequan_info: '锁定技：你的“杀”无视防具，使用“杀”指定目标或成为“杀”的目标后，摸一张牌。',
+            tianxuan: '天选',
+            tianxuan_info: '出牌阶段限一次，你可以将任意一张黑色手牌当“挟天子令诸侯”使用。若如此做，此“挟令”的额外回合此技能无效。',
+            taizi: '太子',
+            taizi_info: '出牌阶段限一次，你可以将任意一张红色手牌当“以逸待劳”使用',
+            fupo: '父魄',
+            fupo_info: '',
+            jiaoyi: '交易',
+            jiaoyi_info: '出牌阶段限一次，你可以将任意一张红色手牌当“远交近攻”使用',
             //X
             jiujiu: '九九',
             jiujiu_info: '每当你受到伤害，你亮出牌堆顶的9张牌，获得其中所有点数不小于9的牌。你点数小于9的拼点牌点数视为9。',
             taowa: '套娃',
             taowa_info: '你的回合外失去牌时，可立即摸一张牌。濒死状态时，你可以与其他角色拼点，若你赢，你减少1点体力上限，回复体力至1点。若你没赢，你立即死亡。',
             taowa2: '套娃',
-            taowa2_info: '濒死状态时，你可以与其他角色拼点，若你赢，你减少1点体力上限，回复体力至1点。若你没赢，你立即死亡。',
+            taowa2_info: '濒死状态时，若你的体力上限大于1，你可以与其他角色拼点，若你赢，你减少1点体力上限，回复体力至1点。若你没赢，你立即死亡。',
             quanhuang: '拳皇',
             quanhuang_info: '锁定技：你的拼点牌点数视为K。',
             lianer: '莲儿',
@@ -5798,12 +6110,23 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             tiancao2: '天草',
             tiancao_info: '游戏开始时你获得两枚“草”标记；你每次受到伤害，获得一枚“草”标记；每有一个“草”，你的进攻距离+1。出牌阶段限一次，你可以弃置一枚“草”标记，摸两张牌。',
             dianyan: '电眼',
-            dianyan_info: '出牌阶段，你可以弃置两枚“草”标记，若如此做，在本回合中，你的“杀”伤害+1，额外目标+1，无视防具。若此“杀”造成伤害，获得一枚“草”标记',
+            dianyan_info: '出牌阶段限一次，你可以弃置两枚“草”标记，若如此做，在本回合中，你的“杀”伤害+1，额外目标+1，无视防具，且若此“杀”造成伤害，获得一枚“草”标记',
             icefeng: '冰封',
             icefeng_info: '锁定技：你的“杀”造成伤害后，目标不能使用“杀”和伤害类型的锦囊，直到他的回合结束。',
             muwang: '沐王',
             muwang_info: '',
+            mitao: '蜜桃',
+            mitao: '出牌阶段限一次，你可以弃置一张“桃”，使所有角色回复1点体力。',
+            taobao: '桃宝',
+            taobao_info: '锁定技：你每回复1点体力，摸一张牌。其他角色每令你回复一次体力，该角色摸一张牌。',
+            nvzun: '女尊',
+            nvzun_info: '锁定技：所有男性角色与你计算距离时+1（防守距离+1），你与所有女性角色计算距离时-1（进攻距离+1）',
+            neighbor: '邻居',
+            neighbor_info: '锁定技：摸牌阶段你额外摸与你距离不大于1的角色数量的牌。使用“杀”和“顺手牵羊”时，无视距离',
 
+            chemistry: '化学',
+            chemistry2: '化学',
+            chemistry_info: '回合结束阶段，你可以选择并声明一种风标军争牌。你的下一个回合开始时，随机将一张手牌变化成你声明的类型的牌，点数和花色不变。',
         },
     };
 });
