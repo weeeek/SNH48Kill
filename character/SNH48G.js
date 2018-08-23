@@ -5022,10 +5022,9 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     "step 0"
                     player.chooseToDiscard(true, 'h', { color: 'black' });
                     "step 1"
-                    var target = player.storage.tianxuan;
-                    target.markSkillCharacter('tianxuan', player, '放权', '进行一个额外回合');
-                    target.insertPhase();
-                    target.addSkill('tianxuan3');
+                    player.markSkillCharacter('tianxuan', player, '天选', '进行一个额外回合');
+                    player.insertPhase();
+                    player.addSkill('tianxuan3');
                     player.removeSkill('tianxuan2');
                     delete player.storage.tianxuan;
                 }
@@ -5038,6 +5037,60 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 content: function () {
                     player.unmarkSkill('tianxuan');
                     player.removeSkill('tianxuan3');
+                }
+            },
+            //当你需要使用或打出【闪】时，你可以选择一项：1，令当前回合角色摸一张牌；2，令当前回合角色弃置你的一张手或装备牌。若如此做，视为你使用或打出了一张【闪】
+            yuanliang: {
+                audio: 2,
+                trigger: { player: 'chooseToRespondBegin' },
+                filter: function (event, player) {
+                    if (event.responded) return false;
+                    if (!event.filterCard({ name: 'shan' })) return false;
+                    return true;
+                },
+                check: function (event, player) {
+                    if (get.attitude(player, _status.currentPhase) > 0) return true;
+                    var nh = _status.currentPhase.countCards('h') + 1;
+                    var players = game.filterPlayer();
+                    for (var i = 0; i < players.length; i++) {
+                        if (players[i].countCards('h') > nh) {
+                            if (!player.hasShan() || get.attitude(player, players[i]) <= 0) return true;
+                        }
+                    }
+                    return false;
+                },
+                content: function (event) {
+                    'step 0'
+                    var str1 = '当前回合角色摸两张牌';
+                    var str2 = '当前回合角色弃置你两张牌';
+                    player.chooseControl(str1, str2, function (event, player) {
+                        return _status.event.choice;
+                    }).set('choice', get.attitude(player, _status.currentPhase) > 0 ? str1 : str2);
+                    event.str = str1;
+                    'step 1'
+                    if (result.control == event.str) {
+                        player.line(_status.currentPhase, 'green');
+                        _status.currentPhase.draw(2);
+                    }
+                    else {
+                        _status.currentPhase.discardPlayerCard(player, 'he', 2, true)
+                    }
+                    trigger.untrigger();
+                    trigger.responded = true;
+                    trigger.result = { bool: true, card: { name: 'shan' } }
+                },
+                ai: {
+                    effect: {
+                        target: function (card, player, target, current) {
+                            if (get.tag(card, 'respondShan') && current < 0) {
+                                var nh = player.countCards('h');
+                                var players = game.filterPlayer();
+                                for (var i = 0; i < players.length; i++) {
+                                    if (players[i].countCards('h') > nh) return 0.4;
+                                }
+                            }
+                        }
+                    }
                 }
             },
             taizi: {
@@ -5359,12 +5412,13 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         return distance - from.storage.tiancao;
                     }
                 },
-                group: ['tiancao1', 'tiancao2']
+                group: ['tiancao2']
             },
             tiancao1: {
                 trigger: { player: 'phaseBegin' },
                 forced: true,
-                init: function (player) {
+                filter: function () { return true},
+                content: function () {
                     if (player.storage.tiancao == undefined)
                         player.storage.tiancao = 2;
                     game.addVideo('storage', player, ['tiancao', player.storage.tiancao]);
@@ -5867,6 +5921,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             duzong_info: '觉醒技：若你手中的“毒”大于等于两张，你体力上限-1并回复1点体力，永久获得技能“心血”',
             xinxie: '心血',
             xinxie_info: '你每次使用“毒”之后，摸1张牌；你的结束阶段，随机将一张手牌转化为毒。',
+            
             //赵嘉敏篇
             shuangfa: '双发',
             shuangfa_info: '出牌阶段使用的第一张可以打出两次的牌将使用或打出两次',
@@ -6081,9 +6136,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             haibao: '海豹',
             haibao_info: '锁定技：你的♥均视为♠；你的♦︎均视为♣',
             tiequan: '铁拳',
-            tiequan_info: '锁定技：你的“杀”无视防具，使用“杀”指定目标或成为“杀”的目标后，摸一张牌。',
+            tiequan_info: '锁定技：你的“杀”无视防具且伤害+1，使用“杀”指定目标或成为“杀”的目标后，摸一张牌。',
             tianxuan: '天选',
             tianxuan_info: '出牌阶段限一次，你可以将任意一张黑色手牌当“挟天子令诸侯”使用。若如此做，此“挟令”的额外回合此技能无效。',
+            yuanliang: '源亮',
+            yuanliang_info: '当你需要使用或打出【闪】时，你可以选择一项：1，令当前回合角色摸一张牌；2，令当前回合角色弃置你的一张手牌或装备牌。若如此做，视为你使用或打出了一张【闪】',
             taizi: '太子',
             taizi_info: '出牌阶段限一次，你可以将任意一张红色手牌当“以逸待劳”使用',
             fupo: '父魄',
@@ -6127,6 +6184,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             chemistry: '化学',
             chemistry2: '化学',
             chemistry_info: '回合结束阶段，你可以选择并声明一种风标军争牌。你的下一个回合开始时，随机将一张手牌变化成你声明的类型的牌，点数和花色不变。',
+
         },
     };
 });

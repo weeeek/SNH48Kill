@@ -211,7 +211,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 //N
                 SNH48Gchenjiaying: ['female', 'N', 3, ['zhiheng']],
                 SNH48Gchenwenyan: ['female', 'N', 3, ['zhiheng']],
-                SNH48Gfengxinduo: ['female', 'N', 4, ['pupu', 'hainv']],
+                SNH48Gfengxinduo: ['female', 'N', 4, ['pupu', 'hainv', 'ho2h']],
                 SNH48Gguoqianyun: ['female', 'N', 3, ['zhiheng']],
                 SNH48Ghuangtingting: ['female', 'N', 4, ['yancang', 'jiezou']],
                 SNH48Ghaowanqing: ['female', 'N', 3, ['rende', 'yingzi']],
@@ -220,7 +220,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Gjiangzhenyi: ['female', 'N', 3, ['rende', 'yingzi']],
                 SNH48Gliujuzi: ['female', 'N', 3, ['rende', 'yingzi']],
                 SNH48Gliupeixin: ['female', 'N', 3, ['rende', 'yingzi']],
-                SNH48Gluting: ['female', 'N', 4, ['dage', 'kongchang']],
+                SNH48Gluting: ['female', 'N', 4, ['dage', 'kongchang', 'ho2o']],
                 SNH48Gtaoboer: ['female', 'N', 3, ['biyue', 'paoxiao']],
                 SNH48Gxieni: ['female', 'N', 3, ['biyue', 'liuli']],
                 SNH48Gyijiaai: ['female', 'N', 3, ['duwu', 'mashu']],
@@ -331,6 +331,68 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     }
                     //event.trigger('update');                    
                     player.awakenSkill('new_ziqiang');
+                }
+            },
+            ho2_break: {
+                priority: 15,
+                skillAnimation: 'legend',
+                audio: 2,
+                unique: true,
+                trigger: { player: 'phaseBegin' },
+                forced: true,
+                frequent: true,
+                derivation: 'ho2',
+                skillAnimation: 'legend',
+                filter: function (event, player) {
+                    return (player.hasSkill('ho2h') && player.hasSkill('ho2h')) || player.hasSkill('ho2');
+                },
+                content: function () {
+                    if (!player.hasSkill('ho2')) {
+                        --player.maxHp;
+                        player.recover();
+                    }
+                    player.removeAdditionalSkill('ho2_init');
+                    player.addAdditionalSkill('ho2_break', ['ho2'])
+                    player.awakenSkill('ho2_break');
+                    player.removeSkill('ho2h');
+                    player.removeSkill('ho2o');
+                    player.update();
+                }
+            },
+            ho2_init: {
+                trigger: { global: 'gameStart' },
+                direct: true,
+                filter: function () {
+                    return true
+                },
+                content: function () {
+                    player.addAdditionalSkill('ho2_init', ['ho2_break']);
+                }
+            },
+            ho2h: {
+                group: 'ho2_init'
+            },
+            ho2o: {
+                group: 'ho2_init'
+            },
+            ho2: {
+                audio: 2,
+                trigger: { player: 'useCardAfter' },
+                filter: function (event, player) {
+                    return event.card && get.suit(event.card) == 'heart';
+                },
+                frequent: true,
+                content: function () {
+                    player.draw();
+                    player.recover();
+                },
+                effect: {
+                    target: function (card, player, target) {
+                        if (get.suit(card) == 'heart') return [1, 0.6];
+                    },
+                    player: function (card, player, target) {
+                        if (get.suit(card) == 'heart') return [1, 1];
+                    }
                 }
             },
         },
@@ -1109,6 +1171,14 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             new_lingjun_info: '当你陷入濒死状态时，与你同势力的角色对你使用的[桃]额外回复一点体力值。你以此法脱离濒死状态时，其可摸一张牌。（为队友付出必然能得到回应，每次陷入低谷再出发必将更进一步）',
             new_ziqiang: '自强',
             new_ziqiang_info: '觉醒技, 准备阶段，若你的体力为全场最低（或之一），你增加一点体力上限并回复1点体力，获得技能“魔王”',
+
+            //组合篇
+            ho2h: 'H',
+            ho2h_info: 'HO2组合成员之一，如果游戏开始时或回合开始时，你的主将和副将都是明置的，并且有H和O技能，则获得技能HO2',
+            ho2o: 'O',
+            ho2o_info: 'HO2组合成员之一，如果游戏开始时或回合开始时，你的主将和副将都是明置的，并且有H和O技能，则获得技能HO2',
+            ho2: 'HO',
+            ho2_info: '如果这就是爱情。你每使用一张♥牌，摸一张牌，回复一点体力'
         },
         junList: ['SNH48Gdaimeng', 'SNH48Gyijiaai', 'SNH48Gwanlina', 'SNH48lizhao'],
         guozhanPile: [
