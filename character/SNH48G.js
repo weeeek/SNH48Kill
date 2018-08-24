@@ -45,7 +45,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //SNH48Ghaowanqing: ['female', 'N', 3, ['rende', 'yingzi']],
             //SNH48Ghexiaoyu: ['female', 'N', 3, ['rende', 'yingzi']],
             //SNH48Gjinyingyue: ['female', 'N', 3, ['rende', 'yingzi']],
-            //SNH48Gjiangzhenyi: ['female', 'N', 3, ['rende', 'yingzi']],
+            SNH48Gjiangzhenyi: ['female', 'N', 4, ['zhengyi']],
             //SNH48Gliujuzi: ['female', 'N', 3, ['rende', 'yingzi']],
             //SNH48Gliupeixin: ['female', 'N', 3, ['rende', 'yingzi']],
             SNH48Gluting: ['female', 'N', 4, ['dage', 'kongchang']],
@@ -59,7 +59,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gjujingyi: ['female', 'N', 4, ['dufei', 'poisonousfog', 'jiedu', 'duzong']],
 
             //H
-            //SNH48Gfeiqinyuan: ['female', 'H', 4, ['yuanqi', 'fengfa']],
+            SNH48Gfeiqinyuan: ['female', 'H', 3, ['tianxuan', 'yuanliang']],
             //SNH48Ghongpeiyun: ['female', 'H', 4, ['jiang', 'luanji']],
             SNH48Gjiangshan: ['female', 'H', 4, ['yonggu']],
             //SNH48Gjiangshuting: ['female', 'H', 4, ['jiang', 'luanji']],
@@ -77,7 +77,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //SNH48Gxiongqinxian: ['female', 'H', 3, ['paoxiao', 'longdan']],
             //SNH48Gxuyangyuzhuo: ['female', 'H', 3, ['paoxiao', 'longdan']],
             //SNH48Gyanghuiting: ['female', 'H', 3, ['paoxiao', 'longdan']],
-            //SNH48Gyujiayi: ['female', 'H', 3, ['paoxiao', 'longdan']],
+            SNH48Gyujiayi: ['female', 'H', 4, ['princess', 'jiaoyi']],
             //SNH48Gyuanyiqi: ['female', 'H', 3, ['paoxiao', 'longdan']],
             //SNH48Gzhangxin: ['female', 'H', 3, ['paoxiao', 'longdan']],
             //SNH48Gzengxiaowen: ['female', 'H', 3, ['paoxiao', 'longdan']],
@@ -96,8 +96,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gwangshu: ['female', 'X', 4, ['chemistry', 'neighbor']],
             SNH48Gwangxiaojia: ['female', 'X', 4, ['tiancao', 'dianyan']],
             //SNH48Gxushiqi: ['female', 'X', 4, ['wushuang', 'mashu']],
-            //SNH48Gxietianyi: ['female', 'X', 4, ['wushuang', 'mashu']],
-            SNH48Gyangbingyi: ['female', 'X', 4, ['icefeng']],
+            SNH48Gxietianyi: ['female', 'X', 4, ['wushuang', 'nvzun']],
+            SNH48Gyangbingyi: ['female', 'X', 4, ['tieyi', 'icefeng']],
             //SNH48Gyangyunyu: ['female', 'X', 4, ['wushuang', 'mashu']],
             //SNH48Gzhangdansan: ['female', 'X', 4, ['wushuang', 'mashu']],
             //SNH48Gzhangjiayu: ['female', 'X', 4, ['wushuang', 'mashu']],
@@ -1770,17 +1770,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     damage: true,
                     order: 8,
                     result: {
-                        player: function (player, target) {
-                            if (player.hp >= target.hp) return -0.9;
-                            if (player.hp <= 2) return -10;
-                            return -2;
-                        },
                         target: function (player, target) {
-                            if (!player.getEquip(1)) {
-                                if (player.hp < 2) return 0;
-                                if (player.hp == 2 && target.hp >= 2) return 0;
-                                if (target.hp > player.hp) return 0;
-                            }
                             return get.damageEffect(target, player);
                         }
                     }
@@ -4765,7 +4755,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             hainv: {
                 mod: {
                     targetEnabled: function (card, player, target, now) {
-                        if (card.name == 'shuiyanqijun')
+                        if (card.name == 'shuiyanqijunx')
                             return false;
                     }
                 },
@@ -4786,7 +4776,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     return get.color(card) == 'red';
                 },
                 position: 'he',
-                viewAs: { name: 'shuiyanqijun' },
+                viewAs: { name: 'shuiyanqijunx' },
                 viewAsFilter: function (player) {
                     if (!player.countCards('he', { color: 'red' })) return false;
                 },
@@ -4814,6 +4804,55 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             jiezou: {
                 audio: 2,
                 group: ['tiaosuo', 'tiaoxin']
+            },
+            zhengyi: {
+                enable: 'phaseUse',
+                usable: 1,
+                selectCard: 1,
+                position:'he',
+                filterCard: function () {
+                    return true;
+                },
+                selectTarget: function (target) {
+                    return target != player;
+                },
+                filter: function (event, player) {
+                    return player.countCards('he') > 0
+                },
+                content: function (event, player, target) {
+                    target.addTempSkill('tianjiangzhengyi');
+                },
+                ai: {
+                    damage: true,
+                    order: 8,
+                    result: {
+                        target: function (player, target) {
+                            return get.damageEffect(target, player);
+                        }
+                    }
+                },
+                threaten: 1.3,
+            },
+            tianjiangzhengyi: {
+                trigger: { player: 'phaseBegin' },
+                direct: true,
+                content: function () {
+                    'step 0'
+                    player.judge();
+                    'step 1'
+                    if (get.suit(result.card) == 'spade') {
+                        if (result.card.num > 1 && result.card.num < 10) {
+                            player.damage(3, 'thunder', 'nosource');
+                        }
+                        else {
+                            player.damage(2, 'thunder', 'nosource');
+                        }
+                    } else if (get.suit(result.card) == 'club') {
+                        player.chooseToDiscard(true, 'h',2).set('ai', function (card) {
+                            return 9 - get.value(card)
+                        });
+                    }
+                }
             },
             //H
             //姜杉
@@ -5010,12 +5049,14 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //    }
             //},
             tianxuan: {
-                trigger: { player: 'phaseAfter' },
+                trigger: { player: 'phaseUseAfter' },
                 forced: true,
                 popup: false,
                 audio: false,
                 priority: -50,
                 filter: function (event, player) {
+                    if (player.storage.tianxuan)
+                        return false;
                     return player.countCards('h', { color: 'black' }) > 0
                 },
                 content: function () {
@@ -5097,7 +5138,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 audio: 2,
                 enable: 'chooseToUse',
                 usable: 1,
-                filter: function (player) {
+                filter: function (event,player) {
                     return player.countCards('h', { color: 'red' }) > 0;
                 },
                 filterCard: function (card) {
@@ -5113,11 +5154,70 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     return 4 - get.value(card)
                 }
             },
+            //於佳怡
+            princess: {
+                usable: 1,
+                enable: 'phaseUse',
+                selectTarget: 1,
+                filterTarget: function (target) {
+                    return get.attitude(player, target) < 0
+                },
+                selectCard: 1,
+                position: 'he',
+                filterCard: function (card) {
+                    return card.num == 12;
+                },
+                ai: {
+                    damage: true,
+                    order: 8,
+                    result: {
+                        target: function (player, target) {
+                            return get.damageEffect(target, player);
+                        }
+                    }
+                },
+                threaten: 1.3,
+                group: ['princess_recover', 'princess_compare']
+            },
+            princess_recover: {
+                audio: 2,
+                trigger: { player: 'useCardAfter' },
+                filter: function (event, player) {
+                    return event.card && event.card.num == 12;
+                },
+                frequent: true,
+                content: function () {
+                    player.draw();
+                    player.recover();
+                },
+                effect: {
+                    target: function (card, player, target) {
+                        if (card.num == 12) return [1, 0.6];
+                    },
+                    player: function (card, player, target) {
+                        if (card.num == 12) return [1, 1];
+                    }
+                }
+            },
+            princess_compare: {
+                trigger: { player: 'compare', target: 'compare' },
+                frequent: true,
+                silent: true,
+                content: function () {
+                    game.log(player, '拼点牌点数视为', '#y12');
+                    if (player == trigger.player) {
+                        trigger.num1 = 12;
+                    }
+                    else {
+                        trigger.num2 = 12;
+                    }
+                }
+            },
             jiaoyi: {
                 audio: 2,
                 enable: 'chooseToUse',
                 usable: 1,
-                filter: function (player) {
+                filter: function (event,player) {
                     return player.countCards('h', { color: 'red' }) > 0;
                 },
                 filterCard: function (card) {
@@ -5135,6 +5235,79 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             },
             //洪佩云
             //X
+            //徐诗琪
+            xiaoqi: {
+                trigger: { player: 'damageEnd' },
+                direct: true,
+                audio: 2,
+                content: function () {
+                    'step 0'
+                    event.cards = get.cards(7);
+                    event.videoId = lib.status.videoId++;
+                    game.broadcastAll(function (player, id, cards) {
+                        var str;
+                        if (player == game.me && !_status.auto) {
+                            str = '小七：选择任意张点数不大于7的牌';
+                        }
+                        else {
+                            str = '小七';
+                        }
+                        var dialog = ui.create.dialog(str, cards);
+                        dialog.videoId = id;
+                    }, player, event.videoId, event.cards);
+                    event.time = get.utc();
+                    game.addVideo('showCards', player, ['小七', get.cardsInfo(event.cards)]);
+                    game.addVideo('delay', null, 2);
+                    'step 1'
+                    var next = player.chooseButton([0, 7]);
+                    next.set('dialog', event.videoId);
+                    next.set('filterButton', function (button) {
+                        return get.number(button.link) <= 7;
+                    });
+                    next.set('ai', function (button) {
+                        return get.value(button.link, _status.event.player);
+                    });
+                    "step 2"
+                    if (result.bool && result.links) {
+                        player.logSkill('jiujiu');
+                        var cards2 = [];
+                        for (var i = 0; i < result.links.length; i++) {
+                            cards2.push(result.links[i]);
+                            cards.remove(result.links[i]);
+                        }
+                        for (var i = 0; i < cards.length; i++) {
+                            cards[i].discard();
+                        }
+                        event.cards2 = cards2;
+                    }
+                    else {
+                        event.finish();
+                    }
+                    var time = 1000 - (get.utc() - event.time);
+                    if (time > 0) {
+                        game.delay(0, time);
+                    }
+                    "step 3"
+                    game.broadcastAll('closeDialog', event.videoId);
+                    var cards2 = event.cards2;
+                    player.gain(cards2, 'log');
+                    player.$draw(cards2);
+                    game.delay();
+                },
+                ai: {
+                    effect: {
+                        target: function (card, player, target) {
+                            if (get.tag(card, 'damage')) {
+                                if (player.hasSkillTag('jueqing', false, target)) return [1, -2];
+                                if (!target.hasFriend()) return;
+                                if (target.hp >= 4) return [1, 2];
+                                if (target.hp == 3) return [1, 1.5];
+                                if (target.hp == 2) return [1, 0.5];
+                            }
+                        }
+                    }
+                }
+            },
             //汪佳翎
             jiujiu: {
                 trigger: { player: 'damageEnd' },
@@ -5417,7 +5590,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             tiancao1: {
                 trigger: { player: 'phaseBegin' },
                 forced: true,
-                filter: function () { return true},
+                filter: function () { return true },
                 content: function () {
                     if (player.storage.tiancao == undefined)
                         player.storage.tiancao = 2;
@@ -5498,6 +5671,26 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 },
             },
             //杨冰怡
+            tieyi: {
+                audio: 2,
+                enable: 'chooseToUse',
+                usable: 1,
+                filter: function (event,player) {
+                    return player.countCards('h', { color: 'black' }) > 0;
+                },
+                filterCard: function (card) {
+                    return get.color(card) == 'black';
+                },
+                position: 'h',
+                viewAs: { name: 'diaohulishan' },
+                viewAsFilter: function (player) {
+                    if (!player.countCards('h', { color: 'black' })) return false;
+                },
+                prompt: '将一张黑色手牌当“调虎离山”使用',
+                check: function (card) {
+                    return 4 - get.value(card)
+                }
+            },
             icefeng: {
                 trigger: { source: 'damageBegin' },
                 filter: function (event) {
@@ -5539,7 +5732,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     return target.hp < target.maxHp;
                 },
                 content: function () {
-                    var players = game.filterPlayer;
+                    var players = game.filterPlayer();
                     for (var i = 0; i < players.length; i++) {
                         players[i].recover();
                     }
@@ -5874,8 +6067,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gwangzijie: '王子杰',
             SNH48Gaji: '阿吉',
             SNH48Gyegou: '叶盛',
-            SNH48Gmulaosi: '马老师',
-            SNH48Gpiggyrae: '朱老师',
+            SNH48Gmulaosi: '马跃',
+            SNH48Gpiggyrae: '朱小希',
 
             //技能显示名称，技能说明文字
             fengfa: '风发',
@@ -5921,7 +6114,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             duzong_info: '觉醒技：若你手中的“毒”大于等于两张，你体力上限-1并回复1点体力，永久获得技能“心血”',
             xinxie: '心血',
             xinxie_info: '你每次使用“毒”之后，摸1张牌；你的结束阶段，随机将一张手牌转化为毒。',
-            
+
             //赵嘉敏篇
             shuangfa: '双发',
             shuangfa_info: '出牌阶段使用的第一张可以打出两次的牌将使用或打出两次',
@@ -6124,6 +6317,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             yancang_info: '锁定技：你跳过你的判定阶段。',
             jiezou: '节奏',
             jiezou_info: '出牌阶段，你可以：1（挑衅），指定一名使用【杀】能攻击到你的角色，该角色需对你使用一张【杀】，若该角色不如此做，你弃掉他的一张牌；2（挑唆），弃一张牌，视为一名SNH48角色对另一名SNH48角色使用一张[决斗]，每阶段限一次（此决斗不可被无懈可击响应）',
+            zhengyi: '正义',
+            zhengyi_info: '弃置一张手牌，并选择一个角色，该角色的回合开始时进行一次判定。若结果为♠，其受到2点雷属性伤害，并且若点数为2~9，改为受到3点雷属性伤害。若为♣，弃置两张牌。',
+            tianjiangzhengyi: '天降正义',
+            tianjiangzhengyi_info:'判定阶段进行一次判定。若结果为♠，其受到2点雷属性伤害，并且若点数为2~9，改为受到3点雷属性伤害。若为♣，弃置两张牌。',
             //H
             yonggu: '永固',
             yonggu_info: '你的准备阶段，若你的体力值全场最低，可令所有体力值大于你的角色选择一项：1，弃置一张牌，然后你回复1点体力；2，摸一张牌，然后武将牌翻面',
@@ -6145,6 +6342,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             taizi_info: '出牌阶段限一次，你可以将任意一张红色手牌当“以逸待劳”使用',
             fupo: '父魄',
             fupo_info: '',
+            princess: '公主',
+            princess_info: '锁定技：拼点时，点数小于Q的视为Q；每当你使用或打出一张点数为Q的牌，摸一张牌，回复一点体力。出牌阶段限一次，弃置一张点数为Q的牌，对一名角色造成1点伤害。',
             jiaoyi: '交易',
             jiaoyi_info: '出牌阶段限一次，你可以将任意一张红色手牌当“远交近攻”使用',
             //X
@@ -6170,21 +6369,23 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             dianyan_info: '出牌阶段限一次，你可以弃置两枚“草”标记，若如此做，在本回合中，你的“杀”伤害+1，额外目标+1，无视防具，且若此“杀”造成伤害，获得一枚“草”标记',
             icefeng: '冰封',
             icefeng_info: '锁定技：你的“杀”造成伤害后，目标不能使用“杀”和伤害类型的锦囊，直到他的回合结束。',
+            tieyi: '铁翼',
+            tieyi_info: '出牌阶段限一次，你可以将任意一张黑色手牌当“调虎离山”使用',
             muwang: '沐王',
             muwang_info: '',
             mitao: '蜜桃',
-            mitao: '出牌阶段限一次，你可以弃置一张“桃”，使所有角色回复1点体力。',
+            mitao_info: '出牌阶段限一次，你可以弃置一张“桃”，使所有角色回复1点体力。',
             taobao: '桃宝',
             taobao_info: '锁定技：你每回复1点体力，摸一张牌。其他角色每令你回复一次体力，该角色摸一张牌。',
             nvzun: '女尊',
             nvzun_info: '锁定技：所有男性角色与你计算距离时+1（防守距离+1），你与所有女性角色计算距离时-1（进攻距离+1）',
             neighbor: '邻居',
             neighbor_info: '锁定技：摸牌阶段你额外摸与你距离不大于1的角色数量的牌。使用“杀”和“顺手牵羊”时，无视距离',
-
             chemistry: '化学',
             chemistry2: '化学',
             chemistry_info: '回合结束阶段，你可以选择并声明一种风标军争牌。你的下一个回合开始时，随机将一张手牌变化成你声明的类型的牌，点数和花色不变。',
-
+            xiaoqi: '小七',
+            xiaoqi_info: '每当你受到伤害，你亮出牌堆顶的7张牌，获得其中所有点数不大于7的牌。',
         },
     };
 });

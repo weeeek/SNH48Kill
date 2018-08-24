@@ -175,7 +175,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             game.phaseLoop(player);
         },
         characterPack: {
-            //国战版武将属性配置
+            //女团大战版武将属性配置
             mode_guozhan: {
                 //S
                 SNH48Gchenguanhui: ['female', 'S', 4, ['wenwan', 'fuhei']],
@@ -217,7 +217,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Ghaowanqing: ['female', 'N', 3, ['rende', 'yingzi']],
                 SNH48Ghexiaoyu: ['female', 'N', 3, ['rende', 'yingzi']],
                 SNH48Gjinyingyue: ['female', 'N', 3, ['rende', 'yingzi']],
-                SNH48Gjiangzhenyi: ['female', 'N', 3, ['rende', 'yingzi']],
+                SNH48Gjiangzhenyi: ['female', 'N', 4, ['zhengyi']],
                 SNH48Gliujuzi: ['female', 'N', 3, ['rende', 'yingzi']],
                 SNH48Gliupeixin: ['female', 'N', 3, ['rende', 'yingzi']],
                 SNH48Gluting: ['female', 'N', 4, ['dage', 'kongchang', 'ho2o']],
@@ -231,7 +231,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Gjujingyi: ['female', 'N', 4, ['dufei', 'poisonousfog', 'jiedu', 'duzong']],
 
                 //H
-                SNH48Gfeiqinyuan: ['female', 'H', 4, ['yuanqi', 'fengfa']],
+                SNH48Gfeiqinyuan: ['female', 'H', 3, ['tianxuan', 'yuanliang']],
                 SNH48Ghongpeiyun: ['female', 'H', 4, ['jiang', 'luanji']],
                 SNH48Gjiangshan: ['female', 'H', 4, ['yonggu']],
                 SNH48Gjiangshuting: ['female', 'H', 4, ['jiang', 'luanji']],
@@ -249,7 +249,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Gxiongqinxian: ['female', 'H', 3, ['paoxiao', 'longdan']],
                 SNH48Gxuyangyuzhuo: ['female', 'H', 3, ['paoxiao', 'longdan']],
                 SNH48Gyanghuiting: ['female', 'H', 3, ['paoxiao', 'longdan']],
-                SNH48Gyujiayi: ['female', 'H', 3, ['paoxiao', 'longdan']],
+                SNH48Gyujiayi: ['female', 'H', 4, ['princess', 'jiaoyi']],
                 SNH48Gyuanyiqi: ['female', 'H', 3, ['paoxiao', 'longdan']],
                 SNH48Gzhangxin: ['female', 'H', 3, ['paoxiao', 'longdan']],
                 SNH48Gzengxiaowen: ['female', 'H', 3, ['paoxiao', 'longdan']],
@@ -268,8 +268,8 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Gwangshu: ['female', 'X', 4, ['chemistry', 'neighbor']],
                 SNH48Gwangxiaojia: ['female', 'X', 4, ['tiancao', 'dianyan']],
                 SNH48Gxushiqi: ['female', 'X', 4, ['wushuang', 'mashu']],
-                SNH48Gxietianyi: ['female', 'X', 4, ['wushuang', 'mashu']],
-                SNH48Gyangbingyi: ['female', 'X', 4, ['wushuang', 'mashu']],
+                SNH48Gxietianyi: ['female', 'X', 4, ['wushuang', 'nvzun']],
+                SNH48Gyangbingyi: ['female', 'X', 4, ['tieyi', 'icefeng']],
                 SNH48Gyangyunyu: ['female', 'X', 4, ['wushuang', 'mashu']],
                 SNH48Gzhangdansan: ['female', 'X', 4, ['wushuang', 'mashu']],
                 SNH48Gzhangjiayu: ['female', 'X', 4, ['wushuang', 'mashu']],
@@ -335,7 +335,6 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             },
             ho2_break: {
                 priority: 15,
-                skillAnimation: 'legend',
                 audio: 2,
                 unique: true,
                 trigger: { player: 'phaseBegin' },
