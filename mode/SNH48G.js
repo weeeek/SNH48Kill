@@ -175,7 +175,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             game.phaseLoop(player);
         },
         characterPack: {
-            //国战版武将属性配置
+            //女团大战版武将属性配置
             mode_guozhan: {
                 //S
                 SNH48Gchenguanhui: ['female', 'S', 4, ['wenwan', 'fuhei']],
@@ -217,7 +217,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Ghaowanqing: ['female', 'N', 3, ['rende', 'yingzi']],
                 SNH48Ghexiaoyu: ['female', 'N', 3, ['rende', 'yingzi']],
                 SNH48Gjinyingyue: ['female', 'N', 3, ['rende', 'yingzi']],
-                SNH48Gjiangzhenyi: ['female', 'N', 3, ['rende', 'yingzi']],
+                SNH48Gjiangzhenyi: ['female', 'N', 4, ['zhengyi']],
                 SNH48Gliujuzi: ['female', 'N', 3, ['rende', 'yingzi']],
                 SNH48Gliupeixin: ['female', 'N', 3, ['rende', 'yingzi']],
                 SNH48Gluting: ['female', 'N', 4, ['dage', 'kongchang', 'ho2o']],
@@ -231,7 +231,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Gjujingyi: ['female', 'N', 4, ['dufei', 'poisonousfog', 'jiedu', 'duzong']],
 
                 //H
-                SNH48Gfeiqinyuan: ['female', 'H', 3, ['yuanqi', 'taizi']],
+                SNH48Gfeiqinyuan: ['female', 'H', 3, ['tianxuan', 'yuanqi', 'taizi']],
                 SNH48Ghongpeiyun: ['female', 'H', 4, ['peiyun', 'fuhun']],
                 SNH48Gjiangshan: ['female', 'H', 4, ['yonggu']],
                 SNH48Gjiangshuting: ['female', 'H', 4, ['jiang', 'luanji']],
@@ -249,17 +249,15 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Gxiongqinxian: ['female', 'H', 3, ['paoxiao', 'longdan']],
                 SNH48Gxuyangyuzhuo: ['female', 'H', 3, ['paoxiao', 'longdan']],
                 SNH48Gyanghuiting: ['female', 'H', 3, ['paoxiao', 'longdan']],
-                SNH48Gyujiayi: ['female', 'H', 4, ['jiaoyi']],
+                SNH48Gyujiayi: ['female', 'H', 4, ['princess', 'jiaoyi']],
                 SNH48Gyuanyiqi: ['female', 'H', 3, ['paoxiao', 'longdan']],
                 SNH48Gzhangxin: ['female', 'H', 3, ['paoxiao', 'longdan']],
                 SNH48Gzengxiaowen: ['female', 'H', 3, ['paoxiao', 'longdan']],
 
                 SNH48Gliujiongran: ['female', 'H', 3, ['luoshen', 'biyue']],
-                //X
-                SNH48Gchenlin: ['female', 'X', 4, ['wushuang', 'mashu']],
                 SNH48Gchenyunling: ['female', 'X', 4, ['taowa', 'quanhuang']],
                 SNH48Gfengxiaofei: ['female', 'X', 4, ['chongaaaa', 'beifen', 'yuanzhen']],
-                SNH48Glizhao: ['female', 'X', 4, ['mitao', 'taobao']],
+                SNH48Glizhao: ['female', 'X', 4, ['mitao', 'taobao'], ['zhu']],
                 SNH48Gpanyingqi: ['female', 'X', 4, ['wushuang', 'mashu']],
                 SNH48Gqijing: ['female', 'X', 4, ['lianer', 'jingjing']],
                 SNH48Gsongxinran: ['female', 'X', 4, ['guoer']],
@@ -269,9 +267,9 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Gwangxiaojia: ['female', 'X', 4, ['tiancao', 'dianyan']],
                 SNH48Gxushiqi: ['female', 'X', 4, ['xiaoqi']],
                 SNH48Gxietianyi: ['female', 'X', 4, ['wushuang', 'nvzun']],
-                SNH48Gyangbingyi: ['female', 'X', 4, ['icefeng', 'ershui'], ['zhu']],
+                SNH48Gyangbingyi: ['female', 'X', 4, ['tieyi', 'icefeng', 'ershui'], ['zhu']],
                 SNH48Gyangyunyu: ['female', 'X', 3, ['zhanbu']],
-                SNH48Gzhangdansan: ['female', 'X', 4, ['tansuan']],
+                SNH48Gzhangdansan: ['female', 'X', 4, ['tansuan', 'mashu']],
                 SNH48Gzhangjiayu: ['female', 'X', 4, ['muwang']],
 
                 SNH48Glijing: ['female', 'X', 4, ['order', 'xflag']],
@@ -335,7 +333,6 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             },
             ho2_break: {
                 priority: 15,
-                skillAnimation: 'legend',
                 audio: 2,
                 unique: true,
                 trigger: { player: 'phaseBegin' },
