@@ -73,34 +73,20 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                     if (result.bool) {
                         target.damage(player);
                     }
-                    else {                        
-                        player.damage(target);                        
+                    else {
+                        player.damage(target);
                     }
                     event.finish();
                 },
                 ai: {
-                    order: function (name, player) {
-                        var cards = player.getCards('h');
-                        for (var i = 0; i < cards.length; i++) {
-                            if (cards[i].number > 11 && get.value(cards[i]) < 7) {
-                                return 9;
-                            }
-                        }
-                        return get.order({ name: 'sha' }) - 1;
-                    },
+                    damage: true,
+                    order: 8,
                     result: {
-                        player: function (player) {                            
-                            var num = player.countCards('h');
-                            if (num > player.hp) return 0;
-                            if (num == 1) return -2;
-                            if (num == 2) return -1;
-                            return -0.7;
+                        player: function (player, target) {
+                            return get.damageEffect(player, target);
                         },
                         target: function (player, target) {
-                            var num = target.countCards('h');
-                            if (num == 1) return -1;
-                            if (num == 2) return -0.7;
-                            return -0.5
+                            return get.damageEffect(target, player);
                         },
                     },
                     threaten: 1.3
@@ -168,6 +154,9 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                 },
                 filterCard: function (card) {
                     return get.color(card) == 'black';
+                },
+                filter: function (event, player) {
+                    return player.countCards('he', { color: 'black' }) > 2;
                 },
                 //加上表示可以使用装备区的牌，不加默认手牌
                 position: 'he',

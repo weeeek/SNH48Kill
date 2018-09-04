@@ -232,7 +232,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
 
                 //H
                 SNH48Gfeiqinyuan: ['female', 'H', 3, ['tianxuan', 'yuanqi', 'taizi']],
-                SNH48Ghongpeiyun: ['female', 'H', 4, ['peiyun', 'fuhun']],
+                SNH48Ghongpeiyun: ['female', 'H', 4, ['peiyun', 'fuwei']],
                 SNH48Gjiangshan: ['female', 'H', 4, ['yonggu']],
                 SNH48Gjiangshuting: ['female', 'H', 4, ['jiang', 'luanji']],
                 SNH48Glijiaen: ['female', 'H', 4, ['jiang', 'luanji']],
@@ -255,12 +255,14 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Gzengxiaowen: ['female', 'H', 3, ['paoxiao', 'longdan']],
 
                 SNH48Gliujiongran: ['female', 'H', 3, ['luoshen', 'biyue']],
+
+                SNH48Gchenlin: ['female', 'X', 4, ['datou', 'xunshan']],
                 SNH48Gchenyunling: ['female', 'X', 4, ['taowa', 'quanhuang']],
                 SNH48Gfengxiaofei: ['female', 'X', 4, ['chongaaaa', 'beifen', 'yuanzhen']],
                 SNH48Glizhao: ['female', 'X', 4, ['mitao', 'taobao'], ['zhu']],
-                SNH48Gpanyingqi: ['female', 'X', 4, ['wushuang', 'mashu']],
+                SNH48Gpanyingqi: ['female', 'X', 4, ['liangong', 'tisheng']],
                 SNH48Gqijing: ['female', 'X', 4, ['lianer', 'jingjing']],
-                SNH48Gsongxinran: ['female', 'X', 4, ['guoer']],
+                SNH48Gsongxinran: ['female', 'X', 4, ['guoer','xiaohua']],
                 SNH48Gsunxinwen: ['female', 'X', 4, ['wushuang', 'mashu']],
                 SNH48Gwangjialing: ['female', 'X', 4, ['jiujiu']],
                 SNH48Gwangshu: ['female', 'X', 4, ['chemistry', 'neighbor']],
@@ -269,7 +271,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Gxietianyi: ['female', 'X', 4, ['wushuang', 'nvzun']],
                 SNH48Gyangbingyi: ['female', 'X', 4, ['tieyi', 'icefeng', 'ershui'], ['zhu']],
                 SNH48Gyangyunyu: ['female', 'X', 3, ['zhanbu']],
-                SNH48Gzhangdansan: ['female', 'X', 4, ['tansuan', 'mashu']],
+                SNH48Gzhangdansan: ['female', 'X', 4, ['tansuan']],
                 SNH48Gzhangjiayu: ['female', 'X', 4, ['muwang']],
 
                 SNH48Glijing: ['female', 'X', 4, ['order', 'xflag']],
