@@ -231,8 +231,8 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Gjujingyi: ['female', 'N', 4, ['dufei', 'poisonousfog', 'jiedu', 'duzong']],
 
                 //H
-                SNH48Gfeiqinyuan: ['female', 'H', 4, ['yuanqi', 'fengfa']],
-                SNH48Ghongpeiyun: ['female', 'H', 4, ['jiang', 'luanji']],
+                SNH48Gfeiqinyuan: ['female', 'H', 3, ['yuanqi', 'taizi']],
+                SNH48Ghongpeiyun: ['female', 'H', 4, ['peiyun', 'fuhun']],
                 SNH48Gjiangshan: ['female', 'H', 4, ['yonggu']],
                 SNH48Gjiangshuting: ['female', 'H', 4, ['jiang', 'luanji']],
                 SNH48Glijiaen: ['female', 'H', 4, ['jiang', 'luanji']],
@@ -249,7 +249,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Gxiongqinxian: ['female', 'H', 3, ['paoxiao', 'longdan']],
                 SNH48Gxuyangyuzhuo: ['female', 'H', 3, ['paoxiao', 'longdan']],
                 SNH48Gyanghuiting: ['female', 'H', 3, ['paoxiao', 'longdan']],
-                SNH48Gyujiayi: ['female', 'H', 3, ['paoxiao', 'longdan']],
+                SNH48Gyujiayi: ['female', 'H', 4, ['jiaoyi']],
                 SNH48Gyuanyiqi: ['female', 'H', 3, ['paoxiao', 'longdan']],
                 SNH48Gzhangxin: ['female', 'H', 3, ['paoxiao', 'longdan']],
                 SNH48Gzengxiaowen: ['female', 'H', 3, ['paoxiao', 'longdan']],
@@ -262,19 +262,19 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Glizhao: ['female', 'X', 4, ['mitao', 'taobao']],
                 SNH48Gpanyingqi: ['female', 'X', 4, ['wushuang', 'mashu']],
                 SNH48Gqijing: ['female', 'X', 4, ['lianer', 'jingjing']],
-                SNH48Gsongxinran: ['female', 'X', 4, ['wushuang', 'mashu']],
+                SNH48Gsongxinran: ['female', 'X', 4, ['guoer']],
                 SNH48Gsunxinwen: ['female', 'X', 4, ['wushuang', 'mashu']],
                 SNH48Gwangjialing: ['female', 'X', 4, ['jiujiu']],
                 SNH48Gwangshu: ['female', 'X', 4, ['chemistry', 'neighbor']],
                 SNH48Gwangxiaojia: ['female', 'X', 4, ['tiancao', 'dianyan']],
-                SNH48Gxushiqi: ['female', 'X', 4, ['wushuang', 'mashu']],
-                SNH48Gxietianyi: ['female', 'X', 4, ['wushuang', 'mashu']],
-                SNH48Gyangbingyi: ['female', 'X', 4, ['wushuang', 'mashu']],
-                SNH48Gyangyunyu: ['female', 'X', 4, ['wushuang', 'mashu']],
-                SNH48Gzhangdansan: ['female', 'X', 4, ['wushuang', 'mashu']],
-                SNH48Gzhangjiayu: ['female', 'X', 4, ['wushuang', 'mashu']],
+                SNH48Gxushiqi: ['female', 'X', 4, ['xiaoqi']],
+                SNH48Gxietianyi: ['female', 'X', 4, ['wushuang', 'nvzun']],
+                SNH48Gyangbingyi: ['female', 'X', 4, ['icefeng', 'ershui'], ['zhu']],
+                SNH48Gyangyunyu: ['female', 'X', 3, ['zhanbu']],
+                SNH48Gzhangdansan: ['female', 'X', 4, ['tansuan']],
+                SNH48Gzhangjiayu: ['female', 'X', 4, ['muwang']],
 
-                SNH48Glijing: ['female', 'X', 4, ['guanxing', 'danlao']],
+                SNH48Glijing: ['female', 'X', 4, ['order', 'xflag']],
 
                 SNH48Gwangzijie: ['male', 'guan', 1, ['longdan', 'chongzhen', 'paoxiao', 'jiang', 'linglong']],
                 SNH48Gaji: ['male', 'guan', 1, ['buqu', 'yingzi', 'kuaihuo', 'yiji', 'jizhi']],
@@ -314,15 +314,13 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 trigger: { player: 'phaseBegin' },
                 forced: true,
                 filter: function (event, player) {
-                    if (player.storage.new_ziqiang)
+                    if (player.storage.ziqiang)
                         return false;
                     return player.isMinHp();
                 },
                 content: function () {
-                    player.storage.new_ziqiang = true;
+                    player.storage.ziqiang = true;
                     player.maxHp++;
-                    player.update();
-                    player.recover();
                     if (player.hasSkill('new_ziqiang')) {
                         player.addSkill('mowang');
                     }
@@ -331,6 +329,8 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     }
                     //event.trigger('update');                    
                     player.awakenSkill('new_ziqiang');
+                    player.update();
+                    player.recover();
                 }
             },
             ho2_break: {
@@ -344,7 +344,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 derivation: 'ho2',
                 skillAnimation: 'legend',
                 filter: function (event, player) {
-                    return (player.hasSkill('ho2h') && player.hasSkill('ho2h')) || player.hasSkill('ho2');
+                    return (player.hasSkill('ho2h') && player.hasSkill('ho2o')) || player.hasSkill('ho2');
                 },
                 content: function () {
                     if (!player.hasSkill('ho2')) {
@@ -392,6 +392,27 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     },
                     player: function (card, player, target) {
                         if (get.suit(card) == 'heart') return [1, 1];
+                    }
+                }
+            },
+            xflag: {
+                global: 'xflag2',
+                filter: function (event, player) {
+                    console.log('event.player.group', event.player.group)
+                    console.log('player.group', player.group)
+                    return event.player.group == player.group;
+                },
+                ai: {
+                    threaten: 1.5
+                }
+            },
+            xflag2: {
+                mod: {
+                    globalTo: function (from, to, distance) {
+                        return distance + 1;
+                    },
+                    globalFrom: function (from, to, distance) {
+                        return distance - 1;
                     }
                 }
             },
@@ -1168,15 +1189,17 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             mingzhifujiang: '明置副将',
             mode_guozhan_character_config: '国战武将',
             new_lingjun: '领军',
-            new_lingjun_info: '当你陷入濒死状态时，与你同势力的角色对你使用的[桃]额外回复一点体力值。你以此法脱离濒死状态时，其可摸一张牌。（为队友付出必然能得到回应，每次陷入低谷再出发必将更进一步）',
+            new_lingjun_info: '当你陷入濒死状态时，与你同势力的角色对你使用的[桃]额外回复一点体力值。你以此法脱离濒死状态时，其可摸一张牌。',
             new_ziqiang: '自强',
             new_ziqiang_info: '觉醒技, 准备阶段，若你的体力为全场最低（或之一），你增加一点体力上限并回复1点体力，获得技能“魔王”',
-
+            //女团大战版本独有
+            xflag: '梦旗',
+            xflag_info: '锁定技，同势力角色防御距离+1，进攻距离+1',
             //组合篇
             ho2h: 'H',
-            ho2h_info: 'HO2组合成员之一，如果游戏开始时或回合开始时，你的主将和副将都是明置的，并且有H和O技能，则获得技能HO2',
+            ho2h_info: 'HO2组合成员之一，如果回合开始时，你的主将和副将都是明置的，并且有H和O技能，则获得技能HO2',
             ho2o: 'O',
-            ho2o_info: 'HO2组合成员之一，如果游戏开始时或回合开始时，你的主将和副将都是明置的，并且有H和O技能，则获得技能HO2',
+            ho2o_info: 'HO2组合成员之一，如果回合开始时，你的主将和副将都是明置的，并且有H和O技能，则获得技能HO2',
             ho2: 'HO',
             ho2_info: '如果这就是爱情。你每使用一张♥牌，摸一张牌，回复一点体力'
         },
@@ -1247,7 +1270,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             ["club", 1, "zhuge"],
             ["diamond", 1, "zhuge"],
             //因为代码有BUG，禁用飞龙夺凤
-            ["spade", 2, "feilongduofeng"],
+            //["spade", 2, "feilongduofeng"],
             ["spade", 6, "qinggang"],
             ["spade", 5, "qinglong"],
             ["spade", 12, "zhangba"],
