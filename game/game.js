@@ -43284,11 +43284,11 @@
     };
     var get = {
         is: {
-            guozhanMode:function(){
+            guozhanMode: function () {
                 return get.mode() == 'guozhan' || get.mode() == 'SNH48G'
             },
-            SNH48G:function(player){
-                var SNH48G = ['S','N','H','X','guan','fen'];
+            SNH48G: function (player) {
+                var SNH48G = ['S', 'N', 'H', 'X', 'guan', 'fen'];
                 return SNH48G.indexOf(player.group) > -1;
             },
             converted: function (event) {

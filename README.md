@@ -1,7 +1,7 @@
 # SNH48Kill
 ***[无名杀官方](http://noname.pub/)***
 -----------
-***[SNH48女团大战版-在线游玩](https://weeeek.github.io/SNH48Kill/)***
+***[SNH48女团大战版-在线游玩（最好缓存各种文件，否则游戏加载大概率失败）](https://weeeek.github.io/SNH48Kill/)***
 -----------
 ***[Zip压缩包下载](https://github.com/weeeek/SNH48Kill/archive/master.zip)***
 -----------
@@ -161,3 +161,11 @@
 		</div>
 	</li>
 </ol>
+<div>
+	<h4>游戏更新</h4>
+	<h5>主程序更新：</h5>
+	<ul>
+		<li>git remote add noname https://github.com/libccy/noname.git </li>
+		<li>git fetch origin noname</li>
+	</ul>	
+</div>
