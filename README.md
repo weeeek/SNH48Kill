@@ -86,7 +86,7 @@
 						<li>杀被闪响应后（shaMiss）</li>
 						<li>...</li>
 					</ol>
-				<li>
+				</li>
 				<li>
 					<h3>使用次数</h3>
 					<div>usable:N+</div>

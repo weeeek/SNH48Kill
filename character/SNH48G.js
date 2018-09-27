@@ -834,9 +834,13 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     //自己弃的不算
                     if (event.player == player)
                         return false;
-                    for (var i = 0; i < event.cards.length; i++) {
-                        return event.cards[i].name == 'du' && get.position(event.cards[i]) == 'd';
+                    if (event.cards & event.cards.length > 0) {
+                        for (var i = 0; i < event.cards.length; i++) {
+                            if (event.cards[i].name == 'du' && get.position(event.cards[i]) == 'd')
+                                return true;
+                        }
                     }
+                    return false;
                 },
                 forced: true,
                 check: function (event, player) {
@@ -2551,9 +2555,13 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 filter: function (event, player) {
                     if (event.player == player)
                         return false;
-                    for (var i = 0; i < event.cards.length; i++) {
-                        return event.cards[i].name == 'jiu' && get.position(event.cards[i]) == 'd';
+                    if (event.cards && event.cards.length > 0) {
+                        for (var i = 0; i < event.cards.length; i++) {
+                            if (event.cards[i].name == 'jiu' && get.position(event.cards[i]) == 'd')
+                                return true;
+                        }
                     }
+                    return false;
                 },
                 forced: true,
                 check: function (event, player) {
@@ -3307,9 +3315,13 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     //自己弃的不算
                     if (event.player == player)
                         return false;
-                    for (var i = 0; i < event.cards.length; i++) {
-                        return event.cards[i].name == 'sha' && get.position(event.cards[i]) == 'd';
+                    if (event.cards && event.cards.length > 0) {
+                        for (var i = 0; i < event.cards.length; i++) {
+                            if (event.cards[i].name == 'sha' && get.position(event.cards[i]) == 'd')
+                                return true;
+                        }
                     }
+                    return false;
                 },
                 forced: true,
                 check: function (event, player) {
@@ -3444,9 +3456,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 trigger: { global: 'discardAfter' },
                 filter: function (event, player) {
                     if (event.player == player) return false;
-                    for (var i = 0; i < event.cards.length; i++) {
-                        if (get.suit(event.cards[i]) == 'diamond' && get.position(event.cards[i]) == 'd') {
-                            return true;
+                    if (event.cards && event.cards.length > 0) {
+                        for (var i = 0; i < event.cards.length; i++) {
+                            if (get.suit(event.cards[i]) == 'diamond' && get.position(event.cards[i]) == 'd')
+                                return true;
                         }
                     }
                     return false;
@@ -3857,9 +3870,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         event.cards && event.cards.length &&
                         event.getParent(2).name == 'phaseDiscard') {
                         for (var i = 0; i < event.cards.length; i++) {
-                            if (get.position(event.cards[i]) == 'd') {
+                            if (get.position(event.cards[i]) == 'd')
                                 return true;
-                            }
                         }
                         return false;
                     }
@@ -4129,7 +4141,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 }
             },
             huopo: {
-                //出牌阶段限一次，你可将一至三张手牌交给一名其他角色，若你这么做，该角色的下个回合开始时，你摸等量的牌                
+                //出牌阶段限一次，你可将一至三张手牌交给一名其他角色，若你这么做，该角色的下个回合开始时，你摸两倍数量的牌                
                 usable: 1,
                 enable: 'phaseUse',
                 filterTarget: function (card, player, target) {
@@ -4181,7 +4193,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     return player.storage.huopo_draw.length > 0
                 },
                 content: function (event) {
-                    player.storage.huopo_target.draw(player.storage.huopo_draw.length);
+                    player.storage.huopo_target.draw(player.storage.huopo_draw.length * 2);
                     player.storage.huopo_draw = [];
 
                     player.removeAdditionalSkill('huopo');
@@ -4852,9 +4864,13 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     //自己弃的不算
                     if (event.player == player)
                         return false;
-                    for (var i = 0; i < event.cards.length; i++) {
-                        return get.type(event.cards[i]) == 'equip' && get.position(event.cards[i]) == 'd';
+                    if (event.cards && event.cards.length > 0) {
+                        for (var i = 0; i < event.cards.length; i++) {
+                            if (get.type(event.cards[i]) == 'equip' && get.position(event.cards[i]) == 'd')
+                                return true;
+                        }
                     }
+                    return false;
                 },
                 forced: true,
                 check: function (event, player) {
@@ -6208,9 +6224,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 trigger: { global: 'discardAfter' },
                 filter: function (event, player) {
                     if (event.player == player) return false;
-                    for (var i = 0; i < event.cards.length; i++) {
-                        if (get.suit(event.cards[i]) == 'heart' && get.position(event.cards[i]) == 'd') {
-                            return true;
+                    if (event.cards && event.cards.length > 0) {
+                        for (var i = 0; i < event.cards.length; i++) {
+                            if (get.suit(event.cards[i]) == 'heart' && get.position(event.cards[i]) == 'd')
+                                return true;
                         }
                     }
                     return false;
@@ -6302,7 +6319,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 unique: true,
                 enable: 'phaseUse',
                 filterTarget: function (card, player, target) {
-                    if (target.group == 'S' || target.group == 'N' || target.group == 'H' || target.group == 'X')
+                    if (target == player)
+                        return false;
+                    if (get.is.guozhanMode())
+                        return true;
+                    else if (target.group == 'S' || target.group == 'N' || target.group == 'H' || target.group == 'X')
                         return true;
                     else
                         return false;
@@ -6366,17 +6387,18 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         player: function (player) {
                             var num = 0;
                             var players = game.filterPlayer();
-                            players.romove(player);
                             players.sortBySeat();
 
                             for (var i = 0; i < players.length; i++) {
-                                var att = get.attitude(player, players[i]);
-                                //友
-                                if (att > 0) att = 1;
-                                //敌
-                                if (att < 0) att = -1;
+                                if (players[i] != player) {
+                                    var att = get.attitude(player, players[i]);
+                                    //友
+                                    if (att > 0) att = 1;
+                                    //敌
+                                    if (att < 0) att = -1;
 
-                                num += att;
+                                    num += att;
+                                }
                             }
                             return -players.length / 3 - num;
                         }
@@ -6842,8 +6864,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             ganxing_info: '出牌阶段限一次, 你可指定一名其他角色并指定一个花色，观看手牌，然后你弃置其手牌或装备牌理一张此花色的牌。',
             huopo: '活泼',
             huopo2: '活泼',
-            huopo_info: '回合结束阶段，你可将任意张手牌交给一名其它角色，若你这么做，该角色的下个回合开始时，你摸等量的牌。',
-            huopo2_info: '回合开始时，袁雨桢摸刚刚交给你的数量的牌',
+            huopo_info: '回合结束阶段，你可将任意张手牌交给一名其它角色，若你这么做，该角色的下个回合开始时，你摸两倍数量的牌。',
+            huopo2_info: '回合开始时，袁雨桢摸刚刚交给你的数量两倍的牌',
             baofa: '爆发',
             baofa_info: '锁定技。你不能使用或打出无懈可击。你可将无懈可击当杀使用或打出，并且此类杀不计入使用次数限制。你的杀可指定的目标数等于你当前的攻击距离。',
             caihua: '才华',
