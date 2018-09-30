@@ -937,7 +937,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 content: function () {
                     "step 0"
                     player.gain(trigger.playerCards.filter(card => card.name == 'du' && get.position(card) == 'd'));
-                    player.$draw(trigger.playerCards.filter(card => card.name == 'du' && get.position(card) == 'd'));
+                    player.$gain2(trigger.playerCards.filter(card => card.name == 'du' && get.position(card) == 'd'));
                     game.delay();
                     "step 1"
                     for (var i = 0; i < trigger.playerCards.length; i++) {
@@ -2908,6 +2908,9 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         'step 2'
                         trigger.player.update();
                     }
+                },
+                ai: {
+                    jueqing: true
                 }
             },
             laydown: {
@@ -3681,6 +3684,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     player.turnOver();
                 },
                 ai: {
+                    maixie: false,
+                    maixie_hp: false,
                     threaten: function (player, target) {
                         if (target.hp == 1) return 2.5;
                         return 1;
