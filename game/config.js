@@ -2,7 +2,7 @@ window.config={
 	forbidai:['miheng','ns_liuzhang'],
 	forbidai_user:[],
 	forbidall:['xiahouyuan','huangzhong','weiyan','dianwei','zhangjiao',
-	'caocao','simayi','guanyu','zhangfei','zhaoyun','ganning','lvmeng','lvbu'],
+	're_caocao','simayi','guanyu','zhangfei','zhaoyun','ganning','lvmeng','lvbu'],
 	forbidversus:['swd_kangnalishi'],
 	forbidstone:['zhugedan','pal_xuanxiao','hs_malfurion','lusu','chenlin','hs_siwangzhiyi',
 		'gjqt_bailitusu','yuanshao','swd_anka','swd_nicole','daqiao','re_daqiao','hs_xuanzhuanjijia',
@@ -13,7 +13,7 @@ window.config={
 	],
 	replacecharacter:{
 		zhangjiao:'sp_zhangjiao',
-		caocao:'re_caocao',
+		re_caocao:'caocao',
 		simayi:'re_simayi',
 		guanyu:'re_guanyu',
 		zhangfei:'re_zhangfei',
@@ -27,34 +27,44 @@ window.config={
 	forbidchess:['hetaihou','swd_kangnalishi'],
 	forbidboss:['caiwenji','gjqt_aruan','pal_xuanxiao','swd_hupo'],
 	forbiddouble:['zhugedan','swd_kangnalishi','dongzhuo','wutugu','hs_siwangzhiyi','hs_ronghejuren','hs_shanlingjuren'],
+	//all:{
+	//	sgscharacters:['standard','shenhua','refresh','yijiang','sp','extra','old'],
+	//	sgscards:['standard','extra','sp','guozhan'],
+	//	sgsmodes:['identity','guozhan','versus','brawl','connect'],
+	//	stockmode:['identity','guozhan','versus','boss','chess','stone','connect','brawl','tafang'],
+	//	stockextension:['boss','cardpile','coin','wuxing'],
+	//	layout:['default','newlayout'],
+	//	theme:['woodden','music','simple'],
+	//	card_font:['xiaozhuan','huangcao','caoshu','xingshu'],
+	//	double_hp:['hejiansan','pingjun','zuidazhi','zuixiaozhi','zonghe'],
+	//	image_background_filter:['default','blur','gray','sepia','invert','saturate','contrast','hue','brightness'],
+	//},
     all: {
         //三国杀武将扩展包：标准，神话，一将成名，SP等，军争。。。
         sgscharacters: ['standard', 'shenhua', 'refresh', 'yijiang', 'sp', 'extra', 'old', 'SNH48G'],
         //三国杀牌堆扩展包：标准，军争，SP，国战
         sgscards: ['standard', 'extra', 'sp', 'guozhan'],
         //三国杀模式：身份，国战，对决，挑战
-		sgsmodes:['identity','guozhan','versus','brawl','connect'],
-		stockmode:['identity','guozhan','versus','boss','chess','stone','connect','brawl','tafang','SNH48G'],
-		stockextension:['boss','cardpile','coin','wuxing'],
-		layout:['default','newlayout'],
-		theme:['woodden','music','simple'],
-		card_font:['xiaozhuan','huangcao','caoshu','xingshu'],
-		double_hp:['hejiansan','pingjun','zuidazhi','zuixiaozhi','zonghe'],
-		image_background_filter:['default','blur','gray','sepia','invert','saturate','contrast','hue','brightness'],
-	},
+        sgsmodes: ['identity', 'guozhan', 'versus', 'brawl', 'connect'],
+        stockmode: ['identity', 'guozhan', 'versus', 'boss', 'chess', 'stone', 'connect', 'brawl', 'tafang', 'SNH48G'],
+        stockextension: ['boss', 'cardpile', 'coin', 'wuxing'],
+        layout: ['default', 'newlayout'],
+        theme: ['woodden', 'music', 'simple'],
+        card_font: ['xiaozhuan', 'huangcao', 'caoshu', 'xingshu'],
+        double_hp: ['hejiansan', 'pingjun', 'zuidazhi', 'zuixiaozhi', 'zonghe'],
+        image_background_filter: ['default', 'blur', 'gray', 'sepia', 'invert', 'saturate', 'contrast', 'hue', 'brightness'],
+    },
 
 	game:'sgs',
 	duration:500,
 	hoveration:1000,
 	doubleclick_intro:true,
-    cheat: false,
-    //背景音乐0-10
-    volumn_background: 1,
-    //游戏声效0-10
+	cheat:false,
+	volumn_background:1,
 	volumn_audio:2,
 
 	connect_avatar:'TeamSII',
-	connect_nickname:'Gone',
+	connect_nickname:'丶Gone',
 	config_menu:true,
 	auto_popped_config:true,
 	auto_popped_history:false,
@@ -86,6 +96,7 @@ window.config={
 	customBackgroundPack:[],
 	favouriteCharacter:[],
 	recentIP:[],
+	vintageSkills:[],
 	alteredSkills:[],
 	brokenFile:[],
 
@@ -143,8 +154,8 @@ window.config={
 	right_click:'pause',
 	sort:'type_sort',
 
-	cards:['standard','ex','extra','sp','classic','basic'],
-	characters:['standard','shenhua','refresh','sp','yijiang','SNH48G'],
+    cards: ['standard', 'ex', 'extra', 'sp', 'classic', 'basic', 'SNH48G'],
+    characters: ['standard', 'shenhua', 'refresh', 'sp', 'yijiang', 'SNH48G'],
 	connect_characters:[],
 	connect_cards:[],
 	plays:[],
@@ -189,17 +200,17 @@ window.config={
 			difficulty:'normal',
 			dierestart:true
 		},
-		guozhan: {
-		    difficulty: 'normal',
-		    initshow_draw: 2,
-		    dierestart: true
-		},
-		SNH48G: {
-		    difficulty: 'normal',
-		    initshow_draw: 2,
-		    dierestart: true
-		},
-	},
+		guozhan:{
+			difficulty:'normal',
+			initshow_draw:2,
+			dierestart:true
+        },
+        SNH48G: {
+            difficulty: 'normal',
+            initshow_draw: 2,
+            dierestart: true
+        },
+    },
 	current_mode:{},
 	customforbid:[],
 	forbid:[

@@ -1,18 +1,17 @@
 window.noname_update={
-	version:'1.9.52',
-	update:'1.9.51',
+	version:'1.9.57.1',
+	update:'1.9.56',
 	changeLog:[
-		'新武将'
-	],
-	players:[
-		'sp_liuqi',
-		'luzhi'
+		'bug修复'
 	],
 	files:[
-		'character/diy.js',
-		'character/sp.js',
-		'character/yijiang.js',
-		'game/game.js',
+		'card/extra.js',
+		'card/guozhan.js',
+		'card/standard.js',
+		'card/swd.js',
+		'card/yunchou.js',
+		'character/extra.js',
+		'game/asset.js',
 		'mode/boss.js'
 	]
 };

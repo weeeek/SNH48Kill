@@ -4,6 +4,117 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
         name: 'SNH48G',
         connect: true,
         card: {
+            juedou2: {
+                audio: true,
+                fullskin: true,
+                wuxieable: false,
+                type: 'trick',
+                enable: true,
+                filterTarget: function (card, player, target) {
+                    return target != player;
+                },
+                content: function () {
+                    "step 0"
+                    if (event.turn == undefined) event.turn = target;
+                    "step 1"
+                    event.trigger('juedou');
+                    "step 2"
+                    if (event.directHit) {
+                        event._result = { bool: false };
+                    }
+                    else {
+                        var next = event.turn.chooseToRespond({ name: 'sha' });
+                        next.set('ai', function (card) {
+                            var event = _status.event;
+                            var player = event.splayer;
+                            var target = event.starget;
+                            if (player.hasSkillTag('notricksource')) return 0;
+                            if (target.hasSkillTag('notrick')) return 0;
+                            if (event.player == target) {
+                                if (player.hasSkill('naman')) return -1;
+                                if (get.attitude(target, player) < 0 || event.player.hp <= 1) {
+                                    return get.unuseful2(card)
+                                }
+                                return -1;
+                            }
+                            else {
+                                if (target.hasSkill('naman')) return -1;
+                                if (get.attitude(player, target) < 0 || event.player.hp <= 1) {
+                                    return get.unuseful2(card)
+                                }
+                                return -1;
+                            }
+                        });
+                        next.set('splayer', player);
+                        next.set('starget', target);
+                        next.autochoose = lib.filter.autoRespondSha;
+                        if (event.turn == target) {
+                            next.source = player;
+                        }
+                        else {
+                            next.source = target;
+                        }
+                    }
+                    "step 3"
+                    if (event.target.isDead() || event.player.isDead()) {
+                        event.finish();
+                    }
+                    else {
+                        if (result.bool) {
+                            if (event.turn == target) event.turn = player;
+                            else event.turn = target;
+                            event.goto(1);
+                        }
+                        else {
+                            if (event.turn == target) {
+                                target.damage();
+                            }
+                            else {
+                                player.damage(target);
+                            }
+                        }
+                    }
+                },
+                ai: {
+                    wuxie: function () {
+                        return 0;
+                    },
+                    basic: {
+                        order: 5,
+                        useful: 1,
+                        value: 5.5
+                    },
+                    result: {
+                        target: -1.5,
+                        player: function (player, target) {
+                            if (get.damageEffect(target, player, target) > 0 && get.attitude(player, target) > 0 && get.attitude(target, player) > 0) {
+                                return 0;
+                            }
+                            var hs1 = target.getCards('h', 'sha');
+                            var hs2 = player.getCards('h', 'sha');
+                            if (hs1.length > hs2.length + 1) {
+                                return -2;
+                            }
+                            var hsx = target.getCards('h');
+                            if (hsx.length > 2 && hs2.length == 0 && hsx[0].number < 6) {
+                                return -2;
+                            }
+                            if (hsx.length > 3 && hs2.length == 0) {
+                                return -2;
+                            }
+                            if (hs1.length > hs2.length && (!hs2.length || hs1[0].number > hs2[0].number)) {
+                                return -2;
+                            }
+                            return -0.5;
+                        }
+                    },
+                    tag: {
+                        respond: 2,
+                        respondSha: 2,
+                        damage: 1,
+                    }
+                }
+            },
             yongqizhichui: {
                 mode: ['SNH48G'],
                 nomod: true,
@@ -195,6 +306,7 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
             },
         },
         translate: {
+            juedou2:'决斗',
             yingyuanbang: '应援棒',
             yingyuanbang_bg: '棒',
             yingyuanbang_skill: '打Call',

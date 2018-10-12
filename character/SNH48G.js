@@ -1504,12 +1504,15 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         trigger.source.damage(player.maxHp - player.hp);
                 },
                 ai: {
+                    maixie_defend: true,
                     effect: {
                         target: function (card, player, target) {
-                            if (player.hasSkillTag('jueqing', false, target)) return [1, -1];
+                            //if (player.hasSkillTag('jueqing', false, target)) return [1, -1];
                             //敌人
-                            if (get.attitude(player, target) < 0)
-                                return get.damageEffect(target, player);
+                            //if (get.attitude(player, target) < 0)
+                            //    return get.damageEffect(target, player);
+                            if (get.attitude(target, player) < 0)
+                                return [1, 1];
                         }
                     }
                 }
@@ -2828,23 +2831,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //邱欣怡，AI测试OK
             meixi: {
                 audio: 2,
-                inherit: 'baiyin_skill',
-                filter: function (event, player) {
-                    if (!lib.skill.baiyin_skill.filter(event, player)) return false;
-                    if (player.getEquip(2)) return false;
-                    return true;
-                },
-                ai: {
-                    effect: {
-                        target: function (card, player, target) {
-                            if (player == target && get.subtype(card) == 'equip2') {
-                                if (get.equipValue(card) <= 7.5) return 0;
-                            }
-                            if (target.getEquip(2)) return;
-                            return lib.skill.baiyin_skill.ai.effect.target.apply(this, arguments);
-                        }
-                    }
-                }, group: 'meixi2'
+                group: ['meixi2', 'baiyin_skill']
             },
             meixi2: {
                 trigger: { player: 'equipBegin' },
@@ -2852,7 +2839,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 frequent: true,
                 filter: function (event) {
                     //没有装备防具时
-                    if (event.player.countCards('e', function (card) { return get.subtype(card) == 'equip2' }) == 0)
+                    if (event.player.countCards('e', function (card) {
+                        return get.subtype(card) == 'equip2'
+                    }) == 0)
+                        //装备防具，触发
                         return get.subtype(event.card) == 'equip2';
                     return false;
                 },
@@ -3693,7 +3683,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     effect: {
                         target: function (card, player, target) {
                             if (get.tag(card, 'damage')) {
-                                if (player.hasSkillTag('jueqing', false, target)) return [1, -2];
+                                //if (player.hasSkillTag('jueqing', false, target)) return [1, -2];
                                 if (target.hp == 1) return 0.8;
                                 if (target.isTurnedOver()) return [0, 3];
                                 var num = game.countPlayer(function (current) {
@@ -4173,7 +4163,9 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         event.target.$gain2(result.cards);
                         //要回合开始时摸牌的人，数量
                         event.target.storage.huopo_target = player;
-                        event.target.storage.huopo_draw = result.cards;
+                        if (event.target.storage.huopo_draw == undefined)
+                            event.target.storage.huopo_draw = [];
+                        event.target.storage.huopo_draw = event.target.storage.huopo_draw.concat(result.cards);
 
                         event.target.addAdditionalSkill('huopo', ['huopo2']);
                     }
@@ -4197,11 +4189,23 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 filter: function (event, player, target) {
                     return player.storage.huopo_draw.length > 0
                 },
+                init: function (player) {
+                    player.storage.huopo2 = player.storage.huopo_draw.length;
+                },
+                logTarget: function (event) {
+                    return event.player.storage.huopo_target;
+                },
+                intro: {
+                    content: 'mark'
+                },
+                mark: true,
+                marktext: '活',
                 content: function (event) {
+                    console.log(player.storage.huopo_target + "摸" + player.storage.huopo_draw.length * 2);
                     player.storage.huopo_target.draw(player.storage.huopo_draw.length * 2);
                     player.storage.huopo_draw = [];
 
-                    player.removeAdditionalSkill('huopo');
+                    player.removeAdditionalSkill('huopo', ['huopo2']);
                 }
             },
             //赵晔，AI测试OK
@@ -4996,62 +5000,76 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 group: ['qinggang_skill', 'shaDamageMore']
             },
             //费沁源
+            tianxuan: {
+                audio: 2,
+                enable: 'phaseUse',
+                viewAs: { name: 'xietianzi' },
+                filterCard: function (card, player) {
+                    if (ui.selected.cards.length) {
+                        return get.suit(card) == get.suit(ui.selected.cards[0]);
+                    }
+                    var cards = player.getCards('h');
+                    for (var i = 0; i < cards.length; i++) {
+                        if (card != cards[i]) {
+                            if (get.suit(card) == get.suit(cards[i])) return true;
+                        }
+                    }
+                    return false;
+                },
+                selectCard: 2,
+                complexCard: true,
+                prompt: '将两张同花色手牌当【挟天子以令诸侯】使用',
+                check: function (card) {
+                    var player = _status.event.player;
+                    var targets = game.filterPlayer(function (current) { });
+                    var num = 0;
+                    if (!player.needsToDiscard(-1)) {
+                        return 0;
+                    }
+                    return 6 - get.value(card);
+                },
+                ai: {
+                    basic: {
+                        order: 10
+                    }
+                }
+            },
             //tianxuan: {
-            //    audio: 2,
-            //    enable: 'chooseToUse',
-            //    usable:1,
-            //    filter: function (player) {
-            //        return player.countCards('h', { color: 'black' }) > 0;
+            //    trigger: { player: 'phaseUseAfter' },
+            //    popup: false,
+            //    audio: false,
+            //    priority: -50,
+            //    filter: function (event, player) {
+            //        if (player.storage.tianxuan)
+            //            return false;
+            //        return player.countCards('h', { color: 'black' }) > 0
             //    },
-            //    filterCard: function (card) {
-            //        return get.color(card) == 'black';
-            //    },
-            //    position: 'h',
-            //    viewAs: { name: 'xietianzi' },
-            //    viewAsFilter: function (player) {
-            //        if (!player.countCards('h', { color: 'black' })) return false;
-            //    },
-            //    prompt: '将一张黑色手牌当【挟天子以令诸侯】使用',
-            //    check: function (card) {
-            //        return 4 - get.value(card)
+            //    content: function () {
+            //        'step 0'
+            //        player.chooseToDiscard('h', { color: 'black' })
+            //        'step 1'
+            //        player.logSkill('tianxuan', player)
+            //        player.markSkillCharacter('tianxuan', player, '天选', '进行一个额外回合');
+            //        player.storage.tianxuan = true;
+            //        player.addSkill('tianxuan3');
+            //        player.insertPhase();
             //    }
             //},
-            tianxuan: {
-                trigger: { player: 'phaseUseAfter' },
-                popup: false,
-                audio: false,
-                priority: -50,
-                filter: function (event, player) {
-                    if (player.storage.tianxuan)
-                        return false;
-                    return player.countCards('h', { color: 'black' }) > 0
-                },
-                content: function () {
-                    'step 0'
-                    player.chooseToDiscard('h', { color: 'black' })
-                    'step 1'
-                    player.logSkill('tianxuan', player)
-                    player.markSkillCharacter('tianxuan', player, '天选', '进行一个额外回合');
-                    player.storage.tianxuan = true;
-                    player.addSkill('tianxuan3');
-                    player.insertPhase();
-                }
-            },
-            tianxuan3: {
-                trigger: { player: ['phaseAfter', 'phaseCancelled'] },
-                frequent: true,
-                audio: false,
-                filter: function (event, player) {
-                    return player.storage.tianxuan;
-                },
-                content: function () {
-                    console.log(player.storage.tianxuan);
-                    player.storage.tianxuan = false;
-                    console.log("移除放权标记")
-                    player.unmarkSkill('tianxuan');
-                    player.removeSkill('tianxuan3');
-                }
-            },
+            //tianxuan3: {
+            //    trigger: { player: ['phaseAfter', 'phaseCancelled'] },
+            //    frequent: true,
+            //    audio: false,
+            //    filter: function (event, player) {
+            //        return player.storage.tianxuan;
+            //    },
+            //    content: function () {
+            //        //console.log(player.storage.tianxuan);
+            //        player.storage.tianxuan = false;
+            //        //console.log("移除放权标记")
+            //        player.unmarkSkill('tianxuan');
+            //        player.removeSkill('tianxuan3');
+            //    }
+            //},
             //当你需要使用或打出【闪】时，你可以选择一项：1，令当前回合角色摸一张牌；2，令当前回合角色弃置你的一张手或装备牌。若如此做，视为你使用或打出了一张【闪】
             yuanqi: {
                 audio: 2,
@@ -6447,6 +6465,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 intro: {
                     content: "cards",
                 },
+                mark: true,
+                marktext: '功',
                 group: "liangong_1",
                 subSkill: {
                     "1": {
@@ -6728,7 +6748,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             yuyan: '预言',
             yuyan_info: '回合外每失去一张牌，你选择一个颜色并进行一次判定，若结果相同，你获得该判定牌。',
             mowang: '魔王',
-            mowang_info: '你每受到一点伤害，你对伤害来源造成X点伤害（X为已损失体力值）。',
+            mowang_info: '你每受到一点伤害，你对伤害来源造成X点伤害，其可选择弃置手牌来降低伤害，每弃置一张降低一点（X为已损失体力值）。',
             ziqiang: '自强',
             ziqiang_info: '主公技，觉醒技, 准备阶段，若你的体力为全场最低（或之一），你增加一点体力上限并回复1点体力，获得技能【魔王】',
             jingwu: '精武',
@@ -6927,8 +6947,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             haibao_info: '锁定技：你的♥均视为♠；你的♦︎均视为♣',
             tiequan: '铁拳',
             tiequan_info: '锁定技：你的【杀】无视防具且伤害+1，使用【杀】指定目标或成为【杀】的目标后，摸一张牌。',
+            //tianxuan: '天选',
+            //tianxuan_info: '出牌阶段限一次：弃置一张黑色手牌，获得一个额外的回合。',
             tianxuan: '天选',
-            tianxuan_info: '出牌阶段限一次：弃置一张黑色手牌，获得一个额外的回合。',
+            tianxuan_info: '出牌阶段你可以将两张同花色手牌当【挟天子以令诸侯】使用',
             yuanqi: '元气',
             yuanqi_info: '当你需要使用或打出【闪】时，你可以选择一项：1，令当前回合角色摸一张牌；2，令当前回合角色弃置你的一张手牌或装备牌。若如此做，视为你使用或打出了一张【闪】',
             taizi: '太子',

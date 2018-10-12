@@ -1,4 +1,4 @@
-﻿////48国战模式武将扩展包，适用于48专属模式
+﻿//48国战模式武将扩展包，适用于48专属模式
 'use strict';
 game.import('mode', function (lib, game, ui, get, ai, _status) {
     return {
@@ -122,6 +122,9 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             }
             "step 2"
             if (ui.coin) {
+                game.broadcast(function (cardtag) {
+                    _status.cardtag = cardtag;
+                }, _status.cardtag);
                 _status.coinCoeff = get.coinCoeff([game.me.name1, game.me.name2]);
             }
             var player;
@@ -262,7 +265,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 SNH48Glizhao: ['female', 'X', 4, ['mitao', 'taobao'], ['zhu']],
                 SNH48Gpanyingqi: ['female', 'X', 4, ['liangong', 'tisheng']],
                 SNH48Gqijing: ['female', 'X', 4, ['lianer', 'jingjing']],
-                SNH48Gsongxinran: ['female', 'X', 4, ['guoer','xiaohua']],
+                SNH48Gsongxinran: ['female', 'X', 4, ['guoer', 'xiaohua']],
                 SNH48Gsunxinwen: ['female', 'X', 4, ['wushuang', 'mashu']],
                 SNH48Gwangjialing: ['female', 'X', 4, ['jiujiu']],
                 SNH48Gwangshu: ['female', 'X', 4, ['chemistry', 'neighbor']],
@@ -426,8 +429,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     H: [],
                     X: [],
                     guan: []
-                };
-                for (var i = 0; i < choice.length; i++) {
+                }; for (var i = 0; i < choice.length; i++) {
                     var group = lib.character[choice[i]][1];
                     if (map[group]) {
                         map[group].push(choice[i]);
@@ -532,7 +534,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     else {
                         data[identity][1]++;
                     }
-                    var list = ['S', 'N', 'H', 'X', 'guan'];
+                    var list = ['wei', 'shu', 'wu', 'qun', 'ye'];
                     var str = '';
                     for (var i = 0; i < list.length; i++) {
                         if (data[list[i]]) {
@@ -1165,20 +1167,22 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
         },
         ui: {
             click: {
-                // identity:function(){
-                // 	if(this.touched) {this.touched=false;return;}
-                // 	_status.clicked=true;
-                // 	if(this.parentNode.isUnseen()&&this.parentNode!=game.me){
-                // 		switch(this.firstChild.innerHTML){
-                // 			case '魏':this.firstChild.innerHTML='蜀';this.dataset.color='shu';break;
-                // 			case '蜀':this.firstChild.innerHTML='吴';this.dataset.color='wu';break;
-                // 			case '吴':this.firstChild.innerHTML='群';this.dataset.color='qun';break;
-                // 			case '群':this.firstChild.innerHTML='野';this.dataset.color='guan';break;
-                // 			case '野':this.firstChild.innerHTML='猜';this.dataset.color='unknown';break;
-                // 			default:this.firstChild.innerHTML='魏';this.dataset.color='wei';break;
-                // 		}
-                // 	}
-                // }
+                identity: function () {
+                    if (this.touched) {
+                        this.touched = false; return;
+                    }
+                    _status.clicked = true;
+                    if (this.parentNode.isUnseen() && this.parentNode != game.me) {
+                        switch (this.firstChild.innerHTML) {
+                            case 'S': this.firstChild.innerHTML = 'S'; this.dataset.color = 'water'; break;
+                            case 'N': this.firstChild.innerHTML = 'N'; this.dataset.color = 'thunder'; break;
+                            case 'H': this.firstChild.innerHTML = 'H'; this.dataset.color = 'fire'; break;
+                            case 'X': this.firstChild.innerHTML = 'X'; this.dataset.color = 'nature'; break;
+                            case 'guan': this.firstChild.innerHTML = 'guan'; this.dataset.color = 'metal'; break;
+                            default: this.firstChild.innerHTML = '魏'; this.dataset.color = 'wei'; break;
+                        }
+                    }
+                }
             }
         },
         translate: {

@@ -3886,6 +3886,302 @@
             },
         },
         mode: {
+            SNH48G: {
+                name: '女团大战',
+                connect: {
+                    update: function (config, map) {
+                        if (config.connect_onlyguozhan) {
+                            map.connect_junzhu.show();
+                        }
+                        else {
+                            map.connect_junzhu.hide();
+                        }
+                    },
+                    connect_player_number: {
+                        name: '游戏人数',
+                        init: '8',
+                        item: {
+                            '3': '三人',
+                            '4': '四人',
+                            '5': '五人',
+                            '6': '六人',
+                            '7': '七人',
+                            '8': '八人'
+                        },
+                        frequent: true,
+                        restart: true,
+                    },
+                    connect_initshow_draw: {
+                        name: '首亮摸牌',
+                        item: {
+                            '0': '关闭',
+                            '1': '一张',
+                            '2': '两张',
+                            '3': '三张',
+                        },
+                        init: '2',
+                        frequent: true,
+                        intro: '第一个明置身份牌的角色可获得摸牌奖励'
+                    },
+                    connect_zhulian: {
+                        name: '珠联璧合',
+                        init: true,
+                        // frequent:true,
+                        intro: '主将和副将都明置后，若为特定组合，可摸两张牌或回复一点体力'
+                    },
+                    connect_guozhanpile: {
+                        name: '使用国战牌堆',
+                        init: true,
+                        frequent: true,
+                        restart: true,
+                    },
+                    connect_onlyguozhan: {
+                        name: '使用国战武将',
+                        init: true,
+                        frequent: true,
+                        restart: true,
+                        intro: '开启武将技能将替换为国战版本并禁用非国战武将'
+                    },
+                    connect_junzhu: {
+                        name: '替换君主',
+                        init: true,
+                        // frequent:true,
+                        restart: true,
+                        intro: '开启后将使用国战君主替换原武将牌'
+                    },
+                    connect_ban_weak: {
+                        name: '屏蔽弱将',
+                        init: false,
+                        restart: true,
+                    },
+                    connect_ban_strong: {
+                        name: '屏蔽强将',
+                        init: false,
+                        restart: true,
+                    },
+                },
+                config: {
+                    update: function (config, map) {
+                        if (config.onlyguozhan) {
+                            map.junzhu.show();
+                        }
+                        else {
+                            map.junzhu.hide();
+                        }
+                    },
+                    guozhan_mode: {
+                        name: '游戏模式',
+                        init: 'mingjiang',
+                        item: {
+                            normal: '标准',
+                            mingjiang: '明将'
+                        },
+                        frequent: true,
+                    },
+                    player_number: {
+                        name: '游戏人数',
+                        init: '8',
+                        item: {
+                            '3': '三人',
+                            '4': '四人',
+                            '5': '五人',
+                            '6': '六人',
+                            '7': '七人',
+                            '8': '八人'
+                        },
+                        frequent: true,
+                        restart: true,
+                    },
+                    initshow_draw: {
+                        name: '首亮摸牌',
+                        item: {
+                            '0': '关闭',
+                            '1': '一张',
+                            '2': '两张',
+                            '3': '三张',
+                        },
+                        init: '2',
+                        frequent: true,
+                        intro: '第一个明置身份牌的角色可获得摸牌奖励'
+                    },
+                    zhulian: {
+                        name: '珠联璧合',
+                        init: true,
+                        // frequent:true,
+                        intro: '主将和副将都明置后，若为特定组合，可摸两张牌或回复一点体力'
+                    },
+                    guozhanpile: {
+                        name: '使用国战牌堆',
+                        init: true,
+                        frequent: true,
+                        restart: true,
+                    },
+                    onlyguozhan: {
+                        name: '使用国战武将',
+                        init: true,
+                        frequent: true,
+                        restart: true,
+                        intro: '开启武将技能将替换为国战版本并禁用非国战武将'
+                    },
+                    junzhu: {
+                        name: '替换君主',
+                        init: true,
+                        // frequent:true,
+                        restart: true,
+                        intro: '开启后将使用国战君主替换原武将牌'
+                    },
+                    double_hp: {
+                        name: '双将体力上限',
+                        init: 'pingjun',
+                        item: {
+                            hejiansan: '和减三',
+                            pingjun: '平均值',
+                            zuidazhi: '最大值',
+                            zuixiaozhi: '最小值',
+                            zonghe: '相加',
+                        },
+                        restart: true,
+                    },
+                    ban_weak: {
+                        name: '屏蔽弱将',
+                        init: true,
+                        restart: true,
+                    },
+                    ban_strong: {
+                        name: '屏蔽强将',
+                        init: false,
+                        restart: true,
+                    },
+                    free_choose: {
+                        name: '自由选将',
+                        init: true,
+                        onclick: function (bool) {
+                            game.saveConfig('free_choose', bool, this._link.config.mode);
+                            if (!_status.event.getParent().showConfig && !_status.event.showConfig) return;
+                            if (!ui.cheat2 && get.config('free_choose')) ui.create.cheat2();
+                            else if (ui.cheat2 && !get.config('free_choose')) {
+                                ui.cheat2.close();
+                                delete ui.cheat2;
+                            }
+                        }
+                    },
+                    onlyguozhanexpand: {
+                        name: '默认展开自由选将',
+                        init: false,
+                        restart: true,
+                        intro: '开启后自由选将对话框将默认显示全部武将'
+                    },
+                    change_identity: {
+                        name: '自由选择座位',
+                        init: true,
+                        onclick: function (bool) {
+                            game.saveConfig('change_identity', bool, this._link.config.mode);
+                            if (!_status.event.getParent().showConfig && !_status.event.showConfig) return;
+                            var dialog;
+                            if (ui.cheat2 && ui.cheat2.backup) dialog = ui.cheat2.backup;
+                            else dialog = _status.event.dialog;
+                            if (!_status.brawl || !_status.brawl.noAddSetting) {
+                                if (!dialog.querySelector('table') && get.config('change_identity')) _status.event.getParent().addSetting(dialog);
+                                else _status.event.getParent().removeSetting(dialog);
+                            }
+                            ui.update();
+                        }
+                    },
+                    change_choice: {
+                        name: '开启换将卡',
+                        init: true,
+                        onclick: function (bool) {
+                            game.saveConfig('change_choice', bool, this._link.config.mode);
+                            if (!_status.event.getParent().showConfig && !_status.event.showConfig) return;
+                            if (!ui.cheat && get.config('change_choice')) ui.create.cheat();
+                            else if (ui.cheat && !get.config('change_choice')) {
+                                ui.cheat.close();
+                                delete ui.cheat;
+                            }
+                        }
+                    },
+                    change_card: {
+                        name: '开启手气卡',
+                        init: 'disabled',
+                        item: {
+                            disabled: '禁用',
+                            once: '一次',
+                            twice: '两次',
+                            unlimited: '无限',
+                        }
+                    },
+                    continue_game: {
+                        name: '显示再战',
+                        init: true,
+                        intro: '游戏结束后可选择用相同的武将再进行一局游戏',
+                        onclick: function (bool) {
+                            game.saveConfig('continue_game', bool, this._link.config.mode);
+                            if (get.config('continue_game')) {
+                                if (!ui.continue_game && _status.over && !_status.brawl) {
+                                    ui.continue_game = ui.create.control('再战', game.reloadCurrent);
+                                }
+                            }
+                            else if (ui.continue_game) {
+                                ui.continue_game.close();
+                                delete ui.continue_game;
+                            }
+                        }
+                    },
+                    dierestart: {
+                        name: '死亡后显示重来',
+                        init: true,
+                        onclick: function (bool) {
+                            game.saveConfig('dierestart', bool, this._link.config.mode);
+                            if (get.config('dierestart')) {
+                                if (!ui.restart && game.me.isDead() && !_status.connectMode) {
+                                    ui.restart = ui.create.control('restart', game.reload);
+                                }
+                            }
+                            else if (ui.restart) {
+                                ui.restart.close();
+                                delete ui.restart;
+                            }
+                        }
+                    },
+                    revive: {
+                        name: '死亡后显示复活',
+                        init: false,
+                        onclick: function (bool) {
+                            game.saveConfig('revive', bool, this._link.config.mode);
+                            if (get.config('revive')) {
+                                if (!ui.revive && game.me.isDead()) {
+                                    ui.revive = ui.create.control('revive', ui.click.dierevive);
+                                }
+                            }
+                            else if (ui.revive) {
+                                ui.revive.close();
+                                delete ui.revive;
+                            }
+                        }
+                    },
+                    difficulty: {
+                        name: 'AI对人类态度',
+                        init: 'normal',
+                        item: {
+                            easy: '友好',
+                            normal: '一般',
+                            hard: '仇视',
+                        }
+                    },
+                    choice_num: {
+                        name: '候选武将数',
+                        init: '12',
+                        restart: true,
+                        item: {
+                            '8': '8',
+                            '9': '9',
+                            '10': '10',
+                            '11': '11',
+                            '12': '12',
+                        }
+                    },
+                }
+            },
             identity: {
                 name: '身份',
                 connect: {
@@ -5917,7 +6213,7 @@
                         var mode = get.mode();
                         if (type == 'character') {
                             if (lib.characterPack['mode_' + mode] && lib.characterPack['mode_' + mode][name]) {
-                                if (mode == 'guozhan') {
+                                if (get.is.modeInGuozhan(mode)) {
                                     if (name.indexOf('gz_shibing') == 0) {
                                         name = name.slice(3, 11);
                                     }
@@ -9017,6 +9313,13 @@
             fire: "火",
             thunder: "雷",
             poison: "毒",
+            S: 'S',
+            N: 'N',
+            H: 'H',
+            X: 'X',
+            ye: '野',
+            guan: '官',
+            FT: 'Ft',
             wei: '魏',
             shu: '蜀',
             wu: '吴',
@@ -9060,6 +9363,7 @@
             eight: '八',
             nine: '九',
             ten: '十',
+            'SNH48G': "SNH48",
             _chongzhu: '重铸',
             _lianhuan: '连环',
             _lianhuan2: '连环',
@@ -12137,7 +12441,7 @@
                     if (event.animate != false) {
                         if ((card.name == 'wuxie' || card.name == 'youdishenru') && event.getParent().source) {
                             var lining = event.getParent().sourcex || event.getParent().source2 || event.getParent().source;
-                            if (get.mode() == 'guozhan' && card.hasTag && card.hasTag('guo')) {
+                            if (get.is.guozhanMode() && card.hasTag && card.hasTag('guo')) {
                                 if (!Array.isArray(lining)) {
                                     lining = [lining];
                                 }
@@ -18248,46 +18552,60 @@
                     var player = this;
                     var targets;
                     var mode = get.mode();
-                    if (mode == 'identity') {
-                        var num = get.population('fan');
-                        switch (player.identity) {
-                            case 'zhu': case 'zhong': case 'mingzhong': targets = game.filterPlayer(function (target) {
-                                if (func && !func(target)) return false;
-                                if (num >= 3) return target.identity == 'fan';
-                                return target.identity == 'nei' || target.identity == 'fan';
-                            }); break;
-                            case 'nei': targets = game.filterPlayer(function (target) {
-                                if (func && !func(target)) return false;
-                                if (num >= 3) return target.identity == 'fan';
-                                if (game.players.length == 2) return target != player;
-                                return target.identity == 'zhong' || target.identity == 'mingzhong' || target.identity == 'fan';
-                            }); break;
-                            case 'fan': targets = game.filterPlayer(function (target) {
-                                if (func && !func(target)) return false;
-                                return target.identity != 'fan';
-                            }); break;
-                        }
-                    }
-                    else if (mode == 'guozhan') {
-                        if (player.identity == 'ye') {
+                    switch (mode) {
+                        case 'identity':
+                            var num = get.population('fan');
+                            switch (player.identity) {
+                                case 'zhu': case 'zhong': case 'mingzhong': targets = game.filterPlayer(function (target) {
+                                    if (func && !func(target)) return false;
+                                    if (num >= 3) return target.identity == 'fan';
+                                    return target.identity == 'nei' || target.identity == 'fan';
+                                }); break;
+                                case 'nei': targets = game.filterPlayer(function (target) {
+                                    if (func && !func(target)) return false;
+                                    if (num >= 3) return target.identity == 'fan';
+                                    if (game.players.length == 2) return target != player;
+                                    return target.identity == 'zhong' || target.identity == 'mingzhong' || target.identity == 'fan';
+                                }); break;
+                                case 'fan': targets = game.filterPlayer(function (target) {
+                                    if (func && !func(target)) return false;
+                                    return target.identity != 'fan';
+                                }); break;
+                            }
+                            break;
+                        case 'guozhan':
+                            if (player.identity == 'ye') {
+                                targets = game.filterPlayer(function (target) {
+                                    if (func && !func(target)) return false;
+                                    return true;
+                                });
+                            }
+                            else {
+                                var group = lib.character[player.name1][1];
+                                targets = game.filterPlayer(function (target) {
+                                    if (func && !func(target)) return false;
+                                    return target.identity == 'ye' || lib.character[target.name1][1] != group;
+                                });
+                            }
+                            break;
+                        case 'SNH48G':
+                            if (player.identity == 'guan') {
+                                targets = [];
+                            }
+                            else {
+                                var group = lib.character[player.name1][1];
+                                targets = game.filterPlayer(function (target) {
+                                    if (func && !func(target)) return false;
+                                    return target.identity != 'guan' && lib.character[target.name1][1] == group;
+                                });
+                            }
+                            break;
+                        default:
                             targets = game.filterPlayer(function (target) {
                                 if (func && !func(target)) return false;
-                                return true;
+                                return target.side != player.side;
                             });
-                        }
-                        else {
-                            var group = lib.character[player.name1][1];
-                            targets = game.filterPlayer(function (target) {
-                                if (func && !func(target)) return false;
-                                return target.identity == 'ye' || lib.character[target.name1][1] != group;
-                            });
-                        }
-                    }
-                    else {
-                        targets = game.filterPlayer(function (target) {
-                            if (func && !func(target)) return false;
-                            return target.side != player.side;
-                        });
+                            break;
                     }
                     targets.remove(player);
                     return targets;
@@ -18314,8 +18632,8 @@
                             }); break;
                         }
                     }
-                    else if (mode == 'guozhan') {
-                        if (player.identity == 'ye') {
+                    else if (get.is.modeInGuozhan(mode)) {
+                        if (player.identity == 'ye' || player.identity == 'guan') {
                             targets = [];
                         }
                         else {
@@ -18344,7 +18662,7 @@
                     return !this.isFriendOf.apply(this, arguments);
                 },
                 isFriendOf: function (player) {
-                    if (get.mode() == 'guozhan') {
+                    if (get.is.guozhanMode()) {
                         if (this == player) return true;
                         if (this.identity == 'unknown' || this.identity == 'ye') return false;
                         if (player.identity == 'unknown' || player.identity == 'ye') return false;
@@ -18689,7 +19007,7 @@
                     if (typeof num != 'number') {
                         num = 0;
                     }
-                    if (mode == 'identity' || mode == 'guozhan') {
+                    if (mode == 'identity' || get.is.modeInGuozhan(mode)) {
                         for (var i = 0; i < game.players.length; i++) {
                             if (game.players[i].ai.shown == 0 && game.players[i] != this) {
                                 num--;
@@ -18703,7 +19021,7 @@
                 },
                 isUnknown: function (player) {
                     var mode = get.mode();
-                    if (mode == 'identity' || mode == 'guozhan') {
+                    if (mode == 'identity' || get.is.modeInGuozhan(mode)) {
                         if (this.ai.shown == 0 && this != player) {
                             return true;
                         }
@@ -21524,7 +21842,7 @@
                 if (_status.connectMode) {
                     if (lib.configOL.banned.contains(i)) return true;
                     var double_character = false;
-                    if (lib.configOL.mode == 'guozhan') {
+                    if (get.is.modeInGuozhan(lib.configOL.mode)) {
                         double_character = true;
                     }
                     else if (lib.configOL.double_character && (lib.configOL.mode == 'identity' || lib.configOL.mode == 'stone')) {
@@ -21550,7 +21868,7 @@
                 else {
                     if (lib.config.banned.contains(i)) return true;
                     var double_character = false;
-                    if (get.mode() == 'guozhan') {
+                    if (get.is.guozhanMode()) {
                         double_character = true;
                     }
                     else if (get.config('double_character') && (lib.config.mode == 'identity' || lib.config.mode == 'stone')) {
@@ -21983,7 +22301,7 @@
                                 }
                             }
                             var cfg = player.storage.dualside;
-                            if (get.mode() == 'guozhan') {
+                            if (get.is.guozhanMode()) {
                                 if (player.name1 == cfg[0]) {
                                     player.showCharacter(0);
                                 }
@@ -23183,7 +23501,7 @@
                                 else {
                                     player.setIdentity('cai');
                                 }
-                                if (!lib.configOL.observe_handcard && (lib.configOL.mode == 'identity' || lib.configOL.mode == 'guozhan')) {
+                                if (!lib.configOL.observe_handcard && (lib.configOL.mode == 'identity' || get.is.modeInGuozhan(lib.configOL.mode))) {
                                     if (observe && !player.identityShown) {
                                         player.setIdentity('cai');
                                         player.forceShown = false;
@@ -23210,16 +23528,16 @@
                         next.setContent(lib.init.startOnline);
                         if (observe) {
                             next.custom.replace.target = function (player) {
-                                if (!lib.configOL.observe_handcard && lib.configOL.mode == 'guozhan') {
+                                if (!lib.configOL.observe_handcard && get.is.modeInGuozhan(lib.configOL.mode)) {
                                     return;
                                 }
                                 if (player.isAlive()) {
-                                    if (!game.me.identityShown && lib.configOL.mode == 'guozhan') {
+                                    if (!game.me.identityShown && get.is.modeInGuozhan(lib.configOL.mode)) {
                                         game.me.node.identity.firstChild.innerHTML = '猜';
                                         game.me.node.identity.dataset.color = 'unknown';
                                     }
                                     game.swapPlayer(player);
-                                    if (!game.me.identityShown && lib.configOL.mode == 'guozhan') {
+                                    if (!game.me.identityShown && get.is.modeInGuozhan(lib.configOL.mode)) {
                                         game.me.node.identity.firstChild.innerHTML = '';
                                     }
                                 }
@@ -23367,7 +23685,7 @@
             }
         },
         suit: ['club', 'spade', 'diamond', 'heart'],
-        group: ['wei', 'shu', 'wu', 'qun', 'shen'],
+        group: ['wei','shu','wu','qun','shen','S','N','H','X','guan'],
         nature: ['fire', 'thunder', 'poison'],
         linked: ['fire', 'thunder'],
     };
@@ -24552,7 +24870,7 @@
                         game.players[i].node.identity.dataset.color = players[i].color;
                         game.players[i].node.action.innerHTML = '行动';
                     }
-                    else if (lib.config.mode == 'guozhan') {
+                    else if (get.is.modeInGuozhan(lib.config.mode)) {
                         game.players[i].name = players[i].name;
                         game.players[i].name1 = players[i].name1;
                         game.players[i].name2 = players[i].name2;
@@ -27255,7 +27573,7 @@
                 };
                 var modecharacters = lib.characterPack['mode_' + get.mode()];
                 if (modecharacters) {
-                    if (get.mode() == 'guozhan') {
+                    if (get.is.guozhanMode()) {
                         if (modecharacters[newvid.name1]) {
                             if (newvid.name1.indexOf('gz_shibing') == 0) {
                                 newvid.name1 = newvid.name1.slice(3, 11);
@@ -27834,7 +28152,7 @@
                 }
                 else {
                     var skills2;
-                    if (get.mode() == 'guozhan' && player.hasSkillTag('nomingzhi', false, null, true)) {
+                    if (get.is.guozhanMode() && player.hasSkillTag('nomingzhi', false, null, true)) {
                         skills2 = player.getSkills(false, true, false);
                     }
                     else {
@@ -29523,7 +29841,7 @@
                     else if (!player.isUnseen(1)) {
                         avatar = player.node.avatar2.cloneNode();
                     }
-                    else if (get.mode() == 'guozhan' && player.node && player.node.name_seat) {
+                    else if (get.is.guozhanMode() && player.node && player.node.name_seat) {
                         avatar = ui.create.div('.avatar.cardbg');
                         avatar.innerHTML = player.node.name_seat.innerHTML[0];
                     }
@@ -29568,7 +29886,7 @@
                 else if (!player.isUnseen(1)) {
                     avatar = player.node.avatar2.cloneNode();
                 }
-                else if (get.mode() == 'guozhan' && player.node && player.node.name_seat) {
+                else if (get.is.guozhanMode() && player.node && player.node.name_seat) {
                     avatar = ui.create.div('.avatar.cardbg');
                     avatar.innerHTML = player.node.name_seat.innerHTML[0];
                 }
@@ -29590,7 +29908,7 @@
                         else if (!player.isUnseen(1)) {
                             avatar2 = target.node.avatar2.cloneNode();
                         }
-                        else if (get.mode() == 'guozhan' && target.node && target.node.name_seat) {
+                        else if (get.is.guozhanMode() && target.node && target.node.name_seat) {
                             avatar2 = ui.create.div('.avatar.cardbg');
                             avatar2.innerHTML = target.node.name_seat.innerHTML[0];
                         }
@@ -36761,7 +37079,7 @@
                                 row1.hide();
                                 row2.hide();
                             }
-                            if (lib.config.mode == 'identity' || lib.config.mode == 'guozhan') {
+                            if (lib.config.mode == 'identity' || get.is.modeInGuozhan(lib.config.mode)) {
                                 if (!game.phaseNumber) {
                                     nodereplace.classList.add('unselectable');
                                 }
@@ -40117,8 +40435,11 @@
                     }
                 }
                 else {
-                    if (get.mode() == 'guozhan') {
-                        list = { wei: '魏', shu: '蜀', wu: '吴', qun: '群' };
+                    if (get.is.guozhanMode()) {
+                        if (get.mode() == 'SNH48G')
+                            list = { S: 'S', N: 'N', H: 'H', X: 'X', guan: '官' }
+                        else
+                            list = { wei: '魏', shu: '蜀', wu: '吴', qun: '群' };
                     }
                     var list2 = get.copy(list);
                     if (game.getIdentityList2) {
@@ -40126,7 +40447,7 @@
                     }
                     var rect = this.parentNode.getBoundingClientRect();
                     this._customintro = function (uiintro) {
-                        if (get.mode() == 'guozhan') {
+                        if (get.is.guozhanMode()) {
                             uiintro.clickintro = true;
                         }
                         else {
@@ -40151,7 +40472,7 @@
                                 node.firstChild.style.fontSize = '24px';
                                 node.firstChild.style.lineHeight = '24px';
                             }
-                            if (get.mode() == 'guozhan') {
+                            if (get.is.guozhanMode()) {
                                 if (source._guozhanguess) {
                                     if (!source._guozhanguess.contains(i)) {
                                         node.classList.add('transparent');
@@ -43352,6 +43673,16 @@
     };
     var get = {
         is: {
+            modeInGuozhan: function (mode) {
+                return mode == 'guozhan' || mode == 'SNH48G';
+            },
+            guozhanMode: function () {
+                return get.is.modeInGuozhan(get.mode());
+            },
+            SNH48G: function (player) {
+                var SNH48G = ['S', 'N', 'H', 'X', 'guan', 'fen'];
+                return SNH48G.indexOf(player.group) > -1;
+            },
             converted: function (event) {
                 return !(event.cards && event.card && event.cards.length == 1 && event.cards[0] == event.card);
             },
@@ -43427,7 +43758,7 @@
                 return select[0] == 1 && select[1] == 1;
             },
             jun: function (name) {
-                if (get.mode() == 'guozhan') {
+                if (get.is.guozhanMode()) {
                     if (name && typeof name == 'object') {
                         if (name.isUnseen && name.isUnseen(0)) return false;
                         name = name.name1;
@@ -44106,7 +44437,7 @@
                     }
                 }
             }
-            else if (mode == 'guozhan') {
+            else if (get.is.modeInGuozhan(mode)) {
                 for (var i = 0; i < game.players.length; i++) {
                     if (get.is.jun(game.players[i]) && !game.players[i].isUnseen()) {
                         if (skill && !game.players[i].hasSkill(skill)) continue;
@@ -46419,7 +46750,7 @@
             }
         },
         groups: function () {
-            return ['wei', 'shu', 'wu', 'qun'];
+            return get.mode() == 'SNH48' ? ['S','N','H','X','guan'] : ['wei', 'shu', 'wu', 'qun'];
         },
         types: function () {
             var types = [];

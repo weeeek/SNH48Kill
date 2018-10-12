@@ -762,7 +762,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					lib.card[cardname]=lib.card[cardname]||{
 						enable:true,
 						type:'character',
-						image:'character/'+name,
+						image:'character:'+name,
 						fullimage:true,
 						vanish:true,
 						skills:skills,
@@ -2582,15 +2582,11 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			},
 			longyi:{
 				mod:{
-					maxHandcard:function(player,num){
-						var hs=player.getCards('h');
-						for(var i=0;i<hs.length;i++){
-							if(get.color(hs[i])=='black'){
-								num++;
-							}
+					ignoredHandcard:function(card,player){
+						if(get.color(card)=='black'){
+							return true;
 						}
-						return num;
-					},
+					}
 				},
 			},
 			zhongji:{
@@ -5138,14 +5134,10 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			},
 			xiaorong:{
 				mod:{
-					maxHandcard:function(player,num){
-						var hs=player.getCards('h');
-						for(var i=0;i<hs.length;i++){
-							if(get.type(hs[i])=='equip'){
-								num++;
-							}
+					ignoredHandcard:function(card,player){
+						if(get.type(card)=='equip'){
+							return true;
 						}
-						return num;
 					},
 				},
 				trigger:{player:'phaseEnd'},
@@ -7372,7 +7364,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			huanfeng:{
 				skillAnimation:'epic',
 				animationColor:'thunder',
-				trigger:{player:'phaseBegin'},
+				trigger:{player:'phaseBeginStart'},
 				forced:true,
 				unique:true,
 				filter:function(event,player){
@@ -7400,7 +7392,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 						hs:get.cards(4)
 					});
 					player.callSubPlayer(player.storage.huanfeng_end);
-					game.createTrigger('phaseBegin','shengdun',player,trigger);
+					// game.createTrigger('phaseBegin','shengdun',player,trigger);
 				},
 				// group:'huanfeng_end',
 				subSkill:{
@@ -7413,7 +7405,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 							return player.storage.huanfeng_end;
 						},
 						content:function(){
-							
+
 							player.insertPhase();
 							delete player.storage.huanfeng_end;
 						}

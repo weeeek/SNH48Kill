@@ -448,6 +448,113 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					}
 				}
 			},
+			gwminxiang_old:{
+				group:['gwminxiang_count','gwminxiang_clear','gwminxiang_use'],
+				subSkill:{
+					count:{
+						trigger:{player:'phaseBegin'},
+						silent:true,
+						content:function(){
+							player.storage.gwminxiang=[];
+						}
+					},
+					clear:{
+						trigger:{player:'phaseAfter'},
+						silent:true,
+						content:function(){
+							delete player.storage.gwminxiang;
+						}
+					},
+					use:{
+						trigger:{player:'useCardAfter'},
+						silent:true,
+						filter:function(event,player){
+							if(_status.currentPhase!=player) return false;
+							var type=get.type(event.card);
+							if(type!='trick'&&type!='basic') return false;
+							if(get.info(event.card).multitarget) return false;
+							if(!player.storage.gwminxiang) return false;
+							return true;
+						},
+						content:function(){
+							player.storage.gwminxiang.add(trigger.card);
+						}
+					}
+				},
+				trigger:{player:'phaseEnd'},
+				direct:true,
+				filter:function(event,player){
+					if(player.storage.gwminxiang){
+						for(var i=0;i<player.storage.gwminxiang.length;i++){
+							var card=player.storage.gwminxiang[i];
+							if(game.countPlayer(function(current){
+								return current!=player&&lib.filter.targetEnabled3(card,player,current);
+							})>1){
+								return true;
+							}
+						}
+					}
+					return false;
+				},
+				content:function(){
+					'step 0'
+					var list=[];
+					for(var i=0;i<player.storage.gwminxiang.length;i++){
+						var card=player.storage.gwminxiang[i];
+						if(game.countPlayer(function(current){
+							return current!=player&&lib.filter.targetEnabled3(card,player,current);
+						})>1){
+							list.push(card);
+						}
+					}
+					var skip=['shunshou','huogong','shandianjian','jiu'];
+					player.chooseCardButton(get.prompt('gwminxiang'),list).set('ai',function(button){
+						if(skip.contains(button.link.name)) return 0;
+						var val=get.value(button.link);
+						if(get.tag(button.link,'damage')){
+							val+=3;
+						}
+						return val;
+					});
+					'step 1'
+					if(result.bool){
+						var card=result.links[0];
+						event.card=card;
+						player.chooseTarget('选择两个目标互相使用'+get.translation(event.card),2,function(cardx,player,target){
+							return target!=player&&lib.filter.targetEnabled3(card,player,target);
+						}).set('ai',function(target){
+							if(ui.selected.targets.length){
+								return get.effect(target,card,ui.selected.targets[0],player);
+							}
+							return get.effect(target,card,target,player);
+						}).set('targetprompt',['先出牌','后出牌']);
+					}
+					else{
+						event.finish();
+					}
+					'step 2'
+					if(result.bool){
+						player.$throw(event.card);
+						player.logSkill('gwminxiang',result.targets);
+						event.target1=result.targets[0];
+						event.target2=result.targets[1];
+						game.delay();
+					}
+					else{
+						event.finish();
+					}
+					'step 3'
+					event.target1.useCard(event.card,event.target2,'noai');
+					'step 4'
+					if(event.target1.isIn()&&event.target2.isIn()){
+						event.target2.useCard(event.card,event.target1,'noai');
+					}
+				},
+				ai:{
+					expose:0.4,
+					threaten:1.6
+				}
+			},
 			gwminxiang:{
 				enable:'phaseUse',
 				usable:1,
@@ -469,8 +576,9 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					return false;
 				},
 				check:function(card){
+					if(['shunshou','huogong','shandianjian','jiu','tianxianjiu'].contains(card.name)) return 0;
 					if(get.tag(card,'damage')){
-						return get.value(card)+3;
+						return get.value(card)+2;
 					}
 					return get.value(card);
 				},
@@ -487,34 +595,32 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				targetprompt:['先出牌','后出牌'],
 				selectTarget:2,
 				multitarget:true,
+				delay:0,
 				content:function(){
 					'step 0'
-					event.draw=0;
-					targets[0].useCard({name:cards[0].name},targets[1],'noai');
+					player.draw();
 					'step 1'
+					targets[0].useCard({name:cards[0].name},targets[1],'noai');
+					'step 2'
 					if(targets[0].isIn()&&targets[1].isIn()){
 						targets[1].useCard({name:cards[0].name},targets[0],'noai');
 					}
-					'step 2'
-					if(event.draw){
-						player.draw(event.draw);
-					}
 				},
-				group:'gwminxiang_draw',
+				// group:'gwminxiang_draw',
 				multiline:true,
-				subSkill:{
-					draw:{
-						trigger:{global:'damageAfter'},
-						silent:true,
-						filter:function(event,player){
-							var evt=event.getParent(3);
-							return evt.name=='gwminxiang'&&evt.player==player;
-						},
-						content:function(){
-							trigger.getParent(3).draw+=trigger.num;
-						}
-					}
-				},
+				// subSkill:{
+				// 	draw:{
+				// 		trigger:{global:'damageAfter'},
+				// 		silent:true,
+				// 		filter:function(event,player){
+				// 			var evt=event.getParent(3);
+				// 			return evt.name=='gwminxiang'&&evt.player==player;
+				// 		},
+				// 		content:function(){
+				// 			trigger.getParent(3).draw+=trigger.num;
+				// 		}
+				// 	}
+				// },
 				ai:{
 					order:8,
 					result:{
@@ -3344,7 +3450,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				fullborder:'gold',
 				vanish:true,
 				derivation:'gw_diandian',
-				image:'character/gw_yioufeisisp',
+				image:'character:gw_yioufeisisp',
 				enable:function(){
 					return game.countPlayer()>2;
 				},
@@ -3383,7 +3489,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				fullborder:'gold',
 				vanish:true,
 				derivation:'gw_diandian',
-				image:'character/gw_luoqi',
+				image:'character:gw_luoqi',
 				enable:true,
 				filterTarget:function(card,player,target){
 					return player.canUse('sha',target,false);
@@ -3426,7 +3532,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				fullborder:'gold',
 				vanish:true,
 				derivation:'gw_diandian',
-				image:'character/gw_jieluote',
+				image:'character:gw_jieluote',
 				enable:true,
 				filterTarget:true,
 				content:function(){
@@ -3480,7 +3586,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				fullborder:'gold',
 				vanish:true,
 				derivation:'gw_diandian',
-				image:'character/gw_yenaifa',
+				image:'character:gw_yenaifa',
 				enable:true,
 				notarget:true,
 				content:function(){
@@ -3513,7 +3619,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				fullborder:'gold',
 				vanish:true,
 				derivation:'gw_diandian',
-				image:'character/gw_telisi',
+				image:'character:gw_telisi',
 				enable:true,
 				notarget:true,
 				content:function(){
@@ -3548,7 +3654,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				fullborder:'gold',
 				vanish:true,
 				derivation:'gw_diandian',
-				image:'character/gw_hengsaite',
+				image:'character:gw_hengsaite',
 				enable:true,
 				notarget:true,
 				content:function(){
@@ -3588,7 +3694,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				fullborder:'gold',
 				vanish:true,
 				derivation:'gw_diandian',
-				image:'character/gw_fuertaisite',
+				image:'character:gw_fuertaisite',
 				enable:true,
 				filterTarget:true,
 				selectTarget:[1,2],
@@ -3623,7 +3729,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				fullborder:'gold',
 				vanish:true,
 				derivation:'gw_diandian',
-				image:'character/gw_laduoweide',
+				image:'character:gw_laduoweide',
 				enable:true,
 				filterTarget:true,
 				content:function(){
@@ -3655,7 +3761,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				fullborder:'gold',
 				vanish:true,
 				derivation:'gw_diandian',
-				image:'character/gw_enxier',
+				image:'character:gw_enxier',
 				enable:true,
 				filterTarget:function(card,player,target){
 					return Math.abs(target.countCards('h')-player.countCards('h'))<=1;
@@ -3687,7 +3793,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				fullborder:'gold',
 				vanish:true,
 				derivation:'gw_diandian',
-				image:'character/gw_fulisi',
+				image:'character:gw_fulisi',
 				enable:true,
 				filterTarget:function(card,player,target){
 					return target!=player&&target.countCards('h');
@@ -3740,7 +3846,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				fullborder:'gold',
 				vanish:true,
 				derivation:'gw_diandian',
-				image:'character/gw_kaerweite',
+				image:'character:gw_kaerweite',
 				enable:true,
 				filterTarget:function(card,player,target){
 					return target!=player&&target.countCards('h');
@@ -3775,7 +3881,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				fullborder:'gold',
 				vanish:true,
 				derivation:'gw_diandian',
-				image:'character/gw_bulanwang',
+				image:'character:gw_bulanwang',
 				enable:true,
 				notarget:true,
 				content:function(){
@@ -3815,7 +3921,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				fullborder:'gold',
 				vanish:true,
 				derivation:'gw_diandian',
-				image:'character/gw_kuite',
+				image:'character:gw_kuite',
 				enable:true,
 				filterTarget:function(card,player,target){
 					return target.countCards('h')>=player.countCards('h')&&player.canUse('juedou',target);
@@ -3849,7 +3955,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				fullborder:'gold',
 				vanish:true,
 				derivation:'gw_diandian',
-				image:'character/gw_haluo',
+				image:'character:gw_haluo',
 				enable:true,
 				filterTarget:function(card,player,target){
 					return target.isMinHp();
@@ -3880,7 +3986,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				fullborder:'gold',
 				vanish:true,
 				derivation:'gw_diandian',
-				image:'character/gw_dagong',
+				image:'character:gw_dagong',
 				enable:true,
 				content:function(){
 					target.addSkill('gw_ciguhanshuang');
@@ -3918,7 +4024,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				fullborder:'gold',
 				vanish:true,
 				derivation:'gw_diandian',
-				image:'character/gw_gaier',
+				image:'character:gw_gaier',
 				enable:true,
 				filterTarget:true,
 				content:function(){
@@ -3964,7 +4070,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				fullborder:'gold',
 				vanish:true,
 				derivation:'gw_diandian',
-				image:'character/gw_airuiting',
+				image:'character:gw_airuiting',
 				enable:true,
 				filterTarget:function(card,player,target){
 					return target!=player;
@@ -4008,7 +4114,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				fullborder:'gold',
 				vanish:true,
 				derivation:'gw_diandian',
-				image:'character/gw_aisinie',
+				image:'character:gw_aisinie',
 				enable:true,
 				notarget:true,
 				content:function(){
@@ -4046,7 +4152,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				fullborder:'gold',
 				vanish:true,
 				derivation:'gw_diandian',
-				image:'character/gw_falanxisika',
+				image:'character:gw_falanxisika',
 				enable:true,
 				notarget:true,
 				content:function(){
@@ -4089,7 +4195,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				fullborder:'gold',
 				vanish:true,
 				derivation:'gw_diandian',
-				image:'character/gw_huoge',
+				image:'character:gw_huoge',
 				enable:true,
 				notarget:true,
 				content:function(){
@@ -4305,7 +4411,8 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			gwhuanbi:'幻笔',
 			gwhuanbi_info:'出牌阶段限一次，你可以弃置一张牌，并创造一张冒险牌，然后随机选择一名有手牌的角色，被选中的角色可以交给你一张手牌并获得一张该牌的复制',
 			gwminxiang:'冥想',
-			gwminxiang_info:'出牌阶段限一次，你可以弃置一张基本牌或普通锦囊牌并选择两名角色，令目标分别视为对对方使用一张与弃置的牌同名的牌；每当有角色因此受到一点伤害，你在结算后摸一张牌',
+			gwminxiang_old_info:'结束阶段，你可以选择一张本回合使用过的基本牌或普通锦囊牌并选择两名其他角色，令目标分别视为对对方使用一张此牌的复制',
+			gwminxiang_info:'出牌阶段限一次，你可以弃置一张基本牌或普通锦囊牌并摸一张牌，然后选择其他两名角色，令目标分别视为对对方使用一张你弃置的牌的同名牌',
 			gwlangshi:'狼噬',
 			gwlangshi_info:'每当你造成一次伤害，你可以对一名体力值不小于受伤害角色的其他角色造一点伤害',
 			gwjingshi:'血契',

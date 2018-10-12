@@ -43,10 +43,13 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			zuoci:['male','qun',3,['huashen','xinsheng']],
 		},
 		perfectPair:{
+			jiaxu:['liqueguosi'],
 			yuanshao:['yanwen'],
 			menghuo:['zhurong'],
 			sp_zhugeliang:['pangtong'],
-			sunce:['zhouyu','taishici','daqiao']
+			sunce:['zhouyu','taishici','daqiao'],
+			zuoci:['yuji'],
+			xunyu:['xunyou'],
 		},
 		characterFilter:{
 			zuoci:function(mode){
@@ -700,7 +703,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				unique:true,
 				priority:-10,
 				derivation:'guanxing',
-				trigger:{player:'phaseBegin'},
+				trigger:{player:'phaseBeginStart'},
 				forced:true,
 				filter:function(event,player){
 					if(player.storage.zhiji) return false;
@@ -726,7 +729,6 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					if(player.hp>player.maxHp) player.hp=player.maxHp;
 					player.update();
 					player.addSkill('guanxing');
-					game.createTrigger('phaseBegin','guanxing',player,trigger);
 				}
 			},
 			xiangle:{
@@ -885,7 +887,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					else{
 						var next=player.chooseToDiscard(get.prompt('qiaobian'),'弃置一张手牌并跳过判定阶段');
 						next.set('ai',get.unuseful2);
-						next.set('logSkill','qiaobian');
+						next.set('logSkill','qiaobian1');
 					}
 					"step 1"
 					if(result.bool){
@@ -919,7 +921,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					player.chooseToDiscard(get.prompt('qiaobian'),'弃置一张手牌并跳过摸牌阶段，然后可以获得至多两名角色各一张手牌',lib.filter.cardDiscardable).set('ai',function(card){
 						if(!_status.event.check) return 0;
 						return 7-get.value(card);
-					}).set('check',check).set('logSkill','qiaobian');
+					}).set('check',check).set('logSkill','qiaobian2');
 					"step 1"
 					if(result.bool){
 						trigger.cancel();
@@ -982,7 +984,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					player.chooseToDiscard(get.prompt('qiaobian'),'弃置一张手牌并跳过出牌阶段，然后可以移动场上的一张牌',lib.filter.cardDiscardable).set('ai',function(card){
 						if(!_status.event.check) return 0;
 						return 7-get.value(card);
-					}).set('check',check).set('logSkill','qiaobian');
+					}).set('check',check).set('logSkill','qiaobian3');
 					"step 1"
 					if(result.bool){
 						trigger.cancel();
@@ -1006,7 +1008,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				content:function(){
 					"step 0"
 					var discard=player.countCards('h')>player.hp;
-					var next=player.chooseToDiscard(get.prompt('qiaobian'),'弃置一张手牌并跳过弃牌阶段');
+					var next=player.chooseToDiscard(get.prompt('qiaobian4'),'弃置一张手牌并跳过弃牌阶段');
 					next.logSkill='qiaobian';
 					next.ai=function(card){
 						if(discard){
@@ -1196,7 +1198,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				audio:2,
 				derivation:['reyingzi','yinghun'],
 				unique:true,
-				trigger:{player:'phaseBegin'},
+				trigger:{player:'phaseBeginStart'},
 				filter:function(event,player){
 					return player.hp==1&&!player.storage.hunzi;
 				},
@@ -1208,7 +1210,6 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					player.addSkill('yinghun');
 					player.awakenSkill('hunzi');
 					player.storage.hunzi=true;
-					game.createTrigger('phaseBegin','yinghun',player,trigger);
 				},
 				ai:{
 					threaten:function(player,target){
@@ -1341,11 +1342,11 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			},
 			guzheng:{
 				audio:2,
-				unique:true,
-				gainable:true,
+				// unique:true,
+				// gainable:true,
 				trigger:{global:'discardAfter'},
 				filter:function(event,player){
-					if(event.player!=player&&event.player.classList.contains('dead')==false&&
+					if(event.player!=player&&event.player.isIn()&&
 					event.cards&&event.cards.length&&event.getParent(2).name=='phaseDiscard'){
 						for(var i=0;i<event.cards.length;i++){
 							if(get.position(event.cards[i])=='d'){
@@ -1496,6 +1497,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				},
 				get:function(player,num){
 					if(typeof num!='number') num=1;
+					var list=[];
 					while(num--){
 						var name=player.storage.huashen.list.randomRemove();
 						var skills=lib.character[name][3].slice(0);
@@ -1508,9 +1510,20 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 						player.storage.huashen.owned[name]=skills;
 						// player.popup(name);
 						game.log(player,'获得了一个化身');
-						if(player.isUnderControl(true)){
-							player.flashAvatar('huashen',name);
+						list.push(name);
+					}
+					if(player.isUnderControl(true)){
+						var cards=[];
+						for(var i=0;i<list.length;i++){
+							var cardname='huashen_card_'+list[i];
+							lib.card[cardname]={
+								fullimage:true,
+								image:'character:'+list[i]
+							}
+							lib.translate[cardname]=lib.translate[list[i]];
+							cards.push(game.createCard(cardname,'',''));
 						}
+						player.$draw(cards);
 					}
 				},
 				group:['huashen1','huashen2'],
@@ -1605,15 +1618,18 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			},
 			huashen2:{
 				audio:2,
-				trigger:{player:['phaseBegin','phaseEnd','huashenStart']},
+				trigger:{player:['phaseBeginStart','phaseEnd','huashenStart']},
 				filter:function(event,player,name){
-					if(name=='phaseBegin'&&game.phaseNumber==1) return false;
+					if(name=='phaseBeginStart'&&game.phaseNumber==1) return false;
 					return true;
 				},
 				priority:50,
 				forced:true,
 				popup:false,
 				content:function(){
+					'step 0'
+					event.trigger('playercontrol');
+					'step 1'
 					var slist=player.storage.huashen.owned;
 					var list=[];
 					for(var i in slist){
@@ -1682,37 +1698,37 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 									}
 								}
 
-								if(event.triggername=='phaseBegin'){
-									(function(){
-										var skills=[link];
-										var list=[];
-										game.expandSkills(skills);
-										var triggerevent=event._trigger;
-										var name='phaseBegin';
-										for(i=0;i<skills.length;i++){
-											var trigger=get.info(skills[i]).trigger;
-											if(trigger){
-												var add=false;
-												if(player==triggerevent.player&&trigger.player){
-													if(typeof trigger.player=='string'){
-														if(trigger.player==name) add=true;
-													}
-													else if(trigger.player.contains(name)) add=true;
-												}
-												if(trigger.global){
-													if(typeof trigger.global=='string'){
-														if(trigger.global==name) add=true;
-													}
-													else if(trigger.global.contains(name)) add=true;
-												}
-												if(add&&player.isOut()==false) list.push(skills[i]);
-											}
-										}
-										for(var i=0;i<list.length;i++){
-											game.createTrigger('phaseBegin',list[i],player,triggerevent);
-										}
-									}());
-								}
+								// if(event.triggername=='phaseBegin'){
+								// 	(function(){
+								// 		var skills=[link];
+								// 		var list=[];
+								// 		game.expandSkills(skills);
+								// 		var triggerevent=event._trigger;
+								// 		var name='phaseBegin';
+								// 		for(i=0;i<skills.length;i++){
+								// 			var trigger=get.info(skills[i]).trigger;
+								// 			if(trigger){
+								// 				var add=false;
+								// 				if(player==triggerevent.player&&trigger.player){
+								// 					if(typeof trigger.player=='string'){
+								// 						if(trigger.player==name) add=true;
+								// 					}
+								// 					else if(trigger.player.contains(name)) add=true;
+								// 				}
+								// 				if(trigger.global){
+								// 					if(typeof trigger.global=='string'){
+								// 						if(trigger.global==name) add=true;
+								// 					}
+								// 					else if(trigger.global.contains(name)) add=true;
+								// 				}
+								// 				if(add&&player.isOut()==false) list.push(skills[i]);
+								// 			}
+								// 		}
+								// 		for(var i=0;i<list.length;i++){
+								// 			game.createTrigger('phaseBegin',list[i],player,triggerevent);
+								// 		}
+								// 	}());
+								// }
 							}
 						}
 						if(type!='ai'){
@@ -1969,7 +1985,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					"step 0"
 					player.chooseToCompare(trigger.player);
 					"step 1"
-					if(result.bool&&trigger.player.countCards('he')){
+					if(result.bool&&trigger.player.countGainableCards(player,'he')){
 						player.gainPlayerCard(trigger.player,true,'he');
 					}
 				}
@@ -2593,16 +2609,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				audio:2,
 				unique:true,
 				enable:'phaseUse',
-				filter:function(event,player){
-					return !player.storage.luanwu;
-				},
-				init:function(player){
-					player.storage.luanwu=false;
-				},
-				mark:true,
-				intro:{
-					content:'limited'
-				},
+				limited:true,
 				skillAnimation:'epic',
 				animationColor:'thunder',
 				filterTarget:function(card,player,target){
@@ -2613,8 +2620,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				multiline:true,
 				content:function(){
 					"step 0"
-					player.unmarkSkill('luanwu')
-					player.storage.luanwu=true;
+					player.awakenSkill('luanwu');
 					event.current=player.next;
 					"step 1"
 					event.current.animate('target');
@@ -3581,6 +3587,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				content:function(){
 					trigger.directHit=true;
 				},
+				locked:false,
 				mod:{
 					attackFrom:function(from,to,distance){
 						if(get.zhu(from,'shouyue')) return distance-1;
@@ -3707,7 +3714,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 						filterTarget:function(card,player,target){
 							return player!=target;
 						},
-						position:'he',
+						// position:'he',
 						ai1:function(card){
 							return 10-get.value(card);
 						},
@@ -4113,8 +4120,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				content:function(){
 					"step 0"
 					event.card=get.cards()[0];
-					if (player.storage.buqu == undefined)
-					    player.storage.buqu = [];
+					if(player.storage.buqu==undefined) player.storage.buqu=[];
 					player.storage.buqu.push(event.card);
 					player.syncStorage('buqu');
 					player.showCards(player.storage.buqu,'不屈')
@@ -4458,7 +4464,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			beige_info:'一名角色每受到【杀】造成的一次伤害，你可以弃一张牌，并令其进行一次判定，判定结果为：♥该角色回复1点体力；♦︎该角色摸两张牌；♣伤害来源弃两张牌；♠伤害来源将其武将牌翻面',
 			duanchang_info:'锁定技，杀死你的角色失去当前的所有技能直到游戏结束。',
 			// fushen_info:'回合开始前，你可以选择与任意一名角色交换控制权，该角色可选择在下一个回合开始前与你换回',
-			huashen_info:'所有人都展示武将牌后，你随机获得两张未加入游戏的武将牌，选一张置于你面前并声明该武将的一项技能，你拥有该技能且同时将性别和势力属性变成与该武将相同知道该化身被替换。在你的每个准备阶段和结束后，你可以替换化身牌，你须为新的化身重新声明一项技能（你不可声明锁定技、觉醒技或主公技）。',
+			huashen_info:'所有人都展示武将牌后，你随机获得两张未加入游戏的武将牌，选一张置于你面前并声明该武将的一项技能，你拥有该技能且同时将性别和势力属性变成与该武将相同知道该化身被替换。在你的每个准备阶段和结束后，你可以替换化身牌，你须为新的化身重新声明一项技能（你不可声明限定技、觉醒技或主公技）。',
 			xinsheng_info:'你每受到1点伤害，可获得一张新化身牌。',
 			jiangwei:'姜维',
 			liushan:'刘禅',
@@ -4520,7 +4526,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			roulin_info:'你对女性角色、女性角色对你使用【杀】时，都需连续使用两张【闪】才能抵消。',
 			benghuai_info:'结束阶段，若你的体力不是全场最少的(或之一)，你须减1点体力或体力上限。',
 			baonue_info:'主公技，其他群雄角色每造成一次伤害，可进行一次判定，若为♠，你回复1点体力。',
-			luanwu_info:'出牌阶段，可令除你外的所有角色依次对与其距离最近的另一名角色使用一张【杀】，无法如此做者失去1点体力。',
+			luanwu_info:'限定技，出牌阶段，可令除你外的所有角色依次对与其距离最近的另一名角色使用一张【杀】，无法如此做者失去1点体力。',
 			wansha_info:'在你的回合，除你以外，只有处于濒死状态的角色才能使用【桃】。',
 			weimu_info:'你不能成为♠或♣锦囊的目标。',
 

@@ -446,7 +446,11 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 				priority:6,
 				audio:true,
 				filter:function(event,player){
-					if(event.player.hasSkillTag('unequip',false,event.card)) return false;
+					if(event.player.hasSkillTag('unequip',false,{
+						name:event.card?event.card.name:null,
+						target:player,
+						card:event.card
+					})) return false;
 					if(event.card.name=='nanman') return true;
 					if(event.card.name=='wanjian') return true;
 					if(event.card.name=='sha'&&!event.card.nature) return true;
@@ -457,7 +461,11 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 				ai:{
 					effect:{
 						target:function(card,player,target,current){
-							if(player.hasSkillTag('unequip',false,card)) return;
+							if(player.hasSkillTag('unequip',false,{
+								name:card?card.name:null,
+								target:player,
+								card:card
+							})) return;
 							if(card.name=='nanman'||card.name=='wanjian') return 'zerotarget';
 							if(card.name=='sha'){
 								var equip1=player.getEquip(1);
@@ -496,20 +504,17 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 				audio:true,
 				filter:function(event,player){
 					if(event.num<=1) return false;
-					if(event.source&&event.source.hasSkillTag('unequip',false,event.card)) return false;
+					if(event.source&&event.source.hasSkillTag('unequip',false,{
+						name:event.card?event.card.name:null,
+						target:player,
+						card:event.card
+					})) return false;
 					return true;
 				},
 				priority:-10,
 				content:function(){
 					trigger.num=1;
-                },
-                ai: {
-                    effect: {
-                        target: function (card, player, target, current) {
-                            return 1;
-                        }
-                    }
-                }
+				}
 			},
 			zhuque_skill:{
 				trigger:{player:'useCardToBefore'},
@@ -625,7 +630,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 			["heart",13,"wuxie"],
 			["spade",13,"wuxie"],
 			["spade",10,"bingliang"],
-            ["club", 4, "bingliang"],
+			["club",4,"bingliang"],
 		],
 	}
 });
