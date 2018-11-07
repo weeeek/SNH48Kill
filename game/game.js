@@ -23685,7 +23685,7 @@
             }
         },
         suit: ['club', 'spade', 'diamond', 'heart'],
-        group: ['wei','shu','wu','qun','shen','S','N','H','X','guan'],
+        group: ['wei', 'shu', 'wu', 'qun', 'shen', 'S', 'N', 'H', 'X', 'guan'],
         nature: ['fire', 'thunder', 'poison'],
         linked: ['fire', 'thunder'],
     };
@@ -46750,7 +46750,7 @@
             }
         },
         groups: function () {
-            return get.mode() == 'SNH48' ? ['S','N','H','X','guan'] : ['wei', 'shu', 'wu', 'qun'];
+            return get.mode() == 'SNH48' ? ['S', 'N', 'H', 'X', 'guan'] : ['wei', 'shu', 'wu', 'qun'];
         },
         types: function () {
             var types = [];
