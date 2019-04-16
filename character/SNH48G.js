@@ -12,7 +12,6 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gdaimeng: ['female', 'S', 4, ['dandang', 'jianyi', 'lingjun'], ['zhu']],
             SNH48Gjiangyun: ['female', 'S', 3, ['jingyan', 'qichang', 'duomian']],
             SNH48Gkongxiaoyin: ['female', 'S', 4, ['shenhun', 'diandao', 'xinggan']],
-            SNH48Glvyi: ['female', 'S', 4, ['chengzhang']],
             SNH48Gliyuqi: ['female', 'S', 3, ['haomai', 'quanneng', 'chongzhen']],
             SNH48Gliuzengyan: ['female', 'S', 4, ['tongyin', 'ganbei', 'yonglie']],
             SNH48Gmohan: ['female', 'S', 3, ['shiyu', 'yuyan', 'ziqiang'], ['zhu']],
@@ -33,7 +32,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gzhangyuge: ['female', 'S', 3, ['guayan', 'xuanmu']],
             SNH48Gzhaohanqian: ['female', 'S', 4, ['kuaiyan', 'innocence']],
             SNH48Gzhaoye: ['female', 'S', 4, ['baofa', 'caihua']],
-
+            SNH48Gzhuxiaodan: ['female', 'S', 4, ['liren','shouzhuo']],
+            SNH48Gchenjunyu: ['female', 'S', 4, ['mengdong','maomao']],
             SNH48Gzhaojiamin: ['female', 'S', 4, ['shuangfa', 'buzhuang']],
 
             //N
@@ -87,7 +87,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gchenlin: ['female', 'X', 4, ['datou', 'xunshan']],
             SNH48Gchenyunling: ['female', 'X', 4, ['taowa', 'quanhuang']],
             SNH48Gfengxiaofei: ['female', 'X', 4, ['chongaaaa', 'beifen', 'yuanzhen']],
-            SNH48Glizhao: ['female', 'X', 4, ['mitao', 'taobao'], ['zhu']],
+            SNH48Glizhao: ['female', 'X', 4, ['mitao', 'taobao'], ['zhu']],            
+            SNH48Glvyi: ['female', 'X', 4, ['chengzhang']],
             SNH48Gpanyingqi: ['female', 'X', 4, ['liangong', 'tisheng']],
             SNH48Gqijing: ['female', 'X', 4, ['lianer', 'jingjing']],
             SNH48Gsongxinran: ['female', 'X', 4, ['guoer', 'xiaohua']],
@@ -124,13 +125,13 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
         },
         characterIntro: {
             //S
+            SNH48Gchenjunyu: 'SNH48 Team SII 成员，SHY48三期生。',
             SNH48Gchenguanhui: 'SNH48 Team SII 成员，SNH48一期生。很少有人知道如今的人妻艾在当初也曾是S队的标准男役担当。温婉是一个标准的纯防御技能，体现着小艾不欲与人争锋的性格特点。而偶尔腹黑的一面，不仅能跟队友形成微妙的联动，还能有力的回击来自外界的恶意',
             SNH48Gchengjue: 'SNH48 Team SII 成员，SNH48六期生。MC四大输出之一，同时直播里喜欢疯狂暗示自成一路的王玉是S队次时代之一。快刀在当前环境下算是较为合理的强命技。巧盐则保证了不会缺少武器的尴尬，有队友支持的情况下输出能力相当不俗',
             SNH48Gchensi: 'SNH48 Team SII 成员，SNH48一期生。教练是早期的最强者，也是队内的小天使。在面对有恶意的人时，教练会以强大的武力回击来保护自己的队友。同时，即使自身的经历并不美好，教练仍然对这个世界抱有期待，在各种不被人注意的时候总能看到其暖心的一面。',
             SNH48Gdaimeng: 'SNH48 Team SII 队长，SNH48一期生。全队的领军人物，也是队里的家长般的存在。作为主公坚毅提供了一定的防护能力，担当虽然属性上更适合忠臣，但是能够体恤忠臣的付出更显王道本色，领军意味着只要队友不死，就能依靠队友的支持一次次重新站起，体现出了TEAM SII的诚挚团结之意。',
             SNH48Gjiangyun: 'SNH48 Team SII 成员，古风大佬，SNH48二期生。一首红玫瑰惊艳四座，她的潜力远远超过了我们的想象。多面结合了张郃的巧变和荀攸的奇策，进可攻退可守，是上限极高的技能之一。气场则保证了多面的命中率，跟多变形成独有的锦囊类强命技能，还能跟络崽的技能形成几乎完美的配合。',
-            SNH48Gkongxiaoyin: 'SNH48 Team SII 性感成员，SNH48一期生。小孔是一个十分有趣的人，既是全团最拽也是队内总欺，温柔大方的她所在之处一定不会缺少欢乐。神魂颠倒是小孔的成名曲，神魂也是小孔的精髓所在，提高手牌上限能加强蓄爆能力，而颠倒则赋予了回合外的反制能力以及加快音符数的累积。音符是小孔家粉丝的昵称，觉醒后的小孔会跟自己的粉丝共同进退，赢得最终的胜利',
-            SNH48Glvyi: 'SNH48 Team SII 成员，SNH48七期生。口口一是个灵动的孩子，既有不俗的舞蹈能力，也有高能的MC水平，表情包是她的绝技，网盘是她的禁忌。成长是这个S队次时代目前最强者最有力的武器，只要给她时间，没什么是她做不到的。演技则是于吉的蛊惑改版，但却是一个非常具有操作性的技能，也预示着串儿不可预知的成长空间。',
+            SNH48Gkongxiaoyin: 'SNH48 Team SII 性感成员，SNH48一期生。小孔是一个十分有趣的人，既是全团最拽也是队内总欺，温柔大方的她所在之处一定不会缺少欢乐。神魂颠倒是小孔的成名曲，神魂也是小孔的精髓所在，提高手牌上限能加强蓄爆能力，而颠倒则赋予了回合外的反制能力以及加快音符数的累积。音符是小孔家粉丝的昵称，觉醒后的小孔会跟自己的粉丝共同进退，赢得最终的胜利',            
             SNH48Gliyuqi: 'SNH48 Team SII 成员，SNH48一期生。李毛毛是嘉兴路著名暖男，全能偶像，日常义务公演，从替补到选拔，坚韧是毛毛最好的代名词。豪迈是根据毛毛有话直说的个性得来，虽然放弃了属性伤害，但却大幅提高了普通杀和决斗的收益，堂堂正正以王道取胜。全能与其说是神技不如说是信仰，只要手中仍有牌就有希望，与李毛一贯的坚韧风格相匹配。',
             SNH48Gliuzengyan: 'SNH48 Team SII 成员，SNH48五期生。增锅是重组后新加入S队的成员，人美歌甜，造梗能力出色，很快融入了S队的氛围中并成为不可或缺的一员。技能上，痛饮赋予了增锅不会被酒杀集火的防御力，也能在关键时刻援助队友。勇烈改自神周瑜的业火，奠定了增锅作为全队第一爆发手的地位，预示着一旦外界压力达到了警戒线，被激发的增锅将会给所有人展示她的强硬。',
             SNH48Gmohan: 'SNH48 Team SII 副队长，SNH48一期生。莫寒是一个表面无害实则刚强的人，回合内依靠食欲进行续航与爆发，回合外以预言保证手牌量不会过低，也会让敌人因为判定牌而随时改变战术。觉醒后的大魔王更加强大，不仅血量增加还拥有了回合外的强输出能力，凸显了于危难中接任队长时莫莫的魄力和强势。',
@@ -151,7 +152,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gzhangyuge: 'SNH48 Team SII 成员，SNH48一期生。Tako是队宠，更是核心，从话唠小章鱼成长为如今的老干部张帅，多方面发展使得TAKO在任何场合都能迅速成为聚焦点。技能方面简单而实用，寡言使得TAKO免疫了除了翻面以外的所有控制，炫目则是神曹操的归心变化而来，一血多牌可以说是卖血流的最强技能之一，也代表着TAKO即使受伤仍然要坚持梦想的决心。',
             SNH48Gzhaohanqian: 'SNH48 Team SII 成员，SNH48 七期生。赵韩倩给我们带来了很多快乐，也是S队大家的开心果，如今的抖音红人--【赵韩倩要吃钳子】，了解一下。小钳子的两个技能是两种完全不同的机制，只要有发挥的舞台，小钳子就能用自己的实力改变很多东西。',
             SNH48Gzhaoye: 'SNH48 Team SII 成员，SNH48三期生。腿腿，三期生中为数不多的创作担当，MC冷枪王，TAKO著名小迷妹，虽然天天喊着躺床，却依旧能用优质的表现征服大家。腿腿跟王玉一样属于强命系，不同的地方在于王玉是精准打击，腿腿则是大范围的AOE伤害，而且造成的伤害越多，才华的用处就越大，属于越打越强的残局收割者，也跟腿腿不鸣则已一鸣惊人的设定相符合。',
-
+            SNH48Gzhuxiaodan: 'SNH48 Team SII 成员，SNH48九期生。',
             SNH48Gzhaojiamin: '中央戏剧学院在读，SNH48 Team SII 成员，SNH48一期生，《梦想预备生》中饰演同名角色赵嘉敏。',
 
             //N
@@ -206,6 +207,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gchenlin: 'Team X 成员，SNH48四期生',
             SNH48Gchenyunling: 'Team X 成员，SNH48五期生',
             SNH48Gfengxiaofei: 'SNH48 Team X 成员，SNH48四期生，曾经是著名SNH48黑，OLD48法人',
+            SNH48Glvyi: 'SNH48 Team X 成员，SNH48七期生。口口一是个灵动的孩子，既有不俗的舞蹈能力，也有高能的MC水平，表情包是她的绝技，网盘是她的禁忌。成长是这个S队次时代目前最强者最有力的武器，只要给她时间，没什么是她做不到的。演技则是于吉的蛊惑改版，但却是一个非常具有操作性的技能，也预示着串儿不可预知的成长空间。',
             SNH48Glizhao: 'Team X 队长，SNH48四期生',
             SNH48Gpanyingqi: 'Team X 成员，SNH48五期生',
             SNH48Gqijing: 'Team X 成员，SNH48七期生',
@@ -4452,6 +4454,150 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     threaten: 1.6,
                 }
             },
+            //陈俊羽
+            //每当你使用一张非转化的非基本牌，你可以摸一张牌并展示之
+            mengdong: {
+				audio:2,
+				trigger:{player:'useCard'},
+				frequent:true,
+				unique:true,
+				filter:function(event){
+					var type=get.type(event.card,'basic');
+					return type=='basic'&&event.cards[0]&&event.cards[0]==event.card;
+				},
+				content:function(){
+					var cards=get.cards();
+					player.gain(cards,'gain2');
+					game.log(player,'获得了',cards);
+				},
+				ai:{
+					threaten:1.4,
+					noautowuxie:true,
+				}
+            },
+            maomao: {                
+				audio:2,
+				unique:true,
+				enable:'chooseToUse',
+				mark:true,
+				skillAnimation:true,
+				animationStr:'冒冒',
+				animationColor:'fire',
+				init:function(player){
+					player.storage.maomao=false;
+				},
+				filter:function(event,player){
+					if(player.storage.maomao) return false;
+					if(event.type=='dying'){
+						if(player!=event.dying) return false;
+						return true;
+					}
+					else if(event.parent.name=='phaseUse'){
+						return true;
+					}
+					return false;
+				},
+				content:function(){
+					'step 0'
+                    player.hp=Math.min(3,player.maxHp);
+					player.discard(player.getCards('j'));
+					player.draw(3);
+					player.awakenSkill('maomao');
+					player.storage.maomao=true;
+					'step 1'
+					player.link(false);
+					'step 2'
+					player.turnOver(false);
+				},
+				ai:{
+					order:0.5,
+					skillTagFilter:function(player){
+						if(player.storage.maomao) return false;
+						if(player.hp>0) return false;
+					},
+					save:true,
+					result:{
+						player:function(player){
+							if(player.hp==0) return 10;
+							if(player.hp<=1&&player.countCards('he')<=1) return 10;
+							return 0;
+						}
+					},
+					threaten:function(player,target){
+						if(!target.storage.maomao) return 0.6;
+					}
+				},
+				intro:{
+					content:'limited'
+				}
+            },
+            //朱小丹
+            //少摸一张牌，选人决斗
+            liren: {                
+				audio:2,
+				trigger:{player:'phaseDrawBegin'},
+				check:function(event,player){
+					if(player.countCards('h')<player.hp) return false;					
+					return game.hasPlayer(function(current){
+						return get.attitude(player,current)<0&&player.canUse('juedou',current);
+					});
+				},
+				content:function(){
+					"step 0"
+                    trigger.num--;                    
+					"step 1"
+					var check= player.countCards('h')>2;
+					player.chooseTarget(get.prompt('liren'),function(card,player,target){
+						if(player==target) return false;
+						return player.canUse({name:'juedou'},target,false);
+					}).set('check',check).set('ai',function(target){
+						if(!_status.event.check) return 0;
+						return get.effect(target,{name:'juedou'},_status.event.player);
+					});
+                    "step 2"
+					if(result.bool){
+						player.logSkill('liren',result.targets);
+						player.useCard({name:'juedou'},result.targets[0],false);
+					}
+				}
+            },
+            //当你需要打出一张杀或闪响应时，你可将两张手牌当做其使用或打出
+			shouzhuo: {
+				audio:2,
+				trigger:{ player:'chooseToRespond' },
+				frequent:true,
+				filter:function(event,player){
+                    return player.countCards('h') >=2 && !event.responded;
+				},
+				selectCard:2,
+				check:function(card){
+					var player=_status.event.player;
+					return 6-get.value(card);
+				},
+				content:function(){
+                    game.log(player,'守拙发动成功');
+                    trigger.untrigger();
+                    trigger.responded=true;
+				},
+				ai:{
+					effect:{
+						target:function(card,player,target,effect){
+							if(get.tag(card,'respondShan')) return 0.7;
+							if(get.tag(card,'respondSha')) return 0.7;
+						}
+					}
+                },                
+				mod:{
+					maxHandcard:function(player,num){
+						if(player.hasSkill('shouzhuo')){
+							return num + game.countPlayer(function(current){
+								if(player!=current&&current.group==player.group) return 1;
+							});
+						}
+						return num;
+					}
+				}
+            },
             //N
             //张雨鑫，AI测试ok
             xingwen: {
@@ -5034,43 +5180,6 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }
                 }
             },
-            //tianxuan: {
-            //    trigger: { player: 'phaseUseAfter' },
-            //    popup: false,
-            //    audio: false,
-            //    priority: -50,
-            //    filter: function (event, player) {
-            //        if (player.storage.tianxuan)
-            //            return false;
-            //        return player.countCards('h', { color: 'black' }) > 0
-            //    },
-            //    content: function () {
-            //        'step 0'
-            //        player.chooseToDiscard('h', { color: 'black' })
-            //        'step 1'
-            //        player.logSkill('tianxuan', player)
-            //        player.markSkillCharacter('tianxuan', player, '天选', '进行一个额外回合');
-            //        player.storage.tianxuan = true;
-            //        player.addSkill('tianxuan3');
-            //        player.insertPhase();
-            //    }
-            //},
-            //tianxuan3: {
-            //    trigger: { player: ['phaseAfter', 'phaseCancelled'] },
-            //    frequent: true,
-            //    audio: false,
-            //    filter: function (event, player) {
-            //        return player.storage.tianxuan;
-            //    },
-            //    content: function () {
-            //        //console.log(player.storage.tianxuan);
-            //        player.storage.tianxuan = false;
-            //        //console.log("移除放权标记")
-            //        player.unmarkSkill('tianxuan');
-            //        player.removeSkill('tianxuan3');
-            //    }
-            //},
-            //当你需要使用或打出【闪】时，你可以选择一项：1，令当前回合角色摸一张牌；2，令当前回合角色弃置你的一张手或装备牌。若如此做，视为你使用或打出了一张【闪】
             yuanqi: {
                 audio: 2,
                 trigger: { player: 'chooseToRespondBegin' },
@@ -6609,7 +6718,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             SNH48Gzhangyuge: '张语格',
             SNH48Gzhaohanqian: '赵韩倩',
             SNH48Gzhaoye: '赵晔',
-
+            SNH48Gchenjunyu: '陈俊羽',
+            SNH48Gzhuxiaodan: '朱小丹',
             SNH48Gzhaojiamin: '赵嘉敏',
 
             //N
@@ -6905,7 +7015,15 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             qichang_info: '出牌阶段限一次，你可以弃置一张牌，令除自己外所有玩家的【无懈可击】无法被使用或者打出，直到回合结束',
             duomian: '多面',
             duomian_info: '出牌阶段限两次，你可以将两张手牌当做风标军争非延时锦囊使用',
-
+            mengdong: '懵懂',
+            mengdong_info: '锁定技。每当你使用一张基本牌，你摸一张牌并展示之',
+            maomao: '冒冒',
+            maomao_info: '限定技，当你处于濒死状态时，你可以弃置你判定区的牌，复原你的武将牌，并摸三张牌，将体力回复至3点',
+            //摸牌阶段，你可放弃摸牌，选择弃一张牌或跳过出牌阶段，令一名角色获得一个额外的回合。
+            liren: '利刃',
+            liren_info: '摸牌阶段开始时，若你的手牌大于等于你当前体力值，你可指定一名其他角色，视为你对该角色使用了一张【决斗】，若如此做，你少摸一张牌',
+            shouzhuo: '守拙',
+            shouzhuo_info: '你的手牌上限增加场上同势力成员数，当你需要打出一张杀或闪响应时，你可将两张手牌当做其使用或打出',
             //N
             xingwen: '行文',
             xingwen_info: '你的准备阶段，可展示牌堆顶的一张牌并如此往复，直到出现展示的牌与上一张类型相同为止。然后你获得所有展示的牌',
