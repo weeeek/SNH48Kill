@@ -4458,7 +4458,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //每当你使用一张非转化的非基本牌，你可以摸一张牌并展示之
             mengdong: {
 				audio:2,
-				trigger:{player:'useCard'},
+				trigger:{player:['useCard','respond']},
 				frequent:true,
 				unique:true,
 				filter:function(event){
@@ -4490,9 +4490,6 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
 					if(player.storage.maomao) return false;
 					if(event.type=='dying'){
 						if(player!=event.dying) return false;
-						return true;
-					}
-					else if(event.parent.name=='phaseUse'){
 						return true;
 					}
 					return false;
@@ -4535,7 +4532,13 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //少摸一张牌，选人决斗
             liren: {                
 				audio:2,
-				trigger:{player:'phaseDrawBegin'},
+                trigger:{player:'phaseDrawBegin'},
+                filter:function(event,player){
+                    if(player.countCards('h')<player.hp) return false;
+                    return game.hasPlayer(function(current){
+						return get.attitude(player,current)<0&&player.canUse('juedou',current);
+					});
+                },
 				check:function(event,player){
 					if(player.countCards('h')<player.hp) return false;					
 					return game.hasPlayer(function(current){
@@ -6923,11 +6926,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             luogod_info: '你的准备阶段，可进行一定判定，若为红色则可以继续判定，直到出现黑色。然后你获得所有红色的判定牌',
             huangzi: '皇子',
             huangzi_info: '觉醒技，回合开始时，若你的体力值小于等于你的体力上限的一半，你失去1点体力上限，回复1点体力，并获得技能【江山】，【神钩】',
-            tongyin: '痛饮',
             ganbei: '干杯',
             ganbei_info: '每当一名角色进入濒死状态，你可弃置一瓶可乐为其回复1点体力，并且自己也获得【酒】的效果。',
             kele: '可乐',
             kele_info: '下一次使用杀造成的伤害+1，可与【酒】叠加，此效果持续到你的回合结束或使用杀结算后。',
+            tongyin: '痛饮',
             tongyin_bg: '可',
             tongyin_mark_bg: '可乐',
             tongyin_info: '锁定技：每当其他角色弃置、判定、拼点、使用后的【酒】进入弃牌堆后，你可将其置于你的武将牌上，称为"可乐"。',
@@ -6977,7 +6980,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             guayan: '寡言',
             guayan_info: '你不能成为延时类锦囊的目标，你使用非延时类锦囊无距离限制。',
             xuanmu: '炫目',
-            xuanmu_info: '每当你受到1点伤害，你可随机获得每名其他角色区域内的一张牌。然后你翻面。',
+            xuanmu_info: '每当你受到一次伤害，你可随机获得每名其他角色区域内的一张牌。然后你翻面。',
             zanmei: '赞美',
             zanmei_info: '摸牌阶段，你可少摸一张牌并让一名其他角色摸一张牌。',
             luanyin: '乱音',
@@ -7018,8 +7021,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             mengdong: '懵懂',
             mengdong_info: '锁定技。每当你使用一张基本牌，你摸一张牌并展示之',
             maomao: '冒冒',
-            maomao_info: '限定技，当你处于濒死状态时，你可以弃置你判定区的牌，复原你的武将牌，并摸三张牌，将体力回复至3点',
-            //摸牌阶段，你可放弃摸牌，选择弃一张牌或跳过出牌阶段，令一名角色获得一个额外的回合。
+            maomao_info: '限定技，当你处于濒死状态时，你可以弃置你判定区的牌，复原你的武将牌，并摸3张牌，将体力回复3点',
             liren: '利刃',
             liren_info: '摸牌阶段开始时，若你的手牌大于等于你当前体力值，你可指定一名其他角色，视为你对该角色使用了一张【决斗】，若如此做，你少摸一张牌',
             shouzhuo: '守拙',
@@ -7065,8 +7067,6 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             haibao_info: '锁定技：你的♥均视为♠；你的♦︎均视为♣',
             tiequan: '铁拳',
             tiequan_info: '锁定技：你的【杀】无视防具且伤害+1，使用【杀】指定目标或成为【杀】的目标后，摸一张牌。',
-            //tianxuan: '天选',
-            //tianxuan_info: '出牌阶段限一次：弃置一张黑色手牌，获得一个额外的回合。',
             tianxuan: '天选',
             tianxuan_info: '出牌阶段你可以将两张同花色手牌当【挟天子以令诸侯】使用',
             yuanqi: '元气',
