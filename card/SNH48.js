@@ -1,7 +1,7 @@
 'use strict';
 game.import('card', function (lib, game, ui, get, ai, _status) {
     return {
-        name: 'SNH48G',
+        name: 'SNH48',
         connect: true,
         card: {
             juedou2: {
@@ -116,7 +116,7 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                 }
             },
             yongqizhichui: {
-                mode: ['SNH48G'],
+                mode: ['SNH48'],
                 nomod: true,
                 nopower: true,
                 unique: true,
@@ -133,7 +133,7 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                 },
             },
             yingyuanbang: {
-                mode: ['SNH48G'],
+                mode: ['SNH48'],
                 nomod: true,
                 nopower: true,
                 unique: true,
@@ -149,7 +149,7 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                 },
             },
             antyvote: {
-                mode: ['SNH48G'],
+                mode: ['SNH48'],
                 nomod: true,
                 nopower: true,
                 unique: true,
@@ -215,7 +215,7 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                 selectCard: 1,
                 //加上表示可以使用装备区的牌，不加默认手牌
                 position: 'he',
-                prompt: '出牌阶段，弃置一张红色牌，对一名SNH48G女性角色使用，使其回复一点体力。一回合限一次',
+                prompt: '出牌阶段，弃置一张红色牌，对一名SNH48女性角色使用，使其回复一点体力。一回合限一次',
                 filterTarget: function (card, player, target) {
                     if (target.hp >= target.maxHp)
                         return false;
@@ -310,11 +310,11 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
             yingyuanbang: '应援棒',
             yingyuanbang_bg: '棒',
             yingyuanbang_skill: '打Call',
-            yingyuanbang_info: '出牌阶段，你可以弃置一张红色牌，对一名SNH48G女性角色使用，使其回复一点体力。一回合限一次',
+            yingyuanbang_info: '出牌阶段，你可以弃置一张红色牌，对一名SNH48女性角色使用，使其回复一点体力。一回合限一次',
             antyvote: 'Anty票',
             antyvote_bg: '票',
             antyvote_skill: 'Anty',
-            antyvote_info: '出牌阶段，你可以弃置三张黑色牌视为对所有SNH48G女性角色打出“万箭齐发”，每回合限一次',
+            antyvote_info: '出牌阶段，你可以弃置三张黑色牌视为对所有SNH48女性角色打出“万箭齐发”，每回合限一次',
 
             yongqizhichui: '勇气之锤',
             yongqizhichui_bg: '锤',

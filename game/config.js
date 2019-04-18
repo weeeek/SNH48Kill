@@ -41,12 +41,12 @@ window.config={
 	//},
     all: {
         //三国杀武将扩展包：标准，神话，一将成名，SP等，军争。。。
-        sgscharacters: ['standard', 'shenhua', 'refresh', 'yijiang', 'sp', 'extra', 'old', 'SNH48G'],
+        sgscharacters: ['standard', 'shenhua', 'refresh', 'yijiang', 'sp', 'extra', 'old', 'SNH48'],
         //三国杀牌堆扩展包：标准，军争，SP，国战
         sgscards: ['standard', 'extra', 'sp', 'guozhan'],
         //三国杀模式：身份，国战，对决，挑战
         sgsmodes: ['identity', 'guozhan', 'versus', 'brawl', 'connect'],
-        stockmode: ['identity', 'guozhan', 'versus', 'boss', 'chess', 'stone', 'connect', 'brawl', 'tafang', 'SNH48G'],
+        stockmode: ['identity', 'guozhan', 'versus', 'boss', 'chess', 'stone', 'connect', 'brawl', 'tafang', 'SNH48'],
         stockextension: ['boss', 'cardpile', 'coin', 'wuxing'],
         layout: ['default', 'newlayout'],
         theme: ['woodden', 'music', 'simple'],
@@ -154,8 +154,8 @@ window.config={
 	right_click:'pause',
 	sort:'type_sort',
 
-    cards: ['standard', 'ex', 'extra', 'sp', 'classic', 'basic', 'SNH48G'],
-    characters: ['standard', 'shenhua', 'refresh', 'sp', 'yijiang', 'SNH48G'],
+    cards: ['standard', 'ex', 'extra', 'sp', 'classic', 'basic', 'SNH48'],
+    characters: ['standard', 'shenhua', 'refresh', 'sp', 'yijiang', 'SNH48'],
 	connect_characters:[],
 	connect_cards:[],
 	plays:[],
@@ -205,7 +205,7 @@ window.config={
 			initshow_draw:2,
 			dierestart:true
         },
-        SNH48G: {
+        SNH48: {
             difficulty: 'normal',
             initshow_draw: 2,
             dierestart: true

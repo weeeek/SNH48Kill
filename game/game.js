@@ -3886,7 +3886,7 @@
             },
         },
         mode: {
-            SNH48G: {
+            SNH48: {
                 name: '女团大战',
                 connect: {
                     update: function (config, map) {
@@ -9317,6 +9317,12 @@
             N: 'N',
             H: 'H',
             X: 'X',
+            B: 'B',
+            E: 'E',
+            J: 'J',
+            G: 'G',
+            N3: 'N3',
+            Z: 'Z',
             ye: '野',
             guan: '官',
             FT: 'Ft',
@@ -9363,7 +9369,7 @@
             eight: '八',
             nine: '九',
             ten: '十',
-            'SNH48G': "SNH48",
+            'SNH48': "SNH48",
             _chongzhu: '重铸',
             _lianhuan: '连环',
             _lianhuan2: '连环',
@@ -18588,7 +18594,7 @@
                                 });
                             }
                             break;
-                        case 'SNH48G':
+                        case 'SNH48':
                             if (player.identity == 'guan') {
                                 targets = [];
                             }
@@ -23685,7 +23691,7 @@
             }
         },
         suit: ['club', 'spade', 'diamond', 'heart'],
-        group: ['wei', 'shu', 'wu', 'qun', 'shen', 'S', 'N', 'H', 'X', 'guan'],
+        group: ['wei', 'shu', 'wu', 'qun', 'shen', 'S', 'N', 'H', 'X','B','E','J','G','N3','Z','guan'],
         nature: ['fire', 'thunder', 'poison'],
         linked: ['fire', 'thunder'],
     };
@@ -32785,12 +32791,40 @@
                         }
                         alterableCharacters.sort();
                         var groupSort = function (name) {
-                            if (info[name][1] == 'shen') return -1;
-                            if (info[name][1] == 'wei') return 0;
-                            if (info[name][1] == 'shu') return 1;
-                            if (info[name][1] == 'wu') return 2;
-                            if (info[name][1] == 'qun') return 3;
-                            return 4;
+                            switch(info[name][1]){
+                                case 'shen':
+                                    return -1;
+                                case 'wei':
+                                    return 0;
+                                case 'shu':
+                                    return 1;
+                                case 'wu':
+                                    return 2;
+                                case 'qun':
+                                    return 3;
+                                case 'S':
+                                    return 4;
+                                case 'N':
+                                    return 5;
+                                case 'H':
+                                    return 6;
+                                case 'X':
+                                    return 7;
+                                case 'B':
+                                    return 8;
+                                case 'E':
+                                    return 9;
+                                case 'J':
+                                    return 10;
+                                case 'G':
+                                    return 11;
+                                case 'N3':
+                                    return 12;
+                                case 'Z':
+                                    return 13;
+                                default:
+                                return 14;
+                            }
                         }
                         list.sort(function (a, b) {
                             var del = groupSort(a) - groupSort(b);
@@ -34333,6 +34367,16 @@
                                 ['shu', '蜀'],
                                 ['wu', '吴'],
                                 ['qun', '群'],
+                                ['S', 'S'],
+                                ['N', 'N'],
+                                ['H', 'H'],
+                                ['X', 'X'],
+                                ['B', 'B'],
+                                ['E', 'E'],
+                                ['J', 'J'],
+                                ['G', 'G'],
+                                ['N3', 'N3'],
+                                ['Z', 'Z'],
                                 ['shen', '神'],
                             ], null, ui.create.div('.indent', '势力：', newCharacter));
                             var options = ui.create.div('.add_skill.options', '<span>主公<input type="checkbox" name="zhu"></span><span>BOSS<input type="checkbox" name="boss"></span><span>AI禁选<input type="checkbox" name="forbidai"></span><br>', newCharacter);
@@ -37635,7 +37679,8 @@
                 }, true);
             },
             groupControl: function (dialog) {
-                return ui.create.control('wei', 'shu', 'wu', 'qun', function (link, node) {
+                //                
+                return ui.create.control('wei', 'shu', 'wu', 'qun', 'S', 'N', 'H', 'X', 'B', 'E', 'J', 'G', 'N3', 'Z', function (link, node) {
                     if (link == '全部') {
                         dialog.currentcapt = '';
                         dialog.currentgroup = '';
@@ -38062,13 +38107,14 @@
                     }
                 }
                 if (!thisiscard) {
-                    var groups = ['wei', 'shu', 'wu', 'qun'];
+                    var is48Mode = get.mode() == 'SNH48';
+                    var groups = is48Mode ? ['S', 'N' ,'H', 'X', 'B', 'E', 'J', 'G', 'N3', 'Z', 'guan'] : ['wei', 'shu', 'wu', 'qun'];
                     for (var i in lib.character) {
                         if (lib.character[i][1] == 'shen') {
                             groups.add('shen'); break;
                         }
                     }
-                    var natures = ['water', 'soil', 'wood', 'metal'];
+                    var natures = is48Mode ? ['S', 'N' ,'H', 'X', 'B', 'E', 'J', 'G', 'N3', 'Z', 'guan'] : ['water', 'soil', 'wood', 'metal'];
                     var span = document.createElement('span');
                     newlined.appendChild(span);
                     span.style.margin = '8px';
@@ -38158,6 +38204,7 @@
                             this.classList.remove('shown');
                             e.stopPropagation();
                         });
+                        debugger
                         for (var i = 0; i < node.childElementCount; i++) {
                             if (node.childNodes[i].tagName.toLowerCase() == 'span') {
                                 node.childNodes[i].style.display = 'none';
@@ -38191,6 +38238,7 @@
                         newlined2.style.fontSize = '22px';
                     }
                     newlined2.style.textAlign = 'center';
+                    debugger
                     node.appendChild(newlined2);
 
                     packsource.addEventListener(lib.config.touchscreen ? 'touchend' : 'click', function () {
@@ -38325,6 +38373,7 @@
                 if (str) {
                     dialog.add(str);
                 }
+                debugger
                 dialog.add(node);
                 if (thisiscard) {
                     if (seperate) {
@@ -40436,8 +40485,8 @@
                 }
                 else {
                     if (get.is.guozhanMode()) {
-                        if (get.mode() == 'SNH48G')
-                            list = { S: 'S', N: 'N', H: 'H', X: 'X', guan: '官' }
+                        if (get.mode() == 'SNH48')
+                            list = { S: 'S', N: 'N', H: 'H', X: 'X', B: 'B', E: 'E', J: 'J', G: 'G', N3: 'N3', Z: 'Z', guan: '官' }
                         else
                             list = { wei: '魏', shu: '蜀', wu: '吴', qun: '群' };
                     }
@@ -43674,14 +43723,14 @@
     var get = {
         is: {
             modeInGuozhan: function (mode) {
-                return mode == 'guozhan' || mode == 'SNH48G';
+                return mode == 'guozhan' || mode == 'SNH48';
             },
             guozhanMode: function () {
                 return get.is.modeInGuozhan(get.mode());
             },
-            SNH48G: function (player) {
-                var SNH48G = ['S', 'N', 'H', 'X', 'guan', 'fen'];
-                return SNH48G.indexOf(player.group) > -1;
+            SNH48: function (player) {
+                var SNH48 = ['S', 'N', 'H', 'X', 'guan', 'fen'];
+                return SNH48.indexOf(player.group) > -1;
             },
             converted: function (event) {
                 return !(event.cards && event.card && event.cards.length == 1 && event.cards[0] == event.card);

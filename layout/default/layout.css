@@ -4335,13 +4335,149 @@ span[data-nature='woodmm'] {
 }
 
 .player .identity[data-color="S"] {
-	color: #87cefa;
+	color: rgba(145, 205, 235, 1)
+}
+.player .identity[data-color="S"],
+.S,
+div[data-nature='S'],
+span[data-nature='S']{
+	text-shadow: rgba(145,205,235,1) 0 0 2px,
+				 rgba(145,205,235,1) 0 0 5px,
+				 rgba(145,205,235,1) 0 0 10px,
+				 rgba(145,205,235,1) 0 0 20px,
+				 black 0 0 1px
+}
+
+.player .identity[data-color="N"] {
+	color: rgba(174, 134, 187, 1)
+}
+.player .identity[data-color="N"],
+.N,
+div[data-nature='N'],
+span[data-nature='N']{
+	text-shadow: rgba(174,134,187,1) 0 0 2px,
+				 rgba(174,134,187,1) 0 0 5px,
+				 rgba(174,134,187,1) 0 0 10px,
+				 rgba(174,134,187,1) 0 0 20px,
+				 black 0 0 1px
+}
+
+.player .identity[data-color="H"] {
+	color: rgba(243, 152, 0, 1)
+}
+.player .identity[data-color="H"],
+.H,
+div[data-nature='H'],
+span[data-nature='H']{
+	text-shadow: rgba(243,152,0,1) 0 0 2px,
+				 rgba(243,152,0,1) 0 0 5px,
+				 rgba(243,152,0,1) 0 0 10px,
+				 rgba(243,152,0,1) 0 0 20px,
+				 black 0 0 1px
+}
+
+.player .identity[data-color="H"] {
+	color: rgba(169, 204, 41, 1)
+}
+.player .identity[data-color="X"],
+.X,
+div[data-nature='X'],
+span[data-nature='X']{
+	text-shadow: rgba(169,204,41,1) 0 0 2px,
+				 rgba(169,204,41,1) 0 0 5px,
+				 rgba(169,204,41,1) 0 0 10px,
+				 rgba(169,204,41,1) 0 0 20px,
+				 black 0 0 1px
+}
+
+.player .identity[data-color="B"] {
+	color: rgba(255, 36, 113, 1)
+}
+.player .identity[data-color="B"],
+.B,
+div[data-nature='B'],
+span[data-nature='B']{
+	text-shadow: rgba(255,36,113,1) 0 0 2px,
+				 rgba(255,36,113,1) 0 0 5px,
+				 rgba(255,36,113,1) 0 0 10px,
+				 rgba(255,36,113,1) 0 0 20px,
+				 black 0 0 1px
+}
+
+.player .identity[data-color="E"] {
+	color: rgba(12,200,195, 1)
+}
+.player .identity[data-color="E"],
+.E,
+div[data-nature='E'],
+span[data-nature='E']{
+	text-shadow: rgba(12,200,195,1) 0 0 2px,
+				 rgba(12,200,195,1) 0 0 5px,
+				 rgba(12,200,195,1) 0 0 10px,
+				 rgba(12,200,195,1) 0 0 20px,
+				 black 0 0 1px
+}
+
+.player .identity[data-color="J"] {
+	color: rgba(0,106,183, 1)
+}
+.player .identity[data-color="J"],
+.J,
+div[data-nature='J'],
+span[data-nature='J']{
+	text-shadow: rgba(0,106,183,1) 0 0 2px,
+				 rgba(0,106,183,1) 0 0 5px,
+				 rgba(0,106,183,1) 0 0 10px,
+				 rgba(0,106,183,1) 0 0 20px,
+				 black 0 0 1px
+}
+
+.player .identity[data-color="G"] {
+	color: rgba(170,201,19, 1)
+}
+.player .identity[data-color="G"],
+.G,
+div[data-nature='G'],
+span[data-nature='G']{
+	text-shadow: rgba(170,201,19,1) 0 0 2px,
+				 rgba(170,201,19,1) 0 0 5px,
+				 rgba(170,201,19,1) 0 0 10px,
+				 rgba(170,201,19,1) 0 0 20px,
+				 black 0 0 1px
+}
+
+
+.player .identity[data-color="N3"] {
+	color: rgba(255,215,0, 1)
+}
+.player .identity[data-color="N3"],
+.N3,
+div[data-nature='N3'],
+span[data-nature='N3']{
+	text-shadow: rgba(255,215,0,1) 0 0 2px,
+				 rgba(255,215,0,1) 0 0 5px,
+				 rgba(255,215,0,1) 0 0 10px,
+				 rgba(255,215,0,1) 0 0 20px,
+				 black 0 0 1px
+}
+
+.player .identity[data-color="Z"] {
+	color: rgba(234,98,124, 1)
+}
+.player .identity[data-color="Z"],
+.Z,
+div[data-nature='Z'],
+span[data-nature='Z']{
+	text-shadow: rgba(234,98,124,1) 0 0 2px,
+				 rgba(234,98,124,1) 0 0 5px,
+				 rgba(234,98,124,1) 0 0 10px,
+				 rgba(234,98,124,1) 0 0 20px,
+				 black 0 0 1px
 }
 
 
 .player .identity[data-color="cai"],
 .player .identity[data-color="wei"],
-.player .identity[data-color="S"],
 .player .identity[data-color="falsezhu"],
 .player .identity[data-color="friend"],
 .water,
@@ -4366,10 +4502,6 @@ div[data-nature='watermx'],
 span[data-nature='watermx'] {
 	text-shadow: rgba(0, 0, 0, 0.4) 0 0 1px, rgba(20, 83, 140, 1) 0 0 2px, rgba(20, 83, 140, 1) 0 0 2px, rgba(20, 83, 140, 1) 0 0 5px,
 		rgba(20, 83, 140, 1) 0 0 5px, black 0 0 1px;
-}
-
-.player .identity[data-color="H"] {
-	color: #F49600;
 }
 
 .player .identity[data-color="shu"],

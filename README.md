@@ -18,15 +18,15 @@
 			<h4>在SNH48卡包中自制卡牌</h4>
 			<ul>
 				<li>
-					在card/SNH48G.js中，在card对象里定义一个卡牌对象，以卡牌名称拼音命名，名称不可和其它卡牌重复
+					在card/SNH48.js中，在card对象里定义一个卡牌对象，以卡牌名称拼音命名，名称不可和其它卡牌重复
 				</li>
 				<li>
-					在card/SNH48G.js中，在skill对象里定义一个技能对象，以技能名称拼音命名，名称不可和其它技能重复
+					在card/SNH48.js中，在skill对象里定义一个技能对象，以技能名称拼音命名，名称不可和其它技能重复
 				</li>
 				<li>
-					在card/SNH48G.js中，在translate对象里定义一组说明文字
+					在card/SNH48.js中，在translate对象里定义一组说明文字
 				</li>
-				<li>在card/SNH48G.js中，在list对象里定义卡牌点数与花色</li>
+				<li>在card/SNH48.js中，在list对象里定义卡牌点数与花色</li>
 			</ul>
 		</div>
 	</li>
@@ -34,7 +34,7 @@
 		<div>
 			<h4>在SNH48模式中加入自制卡牌</h4>
 			<ul>
-				<li>在mode/SNH48G.js中，复制card/SNH48G.js中的list对象里定义卡牌点数与花色，加入到mode/SNH48G.js的list对象里面</li>
+				<li>在mode/SNH48.js中，复制card/SNH48.js中的list对象里定义卡牌点数与花色，加入到mode/SNH48.js的list对象里面</li>
 			</ul>
 		</div>
 	</li>
@@ -43,16 +43,16 @@
 			<h4>在SNH48卡包中自制武将、武将技能</h4>
 			<ul>
 				<li>
-					在character/SNH48G.js中，在character对象中定义武将（性别，阵营，体力上限，技能组），以“SNH48G”+ 名成拼音命名，名称不可和其它卡牌重复
+					在character/SNH48.js中，在character对象中定义武将（性别，阵营，体力上限，技能组），以“SNH48”+ 名成拼音命名，名称不可和其它卡牌重复
 				</li>
 				<li>
-					在character/SNH48G.js中，在characterIntro对象中定义武将的简介，名称同上面定义的武将名
+					在character/SNH48.js中，在characterIntro对象中定义武将的简介，名称同上面定义的武将名
 				</li>
 				<li>
-					在character/SNH48G.js中，在skill对象中定义技能名称，名称不可和其它技能重复
+					在character/SNH48.js中，在skill对象中定义技能名称，名称不可和其它技能重复
 				</li>
 				<li>
-					在character/SNH48G.js中，在translate对象中定义技能显示名称，技能介绍（因“毒雾”拼音同“黩武”，故改为“poisonousfog”）					
+					在character/SNH48.js中，在translate对象中定义技能显示名称，技能介绍（因“毒雾”拼音同“黩武”，故改为“poisonousfog”）					
 				</li>
 			</ul>
 		</div>

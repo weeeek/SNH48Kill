@@ -2,7 +2,7 @@
 'use strict';
 game.import('mode', function (lib, game, ui, get, ai, _status) {
     return {
-        name: 'SNH48G',
+        name: 'SNH48',
         startBefore: function () {
             var playback = localStorage.getItem(lib.configprefix + 'playback');
             for (var i in lib.characterPack.mode_guozhan) {
@@ -181,111 +181,128 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             //女团大战版武将属性配置
             mode_guozhan: {
                 //S
-                SNH48Gchenguanhui: ['female', 'S', 4, ['wenwan', 'fuhei']],
-                SNH48Gchengjue: ['female', 'S', 4, ['kuaidao', 'qiaoyan']],
-                SNH48Gchensi: ['female', 'S', 4, ['jingwu', 'tianyin']],
-                SNH48Gdaimeng: ['female', 'S', 4, ['dandang', 'jianyi', 'new_lingjun'], ['zhu']],
-                SNH48Gjiangyun: ['female', 'S', 3, ['jingyan', 'qichang', 'duomian']],
-                SNH48Gkongxiaoyin: ['female', 'S', 4, ['shenhun', 'diandao', 'xinggan']],
-                SNH48Glvyi: ['female', 'S', 4, ['chengzhang']],
-                SNH48Gliyuqi: ['female', 'S', 3, ['haomai', 'quanneng', 'chongzhen']],
-                SNH48Gliuzengyan: ['female', 'S', 4, ['tongyin', 'ganbei', 'yonglie']],
-                SNH48Gmohan: ['female', 'S', 3, ['shiyu', 'yuyan', 'new_ziqiang'], ['zhu']],
-                SNH48Gpanyanqi: ['female', 'S', 4, ['tongxin', 'dedication']],
-                SNH48Gqianbeiting: ['female', 'S', 4, ['juxia', 'qiangong']],
-                SNH48Gqiuxinyi: ['female', 'S', 4, ['meixi', 'nvwang', 'laydown']],
-                SNH48Gsunrui: ['female', 'S', 3, ['qigai', 'rexin']],
-                SNH48Gshaoxuecong: ['female', 'S', 4, ['yibing', 'tianpin', 'jiaozhu']],
-                SNH48Gshenzhilin: ['female', 'S', 4, ['zanmei', 'luanyin', 'luansheng']],
-                SNH48Gwenjingjie: ['female', 'S', 4, ['talent', 'wenhe']],
-                SNH48Gwuzhehan: ['female', 'S', 4, ['jiangshan', 'jiamian']],
-                SNH48Gxuchenchen: ['female', 'S', 4, ['qiangyin', 'jinwu', 'chengshu']],
-                SNH48Gxujiaqi: ['female', 'S', 4, ['shengou', 'secret', 'meiren']],
-                SNH48Gxuyiren: ['female', 'S', 4, ['tisu', 'fenfa']],
-                SNH48Gxuzixuan: ['female', 'S', 4, ['luogod', 'longgong', 'huangzi']],
-                SNH48Gyuandanni: ['female', 'S', 4, ['complement', 'kuxuan']],
-                SNH48Gyuanyuzhen: ['female', 'S', 4, ['ganxing', 'huopo']],
-                SNH48Gzhangyuge: ['female', 'S', 3, ['guayan', 'xuanmu']],
-                SNH48Gzhaohanqian: ['female', 'S', 4, ['kuaiyan', 'innocence']],
-                SNH48Gzhaoye: ['female', 'S', 4, ['baofa', 'caihua']],
-                SNH48Gzhuxiaodan: ['female', 'S', 4, ['liren','shouzhuo']],
-                SNH48Gchenjunyu: ['female', 'S', 4, ['mengdong','maomao']],
+                chenguanhui_SNH48: ['female', 'S', 4, ['wenwan', 'fuhei']],
+                chengjue_SNH48: ['female', 'S', 4, ['kuaidao', 'qiaoyan']],
+                chensi_SNH48: ['female', 'S', 4, ['jingwu', 'tianyin']],
+                daimeng_SNH48: ['female', 'S', 4, ['dandang', 'jianyi', 'new_lingjun'], ['zhu']],
+                jiangyun_SNH48: ['female', 'S', 3, ['jingyan', 'qichang', 'duomian']],
+                kongxiaoyin_SNH48: ['female', 'S', 4, ['shenhun', 'diandao', 'xinggan']],
+                lvyi_SNH48: ['female', 'S', 4, ['chengzhang']],
+                liyuqi_SNH48: ['female', 'S', 3, ['haomai', 'quanneng', 'chongzhen']],
+                liuzengyan_SNH48: ['female', 'S', 4, ['tongyin', 'ganbei', 'yonglie']],
+                mohan_SNH48: ['female', 'S', 3, ['shiyu', 'yuyan', 'new_ziqiang'], ['zhu']],
+                panyanqi_SNH48: ['female', 'S', 4, ['tongxin', 'dedication']],
+                qianbeiting_SNH48: ['female', 'S', 4, ['juxia', 'qiangong']],
+                qiuxinyi_SNH48: ['female', 'S', 4, ['meixi', 'nvwang', 'laydown']],
+                sunrui_SNH48: ['female', 'S', 3, ['qigai', 'rexin']],
+                shaoxuecong_SNH48: ['female', 'S', 4, ['yibing', 'tianpin', 'jiaozhu']],
+                shenzhilin_SNH48: ['female', 'S', 4, ['zanmei', 'luanyin', 'luansheng']],
+                wenjingjie_SNH48: ['female', 'S', 4, ['talent', 'wenhe']],
+                wuzhehan_SNH48: ['female', 'S', 4, ['jiangshan', 'jiamian']],
+                xuchenchen_SNH48: ['female', 'S', 4, ['qiangyin', 'jinwu', 'chengshu']],
+                xujiaqi_SNH48: ['female', 'S', 4, ['shengou', 'secret', 'meiren']],
+                xuyiren_SNH48: ['female', 'S', 4, ['tisu', 'fenfa']],
+                xuzixuan_SNH48: ['female', 'S', 4, ['luogod', 'longgong', 'huangzi']],
+                yuandanni_SNH48: ['female', 'S', 4, ['complement', 'kuxuan']],
+                yuanyuzhen_SNH48: ['female', 'S', 4, ['ganxing', 'huopo']],
+                zhangyuge_SNH48: ['female', 'S', 3, ['guayan', 'xuanmu']],
+                zhaohanqian_SNH48: ['female', 'S', 4, ['kuaiyan', 'innocence']],
+                zhaoye_SNH48: ['female', 'S', 4, ['baofa', 'caihua']],
+                zhuxiaodan_SNH48: ['female', 'S', 4, ['liren','shouzhuo']],
+                chenjunyu_SNH48: ['female', 'S', 4, ['mengdong','maomao']],
 
-                SNH48Gzhaojiamin: ['female', 'S', 4, ['shuangfa', 'buzhuang']],
+                zhaojiamin_SNH48: ['female', 'S', 4, ['shuangfa', 'buzhuang']],
 
                 //N
-                SNH48Gchenjiaying: ['female', 'N', 3, ['zhiheng']],
-                SNH48Gchenwenyan: ['female', 'N', 3, ['zhiheng']],
-                SNH48Gfengxinduo: ['female', 'N', 4, ['pupu', 'hainv', 'ho2h']],
-                SNH48Gguoqianyun: ['female', 'N', 3, ['zhiheng']],
-                SNH48Ghuangtingting: ['female', 'N', 4, ['yancang', 'jiezou']],
-                SNH48Ghaowanqing: ['female', 'N', 3, ['rende', 'yingzi']],
-                SNH48Ghexiaoyu: ['female', 'N', 3, ['rende', 'yingzi']],
-                SNH48Gjinyingyue: ['female', 'N', 3, ['rende', 'yingzi']],
-                SNH48Gjiangzhenyi: ['female', 'N', 4, ['zhengyi']],
-                SNH48Gliujuzi: ['female', 'N', 3, ['rende', 'yingzi']],
-                SNH48Gliupeixin: ['female', 'N', 3, ['rende', 'yingzi']],
-                SNH48Gluting: ['female', 'N', 4, ['dage', 'kongchang', 'ho2o']],
-                SNH48Gtaoboer: ['female', 'N', 3, ['biyue', 'paoxiao']],
-                SNH48Gxieni: ['female', 'N', 3, ['biyue', 'liuli']],
-                SNH48Gyijiaai: ['female', 'N', 3, ['duwu', 'mashu']],
-                SNH48Gzhaoyue: ['female', 'N', 4, ['huobing', 'renwu']],
-                SNH48Gzhangyi: ['female', 'N', 3, ['duwu', 'mashu']],
-                SNH48Gzhangyuxin: ['female', 'N', 3, ['xingwen', 'duoyi']],
+                chenjiaying_SNH48: ['female', 'N', 3, ['zhiheng']],
+                chenwenyan_SNH48: ['female', 'N', 3, ['zhiheng']],
+                fengxinduo_SNH48: ['female', 'N', 4, ['pupu', 'hainv', 'ho2h']],
+                guoqianyun_SNH48: ['female', 'N', 3, ['zhiheng']],
+                huangtingting_SNH48: ['female', 'N', 4, ['yancang', 'jiezou']],
+                haowanqing_SNH48: ['female', 'N', 3, ['rende', 'yingzi']],
+                hexiaoyu_SNH48: ['female', 'N', 3, ['rende', 'yingzi']],
+                jinyingyue_SNH48: ['female', 'N', 3, ['rende', 'yingzi']],
+                jiangzhenyi_SNH48: ['female', 'N', 4, ['zhengyi']],
+                liujuzi_SNH48: ['female', 'N', 3, ['rende', 'yingzi']],
+                liupeixin_SNH48: ['female', 'N', 3, ['rende', 'yingzi']],
+                luting_SNH48: ['female', 'N', 4, ['dage', 'kongchang', 'ho2o']],
+                taoboer_SNH48: ['female', 'N', 3, ['biyue', 'paoxiao']],
+                xieni_SNH48: ['female', 'N', 3, ['biyue', 'liuli']],
+                yijiaai_SNH48: ['female', 'N', 3, ['duwu', 'mashu']],
+                zhaoyue_SNH48: ['female', 'N', 4, ['huobing', 'renwu']],
+                zhangyi_SNH48: ['female', 'N', 3, ['duwu', 'mashu']],
+                zhangyuxin_SNH48: ['female', 'N', 3, ['xingwen', 'duoyi']],
 
-                SNH48Gjujingyi: ['female', 'N', 4, ['dufei', 'poisonousfog', 'jiedu', 'duzong']],
+                jujingyi_SNH48: ['female', 'N', 4, ['dufei', 'poisonousfog', 'jiedu', 'duzong']],
 
                 //H
-                SNH48Gfeiqinyuan: ['female', 'H', 3, ['tianxuan', 'yuanqi', 'taizi']],
-                SNH48Ghongpeiyun: ['female', 'H', 4, ['peiyun', 'fuwei']],
-                SNH48Gjiangshan: ['female', 'H', 4, ['yonggu']],
-                SNH48Gjiangshuting: ['female', 'H', 4, ['jiang', 'luanji']],
-                SNH48Glijiaen: ['female', 'H', 4, ['jiang', 'luanji']],
-                SNH48Glinnan: ['female', 'H', 4, ['jiang', 'biyue']],
-                SNH48Glinsiyi: ['female', 'H', 3, ['luoshen', 'qingguo']],
-                SNH48Gliyitong: ['female', 'H', 4, ['jizhi', 'haibao', 'jianfeng']],
-                SNH48Gqiyuzhu: ['female', 'H', 3, ['kurou', 'biyue']],
-                SNH48Gshenmengyao: ['female', 'H', 3, ['luoshen', 'qingguo']],
-                SNH48Gsongyushan: ['female', 'H', 3, ['paoxiao', 'longdan']],
-                SNH48Gsunzhenni: ['female', 'H', 4, ['pengyue', 'haosi']],
-                SNH48Gwanlina: ['female', 'H', 4, ['tiequan']],
-                SNH48Gwangyi: ['female', 'H', 3, ['paoxiao', 'longdan']],
-                SNH48Gxuhan: ['female', 'H', 3, ['paoxiao', 'longdan']],
-                SNH48Gxiongqinxian: ['female', 'H', 3, ['paoxiao', 'longdan']],
-                SNH48Gxuyangyuzhuo: ['female', 'H', 3, ['paoxiao', 'longdan']],
-                SNH48Gyanghuiting: ['female', 'H', 3, ['paoxiao', 'longdan']],
-                SNH48Gyujiayi: ['female', 'H', 4, ['princess', 'jiaoyi']],
-                SNH48Gyuanyiqi: ['female', 'H', 3, ['paoxiao', 'longdan']],
-                SNH48Gzhangxin: ['female', 'H', 3, ['paoxiao', 'longdan']],
-                SNH48Gzengxiaowen: ['female', 'H', 3, ['paoxiao', 'longdan']],
+                feiqinyuan_SNH48: ['female', 'H', 3, ['tianxuan', 'yuanqi', 'taizi']],
+                hongpeiyun_SNH48: ['female', 'H', 4, ['peiyun', 'fuwei']],
+                jiangshan_SNH48: ['female', 'H', 4, ['yonggu']],
+                jiangshuting_SNH48: ['female', 'H', 4, ['jiang', 'luanji']],
+                lijiaen_SNH48: ['female', 'H', 4, ['jiang', 'luanji']],
+                linnan_SNH48: ['female', 'H', 4, ['jiang', 'biyue']],
+                linsiyi_SNH48: ['female', 'H', 3, ['luoshen', 'qingguo']],
+                liyitong_SNH48: ['female', 'H', 4, ['jizhi', 'haibao', 'jianfeng']],
+                qiyuzhu_SNH48: ['female', 'H', 3, ['kurou', 'biyue']],
+                shenmengyao_SNH48: ['female', 'H', 3, ['luoshen', 'qingguo']],
+                songyushan_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
+                sunzhenni_SNH48: ['female', 'H', 4, ['pengyue', 'haosi']],
+                wanlina_SNH48: ['female', 'H', 4, ['tiequan']],
+                wangyi_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
+                xuhan_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
+                xiongqinxian_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
+                xuyangyuzhuo_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
+                yanghuiting_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
+                yujiayi_SNH48: ['female', 'H', 4, ['princess', 'jiaoyi']],
+                yuanyiqi_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
+                zhangxin_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
+                zengxiaowen_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
 
-                SNH48Gliujiongran: ['female', 'H', 3, ['luoshen', 'biyue']],
+                liujiongran_SNH48: ['female', 'H', 3, ['luoshen', 'biyue']],
 
-                SNH48Gchenlin: ['female', 'X', 4, ['datou', 'xunshan']],
-                SNH48Gchenyunling: ['female', 'X', 4, ['taowa', 'quanhuang']],
-                SNH48Gfengxiaofei: ['female', 'X', 4, ['chongaaaa', 'beifen', 'yuanzhen']],
-                SNH48Glizhao: ['female', 'X', 4, ['mitao', 'taobao'], ['zhu']],
-                SNH48Gpanyingqi: ['female', 'X', 4, ['liangong', 'tisheng']],
-                SNH48Gqijing: ['female', 'X', 4, ['lianer', 'jingjing']],
-                SNH48Gsongxinran: ['female', 'X', 4, ['guoer', 'xiaohua']],
-                SNH48Gsunxinwen: ['female', 'X', 4, ['wushuang', 'mashu']],
-                SNH48Gwangjialing: ['female', 'X', 4, ['jiujiu']],
-                SNH48Gwangshu: ['female', 'X', 4, ['chemistry', 'neighbor']],
-                SNH48Gwangxiaojia: ['female', 'X', 4, ['tiancao', 'dianyan']],
-                SNH48Gxushiqi: ['female', 'X', 4, ['xiaoqi']],
-                SNH48Gxietianyi: ['female', 'X', 4, ['wushuang', 'nvzun']],
-                SNH48Gyangbingyi: ['female', 'X', 4, ['tieyi', 'icefeng', 'ershui'], ['zhu']],
-                SNH48Gyangyunyu: ['female', 'X', 3, ['zhanbu']],
-                SNH48Gzhangdansan: ['female', 'X', 4, ['tansuan']],
-                SNH48Gzhangjiayu: ['female', 'X', 4, ['muwang']],
+                chenlin_SNH48: ['female', 'X', 4, ['datou', 'xunshan']],
+                chenyunling_SNH48: ['female', 'X', 4, ['taowa', 'quanhuang']],
+                fengxiaofei_SNH48: ['female', 'X', 4, ['chongaaaa', 'beifen', 'yuanzhen']],
+                lizhao_SNH48: ['female', 'X', 4, ['mitao', 'taobao'], ['zhu']],
+                panyingqi_SNH48: ['female', 'X', 4, ['liangong', 'tisheng']],
+                qijing_SNH48: ['female', 'X', 4, ['lianer', 'jingjing']],
+                songxinran_SNH48: ['female', 'X', 4, ['guoer', 'xiaohua']],
+                sunxinwen_SNH48: ['female', 'X', 4, ['wushuang', 'mashu']],
+                wangjialing_SNH48: ['female', 'X', 4, ['jiujiu']],
+                wangshu_SNH48: ['female', 'X', 4, ['chemistry', 'neighbor']],
+                wangxiaojia_SNH48: ['female', 'X', 4, ['tiancao', 'dianyan']],
+                xushiqi_SNH48: ['female', 'X', 4, ['xiaoqi']],
+                xietianyi_SNH48: ['female', 'X', 4, ['wushuang', 'nvzun']],
+                yangbingyi_SNH48: ['female', 'X', 4, ['tieyi', 'icefeng', 'ershui'], ['zhu']],
+                yangyunyu_SNH48: ['female', 'X', 3, ['zhanbu']],
+                zhangdansan_SNH48: ['female', 'X', 4, ['tansuan']],
+                zhangjiayu_SNH48: ['female', 'X', 4, ['muwang']],
 
-                SNH48Glijing: ['female', 'X', 4, ['order', 'xflag']],
+                lijing_SNH48: ['female', 'X', 4, ['order', 'xflag']],
 
-                SNH48Gwangzijie: ['male', 'guan', 1, ['longdan', 'chongzhen', 'paoxiao', 'jiang', 'linglong']],
-                SNH48Gaji: ['male', 'guan', 1, ['buqu', 'yingzi', 'kuaihuo', 'yiji', 'jizhi']],
-                SNH48Gyegou: ['male', 'guan', 1, ['zhiheng', 'paoxiao', 'wansha', 'weimu', 'luanwu']],
-                SNH48Gmulaosi: ['female', 'guan', 1, ['biyue', 'tiaoxin', 'xiaoji', 'liuli', 'ruoyu']],
-                SNH48Gpiggyrae: ['female', 'guan', 1, ['luoshen', 'luandance', 'qingguo', 'fankui', 'leiji']],
+                //BEJ48
+                duanyixuan_BEJ48: ['female','B',4,['paoxiao']],
+                liushuxian_BEJ48: ['female','B',4,['paoxiao']],
+                sushanshan_BEJ48: ['female','E',4,['paoxiao']],
+                lizi_BEJ48: ['female','E',4,['paoxiao']],
+                huangenru_BEJ48: ['female','J',4,['paoxiao']],
+                hanjiale_BEJ48: ['female','J',4,['paoxiao']],
+                //GNZ48
+                xieleilei_GNZ48: ['female','G',4,['paoxiao']],
+                zhangqiongyu_GNZ48: ['female','G',4,['paoxiao']],
+                liangjiao_GNZ48: ['female','G',3,['hongyan','tianxian']],
+                zhengdanni_GNZ48: ['female','N3',4,['paoxiao']],
+                liulifei_GNZ48: ['female','N3',4,['paoxiao']],
+                laizixi_GNZ48: ['female','Z',4,['paoxiao']],
+                nongyanping_GNZ48: ['female','Z',4,['paoxiao']],
+                liangqiao_GNZ48: ['female', 'Z',3,['guose','liuli']],
+
+                wangzijie_SB: ['male', 'guan', 1, ['longdan', 'chongzhen', 'paoxiao', 'jiang', 'linglong']],
+                aji_SB: ['male', 'guan', 1, ['buqu', 'yingzi', 'kuaihuo', 'yiji', 'jizhi']],
+                yesheng_SB: ['male', 'guan', 1, ['zhiheng', 'paoxiao', 'wansha', 'weimu', 'luanwu']],
+                mulaosi_SB: ['female', 'guan', 1, ['biyue', 'tiaoxin', 'xiaoji', 'liuli', 'ruoyu']],
+                piggyrae_SB: ['female', 'guan', 1, ['luoshen', 'luandance', 'qingguo', 'fankui', 'leiji']],
             }
         },
         skill: {
@@ -430,8 +447,15 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     N: [],
                     H: [],
                     X: [],
+                    B: [],
+                    E: [],
+                    J: [],
+                    G: [],
+                    N3: [],
+                    Z: [],
                     guan: []
-                }; for (var i = 0; i < choice.length; i++) {
+                };
+                for (var i = 0; i < choice.length; i++) {
                     var group = lib.character[choice[i]][1];
                     if (map[group]) {
                         map[group].push(choice[i]);
@@ -536,7 +560,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     else {
                         data[identity][1]++;
                     }
-                    var list = ['wei', 'shu', 'wu', 'qun', 'ye'];
+                    var list = ['S', 'N', 'H', 'X', 'B', 'E', 'J', 'G', 'N3', 'Z', 'guan'];
                     var str = '';
                     for (var i = 0; i < list.length; i++) {
                         if (data[list[i]]) {
@@ -548,6 +572,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 }
             },
             getIdentityList: function (player) {
+                debugger;
                 if (!player.isUnseen()) return;
                 if (player == game.me) return;
                 var list = {
@@ -555,6 +580,12 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     N: 'N',
                     H: 'H',
                     X: 'X',
+                    B: 'B',
+                    E: 'E',
+                    J: 'J',
+                    G: 'G',
+                    N3: 'N',
+                    Z: 'Z',
                     guan: '官',
                     unknown: '猜'
                 }
@@ -574,6 +605,30 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 }
                 if (get.population('X') >= num) {
                     delete list.X;
+                    noye = false;
+                }
+                if (get.population('B') >= num) {
+                    delete list.B;
+                    noye = false;
+                }
+                if (get.population('E') >= num) {
+                    delete list.E;
+                    noye = false;
+                }
+                if (get.population('J') >= num) {
+                    delete list.J;
+                    noye = false;
+                }
+                if (get.population('G') >= num) {
+                    delete list.G;
+                    noye = false;
+                }
+                if (get.population('N3') >= num) {
+                    delete list.N3;
+                    noye = false;
+                }
+                if (get.population('Z') >= num) {
+                    delete list.Z;
                     noye = false;
                 }
                 if (noye) {
@@ -1175,13 +1230,20 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     }
                     _status.clicked = true;
                     if (this.parentNode.isUnseen() && this.parentNode != game.me) {
+                        debugger
                         switch (this.firstChild.innerHTML) {
-                            case 'S': this.firstChild.innerHTML = 'S'; this.dataset.color = 'water'; break;
-                            case 'N': this.firstChild.innerHTML = 'N'; this.dataset.color = 'thunder'; break;
-                            case 'H': this.firstChild.innerHTML = 'H'; this.dataset.color = 'fire'; break;
-                            case 'X': this.firstChild.innerHTML = 'X'; this.dataset.color = 'nature'; break;
+                            case 'S': this.firstChild.innerHTML = 'S'; this.dataset.color = 'SNH48S'; break;
+                            case 'N': this.firstChild.innerHTML = 'N'; this.dataset.color = 'SNH48N'; break;
+                            case 'H': this.firstChild.innerHTML = 'H'; this.dataset.color = 'SNH48H'; break;
+                            case 'X': this.firstChild.innerHTML = 'X'; this.dataset.color = 'SNH48X'; break;
+                            case 'B': this.firstChild.innerHTML = 'B'; this.dataset.color = 'BEJ48B'; break;
+                            case 'E': this.firstChild.innerHTML = 'E'; this.dataset.color = 'BEJ48E'; break;
+                            case 'J': this.firstChild.innerHTML = 'J'; this.dataset.color = 'BEJ48J'; break;
+                            case 'G': this.firstChild.innerHTML = 'G'; this.dataset.color = 'GNZ48G'; break;
+                            case 'N3': this.firstChild.innerHTML = 'N'; this.dataset.color = 'GNZ48N'; break;
+                            case 'Z': this.firstChild.innerHTML = 'Z'; this.dataset.color = 'GNZ48Z'; break;
                             case 'guan': this.firstChild.innerHTML = 'guan'; this.dataset.color = 'metal'; break;
-                            default: this.firstChild.innerHTML = '魏'; this.dataset.color = 'wei'; break;
+                            default: this.firstChild.innerHTML = 'S'; this.dataset.color = 'SNH48S'; break;
                         }
                     }
                 }
@@ -1208,7 +1270,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             ho2: 'HO',
             ho2_info: '如果这就是爱情。你每使用一张♥牌，摸一张牌，回复一点体力'
         },
-        junList: ['SNH48Gdaimeng', 'SNH48Gyijiaai', 'SNH48Gwanlina', 'SNH48lizhao'],
+        junList: ['SNH48daimeng', 'SNH48yijiaai', 'SNH48wanlina', 'SNH48lizhao'],
         guozhanPile: [
             ["spade", 7, "sha"],
             ["spade", 8, "sha"],

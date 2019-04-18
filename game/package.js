@@ -16,7 +16,7 @@ window.noname_package = {
         swd: '轩辕剑',
         gujian: '古剑奇谭',
         xianjian: '仙剑',
-        SNH48G: 'SNH48G'
+        SNH48: 'SNH48'
     },
     card: {
         standard: '标准',
@@ -29,7 +29,7 @@ window.noname_package = {
         gujian: '古剑奇谭',
         hearth: '炉石传说',
         gwent: '昆特牌',
-        SNH48G: 'SNH48G'
+        SNH48: 'SNH48'
     },
     play: {
         boss: '诸神降临',
@@ -38,7 +38,7 @@ window.noname_package = {
         coin: '富甲天下',
     },
     mode: {
-        SNH48G: 'SNH48',
+        SNH48: 'SNH48',
         identity: '身份',
         guozhan: '国战',
         versus: '对决',
