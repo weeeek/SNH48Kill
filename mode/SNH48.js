@@ -455,6 +455,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     Z: [],
                     guan: []
                 };
+                //num配置的可选角色个数
                 for (var i = 0; i < choice.length; i++) {
                     var group = lib.character[choice[i]][1];
                     if (map[group]) {
@@ -572,7 +573,6 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 }
             },
             getIdentityList: function (player) {
-                debugger;
                 if (!player.isUnseen()) return;
                 if (player == game.me) return;
                 var list = {
@@ -861,8 +861,21 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                                 if (get.is.jun(i)) continue;
                             }
                         }
-                        if (lib.character[i][2] == 3 || lib.character[i][2] == 4 || lib.character[i][2] == 5)
-                            event.list.push(i);
+                        //可选角色血量控制
+                        switch(lib.character[i][2]){
+                            case 3:
+                            case 4:
+                            case 5:
+                            case 6:
+                                event.list.push(i);
+                                break;
+                            default:
+                                //因为SB的人都是2血，之前跳过了他们，现在他们可以被随机pick到了。
+                                if(i.indexOf('_SB')> 0){
+                                    event.list.push(i);
+                                }
+                                break;
+                        }
                     }
                     _status.characterlist = event.list.slice(0);
                     _status.yeidentity = [];
@@ -1230,7 +1243,6 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     }
                     _status.clicked = true;
                     if (this.parentNode.isUnseen() && this.parentNode != game.me) {
-                        debugger
                         switch (this.firstChild.innerHTML) {
                             case 'S': this.firstChild.innerHTML = 'S'; this.dataset.color = 'SNH48S'; break;
                             case 'N': this.firstChild.innerHTML = 'N'; this.dataset.color = 'SNH48N'; break;

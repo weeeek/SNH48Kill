@@ -4334,6 +4334,34 @@ span[data-nature='woodmm'] {
 		rgba(57, 123, 4, 1) 0 0 2px, black 0 0 1px;
 }
 
+.identity[data-nature="guan"],
+.identity[data-nature="S"],
+.identity[data-nature="N"],
+.identity[data-nature="H"],
+.identity[data-nature="X"],
+.identity[data-nature="B"],
+.identity[data-nature="E"],
+.identity[data-nature="J"],
+.identity[data-nature="G"],
+.identity[data-nature="N3"],
+.identity[data-nature="Z"]{
+	font-weight: bolder
+}
+
+.player .identity[data-color="guan"] {
+	color: rgba(0, 0, 0, 1)
+}
+.player .identity[data-color="guan"],
+.guan,
+div[data-nature='guan'],
+span[data-nature='guan']{
+	text-shadow: rgba(0,0,0,1) 0 0 2px,
+				 rgba(0,0,0,1) 0 0 5px,
+				 rgba(0,0,0,1) 0 0 10px,
+				 rgba(0,0,0,1) 0 0 20px,
+				 black 0 0 1px
+}
+
 .player .identity[data-color="S"] {
 	color: rgba(145, 205, 235, 1)
 }

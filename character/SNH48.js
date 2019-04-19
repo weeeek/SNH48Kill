@@ -123,23 +123,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             liangqiao_GNZ48: ['female', 'Z',3,['guose','liuli']],
 
             //官方人物，5原三国杀技能组合
-            wangzijie_SB: ['male', 'ye', 2, ['longdan', 'chongzhen', 'paoxiao', 'jiang', 'linglong']],
-            aji_SB: ['male', 'ye', 2, ['buqu', 'yingzi', 'kuaihuo', 'yiji', 'jizhi']],
-            yesheng_SB: ['male', 'ye', 2, ['zhiheng', 'paoxiao', 'wansha', 'weimu', 'luanwu']],
-            mulaosi_SB: ['female', 'ye', 2, ['biyue', 'tiaoxin', 'xiaoji', 'liuli', 'ziqiang']],
-            piggyrae_SB: ['female', 'ye', 2, ['luoshen', 'luandance', 'qingguo', 'fankui', 'leiji']],
-
-
-            shibing1wei: ['male', 'S', 0, [], ['unseen']],
-            shibing2wei: ['female', 'S', 0, [], ['unseen']],
-            shibing1shu: ['male', 'H', 0, [], ['unseen']],
-            shibing2shu: ['female', 'H', 0, [], ['unseen']],
-            shibing1wu: ['male', 'X', 0, [], ['unseen']],
-            shibing2wu: ['female', 'X', 0, [], ['unseen']],
-            shibing1qun: ['male', 'qun', 0, [], ['unseen']],
-            shibing2qun: ['female', 'qun', 0, [], ['unseen']],
-            shibing1ye: ['male', 'N', 0, [], ['unseen']],
-            shibing2ye: ['female', 'N', 0, [], ['unseen']],
+            wangzijie_SB: ['male', 'guan', 2, ['longdan', 'chongzhen', 'paoxiao', 'jiang', 'linglong']],
+            aji_SB: ['male', 'guan', 2, ['buqu', 'yingzi', 'kuaihuo', 'yiji', 'jizhi']],
+            yesheng_SB: ['male', 'guan', 2, ['zhiheng', 'paoxiao', 'wansha', 'weimu', 'luanwu']],
+            mulaosi_SB: ['female', 'guan', 2, ['biyue', 'tiaoxin', 'xiaoji', 'liuli', 'ziqiang']],
+            piggyrae_SB: ['female', 'guan', 2, ['luoshen', 'luandance', 'qingguo', 'fankui', 'leiji']]
         },
         characterIntro: {
             //S

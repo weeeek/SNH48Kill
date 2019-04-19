@@ -4173,11 +4173,11 @@
                         init: '12',
                         restart: true,
                         item: {
-                            '8': '8',
-                            '9': '9',
-                            '10': '10',
-                            '11': '11',
                             '12': '12',
+                            '18': '18',
+                            '24': '24',
+                            '30': '30',
+                            '36': '36',
                         }
                     },
                 }
@@ -9159,13 +9159,15 @@
                     suit = ['spade', 'club'].randomGet();
                 }
 
-                if (name == 'huosha') {
-                    name = 'sha';
-                    nature = 'fire';
-                }
-                else if (name == 'leisha') {
-                    name = 'sha';
-                    nature = 'thunder';
+                switch(name){
+                    case 'huosha':
+                        name = 'sha';
+                        nature = 'fire';
+                        break;
+                    case 'leisha':
+                        name = 'sha';
+                        nature = 'thunder';
+                        break;
                 }
                 if (!lib.card[name]) {
                     return null;
@@ -10070,11 +10072,16 @@
                             nodes.push(ui.arena.childNodes[i]);
                         }
                         for (var i = 0; i < nodes.length; i++) {
-                            if (nodes[i] == ui.canvas) continue;
-                            if (nodes[i] == ui.control) continue;
-                            if (nodes[i] == ui.mebg) continue;
-                            if (nodes[i] == ui.me) continue;
-                            if (nodes[i] == ui.roundmenu) continue;
+                            switch(nodes[i]){
+                                case ui.canvas:
+                                case ui.control:
+                                case ui.mebg:
+                                case ui.me:
+                                case ui.roundmenu:
+                                    continue;
+                                default:
+                                    break;
+                            }
                             nodes[i].remove();
                         }
                         ui.sidebar.innerHTML = '';
@@ -13465,11 +13472,13 @@
                         player.$damage(source);
                         game.broadcastAll(function (nature, player) {
                             if (lib.config.animation && !lib.config.low_performance) {
-                                if (nature == 'fire') {
-                                    player.$fire();
-                                }
-                                else if (nature == 'thunder') {
-                                    player.$thunder();
+                                switch(nature){
+                                    case 'fire':
+                                        player.$fire();
+                                        break;
+                                    case 'thunder':
+                                        player.$thunder();
+                                        break;
                                 }
                             }
                         }, event.nature, player);
@@ -22117,13 +22126,41 @@
         },
         sort: {
             character: function (a, b) {
-                var groupSort = function (name) {
+                var groupSort = function (name) {                    
                     if (!lib.character[name]) return 4;
-                    if (lib.character[name][1] == 'shen') return -1;
-                    if (lib.character[name][1] == 'wei') return 0;
-                    if (lib.character[name][1] == 'shu') return 1;
-                    if (lib.character[name][1] == 'wu') return 2;
-                    if (lib.character[name][1] == 'qun') return 3;
+                    switch(lib.character[name][1]){                        
+                        case 'wei':
+                            return 0;
+                        case 'shu':
+                            return 1;
+                        case 'wu':
+                            return 2;
+                        case 'qun':
+                            return 3;
+                        case 'S':
+                            return 4;
+                        case 'N':
+                            return 5;
+                        case 'H':
+                            return 6;
+                        case 'X':
+                            return 7;
+                        case 'B':
+                            return 8;
+                        case 'E':
+                            return 9;
+                        case 'J':
+                            return 10;
+                        case 'G':
+                            return 11;
+                        case 'N3':
+                            return 12;
+                        case 'Z':
+                            return 13;
+                        default:
+                        case 'shen':
+                            return -1;
+                    }
                 }
                 var del = groupSort(a) - groupSort(b);
                 if (del != 0) return del;
@@ -28979,6 +29016,7 @@
                             this.setBackground(event.replacing, 'character');
 
                             this.nodename.innerHTML = get.slimName(event.replacing);
+                            
                             this.nodename.dataset.nature = get.groupnature(lib.character[event.replacing][1]);
 
                             delete event.replacing;
@@ -37868,10 +37906,20 @@
                 var namecapt = [];
                 var getCapt = function (str) {
                     var capt;
-                    if (str.indexOf('_') == -1) {
+                    //48成员特别筛选组
+                    if (str.includes('48')){
+                        capt = str.substr(str.lastIndexOf('_') + 1, 5);
+                        return capt;
+                    }
+                    else if (str.includes('_SB')){
+                        capt = '丝芭';
+                        return capt;
+                    }
+                    else if (str.indexOf('_') == -1) {
                         capt = str[0];
                     }
                     else {
+                        //re_武将
                         capt = str[str.lastIndexOf('_') + 1];
                     }
                     capt = capt.toLowerCase();
@@ -38090,11 +38138,13 @@
                         span.addEventListener(lib.config.touchscreen ? 'touchend' : 'click', clickCapt);
                         newlined.appendChild(span);
                         node[namecapt[i]] = span;
-                        if (namecapt[i] == '收藏') {
-                            span._nature = 'fire';
-                        }
-                        else {
-                            span._nature = 'wood';
+                        switch(namecapt[i]){
+                            case '收藏':
+                                span._nature = 'fire';
+                                break;
+                            default:
+                                span._nature = 'wood';
+                                break;
                         }
                     }
                     else {
@@ -38165,7 +38215,7 @@
                                 }
                             }
                         }
-                    };
+                    };                    
                     for (var i = 0; i < groups.length; i++) {
                         var span = ui.create.div('.tdnode.pointerdiv.shadowed.reduce_radius.reduce_margin');
                         span.style.margin = '3px';
@@ -38203,8 +38253,7 @@
                             this.delete();
                             this.classList.remove('shown');
                             e.stopPropagation();
-                        });
-                        debugger
+                        });                        
                         for (var i = 0; i < node.childElementCount; i++) {
                             if (node.childNodes[i].tagName.toLowerCase() == 'span') {
                                 node.childNodes[i].style.display = 'none';
@@ -38238,7 +38287,6 @@
                         newlined2.style.fontSize = '22px';
                     }
                     newlined2.style.textAlign = 'center';
-                    debugger
                     node.appendChild(newlined2);
 
                     packsource.addEventListener(lib.config.touchscreen ? 'touchend' : 'click', function () {
@@ -38318,12 +38366,40 @@
                     };
                 }
                 else {
-                    groupSort = function (name) {
-                        if (lib.character[name][1] == 'shen') return -1;
-                        if (lib.character[name][1] == 'wei') return 0;
-                        if (lib.character[name][1] == 'shu') return 1;
-                        if (lib.character[name][1] == 'wu') return 2;
-                        if (lib.character[name][1] == 'qun') return 3;
+                    groupSort = function (name) {                        
+                        switch(lib.character[name][1]){
+                            default:
+                            case 'shen':
+                                return -1;
+                            case 'wei':
+                                return 0;
+                            case 'shu':
+                                return 1;
+                            case 'wu':
+                                return 2;
+                            case 'qun':
+                                return 3;
+                            case 'S':
+                                return 4;
+                            case 'N':
+                                return 5;
+                            case 'H':
+                                return 6;
+                            case 'X':
+                                return 7;
+                            case 'B':
+                                return 8;
+                            case 'E':
+                                return 9;
+                            case 'J':
+                                return 10;
+                            case 'G':
+                                return 11;
+                            case 'N3':
+                                return 12;
+                            case 'Z':
+                                return 13;
+                        }
                     }
                 }
                 list.sort(function (a, b) {
@@ -38373,7 +38449,6 @@
                 if (str) {
                     dialog.add(str);
                 }
-                debugger
                 dialog.add(node);
                 if (thisiscard) {
                     if (seperate) {
@@ -44037,12 +44112,28 @@
         },
         groupnature: function (group, method) {
             var nature;
+            // 角色阵营data-nature配置，Layout.css line 4337
             switch (group) {
                 case 'shen': nature = 'thunder'; break;
                 case 'wei': nature = 'water'; break;
                 case 'shu': nature = 'soil'; break;
                 case 'wu': nature = 'wood'; break;
-                case 'qun': nature = 'metal'; break;
+                case 'ye': 
+                case 'qun': 
+                    nature = 'metal'; break;
+                case 'S': 
+                case 'N': 
+                case 'H': 
+                case 'X': 
+                case 'B': 
+                case 'E': 
+                case 'J': 
+                case 'G': 
+                case 'N3': 
+                case 'Z':  
+                case 'guan': 
+                    nature = group;
+                    break;
                 default: return '';
             }
             if (method == 'raw') {
