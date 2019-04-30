@@ -64,11 +64,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             jiangshan_SNH48: ['female', 'H', 4, ['yonggu']],
             //jiangshuting_SNH48: ['female', 'H', 4, ['jiang', 'luanji']],
             //lijiaen_SNH48: ['female', 'H', 4, ['jiang', 'luanji']],
-            //linnan_SNH48: ['female', 'H', 4, ['jiang', 'biyue']],
+            linnan_SNH48: ['female', 'H', 4, ['tianding', 'dapin']],
             //linsiyi_SNH48: ['female', 'H', 3, ['luoshen', 'qingguo']],
             liyitong_SNH48: ['female', 'H', 4, ['jizhi', 'haibao', 'jianfeng']],
             //qiyuzhu_SNH48: ['female', 'H', 3, ['kurou', 'biyue']],
-            //shenmengyao_SNH48: ['female', 'H', 3, ['luoshen', 'qingguo']],
+            shenmengyao_SNH48: ['female', 'H', 4, ['shenmiao']],
             //songyushan_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
             sunzhenni_SNH48: ['female', 'H', 4, ['pengyue', 'haosi']],
             wanlina_SNH48: ['female', 'H', 4, ['tiequan'], ['zhu']],
@@ -92,7 +92,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             panyingqi_SNH48: ['female', 'X', 4, ['liangong', 'tisheng']],
             qijing_SNH48: ['female', 'X', 4, ['lianer', 'jingjing']],
             songxinran_SNH48: ['female', 'X', 4, ['guoer', 'xiaohua']],
-            //sunxinwen_SNH48: ['female', 'X', 4, ['wushuang', 'mashu']],
+            sunxinwen_SNH48: ['female', 'X', 4, ['news']],
             wangjialing_SNH48: ['female', 'X', 4, ['jiujiu']],
             wangshu_SNH48: ['female', 'X', 4, ['chemistry', 'neighbor']],
             wangxiaojia_SNH48: ['female', 'X', 4, ['tiancao', 'dianyan']],
@@ -131,35 +131,35 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
         },
         characterIntro: {
             //S
-            chenjunyu_SNH48: 'SNH48 Team SII 成员，SHY48三期生。',
+            chenjunyu_SNH48: 'SNH48 Team SII 成员，SHY48三期生',
             chenguanhui_SNH48: 'SNH48 Team SII 成员，SNH48一期生。很少有人知道如今的人妻艾在当初也曾是S队的标准男役担当。温婉是一个标准的纯防御技能，体现着小艾不欲与人争锋的性格特点。而偶尔腹黑的一面，不仅能跟队友形成微妙的联动，还能有力的回击来自外界的恶意',
             chengjue_SNH48: 'SNH48 Team SII 成员，SNH48六期生。MC四大输出之一，同时直播里喜欢疯狂暗示自成一路的王玉是S队次时代之一。快刀在当前环境下算是较为合理的强命技。巧盐则保证了不会缺少武器的尴尬，有队友支持的情况下输出能力相当不俗',
-            chensi_SNH48: 'SNH48 Team SII 成员，SNH48一期生。教练是早期的最强者，也是队内的小天使。在面对有恶意的人时，教练会以强大的武力回击来保护自己的队友。同时，即使自身的经历并不美好，教练仍然对这个世界抱有期待，在各种不被人注意的时候总能看到其暖心的一面。',
-            daimeng_SNH48: 'SNH48 Team SII 队长，SNH48一期生。全队的领军人物，也是队里的家长般的存在。作为主公坚毅提供了一定的防护能力，担当虽然属性上更适合忠臣，但是能够体恤忠臣的付出更显王道本色，领军意味着只要队友不死，就能依靠队友的支持一次次重新站起，体现出了TEAM SII的诚挚团结之意。',
-            jiangyun_SNH48: 'SNH48 Team SII 成员，古风大佬，SNH48二期生。一首红玫瑰惊艳四座，她的潜力远远超过了我们的想象。多面结合了张郃的巧变和荀攸的奇策，进可攻退可守，是上限极高的技能之一。气场则保证了多面的命中率，跟多变形成独有的锦囊类强命技能，还能跟络崽的技能形成几乎完美的配合。',
+            chensi_SNH48: 'SNH48 Team SII 成员，SNH48一期生。教练是早期的最强者，也是队内的小天使。在面对有恶意的人时，教练会以强大的武力回击来保护自己的队友。同时，即使自身的经历并不美好，教练仍然对这个世界抱有期待，在各种不被人注意的时候总能看到其暖心的一面',
+            daimeng_SNH48: 'SNH48 Team SII 队长，SNH48一期生。全队的领军人物，也是队里的家长般的存在。作为主公坚毅提供了一定的防护能力，担当虽然属性上更适合忠臣，但是能够体恤忠臣的付出更显王道本色，领军意味着只要队友不死，就能依靠队友的支持一次次重新站起，体现出了TEAM SII的诚挚团结之意',
+            jiangyun_SNH48: 'SNH48 Team SII 成员，古风大佬，SNH48二期生。一首红玫瑰惊艳四座，她的潜力远远超过了我们的想象。多面结合了张郃的巧变和荀攸的奇策，进可攻退可守，是上限极高的技能之一。气场则保证了多面的命中率，跟多变形成独有的锦囊类强命技能，还能跟络崽的技能形成几乎完美的配合',
             kongxiaoyin_SNH48: 'SNH48 Team SII 性感成员，SNH48一期生。小孔是一个十分有趣的人，既是全团最拽也是队内总欺，温柔大方的她所在之处一定不会缺少欢乐。神魂颠倒是小孔的成名曲，神魂也是小孔的精髓所在，提高手牌上限能加强蓄爆能力，而颠倒则赋予了回合外的反制能力以及加快音符数的累积。音符是小孔家粉丝的昵称，觉醒后的小孔会跟自己的粉丝共同进退，赢得最终的胜利',            
-            liyuqi_SNH48: 'SNH48 Team SII 成员，SNH48一期生。李毛毛是嘉兴路著名暖男，全能偶像，日常义务公演，从替补到选拔，坚韧是毛毛最好的代名词。豪迈是根据毛毛有话直说的个性得来，虽然放弃了属性伤害，但却大幅提高了普通杀和决斗的收益，堂堂正正以王道取胜。全能与其说是神技不如说是信仰，只要手中仍有牌就有希望，与李毛一贯的坚韧风格相匹配。',
-            liuzengyan_SNH48: 'SNH48 Team SII 成员，SNH48五期生。增锅是重组后新加入S队的成员，人美歌甜，造梗能力出色，很快融入了S队的氛围中并成为不可或缺的一员。技能上，痛饮赋予了增锅不会被酒杀集火的防御力，也能在关键时刻援助队友。勇烈改自神周瑜的业火，奠定了增锅作为全队第一爆发手的地位，预示着一旦外界压力达到了警戒线，被激发的增锅将会给所有人展示她的强硬。',
-            mohan_SNH48: 'SNH48 Team SII 副队长，SNH48一期生。莫寒是一个表面无害实则刚强的人，回合内依靠食欲进行续航与爆发，回合外以预言保证手牌量不会过低，也会让敌人因为判定牌而随时改变战术。觉醒后的大魔王更加强大，不仅血量增加还拥有了回合外的强输出能力，凸显了于危难中接任队长时莫莫的魄力和强势。',
-            panyanqi_SNH48: 'SNH48 Team SII 成员，SNH48七期生。大可是心旅加入S队的三个七期生之一，重组后下放预备生。在队期间大可上进且温柔，是非常具有队魂的后辈。大可的两个技能都是来源于重组当日给我的印象，同心是王玉哭崩时上前给予的安慰，也有着强悍的防守反击能力。奉献是同样被下放的处境下却能忍住悲伤跟全队一起鞠躬，在已经命悬一线的情况下主动给队友创造奇迹的机会。',
-            qianbeiting_SNH48: 'SNH48 Team SII 成员，SNH48一期生。曾是一期生16人替补的小钱历经风雨磨练出一套属于自己的偶像理解，已经成为如今S队的支柱。聚虾成塔来自全年四选的获奖发言，虽然小钱有着众多表情包和搞笑高能，但我认为她欢乐的外表下隐藏着一颗要强的心，聚虾随着时间的推移愈发强大，成塔则是在关键时刻能挺身而出，于逆境中闯出一片天。',
-            qiuxinyi_SNH48: 'SNH48 Team SII 成员，SNH48一期生。湾总，S队公认土豪，一期生早期官推，星梦剧场传说级别的人物，但从不因距离而疏远与队友的关系。妹系湾是早期形态，无防具的白银狮子有着良好的防爆特性。如今完全体的女王湾不仅过去的经历独一无二，未来的前途也同样不可限量。',
+            liyuqi_SNH48: 'SNH48 Team SII 成员，SNH48一期生。李毛毛是嘉兴路著名暖男，全能偶像，日常义务公演，从替补到选拔，坚韧是毛毛最好的代名词。豪迈是根据毛毛有话直说的个性得来，虽然放弃了属性伤害，但却大幅提高了普通杀和决斗的收益，堂堂正正以王道取胜。全能与其说是神技不如说是信仰，只要手中仍有牌就有希望，与李毛一贯的坚韧风格相匹配',
+            liuzengyan_SNH48: 'SNH48 Team SII 成员，SNH48五期生。增锅是重组后新加入S队的成员，人美歌甜，造梗能力出色，很快融入了S队的氛围中并成为不可或缺的一员。技能上，痛饮赋予了增锅不会被酒杀集火的防御力，也能在关键时刻援助队友。勇烈改自神周瑜的业火，奠定了增锅作为全队第一爆发手的地位，预示着一旦外界压力达到了警戒线，被激发的增锅将会给所有人展示她的强硬',
+            mohan_SNH48: 'SNH48 Team SII 副队长，SNH48一期生。莫寒是一个表面无害实则刚强的人，回合内依靠食欲进行续航与爆发，回合外以预言保证手牌量不会过低，也会让敌人因为判定牌而随时改变战术。觉醒后的大魔王更加强大，不仅血量增加还拥有了回合外的强输出能力，凸显了于危难中接任队长时莫莫的魄力和强势',
+            panyanqi_SNH48: 'SNH48 Team SII 成员，SNH48七期生。大可是心旅加入S队的三个七期生之一，重组后下放预备生。在队期间大可上进且温柔，是非常具有队魂的后辈。大可的两个技能都是来源于重组当日给我的印象，同心是王玉哭崩时上前给予的安慰，也有着强悍的防守反击能力。奉献是同样被下放的处境下却能忍住悲伤跟全队一起鞠躬，在已经命悬一线的情况下主动给队友创造奇迹的机会',
+            qianbeiting_SNH48: 'SNH48 Team SII 成员，SNH48一期生。曾是一期生16人替补的小钱历经风雨磨练出一套属于自己的偶像理解，已经成为如今S队的支柱。聚虾成塔来自全年四选的获奖发言，虽然小钱有着众多表情包和搞笑高能，但我认为她欢乐的外表下隐藏着一颗要强的心，聚虾随着时间的推移愈发强大，成塔则是在关键时刻能挺身而出，于逆境中闯出一片天',
+            qiuxinyi_SNH48: 'SNH48 Team SII 成员，SNH48一期生。湾总，S队公认土豪，一期生早期官推，星梦剧场传说级别的人物，但从不因距离而疏远与队友的关系。妹系湾是早期形态，无防具的白银狮子有着良好的防爆特性。如今完全体的女王湾不仅过去的经历独一无二，未来的前途也同样不可限量',
             sunrui_SNH48: 'SNH48 Team SII 成员，生日公演专用“男”嘉宾，SNH48二期生。水系偶像孙三哥，非著名迪拜土豪，老来俏干架担当，上海黑心的哥一生之敌...孙芮的事迹太多太多。豪情壮志的前缀，是三哥蛰伏三年后四选一鸣惊人的雄心，气概能有效地限制对方核心的血量和手牌，而热心则能令队友在场外有一定的反制防御能力，',
-            shaoxuecong_SNH48: 'SNH48 Team SII 成员，SNH48四期生。COCO，一个相当正能量的偶像，与萌队一样纯素人入团却也有不输于其他人的偶像素养。異稟来自二选时令人惊讶的UG前列成绩，甜品教主则是COCO平常的代称，異稟本身是个出色的防御技，甜品兼具回复和拆卸两重功效，教主则是高效的控场，令COCO在团队中的作用变得无比重要。',
-            shenzhilin_SNH48: 'SNH48 Team SII 成员，SNH48二期生。小双是S队最早的智商担当，同时也是拍照能手，KI吹顶点，强力歌姬，死亡音姬...小双的才华非常多，缺乏的只是展现的舞台。赞美如字面含义是舍己为人的补牌技，乱音是小双的技能核心，改自鲁肃的缔盟，有着非常强大的控场效果，最后的孪生令小双获得补牌类锦囊或技能的收益变高，但同时必须警惕来自翻面的不良效果。',
-            wenjingjie_SNH48: 'SNH48 Team SII 成员，SNH48二期生。温温是最早加入S队的后辈之一，多年来兢兢业业，三温震一家在S队的几大家庭里别树一帜，离不开温温的居中调和。颖资改自荀彧的驱虎，虽然由对方来选择是掉血或者弃牌，但起到的威慑其实更大，温和则是全队少数的能改判定牌的技能，控场能力十分出色，更能在关键时刻利用判定牌获得某些关键牌改变局面。',
-            wuzhehan_SNH48: 'SNH48 Team SII 成员，SNH48一期生。五折是一个有点傻气却又不天真的人，热爱动物热爱自然，沉稳和童心在她身上显得无比的和谐。阿爸的武将卡我是特地做得比较中二的，这样比较符合阿爸天然的一面23333。江山是询询的强化，偶尔能英姿的李典谁用谁知道。觉醒之后阿爸则化身暴力输出，皇冠改自神吕布的神愤，与KIKI的上钩形成完美COMBO，也是七五折CP的实力象征。',
-            xuchenchen_SNH48: 'SNH48 Team SII 成员，SNH48一期生。大C，老来俏舞蹈担当，塞纳河著名歌姬，曾经的文艺少女在塞纳河经历了种种风雨之后变得风趣且成熟，是S队的定海神针。强音是主要的技能，一牌换两血在集火敌人时非常强悍。劲舞则是回复技能，结合强音几乎是完美的永动效果。成熟则赋予了大C一定的操作技巧，如何控牌控血量将成为制胜关键。',
-            xujiaqi_SNH48: 'SNH48 Team SII 成员，SNH48一期生。从许玛丽到许钩钩，许佳琪一直在超越上一秒的自己，KIKI闪耀的地方不仅仅是好看的外表，更是始终坚强的心灵。阿妈是第一个拥有翻面技能的人，时尚作为回合外的拆顺有稳定的限制爆发能力，上钩改自刘禅的放权，但效果从辅助队友变成强力控场，令KIKI一跃成为S队数一数二的团战强力控制。',
-            xuyiren_SNH48: 'SNH48 Team SII 成员，SNH48三期生。伊姐是S队的老熟人了，是S队公演一道闪烁的光。技能方面很简单，徐家司机担当是伊姐成名之始，提速自带青龙偃月刀效果，保证了杀的高效率使用。另一方面，不懈的努力和良好的人缘使得伊姐无论在哪都能迅速跟成员打成一片，奋发使得伊姐几乎不会缺杀，简单而直接的技能也是伊姐的作风。',
-            xuzixuan_SNH48: 'SNH48 Team SII 成员，SNH48二期生。络络是S队的忙内，曾经是一个大号的中二患者，现在是继承了七五折外加隔壁戴叔叔优点的中流砥柱。络崽作为七五折之子完美继承了阿爸跟阿妈的技能，同时又有着满满的队魂能辅助其他队友，堪称全能。龙宫改自貂蝉的闭月，龙宫成员越多络崽就越强，更能体现一个浪帅浪帅的徐子苏个人魅力。总之一个字，强。',
-            yuandanni_SNH48: 'SNH48 Team SII 成员，SNH48三期生。有着好人缘的丹妮在队里一直以舞蹈担当的存在散发着自己的光和热。补刀源自丹妮的袁式飞刀人设，也是跟队友联动的神技，联合高爆发的队友几乎无解。自己回合内判定的酷炫增加了手牌可使用杀的数量，跟补刀联动使得丹妮可以瞬间打出三刀流的高爆发。',
-            yuanyuzhen_SNH48: 'SNH48 Team SII 成员，SNH48二期生。余震震，S队第二个98LINE，戏精担当，补刀小能手，安静时美如画，活泼时疯如马（芮哥：儿子儿子MUA~）民乐歌姬了解一下。感性是稳定的拆迁控制，虽然有自己的手牌会被对方看到的风险，但配合第二个技能活泼就完全不一样了，大规模拉牌差能力是余震的强势之处，但单挑能力的缺失以及回合外的反制能力差也是高收益背后的高风险。',
-            zhangyuge_SNH48: 'SNH48 Team SII 成员，SNH48一期生。Tako是队宠，更是核心，从话唠小章鱼成长为如今的老干部张帅，多方面发展使得TAKO在任何场合都能迅速成为聚焦点。技能方面简单而实用，寡言使得TAKO免疫了除了翻面以外的所有控制，炫目则是神曹操的归心变化而来，一血多牌可以说是卖血流的最强技能之一，也代表着TAKO即使受伤仍然要坚持梦想的决心。',
-            zhaohanqian_SNH48: 'SNH48 Team SII 成员，SNH48 七期生。赵韩倩给我们带来了很多快乐，也是S队大家的开心果，如今的抖音红人--【赵韩倩要吃钳子】，了解一下。小钳子的两个技能是两种完全不同的机制，只要有发挥的舞台，小钳子就能用自己的实力改变很多东西。',
-            zhaoye_SNH48: 'SNH48 Team SII 成员，SNH48三期生。腿腿，三期生中为数不多的创作担当，MC冷枪王，TAKO著名小迷妹，虽然天天喊着躺床，却依旧能用优质的表现征服大家。腿腿跟王玉一样属于强命系，不同的地方在于王玉是精准打击，腿腿则是大范围的AOE伤害，而且造成的伤害越多，才华的用处就越大，属于越打越强的残局收割者，也跟腿腿不鸣则已一鸣惊人的设定相符合。',
-            zhuxiaodan_SNH48: 'SNH48 Team SII 成员，SNH48九期生。',
-            zhaojiamin_SNH48: '中央戏剧学院在读，SNH48 Team SII 成员，SNH48一期生，《梦想预备生》中饰演同名角色赵嘉敏。',
+            shaoxuecong_SNH48: 'SNH48 Team SII 成员，SNH48四期生。COCO，一个相当正能量的偶像，与萌队一样纯素人入团却也有不输于其他人的偶像素养。異稟来自二选时令人惊讶的UG前列成绩，甜品教主则是COCO平常的代称，異稟本身是个出色的防御技，甜品兼具回复和拆卸两重功效，教主则是高效的控场，令COCO在团队中的作用变得无比重要',
+            shenzhilin_SNH48: 'SNH48 Team SII 成员，SNH48二期生。小双是S队最早的智商担当，同时也是拍照能手，KI吹顶点，强力歌姬，死亡音姬...小双的才华非常多，缺乏的只是展现的舞台。赞美如字面含义是舍己为人的补牌技，乱音是小双的技能核心，改自鲁肃的缔盟，有着非常强大的控场效果，最后的孪生令小双获得补牌类锦囊或技能的收益变高，但同时必须警惕来自翻面的不良效果',
+            wenjingjie_SNH48: 'SNH48 Team SII 成员，SNH48二期生。温温是最早加入S队的后辈之一，多年来兢兢业业，三温震一家在S队的几大家庭里别树一帜，离不开温温的居中调和。颖资改自荀彧的驱虎，虽然由对方来选择是掉血或者弃牌，但起到的威慑其实更大，温和则是全队少数的能改判定牌的技能，控场能力十分出色，更能在关键时刻利用判定牌获得某些关键牌改变局面',
+            wuzhehan_SNH48: 'SNH48 Team SII 成员，SNH48一期生。五折是一个有点傻气却又不天真的人，热爱动物热爱自然，沉稳和童心在她身上显得无比的和谐。阿爸的武将卡我是特地做得比较中二的，这样比较符合阿爸天然的一面23333。江山是询询的强化，偶尔能英姿的李典谁用谁知道。觉醒之后阿爸则化身暴力输出，皇冠改自神吕布的神愤，与KIKI的上钩形成完美COMBO，也是七五折CP的实力象征',
+            xuchenchen_SNH48: 'SNH48 Team SII 成员，SNH48一期生。大C，老来俏舞蹈担当，塞纳河著名歌姬，曾经的文艺少女在塞纳河经历了种种风雨之后变得风趣且成熟，是S队的定海神针。强音是主要的技能，一牌换两血在集火敌人时非常强悍。劲舞则是回复技能，结合强音几乎是完美的永动效果。成熟则赋予了大C一定的操作技巧，如何控牌控血量将成为制胜关键',
+            xujiaqi_SNH48: 'SNH48 Team SII 成员，SNH48一期生。从许玛丽到许钩钩，许佳琪一直在超越上一秒的自己，KIKI闪耀的地方不仅仅是好看的外表，更是始终坚强的心灵。阿妈是第一个拥有翻面技能的人，时尚作为回合外的拆顺有稳定的限制爆发能力，上钩改自刘禅的放权，但效果从辅助队友变成强力控场，令KIKI一跃成为S队数一数二的团战强力控制',
+            xuyiren_SNH48: 'SNH48 Team SII 成员，SNH48三期生。伊姐是S队的老熟人了，是S队公演一道闪烁的光。技能方面很简单，徐家司机担当是伊姐成名之始，提速自带青龙偃月刀效果，保证了杀的高效率使用。另一方面，不懈的努力和良好的人缘使得伊姐无论在哪都能迅速跟成员打成一片，奋发使得伊姐几乎不会缺杀，简单而直接的技能也是伊姐的作风',
+            xuzixuan_SNH48: 'SNH48 Team SII 成员，SNH48二期生。络络是S队的忙内，曾经是一个大号的中二患者，现在是继承了七五折外加隔壁戴叔叔优点的中流砥柱。络崽作为七五折之子完美继承了阿爸跟阿妈的技能，同时又有着满满的队魂能辅助其他队友，堪称全能。龙宫改自貂蝉的闭月，龙宫成员越多络崽就越强，更能体现一个浪帅浪帅的徐子苏个人魅力。总之一个字，强',
+            yuandanni_SNH48: 'SNH48 Team SII 成员，SNH48三期生。有着好人缘的丹妮在队里一直以舞蹈担当的存在散发着自己的光和热。补刀源自丹妮的袁式飞刀人设，也是跟队友联动的神技，联合高爆发的队友几乎无解。自己回合内判定的酷炫增加了手牌可使用杀的数量，跟补刀联动使得丹妮可以瞬间打出三刀流的高爆发',
+            yuanyuzhen_SNH48: 'SNH48 Team SII 成员，SNH48二期生。余震震，S队第二个98LINE，戏精担当，补刀小能手，安静时美如画，活泼时疯如马（芮哥：儿子儿子MUA~）民乐歌姬了解一下。感性是稳定的拆迁控制，虽然有自己的手牌会被对方看到的风险，但配合第二个技能活泼就完全不一样了，大规模拉牌差能力是余震的强势之处，但单挑能力的缺失以及回合外的反制能力差也是高收益背后的高风险',
+            zhangyuge_SNH48: 'SNH48 Team SII 成员，SNH48一期生。Tako是队宠，更是核心，从话唠小章鱼成长为如今的老干部张帅，多方面发展使得TAKO在任何场合都能迅速成为聚焦点。技能方面简单而实用，寡言使得TAKO免疫了除了翻面以外的所有控制，炫目则是神曹操的归心变化而来，一血多牌可以说是卖血流的最强技能之一，也代表着TAKO即使受伤仍然要坚持梦想的决心',
+            zhaohanqian_SNH48: 'SNH48 Team SII 成员，SNH48 七期生。赵韩倩给我们带来了很多快乐，也是S队大家的开心果，如今的抖音红人--【赵韩倩要吃钳子】，了解一下。小钳子的两个技能是两种完全不同的机制，只要有发挥的舞台，小钳子就能用自己的实力改变很多东西',
+            zhaoye_SNH48: 'SNH48 Team SII 成员，SNH48三期生。腿腿，三期生中为数不多的创作担当，MC冷枪王，TAKO著名小迷妹，虽然天天喊着躺床，却依旧能用优质的表现征服大家。腿腿跟王玉一样属于强命系，不同的地方在于王玉是精准打击，腿腿则是大范围的AOE伤害，而且造成的伤害越多，才华的用处就越大，属于越打越强的残局收割者，也跟腿腿不鸣则已一鸣惊人的设定相符合',
+            zhuxiaodan_SNH48: 'SNH48 Team SII 成员，SNH48九期生',
+            zhaojiamin_SNH48: '中央戏剧学院在读，SNH48 Team SII 成员，SNH48一期生，《梦想预备生》中饰演同名角色赵嘉敏',
 
             //N
             chenjiaying_SNH48: 'SNH48 Team NII 成员，SNH48二期生',
@@ -181,7 +181,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             zhangyi_SNH48: 'SNH48 Team NII 成员，SNH48五期生',
             zhangyuxin_SNH48: 'SNH48 Team NII 成员，SNH48三期生',
 
-            SNH48jujingyi_SNH48: '丝芭传媒集团 明星殿堂 成员，SNH48二期生。《芸汐传》中的秦王妃--韩芸汐 的扮演者。',
+            SNH48jujingyi_SNH48: '丝芭传媒集团 明星殿堂 成员，SNH48二期生。《芸汐传》中的秦王妃--韩芸汐 的扮演者',
 
             //H
             feiqinyuan_SNH48: 'SNH48 Team HII 成员，SNH48五期生',
@@ -189,7 +189,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             jiangshan_SNH48: 'SNH48 Team HII 成员，SNH48五期生',
             jiangshuting_SNH48: 'SNH48 Team HII 成员，SNH48五期生',
             lijiaen_SNH48: 'SNH48 Team HII 成员，SNH48六期生',
-            linnan_SNH48: 'SNH48 Team HII 成员，SNH48三期生',
+            linnan_SNH48: 'SNH48 Team HII 成员，SNH48三期生。三分天注定，七分开打拼。',
             linsiyi_SNH48: 'SNH48 Team HII 成员，SNH48二期生',
             liyitong_SNH48: 'SNH48 Team HII 成员，SNH48二期生',
             qiyuzhu_SNH48: 'SNH48 Team HII 成员，SNH48十期生',
@@ -213,7 +213,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             chenlin_SNH48: 'SNH48 Team X 成员，SNH48四期生',
             chenyunling_SNH48: 'SNH48 Team X 成员，SNH48五期生',
             fengxiaofei_SNH48: 'SNH48 Team X 成员，SNH48四期生，曾经是著名SNH48黑，OLD48法人',
-            lvyi_SNH48: 'SNH48 Team X 成员，SNH48七期生。口口一是个灵动的孩子，既有不俗的舞蹈能力，也有高能的MC水平，表情包是她的绝技，网盘是她的禁忌。成长是这个S队次时代目前最强者最有力的武器，只要给她时间，没什么是她做不到的。演技则是于吉的蛊惑改版，但却是一个非常具有操作性的技能，也预示着串儿不可预知的成长空间。',
+            lvyi_SNH48: 'SNH48 Team X 成员，SNH48七期生。口口一是个灵动的孩子，既有不俗的舞蹈能力，也有高能的MC水平，表情包是她的绝技，网盘是她的禁忌。成长是这个S队次时代目前最强者最有力的武器，只要给她时间，没什么是她做不到的。演技则是于吉的蛊惑改版，但却是一个非常具有操作性的技能，也预示着串儿不可预知的成长空间',
             lizhao_SNH48: 'SNH48 Team X 队长，SNH48四期生',
             panyingqi_SNH48: 'SNH48 Team X 成员，SNH48五期生',
             qijing_SNH48: 'SNH48 Team X 成员，SNH48七期生',
@@ -248,10 +248,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             nongyanping_GNZ48: 'GNZ48 Team Z 成员',
             liangqiao_GNZ48: 'GNZ48 Team Z 成员',
 
-            wangzijie_SB: '王靖，上海丝芭文化传媒集团有限公司董事长。',
-            aji_SB: '张竞，前SNH48剧场发言人。',
-            yesheng_SB: '叶盛，上海丝芭文化传媒集团有限公司【艺术总监】。',
-            mulaosi_SB: '棒槌女郎，上海丝芭文化传媒集团有限公司舞蹈总监。',
+            wangzijie_SB: '王靖，上海丝芭文化传媒集团有限公司董事长',
+            aji_SB: '张竞，前SNH48剧场发言人',
+            yesheng_SB: '叶盛，上海丝芭文化传媒集团有限公司【艺术总监】',
+            mulaosi_SB: '棒槌女郎，上海丝芭文化传媒集团有限公司舞蹈总监',
             piggyrae_SB: '朱小希，SNH48 Team SII的舞蹈老师'
         },
         characterFilter: {
@@ -1232,10 +1232,20 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     var card = game.createCard(trigger.card.name, trigger.card.suit, trigger.card.number, trigger.card.nature);
                     //使用卡名，而不是实体卡牌
                     player.useCard({ name: card.name }, (trigger._targets || trigger.targets).slice(0), 'noai').animate = false;
+                    player.storage.shuangfa = false;
                     player.unmarkSkill('shuangfa');
                 },
                 ai: {
                     threaten: 1.3
+                },
+                group: 'shuangfa2'
+            },
+            shuangfa2: {
+                trigger: { player: 'phaseBegin' },
+                frequent: true,
+                content:function(){
+                    player.storage.shuangfa = true;
+                    player.markSkill('shuangfa');
                 }
             },
             buzhuang: {
@@ -1259,8 +1269,6 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     }
                     player.$gain2(card);
                     player.equip(card);
-                    player.storage.shuangfa = true;
-                    player.markSkill('shuangfa');
                 }
             },
 
@@ -1797,15 +1805,15 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     "step 1"
                     //你的回合外每受到一次伤害可进行一次判定，
                     switch (get.suit(result.card)) {
-                        //若结果为黑桃，伤害来源翻面；
+                        //若结果为♠，伤害来源翻面；
                         //case 'spade': trigger.source.turnOver(); break;
-                        //若结果为黑桃，伤害来源受到一点伤害；
+                        //若结果为♠，伤害来源受到一点伤害；
                         case 'spade': trigger.source.damage();
-                        //若结果为方块，你摸两张牌；
+                        //若结果为♦︎，你摸两张牌；
                         case 'diamond': player.draw(2); break;
-                        //若结果为红桃，你回复一点体力；
+                        //若结果为♥，你回复一点体力；
                         case 'heart': player.recover(); break;
-                        //若结果为梅花，伤害来源弃两张牌。
+                        //若结果为♣，伤害来源弃两张牌。
                         case 'club': trigger.source.chooseToDiscard('he', 2, true); break;
                     }
                 },
@@ -5434,6 +5442,176 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     player.removeAdditionalSkill('fuwei', ['xiaoshun'])
                 }
             },
+            tianding: {                
+				audio:2,
+				trigger:{player:'shaBegin'},
+				check:function(event,player){
+					return get.attitude(player,event.target)<=0;
+				},
+				logTarget:'target',
+				content:function(){
+					"step 0"
+					player.judge(function(card){						
+                        if(get.suit(card)=='heart')
+                            return 2;						
+                        if(get.suit(card)=='spade' && card.num <= 9 && card.num >= 2)
+                            return 2;
+						return -0.5;
+					});
+					"step 1"
+					if(result.bool){
+						trigger.directHit=true;
+					}
+                },
+                group: 'tianding2'
+            },
+            tianding2: {
+				trigger:{player:'chooseToRespondBegin'},
+				filter:function(event,player){
+					if(event.responded) return false;
+					if(!event.filterCard({name:'shan'})) return false;
+					if(!lib.filter.cardRespondable({name:'sha'},player,event)) return false;
+					return true;
+				},
+				audio:true,
+				check:function(event,player){
+					if(get.damageEffect(player,event.player,player)>=0) return false;
+					return true;
+				},
+				content:function(){
+					"step 0"
+					player.judge('tianding',function(card){return (get.suit(card)=='heart' || (get.suit(card)=='spade' && card.num <= 9 && card.num >= 2))?1.5:-0.5});
+					"step 1"
+					if(result.judge>0){
+						trigger.untrigger();
+						trigger.responded=true;
+						trigger.result={bool:true,card:{name:'shan'}}
+					}
+				},
+				ai:{
+					effect:{
+						target:function(card,player,target,effect){
+							if(player.hasSkillTag('unequip',false,{
+								name:card?card.name:null,
+								target:player,
+								card:card
+							})) return;
+							if(get.tag(card,'respondShan')) return 0.5;
+						}
+					}
+				}
+            },
+            dapin: {
+                audio:2,
+                trigger:{player:'judgeEnd'},
+                frequent:function(event){
+                    if(event.result.card.name=='du') return false;
+                    if(event.result.card.number > 9) return false;
+                    return true;
+                },
+                check:function(event){
+                    if(event.result.card.name=='du') return false;
+                    debugger
+                    if(event.result.card.number > 9) return false;
+                    return true;
+                },
+                filter:function(event,player){
+                    if(event.result.card.number > 9)
+                        return false;
+                    if(get.owner(event.result.card))
+                        return false;
+                    if(event.nogain&&event.nogain(event.result.card))
+                        return false;                    
+                    return true;
+                },
+                content:function(){
+                    player.gain(trigger.result.card);
+                    player.$gain2(trigger.result.card);
+                }
+            },            
+            //沈梦瑶
+            shenmiao:{                
+                //出牌阶段使用的第一张牌根据点数有不同效果
+                trigger: { player: 'useCardAfter' },
+                direct: true,
+                usable: 1,
+                init: function (player) {
+                    player.storage.shenmiao = true;
+                },
+                mark: true,
+                intro: {
+                    content: 'limited'
+                },
+                filter: function (event, player) {
+                    //非自己回合不触发
+                    //debugger
+                    if (event.player != player)
+                        return false;
+                    if (!player.storage.shenmiao)
+                        return false;
+                    //没实体卡的不触发
+                    if (!event.card) 
+                        return false;
+                    return true;
+                },
+                check: function (event, player) {
+                    if (!event.card) return false;
+                    return true;
+                },
+                content: function () {                    
+                    player.logSkill('shenmiao');
+                    if(trigger.card.number % 2 == 1)
+                        player.recover();                          
+                    else
+                        player.draw(2);
+                    player.storage.shenmiao = false;
+                    player.unmarkSkill('shenmiao');
+                },
+                ai: {
+                    threaten: 1.3
+                },
+                group: ['shenmiao1','shenmiao2']
+            },
+            shenmiao1: {                
+                trigger: { player: 'phaseBegin' },
+                frequent: true,
+                filter: function (event, player) {
+                    return true
+                },
+                content: function () {
+                    player.storage.shenmiao = true;
+                    player.markSkill('shenmiao');
+                }
+            },
+            shenmiao2: {
+				audio:2,
+				trigger:{target:'shaBefore'},
+				direct:true,
+				priority:5,
+				filter:function(event,player){
+                    //实体牌才触发
+					return event.card && event.card.number > 0
+                },
+                content: function(){
+                    player.logSkill('shenmiao');
+                    if(trigger.card.number % 2 == 0)
+                        trigger.target.draw();
+                    else
+                        trigger.source.chooseToDiscard(true, 'he', 1).set('ai', function (card) {
+                            return 9 - get.value(card)
+                        });
+                },
+				ai:{
+					effect:{
+						target:function(card,player,target){
+							if(player.countCards('he')>=1 && get.tag(card,'damage')){
+								if(player.hasSkillTag('jueqing',false,target)) return [1,-1.5];
+								if(get.attitude(target,player)<0) return [1,1];
+							}
+						}
+					}
+				}
+            },
             //X
             //徐诗琪
             xiaoqi: {
@@ -6714,6 +6892,104 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     threaten: 0.8
                 }
             },
+            //孙歆文
+            news: {
+                //出牌阶段使用的第一张牌根据花色有不同效果
+                trigger: { player: 'useCardAfter' },
+                direct: true,
+                usable: 1,
+                init: function (player) {
+                    player.storage.news = true;
+                },
+                mark: true,
+                intro: {
+                    content: 'limited'
+                },
+                filter: function (event, player) {
+                    if (!player.storage.news)
+                        return false;
+                    //没实体卡的不触发
+                    if (!event.card) return false;
+
+                    //模拟镜像卡
+                    var card = game.createCard(event.card.name, event.card.suit, event.card.number, event.card.nature);
+                    //复制目标
+                    var targets = event._targets || event.targets;
+                    for (var i = 0; i < targets.length; i++) {
+                        //不在范围内不触发
+                        if (!targets[i].isIn()) return false;
+                        //不能使用不触发
+                        if (!player.canUse({ name: event.card.name }, targets[i], false, false)) {
+                            return false;
+                        }
+                    }
+                    return true;
+                },
+                check: function (event, player) {
+                    if (!event.card) return false;
+                    return true;
+                },
+                content: function () {
+                    'step 0'
+                    player.storage.news = false
+                    player.unmarkSkill('news');
+                    switch(trigger.card.suit){
+                        case 'heart':
+                            player.recover();
+                            event.finish();
+                            break;
+                        case 'spade':
+                            player.draw(2);
+                            event.finish();
+                            break;
+                        case 'club':                                                
+                            player.chooseTarget(get.prompt('news_club')).ai=function(target){
+                                if(player==target) return false;
+                                return get.damageEffect(target,_status.event.player,_status.event.player,'thunder');
+                            };
+                            break;
+                        case 'diamond':
+                            player.chooseTarget(get.prompt('news_diamond'),function(card,player,target){
+                                if(player==target) return false;
+                                return target.countCards('he');
+                            }).set('ai',function(target){
+                                return -get.attitude(_status.event.player,target);
+                            });
+                            break;
+                    }
+					"step 1"
+					if(result.bool){
+                        switch(trigger.card.suit){
+                            case 'club':
+                                player.logSkill('news',result.targets,'thunder');
+                                result.targets[0].damage(1,'thunder');
+                                break;
+                            case 'diamond':                                
+                                player.logSkill('news',result.targets);                                
+                                player.discardPlayerCard(result.targets[0],'he',1,true);                                
+                                break;
+                        }
+					}
+					else{
+						event.finish();
+                    }
+                },
+                ai: {
+                    threaten: 1.3
+                },
+                group: 'news1'
+            },
+            news1: {            
+                trigger: { player: 'phaseBegin' },
+                frequent: true,
+                filter: function (event, player) {
+                    return true
+                },
+                content: function () {
+                    player.storage.news = true;
+                    player.markSkill('news');
+                }
+            }
         },
         translate: {
             //S
@@ -6837,28 +7113,28 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             wangzijie_SB: '王子杰',
             aji_SB: '阿吉',
             yesheng_SB: '叶盛',
-            mulaosi_SB: '马跃',
+            mulaosi_SB: '马老师',
             piggyrae_SB: '朱小希',
 
             //技能显示名称，技能说明文字
             fengfa: '风发',
-            fengfa_info: '出牌阶段，你可以将任意两张相同花色的手牌当【万箭齐发】使用。',
+            fengfa_info: '出牌阶段，你可以将任意两张相同花色的手牌当【万箭齐发】使用',
             gaoshi: '搞事',
-            gaoshi_info: '出牌阶段，你可以指定一名使用【杀】能攻击到你的角色，该角色需对你使用一张【杀】，若该角色不如此做，你弃掉他的一张牌，每回合限一次。',
+            gaoshi_info: '出牌阶段，你可以指定一名使用【杀】能攻击到你的角色，该角色需对你使用一张【杀】，若该角色不如此做，你弃掉他的一张牌，每回合限一次',
             kuaihuo: '快活',
-            kuaihuo_info: '当你失去最后的手牌时，你可以令至多X名角色各摸一张牌（X为你此次失去的手牌数）。',
+            kuaihuo_info: '当你失去最后的手牌时，你可以令至多X名角色各摸一张牌（X为你此次失去的手牌数）',
             letian: '乐天',
             letian_info: '你可以立即获得你的判定牌',
             modi: '魔笛',
             modi_info: '锁定技：你的防御距离+1',
             zhanwu: '战舞',
-            zhanwu_info: '出牌阶段，你可以交给任一其他角色一张装备牌或【杀】，该角色进行二选一：1. 视为对其攻击范围内的另一名由你指定的角色使用一张【杀】。2. 摸一张牌。每回合限一次。',
+            zhanwu_info: '出牌阶段，你可以交给任一其他角色一张装备牌或【杀】，该角色进行二选一：1. 视为对其攻击范围内的另一名由你指定的角色使用一张【杀】。2. 摸一张牌。每回合限一次',
             tianlai: '天籁',
-            tianlai_info: '每当你使用或打出一张【闪】，可令任意一名角色进行一次判定，若结果为梅花，其受到一点雷电伤害，然后你回复一点体力；若结果为黑桃，其受到两点雷电伤害',
+            tianlai_info: '每当你使用或打出一张【闪】，可令任意一名角色进行一次判定，若结果为♣，其受到一点雷电伤害，然后你回复一点体力；若结果为♠，其受到两点雷电伤害',
             quanneng: '全能',
             quanneng_info: '你可以将[杀]当[闪]，或[闪]当[杀]使用或打出',
             yezhan: '夜战',
-            yezhan_info: '当你成为一张指定了多个目标的锦囊牌的目标时，你可以取消之，并摸一张牌。',
+            yezhan_info: '当你成为一张指定了多个目标的锦囊牌的目标时，你可以取消之，并摸一张牌',
             zhanbu: '占卜',
             zhanbu_info: '观星+傲才+秘计',
 
@@ -6867,13 +7143,13 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             wenrou_info: '每当有角色受到伤害后，若其体力值与你相同，你选择你或他摸一张牌',
             //丶Gone设计的技能
             luandance: '乱舞',
-            luandance_info: '令除你外的所有SNH48非官方角色依次对另一名角色使用一张【杀】，无法如此做者受到1点伤害。',
+            luandance_info: '令除你外的所有SNH48非官方角色依次对另一名角色使用一张【杀】，无法如此做者受到1点伤害',
             tiaosuo: '挑唆',
-            tiaosuo_info: '出牌阶段，你可以弃一张牌，视为一名SNH48角色对另一名SNH48角色使用一张[决斗]，每阶段限一次',
+            tiaosuo_info: '出牌阶段限一次，你可以弃一张牌，视为一名SNH48角色对另一名SNH48角色使用一张[决斗]',
 
             //鞠婧祎篇
             dufei: '毒妃',
-            dufei_info: '锁定技：每当其他角色弃置、判定、拼点、使用后并进入弃牌堆的毒，你获得之。你每有一个【毒】，手牌上限+1。你使用毒时不会流失体力，反而会回复1点体力。',
+            dufei_info: '锁定技：每当其他角色弃置、判定、拼点、使用后并进入弃牌堆的毒，你获得之。你每有一个【毒】，手牌上限+1。你使用毒时不会流失体力，反而会回复1点体力',
             poisonousfog: '毒雾',
             poisonousfog_info: '出牌阶段限一次，你可以弃置两张【毒】，若如此做，除你之外的所有角色失去1点体力',
             jiedu: '解毒',
@@ -6881,7 +7157,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             duzong: '毒宗',
             duzong_info: '觉醒技：若你手中的【毒】大于等于两张，你体力上限-1并回复1点体力，永久获得技能【心血】',
             xinxie: '心血',
-            xinxie_info: '你每次使用【毒】之后，摸1张牌；你的结束阶段，随机将一张手牌转化为毒。',
+            xinxie_info: '你每次使用【毒】之后，摸1张牌；你的结束阶段，随机将一张手牌转化为毒',
 
             //赵嘉敏篇
             shuangfa: '双发',
@@ -6891,17 +7167,17 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
 
             //参考   北极瑞风HZYQ设计的技能
             dandang: '担当',
-            dandang_info: '当你攻击距离内的角色被杀指定为目标时，你可弃一张牌并将该杀的目标转移至你身上。',
+            dandang_info: '当你攻击距离内的角色被杀指定为目标时，你可弃一张牌并将该杀的目标转移至你身上',
             jianyi: '坚毅',
-            jianyi_info: '当你受到伤害时，若你的伤害来源不弃一张牌，此次伤害-1。',
+            jianyi_info: '当你受到伤害时，若你的伤害来源不弃一张牌，此次伤害-1',
             lingjun: '领军',
-            lingjun_info: '主公技，当你陷入濒死状态时，与你同势力的角色对你使用的[桃]额外回复一点体力值。你以此法脱离濒死状态时，其摸一张牌。',
+            lingjun_info: '主公技，当你陷入濒死状态时，与你同势力的角色对你使用的[桃]额外回复一点体力值。你以此法脱离濒死状态时，其摸一张牌',
             shiyu: '食欲',
-            shiyu_info: '每当你使用杀对一名角色造成伤害时，你可与其拼点，若你赢，你获得对方的一张牌并且摸一张牌。',
+            shiyu_info: '每当你使用杀对一名角色造成伤害时，你可与其拼点，若你赢，你获得对方的一张牌并且摸一张牌',
             yuyan: '预言',
-            yuyan_info: '回合外每失去一张牌，你选择一个颜色并进行一次判定，若结果相同，你获得该判定牌。',
+            yuyan_info: '回合外每失去一张牌，你选择一个颜色并进行一次判定，若结果相同，你获得该判定牌',
             mowang: '魔王',
-            mowang_info: '你每受到一点伤害，你对伤害来源造成X点伤害，其可选择弃置手牌来降低伤害，每弃置一张降低一点（X为已损失体力值）。',
+            mowang_info: '你每受到一点伤害，你对伤害来源造成X点伤害，其可选择弃置手牌来降低伤害，每弃置一张降低一点（X为已损失体力值）',
             ziqiang: '自强',
             ziqiang_info: '主公技，觉醒技, 准备阶段，若你的体力为全场最低（或之一），你增加一点体力上限并回复1点体力，获得技能【魔王】',
             jingwu: '精武',
@@ -6909,57 +7185,57 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             jingwu2_info: '体力值为单数：【杀】无视距离且能额外指定一名角色',
             jingwu3: '精武',
             jingwu3_info: '体力值为双数：【杀】无视防具且可额外使用1个【杀】',
-            jingwu_info: '你的杀根据当前体力值获得如下效果。体力值为单数：无视距离且能额外指定一名角色；体力值为双数：无视防具且可额外使用1个杀。',
+            jingwu_info: '你的杀根据当前体力值获得如下效果。体力值为单数：无视距离且能额外指定一名角色；体力值为双数：无视防具且可额外使用1个杀',
             tianyin: '甜音',
-            tianyin_info: '出牌阶段限一次，你可弃置一张红色手牌并指定一名角色，该角色回复1点体力。',
+            tianyin_info: '出牌阶段限一次，你可弃置一张红色手牌并指定一名角色，该角色回复1点体力',
 
             wenwan: '温婉',
-            wenwan_info: '锁定技：你使用或打出的闪根据当前体力值获得如下效果：体力值为单数：结算后摸两张牌；体力值为双数：该闪结算后视为对伤害来源使用乐不思蜀。',
+            wenwan_info: '锁定技：你使用或打出的闪根据当前体力值获得如下效果：体力值为单数：结算后摸两张牌；体力值为双数：该闪结算后视为对伤害来源使用乐不思蜀',
             fuhei: '腹黑',
             fuhei2: '腹黑',
-            fuhei_info: '出牌阶段，你可弃置一张黑桃牌并选择一名角色，对其造成1点伤害，若如此做，下一个该角色的回合你需要两张闪来响应该角色的杀。',
+            fuhei_info: '出牌阶段，你可弃置一张♠牌并选择一名角色，对其造成1点伤害，若如此做，下一个该角色的回合你需要两张闪来响应该角色的杀',
             fuhei2_info: '对陈观慧使用杀时，陈观慧需要使用两个闪才能抵消',
 
 
             shenhun: '神魂',
             shenhun_bg: '音',
             shenhun_mark_bg: '音符',
-            shenhun_info: '你的判定牌生效时，你可将该判定牌置于你的武将牌上，称为"音符"。你的手牌上限+X（X为音符数）。',
+            shenhun_info: '你的判定牌生效时，你可将该判定牌置于你的武将牌上，称为"音符"。你的手牌上限+X（X为音符数）',
             diandao: '颠倒',
-            diandao_info: '你的回合外每受到一次伤害可进行一次判定，判定结果为：♥你回复1点体力；♦︎你摸两张牌；♣伤害来源弃两张牌；♠伤害来源受到一点伤害。',
+            diandao_info: '你的回合外每受到一次伤害可进行一次判定，判定结果为：♥你回复1点体力；♦︎你摸两张牌；♣伤害来源弃两张牌；♠伤害来源受到一点伤害',
             xinggan: '性感',
-            xinggan_info: '觉醒技，你的回合内若音符数大于你体力值，你体力上限-1，获得技能"美艳"。',
+            xinggan_info: '觉醒技，你的回合内若音符数大于你体力值，你体力上限-1，获得技能"美艳"',
             meiyan: '美艳',
-            meiyan_info: '出牌阶段限一次，你可弃置一张武将牌最上面的【音符】并指定一名角色，视为对该角色使用乐不思蜀。',
+            meiyan_info: '出牌阶段限一次，你可弃置一张武将牌最上面的【音符】并指定一名角色，视为对该角色使用乐不思蜀',
             kuaidao: '快刀',
             kuaidao_info: '使用杀指定目标后，你可以弃置其一张手牌，若此牌与【杀】花色相同，此【杀】不可被【闪】响应；同时若此牌为装备牌，此杀伤害+1；此【杀】结算后，该角色获得此【杀】',
             qiaoyan: '巧盐',
-            qiaoyan_info: '你可以将黑色牌当借刀杀人使用，锁定技：每当黑色锦囊牌造成伤害时，若你为伤害来源，你防止此伤害；锁定技：每当你受到黑色锦囊牌对你造成的伤害时，你防止此伤害。',
+            qiaoyan_info: '你可以将黑色牌当借刀杀人使用，锁定技：每当黑色锦囊牌造成伤害时，若你为伤害来源，你防止此伤害；锁定技：每当你受到黑色锦囊牌对你造成的伤害时，你防止此伤害',
             chongaaaa: '冲啊',
-            chongaaaa_info: '出牌阶段限一次，你可弃置X张手牌并最多指定你当前体力值的角色各摸1张牌。',
+            chongaaaa_info: '出牌阶段限一次，你可弃置X张手牌并最多指定你当前体力值的角色各摸1张牌',
             beifen: '辈分',
-            beifen_info: '锁定技：你不会受到体力值不低于你的角色使用锦囊时造成的伤害。',
+            beifen_info: '锁定技：你不会受到体力值不低于你的角色使用锦囊时造成的伤害',
             yuanzhen: '圆阵',
             yuanzhen_info: '限定技，回合开始时，若你已受伤，你可摸X张牌，并回复1点体力（X为场上与你同势力角色数）',
             chengzhang: '成长',
             chengzhang2: '成长',
-            chengzhang_info: '锁定技。装备区每多一张牌，体力上限+1并回复1点体力。每失去一张装备区内的牌，体力上限-1。你根据装备区里牌的数量获得以下技能：1种或以上-温柔；2种或以上-坚毅；3种或以上-豪迈；4种或以上-美人；5种-皇冠。',
+            chengzhang_info: '锁定技。装备区每多一张牌，体力上限+1并回复1点体力。每失去一张装备区内的牌，体力上限-1。你根据装备区里牌的数量获得以下技能：1种或以上-温柔；2种或以上-坚毅；3种或以上-豪迈；4种或以上-美人；5种-皇冠',
             yanji: '演技',
             yanji_info: '其他角色对你使用杀时，你可说出一种牌并将一张手牌背面朝上出示之，该角色可选择是否质疑，若不质疑，跳过当前结算阶段。若质疑则展示，若为真，对方给你一张装备牌或让你对其造成1点伤害；若为假，你失去1点体力，对方获得你展示的手牌。（丰富的表情包既能表达情绪也能掩盖心思）',
             haomai: '豪迈',
-            haomai_info: '锁定技：你受到和使用杀或决斗造成伤害时结算结束后伤害+1。',
+            haomai_info: '锁定技：你受到和使用杀或决斗造成伤害时结算结束后伤害+1',
             shengou: '神钩',
-            shengou_info: '你可在其它任意角色的出牌阶段开始时与其拼点，若你赢，你获得其一张牌。若你没赢，你获得一个神钩标记，失去1点体力，摸一张牌。你有7个神钩标记时，失去此技能。',
+            shengou_info: '你可在其它任意角色的出牌阶段开始时与其拼点，若你赢，你获得其一张牌。若你没赢，你获得一个神钩标记，失去1点体力，摸一张牌。你有7个神钩标记时，失去此技能',
             secret: '奥秘',
-            secret_info: '回合结束后，若你的武将牌正面朝上，你可以与一名其他角色同时翻面，然后各摸两张牌。',
+            secret_info: '回合结束后，若你的武将牌正面朝上，你可以与一名其他角色同时翻面，然后各摸两张牌',
             meiren: '美人',
             meiren_info: '锁定技：（英姿）摸牌阶段多摸一张牌，（闭月）回合结束阶段摸一张牌',
             jiangshan: '江山',
-            jiangshan_info: '摸牌阶段开始前，你可以跳过摸牌阶段并观看牌堆最上方5张牌，然后获得其中不同类型的牌各1张，其余牌弃置。',
+            jiangshan_info: '摸牌阶段开始前，你可以跳过摸牌阶段并观看牌堆最上方5张牌，然后获得其中不同类型的牌各1张，其余牌弃置',
             jiamian: '加冕',
-            jiamian_info: '觉醒技，出牌阶段开始时，若你的手牌包含了四种不同花色的牌，你体力上限-1，回复1点体力，永久获得技能"皇冠"。',
+            jiamian_info: '觉醒技，出牌阶段开始时，若你的手牌包含了四种不同花色的牌，你体力上限-1，回复1点体力，永久获得技能"皇冠"',
             huangguan: '皇冠',
-            huangguan_info: '出牌阶段限一次，你可弃置任意张手牌并指定不多于弃置手牌数的其他角色，视为你对这些角色随机造成X点伤害，随后你翻面（X为弃牌数量）。',
+            huangguan_info: '出牌阶段限一次，你可弃置任意张手牌并指定不多于弃置手牌数的其他角色，视为你对这些角色随机造成X点伤害，随后你翻面（X为弃牌数量）',
             longgong: '龙宫',
             longgong_info: '弃牌阶段开始前，你可摸X张牌，X为场上与你同势力的角色数',
             luogod: '络神',
@@ -6967,87 +7243,87 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             huangzi: '皇子',
             huangzi_info: '觉醒技，回合开始时，若你的体力值小于等于你的体力上限的一半，你失去1点体力上限，回复1点体力，并获得技能【江山】，【神钩】',
             ganbei: '干杯',
-            ganbei_info: '每当一名角色进入濒死状态，你可弃置一瓶可乐为其回复1点体力，并且自己也获得【酒】的效果。',
+            ganbei_info: '每当一名角色进入濒死状态，你可弃置一瓶可乐为其回复1点体力，并且自己也获得【酒】的效果',
             kele: '可乐',
-            kele_info: '下一次使用杀造成的伤害+1，可与【酒】叠加，此效果持续到你的回合结束或使用杀结算后。',
+            kele_info: '下一次使用杀造成的伤害+1，可与【酒】叠加，此效果持续到你的回合结束或使用杀结算后',
             tongyin: '痛饮',
             tongyin_bg: '可',
             tongyin_mark_bg: '可乐',
-            tongyin_info: '锁定技：每当其他角色弃置、判定、拼点、使用后的【酒】进入弃牌堆后，你可将其置于你的武将牌上，称为"可乐"。',
+            tongyin_info: '锁定技：每当其他角色弃置、判定、拼点、使用后的【酒】进入弃牌堆后，你可将其置于你的武将牌上，称为"可乐"',
             yonglie: '涌烈',
-            yonglie_info: '出牌阶段，你可弃置所有可乐，指定最多不超过3名角色造成共计X点伤害(X为可乐数)，随机分配每名目标角色受到的伤害点数。',
+            yonglie_info: '出牌阶段，你可弃置所有可乐，指定最多不超过3名角色造成共计X点伤害(X为可乐数)，随机分配每名目标角色受到的伤害点数',
             meixi: '妹系',
             meixi_info: '锁定技：没有装备防具时视为装备【白银狮子】（你每次受到伤害时，最多承受1点伤害（防止多余的伤害）；没有装备防具时装备一个防具，你回复1点体力）',
             nvwang: '女王',
-            nvwang_info: '锁定技：你使用杀对一名体力上限大于2的角色造成伤害时，你可以使目标角色进行三选一：1，终止该次伤害，弃置装备区内的所有牌并失去1点体力；2，终止该次伤害，弃置一张装备牌并失去1点体力上限,；3，失去1点体力上限，并依然承受该次伤害。',
+            nvwang_info: '锁定技：你使用杀对一名体力上限大于2的角色造成伤害时，你可以使目标角色进行三选一：1，终止该次伤害，弃置装备区内的所有牌并失去1点体力；2，终止该次伤害，弃置一张装备牌并失去1点体力上限,；3，失去1点体力上限，并依然承受该次伤害',
             laydown: '雷当',
-            laydown_info: '对男性角色使用杀后（SNH48模式无性别限制），你可以令其选择一项：1.弃置一张手牌；2.令你摸一张牌。',
+            laydown_info: '对男性角色使用杀后（SNH48模式无性别限制），你可以令其选择一项：1.弃置一张手牌；2.令你摸一张牌',
             tongxin: '同心',
-            tongxin_info: '除你之外每当与你势力相同的武将受到伤害时，你可失去X点体力并对伤害来源进行一次判定，若为黑色，视为你对其造成X点雷属性伤害；若为红色，视为你对其造成X点火属性伤害（X为受到的伤害值）；然后再进行一次判定，若为黑色，你失去1点体力，若为红色，你弃1张牌，（没有则不弃）。',
+            tongxin_info: '除你之外每当与你势力相同的武将受到伤害时，你可失去X点体力并对伤害来源进行一次判定，若为黑色，视为你对其造成X点雷属性伤害；若为红色，视为你对其造成X点火属性伤害（X为受到的伤害值）；然后再进行一次判定，若为黑色，你失去1点体力，若为红色，你弃1张牌，（没有则不弃）',
             dedication: '奉献',
-            dedication_info: '你死亡时，你可令一名角色获得技能"同心"并将手牌补至体力上限，最多5张。',
+            dedication_info: '你死亡时，你可令一名角色获得技能"同心"并将手牌补至体力上限，最多5张',
             juxia: '聚虾',
             juxia_bg: '虾',
             juxia_mark_bg: '虾',
-            juxia_info: '锁定技：每当你使用或打出锦囊牌，你进行一次判定，若结果不为红桃，你将已使用的锦囊牌置于你的武将牌上，称为"虾"。弃牌阶段，若你的手牌数少于虾，跳过弃牌阶段。',
+            juxia_info: '锁定技：每当你使用或打出锦囊牌，你进行一次判定，若结果不为♥，你将已使用的锦囊牌置于你的武将牌上，称为"虾"。弃牌阶段，若你的手牌数少于虾，跳过弃牌阶段',
             qiangong: '钱攻',
-            qiangong_info: '觉醒技，回合开始阶段，若你手牌数小于虾，你减1点体力上限并回复1点体力，然后获得技能【成塔】。',
+            qiangong_info: '觉醒技，回合开始阶段，若你手牌数小于虾，你减1点体力上限并回复1点体力，然后获得技能【成塔】',
             chengta: '成塔',
-            chengta_info: '出牌阶段限两次，你可以使用【虾】中的牌，可再次触发【聚虾】。',
+            chengta_info: '出牌阶段限两次，你可以使用【虾】中的牌，可再次触发【聚虾】',
             yibing: '异禀',
-            yibing_info: '锁定技：若你手牌数小于等于1，任何无属性的伤害对你无效。',
+            yibing_info: '锁定技：若你手牌数小于等于1，任何无属性的伤害对你无效',
             tianpin: '甜品',
-            tianpin_info: '出牌阶段限一次，你可以弃置1张牌，令一名角色回复1点体力并可以弃置其判定区的一张牌，如果目标是自己，弃一张牌（没有则不弃）。',
+            tianpin_info: '出牌阶段限一次，你可以弃置1张牌，令一名角色回复1点体力并可以弃置其判定区的一张牌，如果目标是自己，弃一张牌（没有则不弃）',
             jiaozhu: '教主',
-            jiaozhu_info: '当你失去最后一张手牌时，你可选择一名角色令其摸一张牌或弃一张牌。',
+            jiaozhu_info: '当你失去最后一张手牌时，你可选择一名角色令其摸一张牌或弃一张牌',
             tisu: '提速',
-            tisu_info: '每当一名角色使用闪抵消你的杀时，你可再对其一张杀，并且获得一枚速度标记；你每有一个速度标记，杀额外造成1点伤害，杀结算后，移除所有速度标记。',
+            tisu_info: '每当一名角色使用闪抵消你的杀时，你可再对其一张杀，并且获得一枚速度标记；你每有一个速度标记，杀额外造成1点伤害，杀结算后，移除所有速度标记',
             fenfa: '奋发',
-            fenfa_info: '锁定技。每当一名其他角色弃置的杀进入弃牌堆时，你将其加入手牌。',
+            fenfa_info: '锁定技。每当一名其他角色弃置的杀进入弃牌堆时，你将其加入手牌',
             complement: '补刀',
-            complement_info: '每当一名角色造成伤害时，你可向受伤角色使用一张杀，补刀杀不计入使用限制。',
+            complement_info: '每当一名角色造成伤害时，你可向受伤角色使用一张杀，补刀杀不计入使用限制',
             kuxuan: '酷炫',
             kuxuan2: '酷炫',
-            kuxuan_info: '摸牌阶段开始前，你可进行一次判定，获得判定牌，你在你的回合内，可以将所有与判定牌相同颜色的手牌视为杀使用或打出，并且此类杀不计入使用次数限制。',
+            kuxuan_info: '摸牌阶段开始前，你可进行一次判定，获得判定牌，你在你的回合内，可以将所有与判定牌相同颜色的手牌视为杀使用或打出，并且此类杀不计入使用次数限制',
             kuaiyan: '快言',
-            kuaiyan_info: '出牌阶段仅一次，你可选择一名其他角色进行一次判定，若结果为黑色，其受到1点雷属性伤害。',
+            kuaiyan_info: '出牌阶段仅一次，你可选择一名其他角色进行一次判定，若结果为黑色，其受到1点雷属性伤害',
             innocence: '无邪',
-            innocence_info: '当其他角色的♦︎牌，因弃牌或判定而进入弃牌堆时，你获得之。',
+            innocence_info: '当其他角色的♦︎牌，因弃牌或判定而进入弃牌堆时，你获得之',
             talent: '颍资',
-            talent_info: '出牌阶段开始时，你可与一名角色拼点，若你赢，你可令其选择弃两张牌或你对其造成1点伤害。若你输，你跳过出牌阶段。',
+            talent_info: '出牌阶段开始时，你可与一名角色拼点，若你赢，你可令其选择弃两张牌或你对其造成1点伤害。若你输，你跳过出牌阶段',
             wenhe: '温和',
-            wenhe_info: '每当一名角色的判定牌生效前，你可打出一张牌替代之，若该牌与判定牌花色相同，你获得该判定牌。',
+            wenhe_info: '每当一名角色的判定牌生效前，你可打出一张牌替代之，若该牌与判定牌花色相同，你获得该判定牌',
             guayan: '寡言',
-            guayan_info: '你不能成为延时类锦囊的目标，你使用非延时类锦囊无距离限制。',
+            guayan_info: '你不能成为延时类锦囊的目标，你使用非延时类锦囊无距离限制',
             xuanmu: '炫目',
-            xuanmu_info: '每当你受到一次伤害，你可随机获得每名其他角色区域内的一张牌。然后你翻面。',
+            xuanmu_info: '每当你受到一次伤害，你可随机获得每名其他角色区域内的一张牌。然后你翻面',
             zanmei: '赞美',
-            zanmei_info: '摸牌阶段，你可少摸一张牌并让一名其他角色摸一张牌。',
+            zanmei_info: '摸牌阶段，你可少摸一张牌并让一名其他角色摸一张牌',
             luanyin: '乱音',
-            luanyin_info: '出牌阶段，你可选择两名其他角色，你弃置二者手牌或装备区之差的牌，然后令双方交换手牌或装备区内的牌。',
+            luanyin_info: '出牌阶段，你可选择两名其他角色，你弃置二者手牌或装备区之差的牌，然后令双方交换手牌或装备区内的牌',
             luansheng: '孪生',
-            luansheng_info: '锁定技。你每次获得牌之后，进行一次判定，若结果为红色，额外摸一张牌，每阶段限一次。你每次翻面，你弃置你的1张角色区的牌。',
+            luansheng_info: '锁定技。你每次获得牌之后，进行一次判定，若结果为红色，额外摸一张牌，每阶段限一次。你每次翻面，你弃置你的1张角色区的牌',
             qigai: '气概',
-            qigai_info: '出牌阶段仅一次，若你手牌数大于你当前体力值，你可将手牌弃置到当前体力值，然后选择一项：；摸X+1张牌，弃置一张牌；摸一张牌，弃置X+1张牌或受到（X+1）/2点伤害。X为弃牌数。',
+            qigai_info: '出牌阶段仅一次，若你手牌数大于你当前体力值，你可将手牌弃置到当前体力值，然后选择一项：；摸X+1张牌，弃置一张牌；摸一张牌，弃置X+1张牌或受到（X+1）/2点伤害。X为弃牌数',
             rexin: '热心',
-            rexin_info: '其他角色弃牌时，你可选择一张牌，该角色收回与此牌颜色相同的牌，你获得与此牌颜色不同的牌。',
+            rexin_info: '其他角色弃牌时，你可选择一张牌，该角色收回与此牌颜色相同的牌，你获得与此牌颜色不同的牌',
             qiangyin: '强音',
-            qiangyin_info: '出牌阶段，你可指定一名角色，该角色弃置两张牌，然后你失去1点体力。',
+            qiangyin_info: '出牌阶段，你可指定一名角色，该角色弃置两张牌，然后你失去1点体力',
             jinwu: '劲舞',
-            jinwu_info: '弃牌阶段开始时，若你区域内的牌数之和大于等于当前体力值，你回复1点体力。',
+            jinwu_info: '弃牌阶段开始时，若你区域内的牌数之和大于等于当前体力值，你回复1点体力',
             chengshu: '成熟',
-            chengshu_info: '锁定技。你与所有体力值大于你的角色距离+1，与所有手牌数少于你的角色距离-1。',
+            chengshu_info: '锁定技。你与所有体力值大于你的角色距离+1，与所有手牌数少于你的角色距离-1',
             ganxing: '感性',
             ganxing_discard: '弃置',
-            ganxing_info: '出牌阶段限一次, 你可指定一名其他角色并指定一个花色，观看手牌，然后你弃置其手牌或装备牌理一张此花色的牌。',
+            ganxing_info: '出牌阶段限一次, 你可指定一名其他角色并指定一个花色，观看手牌，然后你弃置其手牌或装备牌理一张此花色的牌',
             huopo: '活泼',
             huopo2: '活泼',
-            huopo_info: '回合结束阶段，你可将任意张手牌交给一名其它角色，若你这么做，该角色的下个回合开始时，你摸两倍数量的牌。',
+            huopo_info: '回合结束阶段，你可将任意张手牌交给一名其它角色，若你这么做，该角色的下个回合开始时，你摸两倍数量的牌',
             huopo2_info: '回合开始时，袁雨桢摸刚刚交给你的数量两倍的牌',
             baofa: '爆发',
-            baofa_info: '锁定技。你不能使用或打出无懈可击。你可将无懈可击当杀使用或打出，并且此类杀不计入使用次数限制。你的杀可指定的目标数等于你当前的攻击距离。',
+            baofa_info: '锁定技。你不能使用或打出无懈可击。你可将无懈可击当杀使用或打出，并且此类杀不计入使用次数限制。你的杀可指定的目标数等于你当前的攻击距离',
             caihua: '才华',
-            caihua_info: '你的杀造成伤害时，你可展示一张牌并进行一次判定，若颜色相同，你获得该判定牌。',
+            caihua_info: '你的杀造成伤害时，你可展示一张牌并进行一次判定，若颜色相同，你获得该判定牌',
             jingyan: '惊艳',
             jingyan_info: '摸牌阶段，你多摸一张牌。结束阶段开始时，你摸一张牌，然后可以将两张牌置于武将牌上，在你的下一个回合开始时，获得技能【未来】',
             mirai: '未来',
@@ -7074,26 +7350,26 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             huobing: '火并',
             huobing_info: '出牌阶段限一次，你与一名其他角色拼点，若你赢，视为你对其使用【决斗】，若你没赢，视为其对你使用【决斗】。此【决斗】不能被【无懈可击】响应',
             renwu: '刃舞',
-            renwu_info: '锁定技：所有角色的回合结束后，若你的武将牌背面朝上，翻回正面。',
+            renwu_info: '锁定技：所有角色的回合结束后，若你的武将牌背面朝上，翻回正面',
             dage: '大哥',
             dage_info: '锁定技：手牌数小于你的角色对你使用杀无效。觉醒技，你的回合开始时，若你的体力全场最低，你失去1点体力上限，回复1点体力，并获得技能【亮龙】',
             kongchang: '控场',
             kongchang_info: '每次受到伤害后，展示牌堆顶的X张牌，并将其交给任意1~X名角色（X为当前场上存活的角色数量，且最大为4）',
             lianglong: '亮龙',
-            lianglong_info: '【杀】无距离限制，且可以无限出杀。',
+            lianglong_info: '【杀】无距离限制，且可以无限出杀',
             hainv: '海女',
             hainv1: '海女',
             hainv_info: '出牌阶段限一次，你可将两张红色手牌当做【水淹七军】使用。锁定技：【水淹七军】对你无效',
             pupu: '卟卟',
             pupu_info: '锁定技：每当你受到或造成一次伤害，从牌堆摸一张牌',
             yancang: '盐仓',
-            yancang_info: '锁定技：你跳过你的判定阶段。',
+            yancang_info: '锁定技：你跳过你的判定阶段',
             jiezou: '节奏',
             jiezou_info: '出牌阶段各限一次，你可以：1（挑衅），指定一名使用【杀】能攻击到你的角色，该角色需对你使用一张【杀】，若该角色不如此做，你弃掉他的一张牌；2（挑唆），弃一张牌，视为一名SNH48角色对另一名SNH48角色使用一张[决斗]（此决斗不可被无懈可击响应）',
             zhengyi: '正义',
-            zhengyi_info: '弃置一张手牌，并选择一个角色，该角色的回合开始时进行一次判定。若结果为♠，其受到2点雷属性伤害，并且若点数为2~9，改为受到3点雷属性伤害。若为♣，弃置两张牌。',
+            zhengyi_info: '弃置一张手牌，并选择一个角色，该角色的回合开始时进行一次判定。若结果为♠，其受到2点雷属性伤害，并且若点数为2~9，改为受到3点雷属性伤害。若为♣，弃置两张牌',
             tianjiangzhengyi: '天降正义',
-            tianjiangzhengyi_info: '判定阶段进行一次判定。若结果为♠，其受到2点雷属性伤害，并且若点数为2~9，改为受到3点雷属性伤害。若为♣，弃置两张牌。',
+            tianjiangzhengyi_info: '判定阶段进行一次判定。若结果为♠，其受到2点雷属性伤害，并且若点数为2~9，改为受到3点雷属性伤害。若为♣，弃置两张牌',
 
             //H
             yonggu: '永固',
@@ -7101,13 +7377,13 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             pengyue: '捧月',
             pengyue_info: '其他角色弃置的装备牌进入弃牌堆后，你获得之。每当你装备一张装备牌，摸一张牌',
             haosi: '壕肆',
-            haosi_info: '摸牌阶段额外摸你装备区数量的牌，弃牌阶段开始时弃你装备区数量的牌。',
+            haosi_info: '摸牌阶段额外摸你装备区数量的牌，弃牌阶段开始时弃你装备区数量的牌',
             jianfeng: '剑锋',
             jianfeng_info: '锁定技：当你对一个目标造成大于1点的伤害时，目标相邻且距离为1的角色也同样会受到伤害，但伤害-1',
             haibao: '海豹',
             haibao_info: '锁定技：你的♥均视为♠；你的♦︎均视为♣',
             tiequan: '铁拳',
-            tiequan_info: '锁定技：你的【杀】无视防具且伤害+1，使用【杀】指定目标或成为【杀】的目标后，摸一张牌。',
+            tiequan_info: '锁定技：你的【杀】无视防具且伤害+1，使用【杀】指定目标或成为【杀】的目标后，摸一张牌',
             tianxuan: '天选',
             tianxuan_info: '出牌阶段你可以将两张同花色手牌当【挟天子以令诸侯】使用',
             yuanqi: '元气',
@@ -7115,58 +7391,64 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             taizi: '太子',
             taizi_info: '出牌阶段限一次，你可以将任意一张红色手牌当【以逸待劳】使用',
             fuwei: '父威',
-            fuwei_info: '对其他角色使用【杀】造成伤害后，直到其回合结束，获得技能“孝顺”（对“父威”技能持有者使用【杀】需额外弃置一张牌，否则此杀无效）。',
+            fuwei_info: '对其他角色使用【杀】造成伤害后，直到其回合结束，获得技能“孝顺”（对“父威”技能持有者使用【杀】需额外弃置一张牌，否则此杀无效）',
             xiaoshun: '孝顺',
             xiaoshun_info: '对“父威”技能持有者使用【杀】需额外弃置一张牌，否则此杀无效',
             princess: '公主',
-            princess_info: '锁定技：拼点时，点数小于Q的视为Q；每当你使用或打出一张点数为Q的牌，摸一张牌，回复一点体力。出牌阶段限一次，弃置一张点数为Q的牌，对一名角色造成1点伤害。',
+            princess_info: '锁定技：拼点时，点数小于Q的视为Q；每当你使用或打出一张点数为Q的牌，摸一张牌，回复一点体力。出牌阶段限一次，弃置一张点数为Q的牌，对一名角色造成1点伤害',
             jiaoyi: '交易',
             jiaoyi_info: '出牌阶段限一次，你可以将任意一张红色手牌当【远交近攻】使用',
             peiyun: 'PY',
             peiyun_info: '出牌阶段限一次，将任意一张手牌当【勠力同心】使用',
+            tianding: '天定',
+            tianding_info: '使用杀时，可进行一次判定，若结果为♥或者♠2~9，则此杀不可被【闪】响应。当你需要使用或打出一张【闪】时，可进行一次判定，若结果为♥或者♠2~9，视为你使用或打出了一张【闪】',
+            tianding2: '天定',
+            tianding2_info: '当你需要使用或打出一张【闪】时，可进行一次判定，若结果为♥或者♠2~9，视为你使用或打出了一张【闪】',
+            dapin: '打拼',
+            dapin_info: '若你的判定牌点数小于等于9，你可获得之',
             //X
             jiujiu: '九九',
-            jiujiu_info: '每当你受到伤害，你亮出牌堆顶的9张牌，获得其中所有点数不小于9的牌。你点数小于9的拼点牌点数视为9。',
+            jiujiu_info: '每当你受到伤害，你亮出牌堆顶的9张牌，获得其中所有点数不小于9的牌。你点数小于9的拼点牌点数视为9',
             xiaoqi: '小七',
-            xiaoqi_info: '每当你受到伤害，你亮出牌堆顶的7张牌，获得其中所有点数不大于7的牌。你点数小于7的拼点牌点数+7。',
+            xiaoqi_info: '每当你受到伤害，你亮出牌堆顶的7张牌，获得其中所有点数不大于7的牌。你点数小于7的拼点牌点数+7',
             taowa: '套娃',
-            taowa_info: '你的回合外失去牌时，可立即摸一张牌。濒死状态时，你可以与其他角色拼点，若你赢，你减少1点体力上限，回复体力至1点。若你没赢，你立即死亡。',
+            taowa_info: '你的回合外失去牌时，可立即摸一张牌。濒死状态时，你可以与其他角色拼点，若你赢，你减少1点体力上限，回复体力至1点。若你没赢，你立即死亡',
             taowa2: '套娃',
-            taowa2_info: '濒死状态时，若你的体力上限大于1，你可以与其他角色拼点，若你赢，你减少1点体力上限，回复体力至1点。若你没赢，你立即死亡。',
+            taowa2_info: '濒死状态时，若你的体力上限大于1，你可以与其他角色拼点，若你赢，你减少1点体力上限，回复体力至1点。若你没赢，你立即死亡',
             quanhuang: '拳皇',
-            quanhuang_info: '锁定技：你的拼点牌点数视为K。',
+            quanhuang_info: '锁定技：你的拼点牌点数视为K',
             lianer: '莲儿',
-            lianer_info: '锁定技：你将要受到【杀】造成的大于1点的伤害时，令此伤害-1，然后与你距离不大于1的相邻角色，各受到你造成的1点伤害。',
+            lianer_info: '锁定技：你将要受到【杀】造成的大于1点的伤害时，令此伤害-1，然后与你距离不大于1的相邻角色，各受到你造成的1点伤害',
             jingjing: '静静',
             jingjing2_bg: '静',
             jingjing2: '静静',
             jingjing3: '静静',
-            jingjing_info: '弃置2张红色手牌，直到你的下回合开始，防止你受到的除雷电伤害外的一切伤害。',
+            jingjing_info: '弃置2张红色手牌，直到你的下回合开始，防止你受到的除雷电伤害外的一切伤害',
             tiancao: '天草',
             tiancao2: '天草',
-            tiancao_info: '游戏开始时你获得两枚【草】标记；你每次受到伤害，获得一枚【草】标记；每有一个【草】，你的进攻距离+1。出牌阶段限一次，你可以弃置一枚【草】标记，摸两张牌。',
+            tiancao_info: '游戏开始时你获得两枚【草】标记；你每次受到伤害，获得一枚【草】标记；每有一个【草】，你的进攻距离+1。出牌阶段限一次，你可以弃置一枚【草】标记，摸两张牌',
             dianyan: '电眼',
             dianyan_info: '出牌阶段限一次，你可以弃置两枚【草】标记，若如此做，在本回合中，你的【杀】伤害+1，额外目标+1，无视防具，且若此【杀】造成伤害，获得一枚【草】标记',
             icefeng: '冰封',
             icefeng2: '冰封',
-            icefeng_info: '锁定技：你的【杀】造成伤害后，目标不能使用【杀】和伤害类型的锦囊，直到他的回合结束。',
+            icefeng_info: '锁定技：你的【杀】造成伤害后，目标不能使用【杀】和伤害类型的锦囊，直到他的回合结束',
             ershui: '二水',
-            ershui_info: '锁定技：若你的手牌小于5时，补到5张。',
+            ershui_info: '锁定技：若你的手牌小于5时，补到5张',
             tieyi: '铁翼',
             tieyi_info: '出牌阶段限一次，你可以将任意一张黑色手牌当【调虎离山】使用',
             muwang: '沐王',
             muwang_info: '锁定技，每当你受到即将受到的雷电伤害时，防止此伤害，并摸一张牌；每当你造成一次雷电伤害时，你摸一张牌',
             mitao: '蜜桃',
-            mitao_info: '出牌阶段限一次，你可以弃置一张【桃】，使所有角色回复1点体力。',
+            mitao_info: '出牌阶段限一次，你可以弃置一张【桃】，使所有角色回复1点体力',
             taobao: '桃宝',
-            taobao_info: '锁定技：你每回复1点体力，摸一张牌。其他角色每令你回复一次体力，该角色摸一张牌。',
+            taobao_info: '锁定技：你每回复1点体力，摸一张牌。其他角色每令你回复一次体力，该角色摸一张牌',
             nvzun: '女尊',
             nvzun_info: '锁定技：所有男性角色与你计算距离时+1（防守距离+1），你与所有女性角色计算距离时-1（进攻距离+1）',
             neighbor: '邻居',
             neighbor_info: '锁定技：摸牌阶段你额外摸与你距离不大于1的角色数量的牌。使用【杀】和锦囊牌时，无视距离',
             chemistry: '化学',
             chemistry2: '化学',
-            chemistry_info: '回合结束阶段，你可以选择并声明一种风标军争牌。你的下一个回合开始时，随机将一张手牌变化成你声明的类型的牌，点数和花色不变。',
+            chemistry_info: '回合结束阶段，你可以选择并声明一种风标军争牌。你的下一个回合开始时，随机将一张手牌变化成你声明的类型的牌，点数和花色不变',
             tansuan: '碳酸',
             tansuan_info: '锁定技，你使用【杀】指定的目标数上限+2，次数上限+1',
             order: '号令',
@@ -7174,17 +7456,23 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             guoer: '果儿',
             guoer_info: '你可以将【桃】当【无中生有】使用。锁定技：使用【桃】时，摸一张牌',
             xiaohua: '校花',
-            xiaohua_info: '当其他角色的♥牌，因弃牌或判定而进入弃牌堆时，你获得之。',
+            xiaohua_info: '当其他角色的♥牌，因弃牌或判定而进入弃牌堆时，你获得之',
             xiaoqi: '小七',
-            xiaoqi_info: '每当你受到伤害，你亮出牌堆顶的7张牌，获得其中所有点数不大于7的牌。',
+            xiaoqi_info: '每当你受到伤害，你亮出牌堆顶的7张牌，获得其中所有点数不大于7的牌',
             datou: '大头',
-            datou_info: '【万箭齐发】对你无效；若其他角色使用的【万箭齐发】在结算完时进入弃牌堆，你立即获得它。',
+            datou_info: '【万箭齐发】对你无效；若其他角色使用的【万箭齐发】在结算完时进入弃牌堆，你立即获得它',
             xunshan: '巡山',
-            xunshan_info: '限定技，随机获得每名其他角色区域内的一张牌。',
+            xunshan_info: '限定技，随机获得每名其他角色区域内的一张牌',
             liangong: '练功',
-            liangong_info: '每当场上有角色因受到【杀】或【决斗】造成的伤害，你摸一张牌然后将一张手牌置于你的武将牌上，称之为“功”。在你即将受到伤害时，你可以弃置两张“功”，防止此伤害。',
+            liangong_info: '每当场上有角色因受到【杀】或【决斗】造成的伤害，你摸一张牌然后将一张手牌置于你的武将牌上，称之为“功”。在你即将受到伤害时，你可以弃置两张“功”，防止此伤害',
             tisheng: '提升',
-            tisheng_info: '出牌阶段限一次，你可以移去一张“功”并选择一名角色，令其摸两张牌。然后你回复1点体力。'
+            tisheng_info: '出牌阶段限一次，你可以移去一张“功”并选择一名角色，令其摸两张牌。然后你回复1点体力。',
+            news: '新闻',
+            news_info: '锁定技：你的出牌阶段使用的第一张牌，♥恢复1点体力，♠抽2张牌，♦︎弃置一个角色的1张牌，♣对一个角色造成1点雷属性伤害',
+            news_club: '对一个其它角色造成1点雷属性伤害',
+            news_diamond: '弃置一个其它角色的1张牌',
+            shenmiao: '神喵',
+            shenmiao_info: '锁定技：你的出牌阶段使用的第一张牌的点数若为，奇数：恢复一点体力，偶数：摸两张牌；当你成为杀的目标后此杀若为，奇数：此杀使用者弃置一张牌，偶数：你摸一张牌'
         },
     };
 });

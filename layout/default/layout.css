@@ -4404,7 +4404,7 @@ span[data-nature='H']{
 				 black 0 0 1px
 }
 
-.player .identity[data-color="H"] {
+.player .identity[data-color="X"] {
 	color: rgba(169, 204, 41, 1)
 }
 .player .identity[data-color="X"],
