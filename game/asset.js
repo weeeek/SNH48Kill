@@ -4,6 +4,7 @@ window.noname_asset_list=[
 	'audio/background/music_default.mp3',
 	'audio/background/music_diaochan.mp3',
 	'audio/background/music_shezhan.mp3',
+	'audio/background/music_SNH48_BlueEcho.mp3',
 	'audio/card/default.mp3',
 	'audio/card/female/bingliang.mp3',
 	'audio/card/female/guohe.mp3',

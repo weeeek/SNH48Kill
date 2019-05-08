@@ -37,21 +37,15 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             zhaojiamin_SNH48: ['female', 'S', 4, ['shuangfa', 'buzhuang']],
 
             //N
-            //chenjiaying_SNH48: ['female', 'N', 3, ['zhiheng']],
-            //chenwenyan_SNH48: ['female', 'N', 3, ['zhiheng']],
+            chenjiaying_SNH48: ['female', 'N', 4, ['zhushe', 'hehe']],
             fengxinduo_SNH48: ['female', 'N', 4, ['pupu', 'hainv']],
-            //guoqianyun_SNH48: ['female', 'N', 3, ['zhiheng']],
             huangtingting_SNH48: ['female', 'N', 4, ['yancang', 'jiezou']],
-            //haowanqing_SNH48: ['female', 'N', 3, ['rende', 'yingzi']],
             //hexiaoyu_SNH48: ['female', 'N', 3, ['rende', 'yingzi']],
-            //jinyingyue_SNH48: ['female', 'N', 3, ['rende', 'yingzi']],
+            jinyingyue_SNH48: ['female', 'N', 3, ['jihuocard', 'huimie']],
             jiangzhenyi_SNH48: ['female', 'N', 4, ['zhengyi']],
-            //liujuzi_SNH48: ['female', 'N', 3, ['rende', 'yingzi']],
-            //liupeixin_SNH48: ['female', 'N', 3, ['rende', 'yingzi']],
             luting_SNH48: ['female', 'N', 4, ['dage', 'kongchang']],
-            //taoboer_SNH48: ['female', 'N', 3, ['biyue', 'paoxiao']],
             //xieni_SNH48: ['female', 'N', 3, ['biyue', 'liuli']],
-            //yijiaai_SNH48: ['female', 'N', 4, ['duwu', 'mashu']],
+            yijiaai_SNH48: ['female', 'N', 4, ['ruoyu', 'geini']],
             zhaoyue_SNH48: ['female', 'N', 4, ['huobing', 'renwu']],
             //zhangyi_SNH48: ['female', 'N', 3, ['duwu', 'mashu']],
             zhangyuxin_SNH48: ['female', 'N', 3, ['xingwen', 'duoyi']],
@@ -4938,6 +4932,18 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     player.draw()
                 }
             },
+            //易嘉爱
+            geini:{
+				trigger:{player: ['damageEnd','loseEnd']},
+				direct:true,
+                frequent: true,
+				filter:function(event,player){
+					return (event.source&&event.source.countGainableCards(player,'he')&&event.num>0&&event.source!=player);
+				},
+				content:function(){
+					player.gainPlayerCard([1,Math.max(1,trigger.num)],get.prompt('geini',trigger.source),trigger.source,get.buttonValue,'he').set('logSkill',['geini',trigger.source]);
+				}
+            },
             //黄婷婷
             yancang: {
                 audio: 2,
@@ -5001,6 +5007,268 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         });
                     }
                 }
+            },
+            //陈佳莹，呵呵
+            zhushe: {
+                group: ['zhushe_red', 'zhushe_black']
+            },
+            zhushe_red: {
+                enable: 'phaseUse',
+                usable: 1,
+                audio: 2,
+                selectTarget: 1,
+                filterTarget: function(){
+                    return true;
+                },
+                selectCard: 1,
+                filterCard: function (card) {
+                    return get.color(card) == 'red';
+                },
+                filter: function (event, player) {
+                    return player.countCards('h', {color: 'red'}) > 0;
+                },
+                content: function (event) {
+                    switch(get.suit(event.cards[0])){
+                        case "heart":
+                            target.addTempSkill("zhushe_heart");
+                            player.addAdditionalSkill('zhushe', ['zhushe_heart']);
+                            break;
+                        case "diamond":                            
+                            target.addTempSkill("zhushe_diamond");
+                            player.addAdditionalSkill('zhushe', ['zhushe_diamond']);
+                            break;
+                    }
+                },
+                ai: {
+                    order: function (skill, player) {
+                        if (player.hp < player.maxHp) {
+                            return 10;
+                        }
+                        return 1;
+                    },
+                    result: {
+                        target: function (player, target) {
+                            if (target.hasSkillTag('nogain')) return 0;
+                            if (target.hasJudge('lebu')) return 0;
+                            var nh = target.countCards('h');
+                            var np = player.countCards('h');
+                            if (player.hp == player.maxHp) {
+                                if (nh >= np - 1 && np <= player.hp && !target.hasSkill('haoshi')) return 0;
+                            }
+                            return Math.max(1, 5 - nh);
+                        }
+                    },
+                    effect: {
+                        target: function (card, player, target) {
+                            if (player == target && get.type(card) == 'equip') {
+                                if (player.countCards('e', { subtype: get.subtype(card) })) {
+                                    var players = game.filterPlayer();
+                                    for (var i = 0; i < players.length; i++) {
+                                        if (players[i] != player && get.attitude(player, players[i]) > 0) {
+                                            return 0;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    threaten: 0.8
+                }
+            },
+            zhushe_black: {
+                enable: 'phaseUse',
+                usable: 1,
+                audio: 2,
+                selectTarget: 1,
+                filterTarget: function (player, target) {
+                    return player != target;
+                },
+                selectCard:1,
+                filterCard: function (card) {
+                    return get.color(card) == 'black';
+                },
+                filter: function (event, player) {
+                    return player.countCards('h', {color: 'black'}) > 0;
+                },
+                content: function (event) {
+                    switch(get.suit(event.cards[0])){
+                        case "spade":
+                            target.addTempSkill("zhushe_spade");
+                            player.addAdditionalSkill('zhushe', ['zhushe_spade']);
+                            break;
+                        case "club":
+                            target.addTempSkill("zhushe_club");
+                            player.addAdditionalSkill('zhushe', ['zhushe_club']);
+                            break;
+                    }
+                },
+                ai: {
+                    result: {
+                        target: function (player, target) {
+                            if(get.attitude(player, target) > 0)
+                                return 0;
+                        }
+                    },
+                    threaten: 0.8
+                }
+            },
+            zhushe_heart:{
+                trigger: { player: 'phaseBegin' },
+                mark: true,
+                marktext: '♥',
+                direct: true,
+                content:function(){
+                    player.recover();
+                    player.removeAdditionalSkill('zhushe', ['zhushe_heart']);
+                }
+            },
+            zhushe_diamond:{
+                trigger: { player: 'phaseBegin' },
+                mark: true,
+                marktext: '♦',
+                direct: true,
+                content:function(){
+                    player.draw(2);
+                    player.removeAdditionalSkill('zhushe', ['zhushe_diamond']);
+                }
+            },
+            zhushe_club:{
+                trigger: { player: 'phaseBegin' },
+                mark: true,
+                marktext: '♣',
+                direct: true,
+                content:function(){
+                    player.removeAdditionalSkill('zhushe', ['zhushe_club']);
+                },
+                mod: {
+                    maxHandcard: function (player, num) {
+                        return num - 2;
+                    }
+                }
+            },
+            zhushe_spade:{
+                mark: true,
+                marktext: '♠',
+                trigger: { player: 'phaseEnd' },
+                direct: true,
+                content:function(){
+                    player.loseHp();
+                    player.removeAdditionalSkill('zhushe', ['zhushe_spade']);
+                }
+            },
+            hehe: {
+				audio:2,
+				trigger:{global:'judge'},
+				filter:function(event,player){
+					return player.countCards('he',{ color: get.color(event.player.judging[0]) })>0;
+				},
+				direct:true,
+				content:function(){
+					"step 0"
+					player.chooseCard(get.translation(trigger.player)+'的'+(trigger.judgestr||'')+'判定为'+
+					get.translation(trigger.player.judging[0])+'，'+get.prompt('hehe'),'he',function(card){
+						return get.color(card)==get.color(trigger.player.judging[0]);
+					}).set('ai',function(card){
+						var trigger=_status.event.getTrigger();
+						var player=_status.event.player;
+						var judging=_status.event.judging;
+						var result=trigger.judge(card)-trigger.judge(judging);
+						var attitude=get.attitude(player,trigger.player);
+						if(attitude==0||result==0) return 0;
+						if(attitude>0){
+							return result;
+						}
+						else{
+							return -result;
+						}
+					}).set('judging',trigger.player.judging[0]);
+					"step 1"
+					if(result.bool){
+						player.respond(result.cards,'highlight');
+					}
+					else{
+						event.finish();
+					}
+					"step 2"
+					if(result.bool){
+						player.logSkill('hehe');
+						player.$gain2(trigger.player.judging[0]);
+						player.gain(trigger.player.judging[0]);
+						trigger.player.judging[0]=result.cards[0];
+						if(!get.owner(result.cards[0],'judge')){
+							trigger.position.appendChild(result.cards[0]);
+						}
+						game.log(trigger.player,'的判定牌改为',result.cards[0]);
+					}
+					"step 3"
+					game.delay(2);
+				},
+				ai:{
+					tag:{
+						rejudge:1
+					}
+				}
+            },
+            huimie:{                
+				fullskin:true,
+				type:'trick',
+				enable:true,
+				selectTarget:-1,
+				filterTarget:true,
+				reverseOrder:true,
+				content:function(){
+					"step 0"
+					target.chooseToDiscard([1,2],'he').ai=function(card){
+						if(get.damageEffect(target,player,target,'thunder')>=0){
+							if(target.hasSkillTag('maixie')){
+								if(ui.selected.cards.length) return 0;
+							}
+							else{
+								return 0;
+							}
+						}
+						if(player.hasSkillTag('notricksource')) return 0;
+						if(target.hasSkillTag('notrick')) return 0;
+						if(card.name=='tao') return 0;
+						if(target.hp==1&&card.name=='jiu') return 0;
+						if(get.type(card)!='basic'){
+							return 10-get.value(card);
+						}
+						return 8-get.value(card);
+					};
+					"step 1"
+					if(!result.bool||result.cards.length<2){
+						if(result.bool) target.damage(2-result.cards.length,'thunder');
+						else target.damage(2,'thunder');
+					}
+				},
+				ai:{
+					basic:{
+						order:7,
+						useful:[5,1]
+					},
+					result:{
+						target:function(player,target){
+							if(target.hasSkillTag('nothunder')) return 0;
+							if(player.hasUnknown(2)) return 0;
+							var nh=target.countCards('he');
+							if(target==player) nh--;
+							if(nh==2) return -2.5;
+							if(nh==1) return -3;
+							if(nh==0) return -4;
+							return -2;
+						},
+					},
+					tag:{
+						damage:1,
+						natureDamage:1,
+						thunderDamage:1,
+						multitarget:1,
+						multineg:1,
+						discard:2,
+						loseCard:2,
+					}
+				}
             },
             //H
             //姜杉
@@ -6062,20 +6330,9 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 },
                 group: ['tiancao2']
             },
-            tiancao1: {
-                trigger: { player: 'phaseBegin' },
-                forced: true,
-                filter: function () { return true },
-                content: function () {
-                    if (player.storage.tiancao == undefined)
-                        player.storage.tiancao = 2;
-                    game.addVideo('storage', player, ['tiancao', player.storage.tiancao]);
-                }
-            },
             tiancao2: {
                 audio: 2,
                 enable: 'phaseUse',
-                usable: 1,
                 filter: function (event, player) {
                     return player.storage.tiancao > 0;
                 },
@@ -6412,6 +6669,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     trigger.cancel();
                 },
                 ai: {
+					nothunder:true,
                     effect: {
                         target: function (card, player, target, current) {
                             if (card.name == 'tiesuo') return 0;
@@ -7116,7 +7374,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             mulaosi_SB: '马老师',
             piggyrae_SB: '朱小希',
 
-            //技能显示名称，技能说明文字
+            //技能显示名称，_info技能说明文字
             fengfa: '风发',
             fengfa_info: '出牌阶段，你可以将任意两张相同花色的手牌当【万箭齐发】使用',
             gaoshi: '搞事',
@@ -7343,6 +7601,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             shouzhuo: '守拙',
             shouzhuo_info: '你的手牌上限增加场上同势力成员数，当你需要打出一张杀或闪响应时，你可将两张手牌当做其使用或打出',
             //N
+            huimie: '毁灭',
+            huimie_info: '对所有角色使用，令目标弃置0~2张牌，并受到2-X点雷电伤害，X为其弃置的手牌数',
             xingwen: '行文',
             xingwen_info: '你的准备阶段，可展示牌堆顶的一张牌并如此往复，直到出现展示的牌与上一张类型相同为止。然后你获得所有展示的牌',
             duoyi: '朵颐',
@@ -7362,6 +7622,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             hainv_info: '出牌阶段限一次，你可将两张红色手牌当做【水淹七军】使用。锁定技：【水淹七军】对你无效',
             pupu: '卟卟',
             pupu_info: '锁定技：每当你受到或造成一次伤害，从牌堆摸一张牌',
+            geini: '给你',
+            geini_info: '每当玩家从你这里获取一张牌时，你可以在这之后获取他的一张牌。',
             yancang: '盐仓',
             yancang_info: '锁定技：你跳过你的判定阶段',
             jiezou: '节奏',
@@ -7370,6 +7632,20 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             zhengyi_info: '弃置一张手牌，并选择一个角色，该角色的回合开始时进行一次判定。若结果为♠，其受到2点雷属性伤害，并且若点数为2~9，改为受到3点雷属性伤害。若为♣，弃置两张牌',
             tianjiangzhengyi: '天降正义',
             tianjiangzhengyi_info: '判定阶段进行一次判定。若结果为♠，其受到2点雷属性伤害，并且若点数为2~9，改为受到3点雷属性伤害。若为♣，弃置两张牌',
+            zhushe:'注射',
+            zhushe_info: '出牌阶段，红黑手牌各限1次，你可弃置一张手牌并选择一个角色，该角色根据此牌花色有不同的效果：♥回合开始时恢复1点体力，♠回合结束时失去1点体力，♦︎回合开始时摸两张牌，♣本回合手牌上限-2',
+            zhushe_red: '注射·爱',
+            zhushe_black: '注射·恨',
+            zhushe_heart: '♥',
+            zhushe_heart_info: '回合开始时恢复1点体力',
+            zhushe_spade: '♠',
+            zhushe_spade_info: '回合结束时失去1点体力',
+            zhushe_club: '♣',
+            zhushe_club_info: '本回合手牌上限-2',
+            zhushe_diamond: '︎♦︎',
+            zhushe_diamond_info: '回合开始时摸两张牌',
+            hehe: '呵呵',
+            hehe_info: '任意一名角色的判定生效前，你可以打出一张同色牌替换之',
 
             //H
             yonggu: '永固',
@@ -7426,7 +7702,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             jingjing_info: '弃置2张红色手牌，直到你的下回合开始，防止你受到的除雷电伤害外的一切伤害',
             tiancao: '天草',
             tiancao2: '天草',
-            tiancao_info: '游戏开始时你获得两枚【草】标记；你每次受到伤害，获得一枚【草】标记；每有一个【草】，你的进攻距离+1。出牌阶段限一次，你可以弃置一枚【草】标记，摸两张牌',
+            tiancao_info: '游戏开始时你获得两枚【草】标记；你每次受到伤害，获得一枚【草】标记；每有一个【草】，你的进攻距离+1。你可以弃置一枚【草】标记，摸两张牌',
             dianyan: '电眼',
             dianyan_info: '出牌阶段限一次，你可以弃置两枚【草】标记，若如此做，在本回合中，你的【杀】伤害+1，额外目标+1，无视防具，且若此【杀】造成伤害，获得一枚【草】标记',
             icefeng: '冰封',
@@ -7476,3 +7752,4 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
         },
     };
 });
+//♥♠♦♣

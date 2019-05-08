@@ -184,15 +184,15 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 chenguanhui_SNH48: ['female', 'S', 4, ['wenwan', 'fuhei']],
                 chengjue_SNH48: ['female', 'S', 4, ['kuaidao', 'qiaoyan']],
                 chensi_SNH48: ['female', 'S', 4, ['jingwu', 'tianyin']],
-                daimeng_SNH48: ['female', 'S', 4, ['dandang', 'jianyi', 'new_lingjun'], ['zhu']],
+                daimeng_SNH48: ['female', 'S', 4, ['dandang', 'jianyi', 'new_lingjun', 'stage']],
                 jiangyun_SNH48: ['female', 'S', 3, ['jingyan', 'qichang', 'duomian']],
                 kongxiaoyin_SNH48: ['female', 'S', 4, ['shenhun', 'diandao', 'xinggan']],
                 lvyi_SNH48: ['female', 'S', 4, ['chengzhang']],
                 liyuqi_SNH48: ['female', 'S', 3, ['haomai', 'quanneng', 'chongzhen']],
                 liuzengyan_SNH48: ['female', 'S', 4, ['tongyin', 'ganbei', 'yonglie']],
-                mohan_SNH48: ['female', 'S', 3, ['shiyu', 'yuyan', 'new_ziqiang'], ['zhu']],
+                mohan_SNH48: ['female', 'S', 3, ['shiyu', 'yuyan', 'new_ziqiang']],
                 panyanqi_SNH48: ['female', 'S', 4, ['tongxin', 'dedication']],
-                qianbeiting_SNH48: ['female', 'S', 4, ['juxia', 'qiangong']],
+                qianbeiting_SNH48: ['female', 'S', 4, ['juxia', 'qiangong', 'stage']],
                 qiuxinyi_SNH48: ['female', 'S', 4, ['meixi', 'nvwang', 'laydown']],
                 sunrui_SNH48: ['female', 'S', 3, ['qigai', 'rexin']],
                 shaoxuecong_SNH48: ['female', 'S', 4, ['yibing', 'tianpin', 'jiaozhu']],
@@ -214,21 +214,21 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 zhaojiamin_SNH48: ['female', 'S', 4, ['shuangfa', 'buzhuang']],
 
                 //N
-                chenjiaying_SNH48: ['female', 'N', 3, ['zhiheng']],
+                chenjiaying_SNH48: ['female', 'N', 4, ['zhushe', 'hehe']],
                 chenwenyan_SNH48: ['female', 'N', 3, ['zhiheng']],
                 fengxinduo_SNH48: ['female', 'N', 4, ['pupu', 'hainv', 'ho2h']],
                 guoqianyun_SNH48: ['female', 'N', 3, ['zhiheng']],
                 huangtingting_SNH48: ['female', 'N', 4, ['yancang', 'jiezou']],
                 haowanqing_SNH48: ['female', 'N', 3, ['rende', 'yingzi']],
-                hexiaoyu_SNH48: ['female', 'N', 3, ['rende', 'yingzi']],
-                jinyingyue_SNH48: ['female', 'N', 3, ['rende', 'yingzi']],
+                hexiaoyu_SNH48: ['female', 'N', 3, ['rende', 'yingzi', 'lightLocus']],                
+                jinyingyue_SNH48: ['female', 'N', 3, ['jihuocard', 'huimie']],
                 jiangzhenyi_SNH48: ['female', 'N', 4, ['zhengyi']],
                 liujuzi_SNH48: ['female', 'N', 3, ['rende', 'yingzi']],
                 liupeixin_SNH48: ['female', 'N', 3, ['rende', 'yingzi']],
                 luting_SNH48: ['female', 'N', 4, ['dage', 'kongchang', 'ho2o']],
                 taoboer_SNH48: ['female', 'N', 3, ['biyue', 'paoxiao']],
-                xieni_SNH48: ['female', 'N', 3, ['biyue', 'liuli']],
-                yijiaai_SNH48: ['female', 'N', 3, ['duwu', 'mashu']],
+                xieni_SNH48: ['female', 'N', 3, ['biyue', 'liuli']],                
+                yijiaai_SNH48: ['female', 'N', 4, ['ruoyu', 'geini', 'lightLocus']],
                 zhaoyue_SNH48: ['female', 'N', 4, ['huobing', 'renwu']],
                 zhangyi_SNH48: ['female', 'N', 3, ['duwu', 'mashu']],
                 zhangyuxin_SNH48: ['female', 'N', 3, ['xingwen', 'duoyi']],
@@ -248,7 +248,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 shenmengyao_SNH48: ['female', 'H', 4, ['shenmiao']],
                 songyushan_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
                 sunzhenni_SNH48: ['female', 'H', 4, ['pengyue', 'haosi']],
-                wanlina_SNH48: ['female', 'H', 4, ['tiequan']],
+                wanlina_SNH48: ['female', 'H', 4, ['tiequan', 'orangeDone']],
                 wangyi_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
                 xuhan_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
                 xiongqinxian_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
@@ -256,7 +256,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 yanghuiting_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
                 yujiayi_SNH48: ['female', 'H', 4, ['princess', 'jiaoyi']],
                 yuanyiqi_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
-                zhangxin_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
+                zhangxin_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan', 'orangeDone']],
                 zengxiaowen_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
 
                 liujiongran_SNH48: ['female', 'H', 3, ['luoshen', 'biyue']],
@@ -264,7 +264,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 chenlin_SNH48: ['female', 'X', 4, ['datou', 'xunshan']],
                 chenyunling_SNH48: ['female', 'X', 4, ['taowa', 'quanhuang']],
                 fengxiaofei_SNH48: ['female', 'X', 4, ['chongaaaa', 'beifen', 'yuanzhen']],
-                lizhao_SNH48: ['female', 'X', 4, ['mitao', 'taobao'], ['zhu']],
+                lizhao_SNH48: ['female', 'X', 4, ['mitao', 'taobao', 'xflag']],
                 panyingqi_SNH48: ['female', 'X', 4, ['liangong', 'tisheng']],
                 qijing_SNH48: ['female', 'X', 4, ['lianer', 'jingjing']],
                 songxinran_SNH48: ['female', 'X', 4, ['guoer', 'xiaohua']],
@@ -274,7 +274,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 wangxiaojia_SNH48: ['female', 'X', 4, ['tiancao', 'dianyan']],
                 xushiqi_SNH48: ['female', 'X', 4, ['xiaoqi']],
                 xietianyi_SNH48: ['female', 'X', 4, ['wushuang', 'nvzun']],
-                yangbingyi_SNH48: ['female', 'X', 4, ['tieyi', 'icefeng', 'ershui'], ['zhu']],
+                yangbingyi_SNH48: ['female', 'X', 4, ['tieyi', 'icefeng', 'ershui']],
                 yangyunyu_SNH48: ['female', 'X', 3, ['zhanbu']],
                 zhangdansan_SNH48: ['female', 'X', 4, ['tansuan']],
                 zhangjiayu_SNH48: ['female', 'X', 4, ['muwang']],
@@ -311,7 +311,6 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 audio: 2,
                 unique: true,
                 trigger: { target: 'taoBegin' },
-                zhuSkill: true,
                 forced: true,
                 filter: function (event, player) {
                     //自己对自己不触发
@@ -417,26 +416,85 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 }
             },
             xflag: {
-                global: 'xflag2',
-                filter: function (event, player) {
-                    console.log('event.player.group', event.player.group)
-                    console.log('player.group', player.group)
-                    return event.player.group == player.group;
-                },
-                ai: {
-                    threaten: 1.5
-                }
+				trigger:{global:'gameStart',player:'enterGame'},
+				forced:true,
+				filter:function(){
+					return game.players.length>1;
+				},
+				content:function(){
+					game.countPlayer(function(current){
+                        if(current.group == "X")
+                            current.addAdditionalSkill('xflag',['xflag2']);
+                    })
+				}
             },
             xflag2: {
                 mod: {
                     globalTo: function (from, to, distance) {
                         return distance + 1;
-                    },
+                    }
+                }
+            },            
+            lightLocus: {
+				trigger:{global:'gameStart',player:'enterGame'},
+				forced:true,
+				filter:function(){
+					return game.players.length>1;
+				},
+				content:function(){
+					game.countPlayer(function(current){
+                        if(current.group == "N")
+                            current.addAdditionalSkill('lightLocus',['lightLocus2']);
+                    })
+				}
+            },
+            lightLocus2:{
+                mod:{
                     globalFrom: function (from, to, distance) {
                         return distance - 1;
                     }
+				}
+            },
+            orangeDone: {
+				trigger:{global:'gameStart',player:'enterGame'},
+				forced:true,
+				filter:function(){
+					return game.players.length>1;
+				},
+				content:function(){
+					game.countPlayer(function(current){
+                        if(current.group == "H")
+                            current.addAdditionalSkill('orangeDone',['orangeDone2']);
+                    })
+				}
+            },
+            orangeDone2:{
+                mod: {
+					attackFrom:function(from,to,distance){
+						return distance-1;
+					}
                 }
             },
+            stage:{
+				trigger:{global:'gameStart',player:'enterGame'},
+				forced:true,
+				filter:function(){
+					return game.players.length>1;
+				},
+				content:function(){
+					game.countPlayer(function(current){
+                        if(current.group == "S")
+                            current.addAdditionalSkill('stage',['stage2']);
+                    })
+				}
+            },
+            stage2:{
+                mod:{
+                    maxHandcard: function (player, num) {
+                        return num + 2;
+                    }
+                }
+            }
         },
         game: {
             getCharacterChoice: function (list, num) {
@@ -1244,6 +1302,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     _status.clicked = true;
                     if (this.parentNode.isUnseen() && this.parentNode != game.me) {
                         switch (this.firstChild.innerHTML) {
+                            //右上角队伍归属标识，CKG48，SHY48与此处扩展case，并在layout.css中添加对应样式
                             case 'S': this.firstChild.innerHTML = 'S'; this.dataset.color = 'SNH48S'; break;
                             case 'N': this.firstChild.innerHTML = 'N'; this.dataset.color = 'SNH48N'; break;
                             case 'H': this.firstChild.innerHTML = 'H'; this.dataset.color = 'SNH48H'; break;
@@ -1273,7 +1332,13 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             new_ziqiang_info: '觉醒技, 准备阶段，若你的体力为全场最低（或之一），你增加一点体力上限并回复1点体力，获得技能“魔王”',
             //女团大战版本独有
             xflag: '梦旗',
-            xflag_info: '锁定技，同势力角色防御距离+1，进攻距离+1',
+            xflag_info: '锁定技，同势力角色防御距离',
+            orangeDone: '橘定',
+            orangeDone_info: '锁定技，同势力角色攻击距离+1',
+            stage: '舞台',
+            stage_info: '锁定技，同势力角色手牌上限+2',
+            lightLocus:'光轨',
+            lightLocus_info: '锁定技，同势力角色进攻距离+1',
             //组合篇
             ho2h: 'H',
             ho2h_info: 'HO2组合成员之一，如果回合开始时，你的主将和副将都是明置的，并且有H和O技能，则获得技能HO2',
