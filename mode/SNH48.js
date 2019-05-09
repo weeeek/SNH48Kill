@@ -221,7 +221,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 huangtingting_SNH48: ['female', 'N', 4, ['yancang', 'jiezou']],
                 haowanqing_SNH48: ['female', 'N', 3, ['rende', 'yingzi']],
                 hexiaoyu_SNH48: ['female', 'N', 3, ['rende', 'yingzi', 'lightLocus']],                
-                jinyingyue_SNH48: ['female', 'N', 3, ['jihuocard', 'huimie']],
+                jinyingyue_SNH48: ['female', 'N', 3, ['activation', 'huimie']],
                 jiangzhenyi_SNH48: ['female', 'N', 4, ['zhengyi']],
                 liujuzi_SNH48: ['female', 'N', 3, ['rende', 'yingzi']],
                 liupeixin_SNH48: ['female', 'N', 3, ['rende', 'yingzi']],
@@ -419,7 +419,9 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
 				trigger:{global:'gameStart',player:'enterGame'},
 				forced:true,
 				filter:function(){
-					return game.players.length>1;
+					return game.countPlayer(function(current){
+                        return current.group == "H"
+                    })>2;
 				},
 				content:function(){
 					game.countPlayer(function(current){
@@ -439,7 +441,9 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
 				trigger:{global:'gameStart',player:'enterGame'},
 				forced:true,
 				filter:function(){
-					return game.players.length>1;
+					return game.countPlayer(function(current){
+                        return current.group == "N"
+                    })>2;
 				},
 				content:function(){
 					game.countPlayer(function(current){
@@ -459,7 +463,9 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
 				trigger:{global:'gameStart',player:'enterGame'},
 				forced:true,
 				filter:function(){
-					return game.players.length>1;
+					return game.countPlayer(function(current){
+                        return current.group == "H"
+                    })>2;
 				},
 				content:function(){
 					game.countPlayer(function(current){
@@ -479,7 +485,9 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
 				trigger:{global:'gameStart',player:'enterGame'},
 				forced:true,
 				filter:function(){
-					return game.players.length>1;
+					return game.countPlayer(function(current){
+                        return current.group == "S"
+                    })>2;
 				},
 				content:function(){
 					game.countPlayer(function(current){
@@ -1332,13 +1340,13 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             new_ziqiang_info: '觉醒技, 准备阶段，若你的体力为全场最低（或之一），你增加一点体力上限并回复1点体力，获得技能“魔王”',
             //女团大战版本独有
             xflag: '梦旗',
-            xflag_info: '锁定技，同势力角色防御距离',
+            xflag_info: '游戏开始时，若Team X队玩家数大于等于2，则所有Team X角色防御距离+1',
             orangeDone: '橘定',
-            orangeDone_info: '锁定技，同势力角色攻击距离+1',
+            orangeDone_info: '游戏开始时，若Team HII玩家数大于等于2，则所有Team HII角色攻击距离+1',
             stage: '舞台',
-            stage_info: '锁定技，同势力角色手牌上限+2',
+            stage_info: '游戏开始时，若Team SII玩家数大于等于2，则所有Team SII角色手牌上限+2',
             lightLocus:'光轨',
-            lightLocus_info: '锁定技，同势力角色进攻距离+1',
+            lightLocus_info: '游戏开始时，若Team NII玩家数大于等于2，则所有Team NII角色攻击距离+1',
             //组合篇
             ho2h: 'H',
             ho2h_info: 'HO2组合成员之一，如果回合开始时，你的主将和副将都是明置的，并且有H和O技能，则获得技能HO2',

@@ -41,7 +41,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             fengxinduo_SNH48: ['female', 'N', 4, ['pupu', 'hainv']],
             huangtingting_SNH48: ['female', 'N', 4, ['yancang', 'jiezou']],
             //hexiaoyu_SNH48: ['female', 'N', 3, ['rende', 'yingzi']],
-            jinyingyue_SNH48: ['female', 'N', 3, ['jihuocard', 'huimie']],
+            jinyingyue_SNH48: ['female', 'N', 3, ['activation', 'huimie']],
             jiangzhenyi_SNH48: ['female', 'N', 4, ['zhengyi']],
             luting_SNH48: ['female', 'N', 4, ['dage', 'kongchang']],
             //xieni_SNH48: ['female', 'N', 3, ['biyue', 'liuli']],
@@ -1333,6 +1333,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     game.delay();
                 },
                 ai: {
+					effect:{
+						target:function(card,player,target){							
+							if(player.countCards('h')<2) return 'zerotarget';
+						}
+					},
                     threaten: 1.1
                 }
             },
@@ -5030,12 +5035,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 content: function (event) {
                     switch(get.suit(event.cards[0])){
                         case "heart":
-                            target.addTempSkill("zhushe_heart");
-                            player.addAdditionalSkill('zhushe', ['zhushe_heart']);
+                            target.addAdditionalSkill('zhushe', ['zhushe_heart']);
                             break;
                         case "diamond":                            
-                            target.addTempSkill("zhushe_diamond");
-                            player.addAdditionalSkill('zhushe', ['zhushe_diamond']);
+                            target.addAdditionalSkill('zhushe', ['zhushe_diamond']);
                             break;
                     }
                 },
@@ -5093,12 +5096,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 content: function (event) {
                     switch(get.suit(event.cards[0])){
                         case "spade":
-                            target.addTempSkill("zhushe_spade");
-                            player.addAdditionalSkill('zhushe', ['zhushe_spade']);
+                            target.addAdditionalSkill('zhushe', ['zhushe_spade']);
                             break;
                         case "club":
-                            target.addTempSkill("zhushe_club");
-                            player.addAdditionalSkill('zhushe', ['zhushe_club']);
+                            target.addAdditionalSkill('zhushe', ['zhushe_club']);
                             break;
                     }
                 },
@@ -5116,8 +5117,12 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 trigger: { player: 'phaseBegin' },
                 mark: true,
                 marktext: '♥',
+                intro: {
+                    content: '回合开始时恢复1点体力'
+                },
                 direct: true,
                 content:function(){
+                    game.log(player,'注射·♥生效');
                     player.recover();
                     player.removeAdditionalSkill('zhushe', ['zhushe_heart']);
                 }
@@ -5126,8 +5131,12 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 trigger: { player: 'phaseBegin' },
                 mark: true,
                 marktext: '♦',
+                intro: {
+                    content: '回合开始时摸两张牌'
+                },
                 direct: true,
                 content:function(){
+                    game.log(player,'注射·♦生效');
                     player.draw(2);
                     player.removeAdditionalSkill('zhushe', ['zhushe_diamond']);
                 }
@@ -5136,8 +5145,12 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 trigger: { player: 'phaseBegin' },
                 mark: true,
                 marktext: '♣',
+                intro: {
+                    content: '本回合手牌上限-2'
+                },
                 direct: true,
                 content:function(){
+                    game.log(player,'注射·♣生效');
                     player.removeAdditionalSkill('zhushe', ['zhushe_club']);
                 },
                 mod: {
@@ -5147,11 +5160,15 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 }
             },
             zhushe_spade:{
+                trigger: { player: 'phaseEnd' },
                 mark: true,
                 marktext: '♠',
-                trigger: { player: 'phaseEnd' },
+                intro: {
+                    content: '回合开始时失去1点体力'
+                },
                 direct: true,
-                content:function(){
+                content:function(){                    
+				    game.log(player,'注射·♠生效');
                     player.loseHp();
                     player.removeAdditionalSkill('zhushe', ['zhushe_spade']);
                 }
@@ -5206,6 +5223,29 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
 				ai:{
 					tag:{
 						rejudge:1
+					}
+				}
+            },
+            activation: {
+                usable: 1,
+                trigger: { player: 'phaseBegin' },
+                content:function(){
+                    player.draw(2);
+                    player.addTempSkill("activation_effect")
+                },
+                ai: {
+                    result:{
+                        player:function(player){
+                            //如果自己有乐不思蜀需要判定AI就不发动这个技能
+                            if(player.hasJudge('lebu')) return 0;
+                        }
+                    }
+                }
+            },
+            activation_effect:{
+                mod:{
+					maxHandcard:function(player,num){
+						return num -2;
 					}
 				}
             },
@@ -5842,7 +5882,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             },
             shenmiao1: {                
                 trigger: { player: 'phaseBegin' },
-                frequent: true,
+                direct: true,
+                force: true,
                 filter: function (event, player) {
                     return true
                 },
@@ -5857,15 +5898,15 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
 				direct:true,
 				priority:5,
 				filter:function(event,player){
-                    //实体牌才触发
-					return event.card && event.card.number > 0
+                    //自己杀自己不触发，实体牌才触发
+					return event.target != player && event.card && event.card.number > 0
                 },
                 content: function(){
                     player.logSkill('shenmiao');
                     if(trigger.card.number % 2 == 0)
                         trigger.target.draw();
                     else
-                        trigger.source.chooseToDiscard(true, 'he', 1).set('ai', function (card) {
+                        trigger.player.chooseToDiscard(true, 'he', 1).set('ai', function (card) {
                             return 9 - get.value(card)
                         });
                 },
@@ -7601,8 +7642,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             shouzhuo: '守拙',
             shouzhuo_info: '你的手牌上限增加场上同势力成员数，当你需要打出一张杀或闪响应时，你可将两张手牌当做其使用或打出',
             //N
+            activation: '激活',
+            activation_info: '出牌阶段限一次，摸两张牌，本回合手牌上限-2',
             huimie: '毁灭',
-            huimie_info: '对所有角色使用，令目标弃置0~2张牌，并受到2-X点雷电伤害，X为其弃置的手牌数',
+            huimie_info: '对所有角色使用，令目标弃置0~2张牌，并受到(2-X)点雷电伤害，X为其弃置的手牌数',
             xingwen: '行文',
             xingwen_info: '你的准备阶段，可展示牌堆顶的一张牌并如此往复，直到出现展示的牌与上一张类型相同为止。然后你获得所有展示的牌',
             duoyi: '朵颐',
@@ -7623,7 +7666,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             pupu: '卟卟',
             pupu_info: '锁定技：每当你受到或造成一次伤害，从牌堆摸一张牌',
             geini: '给你',
-            geini_info: '每当玩家从你这里获取一张牌时，你可以在这之后获取他的一张牌。',
+            geini_info: '每当玩家从你这里获取一张牌或对你造成一次伤害时，你可以在这之后获取他的一张牌。',
             yancang: '盐仓',
             yancang_info: '锁定技：你跳过你的判定阶段',
             jiezou: '节奏',
