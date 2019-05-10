@@ -45,21 +45,21 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             jiangzhenyi_SNH48: ['female', 'N', 4, ['zhengyi']],
             luting_SNH48: ['female', 'N', 4, ['dage', 'kongchang']],
             //xieni_SNH48: ['female', 'N', 3, ['biyue', 'liuli']],
-            yijiaai_SNH48: ['female', 'N', 4, ['ruoyu', 'geini']],
+            yijiaai_SNH48: ['female', 'N', 4, ['xiangle', 'geini']],
             zhaoyue_SNH48: ['female', 'N', 4, ['huobing', 'renwu']],
             //zhangyi_SNH48: ['female', 'N', 3, ['duwu', 'mashu']],
             zhangyuxin_SNH48: ['female', 'N', 3, ['xingwen', 'duoyi']],
 
             jujingyi_SNH48: ['female', 'N', 4, ['dufei', 'poisonousfog', 'jiedu', 'duzong']],
 
-            //H
+            //H，由于李艺彤的海豹技能，H队不能有洛神技能，否则牌库会被直接抽完。config.js中配置禁止组合
             feiqinyuan_SNH48: ['female', 'H', 3, ['tianxuan', 'yuanqi', 'taizi']],
             hongpeiyun_SNH48: ['female', 'H', 4, ['peiyun', 'fuwei']],
             jiangshan_SNH48: ['female', 'H', 4, ['yonggu']],
             //jiangshuting_SNH48: ['female', 'H', 4, ['jiang', 'luanji']],
             //lijiaen_SNH48: ['female', 'H', 4, ['jiang', 'luanji']],
             linnan_SNH48: ['female', 'H', 4, ['tianding', 'dapin']],
-            //linsiyi_SNH48: ['female', 'H', 3, ['luoshen', 'qingguo']],
+            //linsiyi_SNH48: ['female', 'H', 3, ['', 'qingguo']],
             liyitong_SNH48: ['female', 'H', 4, ['jizhi', 'haibao', 'jianfeng']],
             //qiyuzhu_SNH48: ['female', 'H', 3, ['kurou', 'biyue']],
             shenmengyao_SNH48: ['female', 'H', 4, ['shenmiao']],
@@ -76,7 +76,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //zhangxin_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
             //zengxiaowen_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
 
-            //liujiongran_SNH48: ['female', 'H', 3, ['luoshen', 'biyue']],
+            //liujiongran_SNH48: ['female', 'H', 3, ['', 'biyue']],
             //X
             chenlin_SNH48: ['female', 'X', 4, ['datou', 'xunshan']],
             chenyunling_SNH48: ['female', 'X', 4, ['taowa', 'quanhuang']],
@@ -1417,6 +1417,9 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                         player.draw();
                         player.gainPlayerCard(trigger.player, true, 'he');
                     }
+                    else{
+                        trigger.player.draw();
+                    }
                 },
                 ai: {
                     basic: {
@@ -1480,6 +1483,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 unique: true,
                 zhuSkill: true,
                 keepSkill: true,
+                priority: 15,
                 derivation: 'mowang',
                 trigger: { player: 'phaseBegin' },
                 forced: true,
@@ -2961,7 +2965,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 audio: 4,
                 trigger: { global: 'damageEnd' },
                 filter: function (event, player) {
-                    if (event.source == player || event.player == player)
+                    if (!event.source || event.source == player || event.player == player)
                         return false;
                     if (event.source.hasSkill('muwang'))
                         return false;
@@ -3227,7 +3231,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             jiaozhu: {
                 audio: 2,
                 trigger: { player: 'loseEnd' },
-                direct: true,
+                direct: true,                
                 filter: function (event, player) {
                     if (player.countCards('h')) return false;
                     for (var i = 0; i < event.cards.length; i++) {
@@ -3267,7 +3271,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                                 break;
                             case 0:
                             default:
-                                player.logSkill('relianying', result.targets);
+                                player.logSkill('jiaozhu', result.targets);
                                 game.asyncDraw(result.targets);
                         }
                     }
@@ -3669,10 +3673,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 check: function (event, player) {
                     if (player.isTurnedOver()) return true;
                     var num = game.countPlayer(function (current) {
-                        if (current.countCards('he') && current != player && get.attitude(player, current) <= 0) {
+                        if (current.countCards('j') && current != player && get.attitude(player, current) > 0) {
                             return true;
                         }
-                        if (current.countCards('j') && current != player && get.attitude(player, current) > 0) {
+                        if (current.countCards('he') && current != player && get.attitude(player, current) <= 0) {
                             return true;
                         }
                     });
@@ -3706,8 +3710,6 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     player.turnOver();
                 },
                 ai: {
-                    maixie: false,
-                    maixie_hp: false,
                     threaten: function (player, target) {
                         if (target.hp == 1) return 2.5;
                         return 1;
@@ -3719,10 +3721,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                                 if (target.hp == 1) return 0.8;
                                 if (target.isTurnedOver()) return [0, 3];
                                 var num = game.countPlayer(function (current) {
-                                    if (current.countCards('he') && current != player && get.attitude(player, current) <= 0) {
+                                    if (current.countCards('j') && current != player && get.attitude(player, current) > 0) {
                                         return true;
                                     }
-                                    if (current.countCards('j') && current != player && get.attitude(player, current) > 0) {
+                                    if (current.countCards('he') && current != player && get.attitude(player, current) <= 0) {
                                         return true;
                                     }
                                 });
@@ -4330,6 +4332,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     });
                     'step 1'
                     if (result.bool) {
+                        player.logSkill('jingyan')
                         player.addAdditionalSkill('jingyan', ['mirai']);
                     }
                 },
@@ -5249,13 +5252,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
 					}
 				}
             },
-            huimie:{                
-				fullskin:true,
-				type:'trick',
-				enable:true,
+            huimie:{
+                enable: 'phaseUse',
+				usable: 1,
 				selectTarget:-1,
 				filterTarget:true,
-				reverseOrder:true,
 				content:function(){
 					"step 0"
 					target.chooseToDiscard([1,2],'he').ai=function(card){
@@ -5458,9 +5459,9 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             },
             haibao: {
                 mod: {
-                    suit: function (card, suit) {
+                    suit: function (card, suit, player) {
                         if (suit == 'heart') return 'spade';
-                        if (suit == 'diamond') return 'club'
+                        if (suit == 'diamond') return 'club';
                     }
                 }
             },
@@ -7472,7 +7473,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             lingjun: '领军',
             lingjun_info: '主公技，当你陷入濒死状态时，与你同势力的角色对你使用的[桃]额外回复一点体力值。你以此法脱离濒死状态时，其摸一张牌',
             shiyu: '食欲',
-            shiyu_info: '每当你使用杀对一名角色造成伤害时，你可与其拼点，若你赢，你获得对方的一张牌并且摸一张牌',
+            shiyu_info: '每当你使用杀对一名角色造成伤害时，你可与其拼点，若你赢，你获得对方的一张牌并且摸一张牌，否则对方摸一张牌',
             yuyan: '预言',
             yuyan_info: '回合外每失去一张牌，你选择一个颜色并进行一次判定，若结果相同，你获得该判定牌',
             mowang: '魔王',

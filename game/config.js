@@ -255,5 +255,8 @@ window.config={
 		['xiuhua','xiaoji'],
 		// ['jiushi','jushou'],
 		// ['jiushi','kuiwei'],
+
+		// SNH48模式禁止配对的技能
+		['luoshen', 'haibao']
 	]
 };

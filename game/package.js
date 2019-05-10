@@ -63,7 +63,7 @@ window.noname_package = {
         music_diaochan: '貂蝉',
         music_shezhan: '舌战',
         music_danji: '单骑',
-        music_SNH48: 'SNH48'
+        music_SNH48_BlueEcho: 'SNH48'
     },
     font: {
         xiaozhuan: '小篆',
