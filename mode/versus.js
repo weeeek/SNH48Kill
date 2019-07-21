@@ -98,11 +98,20 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 				game.prepareArena(2);
 			}
 			else if(_status.mode=='three'){
+				lib.character.wenpin[3]=['zhenwei_three'];
+				lib.character.zhugejin[3]=['hongyuan','huanshi_three','mingzhe'];
 				if(!get.config('enable_all_cards')){
 					lib.translate.wuzhong_info+='若对方存活角色多于己方，则额外摸一张牌';
 					lib.translate.zhuge_info='锁定技，出牌阶段，你使用杀的次数上限+3';
 					lib.card.list=lib.cardsThree;
 					game.fixedPile=true;
+				}
+				else if(Array.isArray(lib.config.forbidthreecard)){
+					for(var i=0;i<lib.card.list.length;i++){
+						if(lib.config.forbidthreecard.contains(lib.card.list[i][2])){
+							lib.card.list.splice(i--,1);
+						}
+					}
 				}
 				ui.create.cardsAsync();
 				game.finishCards();
@@ -507,9 +516,9 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 				else if(lib.configOL.versus_mode=='2v2'||lib.configOL.versus_mode=='3v3'){
 					uiintro.add('<div class="text chat">四号位换牌：'+(lib.configOL.replace_handcard?'开启':'关闭'));
 				}
-				uiintro.add('<div class="text chat">出牌时限：'+lib.configOL.choose_timeout+'秒');
-				uiintro.add('<div class="text chat">屏蔽弱将：'+(lib.configOL.ban_weak?'开启':'关闭'));
-				var last=uiintro.add('<div class="text chat">屏蔽强将：'+(lib.configOL.ban_strong?'开启':'关闭'));
+				var last=uiintro.add('<div class="text chat">出牌时限：'+lib.configOL.choose_timeout+'秒');
+				// uiintro.add('<div class="text chat">屏蔽弱将：'+(lib.configOL.ban_weak?'开启':'关闭'));
+				// var last=uiintro.add('<div class="text chat">屏蔽强将：'+(lib.configOL.ban_strong?'开启':'关闭'));
 				if(lib.configOL.banned.length){
 					last=uiintro.add('<div class="text chat">禁用武将：'+get.translation(lib.configOL.banned));
 				}
@@ -1733,6 +1742,9 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 					event.current.classList.remove('selectedx');
 					if(event.current.side==game.me.side){
 						event.current.init(result.buttons[0].link);
+						if(event.current==game.me){
+							game.addRecentCharacter(result.buttons[0].link);
+						}
 						event.list.remove(event.current.name);
 						event.list2.remove(event.current.name);
 						if(event.current.identity=='zhu'){
@@ -1788,7 +1800,7 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 					if(event.xdialog){
 						event.xdialog.close();
 					}
-					game.addRecentCharacter(game.me.name,game.me.name2);
+					// game.addRecentCharacter(game.me.name,game.me.name2);
 					ui.control.style.transitionDuration='0s';
 					ui.refresh(ui.control);
 					ui.arena.classList.remove('choose-character');
@@ -1994,7 +2006,7 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 					_status.color=Math.random()<0.5;
 					var i,list=[];
 					for(i in lib.character){
-						if(lib.config.forbidversus.contains(i)) continue;
+						// if(lib.config.forbidversus.contains(i)) continue;
 						if(lib.filter.characterDisabled(i)) continue;
 						list.push(i);
 					}
@@ -3768,18 +3780,15 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 			["club",4,"bingliang"],
 		],
 		choiceThree:[
-			'sunquan','re_ganning','re_huanggai','re_zhouyu','re_daqiao','re_luxun','sunshangxiang',
-			're_liubei','re_zhangfei','zhugeliang','re_zhaoyun','re_machao','huangyueying',
-			're_caocao','re_simayi','re_zhangliao','re_xuzhu','re_guojia','zhenji','re_lidian',
-			're_gongsunzan','diaochan','re_huatuo',
-			'xiaoqiao',
-			'dianwei',
-			'xuhuang','sunjian',
-			'dengai','jiangwei','sunce',
-			'xin_masu','lingtong','xusheng','chengong',
-			'xunyou','wangyi',
-			'guyong','caifuren',
-			'zhugejin','dingfeng',
+			'zhenji','zhugeliang','sunquan','diaochan',
+			're_ganning','re_daqiao','re_zhangfei','re_machao','re_simayi','re_zhangliao','re_xuzhu','re_guojia','re_lidian',
+			'jiangwei','sunce',
+			'madai','lingtong','yufan',
+			'wangji','yanyan','wangping',
+			'guyong','jushou','caifuren','zhoucang','liuchen','liyan',
+			'caiyong','xuezong',
+			'zhugejin','simalang','sp_sunshangxiang','luzhi','sp_liuqi','quyi',
+			'mazhong','mayunlu','litong','wenpin'
 		],
 		choiceFour:[
 			'sunquan','re_ganning','re_lvmeng','re_zhouyu','re_daqiao','re_luxun','sunshangxiang',

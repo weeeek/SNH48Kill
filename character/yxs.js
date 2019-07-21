@@ -3,6 +3,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 	return {
 		name:'yxs',
 		character:{
+			yxs_qinqiong:["male","wei",4,["yxs_fanji","yxs_menshen"],[]],
 			yxs_wuzetian:['female','wu',4,['nvquan','qiandu','weiyi']],
 			yxs_caocao:['male','wei',4,['zhulu','xieling']],
 			yxs_mozi:['male','qun',3,['jieyong','feigong','jianai']],
@@ -47,6 +48,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			yxs_lanlinwang:['male','shu',4,['guimian','lyuxue']],
 		},
 		characterIntro:{
+			yxs_qinqiong:'秦琼（？—638年），字叔宝，齐州历城（今山东济南市）人，隋末唐初名将。初为隋将，先后在来护儿、张须陀、裴仁基帐下任职，因勇武过人而远近闻名。后随裴仁基投奔瓦岗军领袖李密，瓦岗败亡后转投王世充，因见王世充为人奸诈，与程咬金等人一起投奔李唐。投唐后随李世民南征北战，是一个能在万马军中取敌将首级的勇将，但也因此浑身是伤。唐统一后，秦琼久病缠身，于贞观十二年（638）病逝。生前官至左武卫大将军、翼国公，死后追赠为徐州都督、胡国公，谥曰“壮”。贞观十七年被列入凌烟阁二十四功臣。',
 			yxs_wuzetian:'中国历史上唯一一个正统的女皇帝，也是继位年龄最大的皇帝（67岁即位），又是寿命最长的皇帝之一（终年82岁）。唐高宗时为皇后（655—683）、唐中宗和唐睿宗时为皇太后（683—690），后自立为武周皇帝（690—705），改国号“唐”为“周”，定都洛阳，并号其为“神都”。史称“武周”或“南周”，705年退位。武则天也是一位女诗人和政治家。',
 			yxs_caocao:' 曹操（155年7月18日－220年3月15日），字孟德，一名吉利，小字阿瞒，汉族，沛国谯（今安徽省亳州市）人。曹操生于宦官之家，适逢乱世，但是胸怀大志，参与剿灭董卓战争，之后在官渡大败袁绍，占据北方，挟天子以令诸侯。最后兵败赤壁，与吴，蜀三分天下。',
 			yxs_mozi:' 宋国大夫，名翟，鲁人(今山东滕州人)。墨子是我国战国时期著名的思想家、教育家、科学家、军事家、社会活动家，墨家学派的创始人。墨子曾阻止鲁阳文君攻郑，说服公输般而止楚攻宋。楚惠王打算以书社封墨子，越王也打算以吴之地方五百里以封墨子，但墨子都没有接受。其创立墨家学说，并有《墨子》一书传世。',
@@ -56,7 +58,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			yxs_yangyuhuan:'唐朝贵妃，名玉环，字太真，蒲州永乐人（今山西永济）。杨玉环自小习音律，善歌舞，姿色超群。27岁时，得唐玄宗宠幸，召入宫中，封为贵妃。杨贵妃天生丽质，回眸一笑百媚生，六宫粉黛无颜色，堪称大唐第一美女，此后千余年无出其右者。其与西施、昭君、貂蝉并称中国古代四大美女。',
 			yxs_baosi:'褒姒，周幽王姬宫涅的王后，褒姒原是一名弃婴，被一对做小买卖的夫妻收养，在褒国（今陕西省汉中西北）长大，公元前七七九年（周幽王三年），周幽王征伐有褒国，褒人献出美女褒姒乞降，幽王爱如掌上明珠，立为妃，宠冠周王宫，翌年，褒姒生子伯服（一作伯般），幽王对她更加宠爱，竟废去王后申氏和太子宜臼，册立褒姒为王后，立伯服为太子，周太史伯阳叹气道：“周王室已面临大祸，这是不可避免的了。”',
 			yxs_napolun:'法兰西第一共和国执政、法兰西第一帝国皇帝，出生在法国科西嘉岛，是一位卓越的军事天才。他多次击败保王党的反扑和反法同盟的入侵，捍卫了法国大革命的成果。他颁布的《民法典》更是成为了后世资本主义国家的立法蓝本。他执政期间多次对外扩张，形成了庞大的帝国体系，创造了一系列军事奇迹。',
-			yxs_kaisa:'凯撒是罗马共和国末期杰出的军事统帅、政治家。他公元前60年与庞培、克拉苏秘密结成前三巨头同盟，随后出任高卢总督，在大约8年的时间内征服了高卢全境（今法国一带），还袭击了日耳曼和不列颠。前49年，他率军占领罗马，打败庞培，集大权于一身，实行独裁统治并制定了《儒略历》。',
+			kaisa:'凯撒是罗马共和国末期杰出的军事统帅、政治家。他公元前60年与庞培、克拉苏秘密结成前三巨头同盟，随后出任高卢总督，在大约8年的时间内征服了高卢全境（今法国一带），还袭击了日耳曼和不列颠。前49年，他率军占领罗马，打败庞培，集大权于一身，实行独裁统治并制定了《儒略历》。',
 			yxs_zhuyuanzhang:' 朱元璋，明王朝的开国皇帝。原名重八，后取名兴宗。汉族，濠州（今安徽凤阳县东）钟离太平乡人。朱元璋自幼贫寒，父母兄长均死于瘟疫，孤苦无依，入皇觉寺为小沙弥，入寺不到二个月，因荒年寺租难收，寺主封仓遣散众僧，只得离乡为游方僧，后参加了起义军，并改名“朱元璋”意为诛（朱）灭元朝的璋（璋，古代的一种玉器）。25岁时参加郭子兴领导的红巾军反抗蒙元暴政，在郭子兴手下，率兵出征，有攻必克；因此郭便把养女马氏嫁与了他。元至正二十八年(1368)，在基本击破各路农民起义军和扫平元的残余势力后，于南京称帝，国号大明，年号洪武，建立了全国统一的封建政权。朱元璋统治时期被称为“洪武之治”。葬于明孝陵。',
 			yxs_jinke:'荆轲，喜好读书击剑，为人慷慨侠义。后游历到燕国，被称为“荆卿”（或荆叔），随之由燕国智勇深沉的“节侠”田光推荐给太子丹，拜为上卿。秦国灭赵后，兵锋直指燕国南界，太子丹震惧，与田光密谋，决定派荆轲入秦行刺秦王。荆轲献计太子丹，拟以秦国叛将樊于期之头及燕督亢（今河北涿县、易县、固安一带，是一块肥沃的土地）地图进献秦王，相机行刺。太子丹不忍杀樊于期，荆轲只好私见樊于期，告以实情，樊于期为成全荆轲而自刎。',
 			yxs_libai:'字太白，号青莲居士，又号“谪仙人”，祖籍陇西郡成纪县（今甘肃省平凉市静宁县南）。李白是唐朝著名的浪漫主义诗人，有“诗仙”之称。李白生平作诗无数，存世诗文达千余篇之多，《蜀道难》、《行路难》、《梦游天姥吟留别》、《将进酒》等诗篇脍炙人口，妇孺皆知，另有《李太白集》传世。',
@@ -90,7 +92,119 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			yxs_meixi:'妺（mò）喜，姓嬉（喜），生卒年不详，亦作妺嬉、末喜、末嬉，有施氏之女，夏朝最后一位君主夏桀的王后。根据先秦时代记述女子名时所用的全称和简称方式，妺喜应姓喜，即嬉（也作僖）。由于其名字的“妺”字与“妹妹”的“妹”字字形相似，且在《庄子》等作中也有以妺为妹的用法，因此常误作"妹喜"。',
 			yxs_lanlinwang:'高长恭（541年―573年），又名高孝瓘、高肃，祖籍渤海调蓨（今河北省景县），神武帝高欢之孙，文襄帝高澄第四子，生母不详，南北朝时期北齐宗室、将领，封爵兰陵郡王。高长恭貌柔心壮，音容兼美。为将躬勤细事，每得甘美，虽一瓜数果，必与将士分享。累次升任至并州刺史。突厥攻入晋阳，高长恭奋力将其击退。邙山之战，高长恭为中军，率领五百骑兵再入周军包围圈，直至金墉城下，因高长恭戴着头盔，城中的人不确定是敌军或是我军，直到高长恭把头盔脱下来城上的人才知道是高长恭，派弓箭手开始放箭保护他，之后高长恭成功替金墉解围，高长恭在此次战中威名大振，士兵们为此战而讴歌他，即后来知名的《兰陵王入阵曲》。',
 		},
+		characterTitle:{					 					 
+					 "yxs_qinqiong":"Sukincen",					
+									},
 		skill:{
+			yxs_fanji:{
+                audio:2,
+                trigger:{
+                    player:"damageEnd",
+                },
+                direct:true,
+                priority:12,
+                filter:function (event,player){      
+                if(!player.countCards('h',{name:'sha'})) return false;
+        return event.card.name=='sha'||event.card.name=='juedou';
+    },
+                content:function (){    
+                player.addTempSkill('yxs_fanji2','shaAfter');   
+         player.chooseToUse({name:'sha'},trigger.source,'反击：是否对'+get.translation(trigger.source)+'使用一张杀？').logSkill='yxs_fanji';
+    },
+            },
+               yxs_fanji2:{
+                audio:2,
+                trigger:{
+                    player:"shaBegin",
+                },
+                direct:true,              
+                filter:function (event,player){      
+        return event.card&&event.card.name=='sha'&&get.color(event.card)=='red';
+    },
+                content:function (){    
+               trigger.directHit=true;
+    },
+            },
+                                   		
+			yxs_menshen3:{
+				trigger:{
+					player:['phaseBegin','dieBegin'],
+				},
+				silent:true,
+				filter:function(event,player){
+					return game.hasPlayer(function(current){
+            return current.hasSkill('yxs_menshen2');
+        });
+				},
+				content:function(){
+				 for(var i=0;i<game.players.length;i++){
+            if(game.players[i].hasSkill('yxs_menshen2')){
+					game.players[i].removeSkill('yxs_menshen2');
+					}
+					}
+				},
+			},            
+                         
+            yxs_menshen:{
+                audio:2,
+                trigger:{
+                    player:"phaseEnd",
+                },
+                priority:15,                
+               	group:'yxs_menshen3',
+		           		onremove:true,
+                filter:function (event,player){
+        return game.players.length>1;
+    },
+                content:function (){
+              "step 0"
+     player.chooseTarget('选择【门神】的目标',lib.translate.yxs_menshen_info,true,function(card,player,target){
+             return target!=player;
+     }).set('ai',function(target){     
+             return get.attitude(player,target);            
+     });        
+     "step 1"
+     if(result.bool){           
+        var target=result.targets[0];
+						player.line(target,'green');
+						game.log(target,'成为了','【门神】','的目标');
+						target.storage.yxs_menshen2=player;
+						target.addSkill('yxs_menshen2');
+     }
+    else {       
+            event.finish(); 
+    }                     
+   },      
+   ai:{
+       expose:0.5,
+   },               
+            },
+         
+           yxs_menshen2:{
+     audio:2,
+    	mark:'character',
+				intro:{
+					content:'当你成为【杀】或【决斗】的目标后，改为$成为目标'
+				},
+				nopop:true,
+				priority:15,      
+     trigger:{
+         target:["shaBegin","juedouBegin"],
+      },
+     forced:true,
+				popup:false,
+				filter:function(event,player){
+					return player.isAlive();
+				},
+                content:function (){                             
+          var target=player.storage.yxs_menshen2;
+		    			trigger.player.line(target,'green');
+			trigger.targets.remove(player);
+				  		trigger.targets.push(target);	
+								trigger.target = target;							
+    },
+       }, 
+	   
 			guimian:{
 				trigger:{source:'damageEnd'},
 				forced:true,
@@ -700,22 +814,17 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			dili:{
 				trigger:{player:'phaseDrawBegin'},
 				forced:true,
-				alter:true,
 				filter:function(event,player){
 					return player.hp<player.maxHp;
 				},
 				content:function(){
-					if(get.is.altered('dili')){
-						trigger.num+=Math.ceil((player.maxHp-player.hp)/2);
-					}
-					else{
-						trigger.num+=player.maxHp-player.hp;
-					}
+					trigger.num+=Math.min(2, Math.ceil((player.maxHp-player.hp)/2));
 				},
 				ai:{
 					threaten:function(player,target){
-						if(target.hp==1) return 2.5;
-						if(target.hp==2) return 1.5;
+						var num=Math.min(2, Math.ceil((player.maxHp-player.hp)/2));
+						if(num==2) return 2;
+						if(num==1) return 1;
 						return 0.5;
 					},
 					maixie:true,
@@ -735,7 +844,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					neg:true
 				},
 				init:function(player){
-					if(lib.config.mode=='identity'&&player.isZhu){
+					if(player.isZhu){
 						player.maxHp--;
 						player.update();
 					}
@@ -838,16 +947,9 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				}
 			},
 			xiushen:{
-				trigger:{player:['phaseEnd','phaseUseEnd']},
+				trigger:{player:'phaseUseEnd'},
 				forced:true,
-				alter:true,
 				filter:function(event,player){
-					if(get.is.altered('xiushen')){
-						if(event.name!='phaseUse') return false;
-					}
-					else{
-						if(event.name!='phase') return false;
-					}
 					return game.hasPlayer(function(current){
 						return current.isLinked();
 					});
@@ -2830,7 +2932,15 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			yxs_weizhongxian:'魏忠贤',
 			yxs_lanlinwang:'兰陵王',
 			yxs_meixi:'妹喜',
+			yxs_qinqiong:"秦琼",
 
+			yxs_fanji:"反击",
+            yxs_fanji2:"反击",
+            yxs_fanji_info:"当你受到【杀】或【决斗】造成的伤害后，你可以对伤害来源使用一张【杀】。若此【杀】为红色，其不可闪避",
+            yxs_menshen:"门神",
+            yxs_menshen2:"门神",
+            yxs_menshen3:"门神",
+            yxs_menshen_info:"回合结束阶段，你可选择一名其他角色，若如此做，直到你的下回合开始，所有角色对该角色使用的【杀】或【决斗】均视为对你使用",
 			zhuxin:'诛心',
 			zhuxin_info:'出牌阶段限一次，你可以与一名其他角色拼点，若你赢，你对其造成一点伤害',
 			wlianhuan:'连环',
@@ -2871,8 +2981,8 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			kuangchan:'狂禅',
 			kuangchan_info:'锁定技，你做主公时，不增加体力上限',
 			dili:'底力',
-			dili_info:'锁定技，摸牌阶段，你额外摸X张牌，X为你已损失的体力值',
-			dili_info_alter:'锁定技，摸牌阶段，你额外摸X张牌，X为你已损失的体力值的一半，向上取整',
+			// dili_info:'锁定技，摸牌阶段，你额外摸X张牌，X为你已损失的体力值',
+			dili_info:'锁定技，摸牌阶段，你额外摸X张牌，X为你已损失的体力值的一半，向上取整且最多为2',
 			chujia:'初嫁',
 			chujia_info:'出牌阶段限一次，你可以弃置两张相同颜色的手牌，指定任意一名角色摸X张牌。(X为该角色已损失的体力值) ',
 			zhijie:'知节',
@@ -2882,8 +2992,8 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			yinyang:'阴阳',
 			yinyang_info:'出牌阶段限一次，你可以弃置两张手牌并选择3名角色，分别横置或重置这些角色',
 			xiushen:'修身',
-			xiushen_info:'锁定技，结束阶段，若场上有横置角色，你摸两张牌',
-			xiushen_info_alter:'锁定技，出牌阶段结束时，若场上有横置角色，你摸两张牌',
+			// xiushen_info:'锁定技，结束阶段，若场上有横置角色，你摸两张牌',
+			xiushen_info:'锁定技，出牌阶段结束时，若场上有横置角色，你摸两张牌',
 			yanyi:'演绎',
 			yanyi_info:'出牌阶段限一次，你可以弃置一张黑色牌，指定1名角色和1种花色，若被指定角色的手牌中含有此花色，则受到1点伤害',
 			jiean:'结案',

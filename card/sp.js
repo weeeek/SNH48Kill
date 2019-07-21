@@ -242,7 +242,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 				},
 				onLose:function(){
 					player.unmarkSkill('muniu_skill6');
-					if(event.parent.type!='equip'&&card&&card.cards&&card.cards.length){
+					if((event.getParent(2)&&event.getParent(2).name!='swapEquip')&&event.parent.type!='equip'&&card&&card.cards&&card.cards.length){
 						player.$throw(card.cards,1000);
 						player.popup('muniu');
 						game.log(card,'掉落了',card.cards);
@@ -382,14 +382,14 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 					target.draw(3);
 					'step 1'
 					if(target.countCards('he',{type:'basic'})<target.countCards('he')){
-						target.chooseToDiscard('弃置一张非基本牌（或取消并弃置两张牌）','he',function(card){
+						target.chooseToDiscard('增兵减灶','he',function(card){
 							return get.type(card)!='basic';
 						}).set('ai',function(card){
 							if(_status.event.goon) return 8-get.value(card);
 							return 11-get.value(card);
 						}).set('goon',target.countCards('h',function(card){
 							return get.value(card,target,'raw')<8;
-						})>1);
+						})>1).set('prompt2','弃置一张非基本牌，或取消并弃置两张牌');
 						event.more=true;
 					}
 					else{
@@ -678,6 +678,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 					game.broadcast(function(muniu,cards){
 						muniu.cards=cards;
 					},muniu,muniu.cards);
+					event.trigger("addCardToStorage");
 					var players=game.filterPlayer(function(current){
 						if(!current.getEquip(5)&&current!=player&&!current.isTurnedOver()&&
 							get.attitude(player,current)>=3&&get.attitude(current,player)>=3){
@@ -687,7 +688,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 					players.sort(lib.sort.seat);
 					var choice=players[0];
 					var next=player.chooseTarget('是否移动木牛流马？',function(card,player,target){
-						return !target.isMin()&&player!=target&&!target.getEquip(5);
+						return !target.isMin()&&player!=target&&target.isEmpty(5);
 					});
 					next.set('ai',function(target){
 						return target==_status.event.choice?1:-1;
