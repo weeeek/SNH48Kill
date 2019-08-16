@@ -187,7 +187,6 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 daimeng_SNH48: ['female', 'S', 4, ['dandang', 'jianyi', 'new_lingjun', 'stage']],
                 jiangyun_SNH48: ['female', 'S', 3, ['jingyan', 'qichang', 'duomian']],
                 kongxiaoyin_SNH48: ['female', 'S', 4, ['shenhun', 'diandao', 'xinggan']],
-                lvyi_SNH48: ['female', 'S', 4, ['chengzhang']],
                 liyuqi_SNH48: ['female', 'S', 3, ['haomai', 'quanneng', 'chongzhen']],
                 liuzengyan_SNH48: ['female', 'S', 4, ['tongyin', 'ganbei', 'yonglie']],
                 mohan_SNH48: ['female', 'S', 3, ['shiyu', 'yuyan', 'new_ziqiang']],
@@ -260,11 +259,12 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 zengxiaowen_SNH48: ['female', 'H', 3, ['paoxiao', 'longdan']],
 
                 liujiongran_SNH48: ['female', 'H', 3, ['luoshen', 'biyue']],
-
+                //X
                 chenlin_SNH48: ['female', 'X', 4, ['datou', 'xunshan']],
                 chenyunling_SNH48: ['female', 'X', 4, ['taowa', 'quanhuang']],
                 fengxiaofei_SNH48: ['female', 'X', 4, ['chongaaaa', 'beifen', 'yuanzhen']],
-                lizhao_SNH48: ['female', 'X', 4, ['mitao', 'taobao', 'xflag']],
+                lizhao_SNH48: ['female', 'X', 4, ['mitao', 'taobao', 'xflag']],                
+                lvyi_SNH48: ['female', 'X', 4, ['chengzhang']],
                 panyingqi_SNH48: ['female', 'X', 4, ['liangong', 'tisheng']],
                 qijing_SNH48: ['female', 'X', 4, ['lianer', 'jingjing']],
                 songxinran_SNH48: ['female', 'X', 4, ['guoer', 'xiaohua']],

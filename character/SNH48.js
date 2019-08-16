@@ -7477,6 +7477,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //赵嘉敏篇
             shuangfa: '双发',
             shuangfa_info: '出牌阶段使用的第一张可以打出两次的牌将使用或打出两次',
+            shuangfa2: '双发',
+            shuangfa2_info: '出牌阶段使用的第一张可以打出两次的牌将使用或打出两次',
             buzhuang: '补妆',
             buzhuang_info: '回合结束时，你随机装备一件装备（不替换现有装备）',
 
