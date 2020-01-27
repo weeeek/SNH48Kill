@@ -521,7 +521,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				}
 			},
 			taiji:{
-				trigger:{player:'respond'},
+				trigger:{player:['useCard','respond']},
 				filter:function(event,player){
 					return event.card.name=='shan'&&player.hasSha();
 				},
@@ -1414,14 +1414,14 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				}
 			},
 			jimin:{
-				enable:['chooseToRespond'],
+				enable:['chooseToRespond','chooseToUse'],
 				filterCard:true,
 				viewAs:{name:'shan'},
 				viewAsFilter:function(player){
 					if(!player.countCards('h')) return false;
 					if(player.countCards('e')) return false;
 				},
-				prompt:'将一张手牌当闪打出',
+				prompt:'将一张手牌当闪使用或打出',
 				check:function(){return 1},
 				ai:{
 					respondShan:true,
@@ -1646,7 +1646,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				},
 			},
 			tuqiang:{
-				trigger:{player:'respond'},
+				trigger:{player:['respond','useCard']},
 				filter:function(event,player){
 					return event.card&&event.card.name=='shan';
 				},
@@ -2824,7 +2824,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				enable:'phaseUse',
 				usable:1,
 				filterTarget:function(card,player,target){
-					return player!=target&&target.hasCard(function(card){
+					return target.hasCard(function(card){
 						return !get.info(card).unique;
 					},'e');
 				},

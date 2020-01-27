@@ -2360,10 +2360,10 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				}
 			},
 			zhangmu:{
-				trigger:{player:'chooseToRespondBegin'},
+				trigger:{player:['chooseToRespondBegin','chooseToUseBegin']},
 				filter:function(event,player){
 					if(event.responded) return false;
-					if(!event.filterCard({name:'shan'})) return false;
+					if(!event.filterCard({name:'shan'},player,event)) return false;
 					return player.countCards('h','shan')>0;
 				},
 				direct:true,
@@ -2388,6 +2388,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					}
 				},
 				ai:{
+					respondShan:true,
 					effect:{
 						target:function(card,player,target,effect){
 							if(get.tag(card,'respondShan')&&effect<0){
@@ -2756,7 +2757,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				}
 			},
 			feixu:{
-				trigger:{global:'respond'},
+				trigger:{global:['useCard','respond']},
 				filter:function(event,player){
 					return event.card&&event.card.name=='shan';
 				},
@@ -3716,7 +3717,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					var max=Math.min(ui.cardPile.childNodes.length,lib.skill.longxi.max);
 					for(var i=0;i<max;i++){
 						var card=ui.cardPile.childNodes[i];
-						if(trigger.filterCard(card,player)){
+						if(trigger.filterCard(card,player,trigger)){
 							cards.push(card);
 						}
 					}
@@ -3727,6 +3728,8 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					}
 				},
 				ai:{
+					respondSha:true,
+					respondShan:true,
 					effect:{
 						target:function(card,player,target,effect){
 							if(get.tag(card,'respondShan')) return 0.7;

@@ -16,7 +16,7 @@ game.import('play',function(lib,game,ui,get,ai,_status){
 				for(var i in lib.characterPack.mode_extension_boss){
 					lib.characterPack.mode_extension_boss[i][4].push('mode:boss');
 					lib.character[i]=lib.characterPack.mode_extension_boss[i];
-					if(typeof lib.character[i][2]!='number'){
+					if(typeof lib.character[i][2]!='number'&&(typeof lib.character[i][2]!='string'||lib.character[i][2].indexOf('/')==-1)){
 						lib.character[i][2]=Infinity;
 					}
 					if(!lib.config.boss_enableai_playpackconfig){
@@ -86,7 +86,11 @@ game.import('play',function(lib,game,ui,get,ai,_status){
 							if(lib.skill[i]) console.log(i);
 							if(i!='versus_ladder'){
 								lib.skill[i]=mode.skill[i];
-								game.finishSkill(i);
+							}
+						}
+						for(var ii in mode.skill){
+							if(ii!='versus_ladder'){
+								game.finishSkill(ii);
 							}
 						}
 						storage.versus={};
@@ -111,7 +115,11 @@ game.import('play',function(lib,game,ui,get,ai,_status){
 					for(var i in mode.skill){
 						if(lib.skill[i]) console.log(i);
 						lib.skill[i]=mode.skill[i];
-						game.finishSkill(i);
+					}
+					for(var ii in mode.skill){
+						if(ii!='versus_ladder'){
+							game.finishSkill(ii);
+						}
 					}
 					storage.boss={};
 					for(var i in mode.characterPack.mode_boss){

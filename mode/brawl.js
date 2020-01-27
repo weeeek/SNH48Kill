@@ -368,6 +368,643 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 			lib.init.onfree();
 		},
 		brawl:{
+			huanhuazhizhan:{
+				name:'幻化之战',
+				mode:'identity',
+				intro:[
+					'杀死所有其他角色，成为最后的存活者',
+					'所有角色改为四血白板，依靠灵力值获得技能。灵力值可以通过各种方式获得',
+				],
+				showcase:function(init){
+					if(init){
+						this.nodes=[];
+					}
+					else{
+						while(this.nodes.length){
+							this.nodes.shift().remove();
+						}
+					}
+					var lx=this.offsetWidth/2-120;
+					var ly=Math.min(lx,this.offsetHeight/2-60);
+					var setPos=function(node){
+						var i=node.index;
+						var deg=Math.PI/4*i;
+						var dx=Math.round(lx*Math.cos(deg));
+						var dy=Math.round(ly*Math.sin(deg));
+						node.style.transform='translate('+dx+'px,'+dy+'px)';
+					}
+					var characterz=['guyong','litong','mazhong','fuwan','chengpu','liaohua','xinxianying','liuyu'];
+					for(var i=0;i<8;i++){
+						var node=ui.create.player(null,true);
+						this.nodes.push(node);
+						node.init(characterz[i]);
+						node.classList.add('minskin');
+						node.node.marks.remove();
+						node.node.hp.remove();
+						node.node.count.remove();
+						node.style.left='calc(50% - 60px)';
+						node.style.top='calc(50% - 60px)';
+						node.index=i;
+						node.style.borderRadius='100%';
+						node.node.avatar.style.borderRadius='100%';
+						node.node.name.remove();
+						setPos(node);
+						this.appendChild(node);
+					}
+					var nodes=this.nodes;
+					this.showcaseinterval=setInterval(function(){
+						for(var i=0;i<nodes.length;i++){
+							nodes[i].index++;
+							if(nodes[i].index>7){
+								nodes[i].index=0;
+							}
+							setPos(nodes[i]);
+						}
+					},1000);
+				},
+				init:function(){},
+				content:{
+					chooseCharacterBefore:function(){
+					
+					var skills=[];
+					var banned=[
+						'xinfu_guhuo','reguhuo','jixi','duanchang','huashen','xinsheng','rehuashen','rexinsheng',
+						'jinqu','nzry_binglve','nzry_huaiju','nzry_yili','nzry_zhenglun','nzry_mingren','nzry_zhenliang','drlt_qingce',
+						'new_wuhun','qixing','kuangfeng','dawu','baonu','wumou','ol_wuqian','ol_shenfen','renjie','jilue','nzry_junlve','nzry_dinghuo','drlt_duorui',
+						'chuanxin','cunsi',
+						'jueqing','huilei','paiyi','fuhun','zhuiyi','olddanshou','yanzhu','juexiang','jiexun','bizhuan','tongbo',
+						'xinfu_zhanji','xinfu_jijun','xinfu_fangtong',
+						'xinfu_qianchong','pdgyinshi','shuliang',
+						'zongkui','guju','bmcanshi','dingpan','xinfu_lingren','new_luoyan','junwei','gxlianhua',
+						'qizhou','fenyue','dianhu','linglong','fenxin','mouduan',
+						'cuorui','xinmanjuan','xinfu_jianjie','jianjie_faq','new_meibu','xinfu_xingzhao','jici',
+						'xianfu','fenyong','xuehen','yingbin','midao','yishe','yinbing','juedi',
+						'bushi','xinfu_dianhua','xinfu_falu','xinfu_zhenyi','lskuizhu','pingjian','xjshijian','fentian','zhiri','xindan',
+					];
+					var characters=[];
+					for(var name in lib.character){
+						if(!lib.character[name]) continue;
+						if(lib.filter.characterDisabled(name)) continue;
+						if(name.indexOf('old_')==0) continue;
+						var skillsx=lib.character[name][3].slice(0);
+						lib.character[name][2]=4;
+						lib.character[name][3]=[];
+						characters.push(name);
+						var list=skillsx.slice(0);
+						for(var j=0;j<skillsx.length;j++){
+							var info=get.info(skillsx[j]);
+							if(!info){
+								skillsx.splice(j,1);
+								list.splice(j--,1);
+								continue;
+							}
+							if(typeof info.derivation=='string') list.push(info.derivation);
+							else if(Array.isArray(info.derivation)) list.addArray(info.derivation);
+						}
+						for(var j=0;j<list.length;j++){
+							if(skills.contains(list[j])||banned.contains(list[j])) continue;
+							var info=get.info(list[j]);
+							if(!info||info.zhuSkill||info.juexingji||info.charlotte||info.limited) continue;
+							skills.push(list[j]);
+						}
+					}
+					_status.characterlist=characters;
+					var pack={
+						skills:skills,
+						pack:{
+							card:{
+								hhzz_toulianghuanzhu:{
+									enable:true,
+									cardimage:"toulianghuanzhu",
+									chongzhu:true,
+									type:'trick',
+									filterTarget:function(card,player,target){
+										return target.skillH.length>0;
+									},
+									content:function(){
+										target.removeSkillH(target.skillH.randomGet());
+										var skills=lib.huanhuazhizhan.skills;
+										skills.randomSort();
+										for(var i=0;i<skills.length;i++){
+											if(!target.skillH.contains(skills[i])){
+												target.addSkillH(skills[i]);
+												break;
+											}
+										}
+									},
+									ai:{
+										order:10,
+										result:{
+											target:function(){
+												return 0.5-Math.random();
+											},
+										},
+									},
+								},
+								hhzz_fudichouxin:{
+									enable:true,
+									cardimage:"fudichouxin",
+									type:'trick',
+									filterTarget:function(card,player,target){
+										return target.skillH.length>0;
+									},
+									content:function(){
+										target.removeSkillH(target.skillH.randomGet());
+									},
+									ai:{
+										order:10,
+										result:{target:-1},
+									},
+								},
+							},
+							character:{
+								hhzz_shiona:['female','key',1,['hhzz_huilei']],
+								hhzz_kanade:['female','key',2,['hhzz_youlian']],
+								hhzz_takaramono1:['male','qun',5,['hhzz_jubao','hhzz_huizhen']],
+								hhzz_takaramono2:['male','qun',5,['hhzz_jubao','hhzz_zhencang']],
+							},
+							skill:{
+								_lingli_damage:{
+									trigger:{source:'damage'},
+									forced:true,
+									popup:false,
+									filter:function(event,player){
+										return event.player==_status.toKill;
+									},
+									content:function(){
+										player.changeLingli(1);
+									},
+								},
+								_lingli:{
+								 mark:true,
+								 intro:{
+								 	content:'共有#点灵力',
+								 },
+								 trigger:{
+								 	player:'phaseBeginStart',
+								 },
+								 popup:false,
+								 forced:true,
+								 filter:function(event,player){
+								 	return player.storage._lingli>1;
+								 },
+								 content:function(){
+								 	'step 0'
+								 	event.skills=lib.huanhuazhizhan.skills;
+								 	var skills=event.skills;
+								 	skills.randomSort();
+								 	var list=[];
+								 	for(var i=0;i<skills[i].length;i++){
+								 		if(!player.skillH.contains(skills[i])) list.push(skills[i]);
+								 		if(list.length==3) break;
+								 	}
+								 	if(!list.length){event.finish();return;}
+								 	event.list=list;
+								 	player.chooseBool('是否消耗2点灵力值获得一个技能？').ai=function(){
+								 		return player.skillH.length<3;
+								 	};
+								 	'step 1'
+								 	if(!result.bool){event.finish();return;}
+								 	player.changeLingli(-2);
+								 	var dialog=game.getSkillDialog(event.list,'选择获得一个技能');
+								 	player.chooseControl(event.list).set('ai',function(){
+								 		return 0;
+								 	}).dialog=dialog;
+								 	'step 2'
+							 		event.skill=result.control;
+							 		if(player.skillH.length==3){
+									 	event.lose=true;
+											player.chooseControl(player.skillH).prompt='选择失去1个已有技能';
+							 		}
+								 	'step 3'
+								 	if(event.lose) player.removeSkillH(result.control);
+								 	player.addSkillH(event.skill);
+								 },
+								},
+								_lingli_round:{
+									trigger:{global:'roundStart'},
+									forced:true,
+									popup:false,
+									filter:function(event,player){
+										return _status._aozhan!=true&&game.roundNumber>1;
+									},
+									content:function(){
+										player.changeLingli(1);
+									},
+								},
+								_lingli_draw:{
+									enable:'phaseUse',
+									filter:function(event,player){
+										return player.storage._lingli>0;
+									},
+									content:function(){
+										player.changeLingli(-1);
+										player.draw();
+									},
+								},
+								ai:{
+									order:10,
+									result:{
+										player:function(player){
+											return (player.storage._lingli-2*(3-player.skillH.length))>0?1:0;
+										},
+									},
+								},
+								_lingli_save:{
+									trigger:{target:'useCardToTargeted'},
+									forced:true,
+									popup:false,
+									filter:function(event,player){
+										return event.card.name=='tao'&&player==_status.toSave;
+									},
+									content:function(){
+										trigger.player.changeLingli(1);
+									},
+								},
+								_hhzz_qiankunbagua:{
+									trigger:{player:'phaseAfter'},
+									forced:true,
+									forceDie:true,
+									popup:false,
+									filter:function(event,player){
+										return _status._aozhan&&!player.getStat('damage')&&player.isAlive()||event._lastDead!=undefined;
+									},
+									content:function(){
+										'step 0'
+										if(_status._aozhan&&!player.getStat('damage')) player.loseHp();
+										if(trigger._lastDead==undefined) event.finish();
+										'step 1'
+										var type=get.rand(1,8);
+										event.type=type;
+										player.playerfocus(1200);
+										player.$fullscreenpop('乾坤八卦·'+['离','坎','乾','震','兑','艮','巽','坤'][type-1],get.groupnature(player.group,'raw'));
+										game.delay(1.5);
+										'step 2'
+										var type=event.type;
+										switch(type){
+											case 1:{
+												game.countPlayer(function(current){
+													current.loseHp();
+												});
+												break;
+											}
+											case 2:{
+												game.countPlayer(function(current){
+													current.draw(2,'nodelay');
+												});
+												break;
+											}
+											case 3:{
+												trigger._lastDead.revive(3);
+												trigger._lastDead.draw(3);
+												break;
+											}
+											case 4:{
+												game.countPlayer(function(current){
+													var he=current.getCards('he');
+													if(he.length) current.discard(he.randomGet()).delay=false;
+												});
+												break;
+											}
+											case 5:{
+												game.countPlayer(function(current){
+													current.changeLingli(1);
+												});
+												break;
+											}
+											case 6:{
+												var cards=[];
+												game.countPlayer(function(current){
+													var card=get.cardPile(function(card){
+														return !cards.contains(card)&&get.type(card)=='equip';
+													});
+													if(card){
+														cards.push(card);
+														current.$gain(card,'gain2')
+														current.gain(card);
+													}
+												});
+												break;
+											}
+											case 7:{
+												game.countPlayer(function(current){
+													if(current.skillH.length<3){
+														var skills=lib.huanhuazhizhan.skills;
+														skills.randomSort();
+														for(var i=0;i<skills.length;i++){
+															if(!current.skillH.contains(skills[i])){
+																current.addSkillH(skills[i]);
+																break;
+															}
+														}
+													}
+												});
+												break;
+											}
+											case 8:{
+												trigger._lastDead.revive(null,false);
+												trigger._lastDead.uninit();
+												trigger._lastDead.init(['hhzz_shiona','hhzz_kanade','hhzz_takaramono1','hhzz_takaramono2'].randomGet());
+												trigger._lastDead.skillH=[];
+												break;
+											}
+										}
+									},
+								},
+								hhzz_huilei:{
+									mod:{
+										cardEnabled:function(){return false},
+										cardSavable:function(){return false},
+										cardRespondable:function(){return false},
+									},
+									ai:{
+										effect:{
+											target:function(card,player,target){
+												if(get.tag(card,'damage')) return [-5,0];
+											}
+										}
+									}
+								},
+								hhzz_youlian:{
+									mod:{
+										cardEnabled:function(){return false},
+										cardSavable:function(){return false},
+										cardRespondable:function(){return false},
+									},
+									ai:{
+										effect:{
+											target:function(card,player,target){
+												if(get.tag(card,'damage')) return [-5,0];
+											}
+										}
+									}
+								},
+								hhzz_zhencang:{
+									mod:{
+										cardEnabled:function(){return false},
+										cardSavable:function(){return false},
+										cardRespondable:function(){return false},
+									},
+								},
+								hhzz_huizhen:{
+									mod:{
+										cardEnabled:function(){return false},
+										cardSavable:function(){return false},
+										cardRespondable:function(){return false},
+									},
+								},
+								hhzz_jubao:{
+									trigger:{player:'damage'},
+									forced:true,
+									logTarget:'source',
+									filter:function(event,player){
+										return event.source!=undefined&&player.countCards('he')>0;
+									},
+									content:function(){
+										var cards=player.getCards('he');
+										cards.randomSort();
+										cards=cards.slice(0,trigger.num);
+										trigger.source.gain('giveAuto',cards,player);
+									},
+									ai:{
+										effect:{
+											target:function(card,player,target){
+												if(get.tag(card,'damage')) return [15,0];
+											}
+										}
+									}
+								},
+							},
+							translate:{
+								_lingli:'灵力',
+								_lingli_draw:'灵力摸牌',
+								hhzz_huilei:'挥泪',
+								hhzz_youlian:'犹怜',
+								hhzz_zhencang:'珍藏',
+								hhzz_huizhen:'汇珍',
+								hhzz_jubao:'聚宝',
+								hhzz_huilei_info:'锁定技，杀死你的角色弃置所有的牌。',
+								hhzz_youlian_info:'锁定技，杀死你的角色弃置所有牌并随机失去一个技能。',
+								hhzz_zhencang_info:'锁定技，杀死你的角色摸一张牌并随机获得一个技能(已满则先随机移除一个)。',
+								hhzz_huizhen_info:'锁定技，杀死你的角色摸三张牌并随机获得一个技能(已满则先随机移除一个)。',
+								hhzz_jubao_info:'锁定技，当你受到伤害的点数确定时，伤害来源随机获得你区域内的X张牌（X为伤害点数）。',
+								hhzz_shiona:'汐奈',
+								hhzz_kanade:'立华奏',
+								hhzz_takaramono1:'坚实宝箱',
+								hhzz_takaramono2:'普通宝箱',
+								hhzz_toulianghuanzhu:'偷梁换柱',
+								hhzz_fudichouxin:'釜底抽薪',
+								hhzz_toulianghuanzhu_info:'出牌阶段，对一名角色使用，随机更换其一个技能。可重铸。',
+								hhzz_fudichouxin_info:'出牌阶段，对一名角色使用，随机弃置其一个技能。',
+							},
+						},
+						get:{
+							rawAttitude:function(from,to){
+								if(from==to) return 10;
+								if(to==_status.toKill) return -12;
+								return -10;
+							}
+						},
+						eltc:{
+							gameDraw:function(){
+								var end=player;
+								var numx;
+								var num=function(player){
+									return player._hSeat>5?5:4;
+								};
+								do{
+									if(typeof num=='function'){
+										numx=num(player);
+									}
+									if(player._hSeat>6) player.changeLingli(1);
+									player.directgain(get.cards(numx));
+									player=player.next;
+								}
+								while(player!=end);
+							},
+						},
+						eltp:{
+							addSkillH:function(skill){
+								this.skillH.add(skill);
+								this.addSkillLog.apply(this,arguments);
+							},
+							removeSkillH:function(skill){
+								this.skillH.remove(skill);
+								game.log(this,'失去了技能','#g【'+get.translation(skill)+'】');
+								this.removeSkill(skill);
+							},
+							dieAfter:function(){
+								var evt=_status.event.getParent('phase');
+								if(evt) evt._lastDead=this;
+								if(game.playerx().length==1) game.over(game.me.isAlive());
+							},
+							$dieAfter:function(){},
+							dieAfter2:function(source){
+								if(source){
+									switch(this.name){
+										case 'hhzz_kanade':
+											var cards=source.getCards('he');
+											if(cards.length) source.discard(cards);
+											var skills=source.skillH;
+											if(skills.length) source.removeSkillH(skills.randomGet());
+											break;
+										case 'hhzz_shiona':
+											var cards=source.getCards('he');
+											if(cards.length) source.discard(cards);
+											break;
+										case 'hhzz_takaramono2':
+											source.draw();
+											if(source.skillH.length==1) source.removeSkillH(source.skillH.randomGet());
+											var skills=lib.huanhuazhizhan.skills;
+											skills.randomSort();
+											for(var i=0;i<skills.length;i++){
+												if(!source.skillH.contains(skills[i])){
+													source.addSkillH(skills[i]);
+													break;
+												}
+											}
+											break;
+										case 'hhzz_takaramono1':
+											source.draw(3);
+											if(source.skillH.length==1) source.removeSkillH(source.skillH.randomGet());
+											var skills=lib.huanhuazhizhan.skills;
+											skills.randomSort();
+											for(var i=0;i<skills.length;i++){
+												if(!source.skillH.contains(skills[i])){
+													source.addSkillH(skills[i]);
+													break;
+												}
+											}
+											break;
+										default:
+											source.draw();
+											source.changeLingli(this==_status.toKill?3:1);
+											break;
+									}
+								}
+								if(game.players.length<=4&&!_status._aozhan){
+									delete _status.toKill;
+									delete _status.toSave;
+									ui.huanhuazhizhan.innerHTML='死战模式';
+									_status._aozhan=true;
+									game.playBackgroundMusic();
+									this.$fullscreenpop('死战模式',get.groupnature(this.group,'raw')||'fire');
+								}
+								else game.randomMission();
+							},
+							logAi:function(){},
+							hasZhuSkill:function(){return false},
+							changeLingli:function(num){
+								if(typeof num!='number') num=1;
+								if(typeof this.storage._lingli!='number') this.storage._lingli=0;
+								if(num>0){
+									game.log(this,'获得了','#y'+get.cnNumber(num)+'点','灵力');
+								}
+								else{
+									if(-num>this.storage._lingli) num=-this.storage._lingli;
+									if(num==0) return;
+									game.log(this,'失去了','#y'+get.cnNumber(-num)+'点','灵力');
+								}
+								this.storage._lingli+=num;
+								this.markSkill('_lingli');
+							},
+						},
+						game:{
+							playerx:function(){
+								return game.filterPlayer(function(current){
+									if(current.name.indexOf('hhzz_')==0) return;
+									return true;
+								});
+							},
+							randomMission:function(){
+								if(_status._aozhan) return;
+								var list=game.playerx().randomSort();
+								_status.toKill=list[0];
+								_status.toSave=list[1];
+								if(!ui.huanhuazhizhan){
+									ui.huanhuazhizhan=ui.create.div('.touchinfo.left',ui.window);
+									if(ui.time3) ui.time3.style.display='none';
+								}
+								ui.huanhuazhizhan.innerHTML='击杀'+get.translation(list[0])+'，保护'+get.translation(list[1]);
+							},
+							getSkillDialog:function(skills,prompt){
+								var dialog=ui.create.dialog('hidden','forcebutton');
+								if(prompt) dialog.addText(prompt);
+								for(var i=0;i<skills.length;i++){
+									dialog.add('<div class="popup pointerdiv" style="width:80%;display:inline-block"><div class="skill">【'+get.translation(skills[i])+'】</div><div>'+lib.translate[skills[i]+'_info']+'</div></div>');
+								}
+								dialog.addText(' <br> ');
+								return dialog;
+							},
+							chooseCharacter:function(){
+								var next=game.createEvent('chooseCharacter',false);
+								next.showConfig=true;
+								next.setContent(function(){
+									'step 0'
+									game.zhu=game.players.randomGet();
+									var i=1;
+									var current=game.zhu;
+									while(true){
+										current.skillH=[];
+										current._hSeat=i;
+										current.ai.shown=1;
+										current.setNickname(get.cnNumber(i,true)+'号位');
+										for(var ii in lib.huanhuazhizhan.eltp) current[ii]=lib.huanhuazhizhan.eltp[ii];
+										current=current.next;
+										i++;
+										if(current==game.zhu) break;
+									}
+									ui.arena.classList.add('choose-character');
+									game.me.chooseButton(['请选择角色形象',[_status.characterlist.randomRemove(5),'character']],true).onfree=true;
+									'step 1'
+									game.me.init(result.links[0]);
+									var list=['xiandeng','shulv','xisheng'];
+									game.me.chooseControl(list).dialog=game.getSkillDialog(list,'选择要获得的初始技能');
+									'step 2'
+									var list=['_lingli','_lingli_round','_lingli_draw','_lingli_save','_hhzz_qiankunbagua','_lingli_damage'];
+									for(var i=0;i<list.length;i++){
+										game.addGlobalSkill(list[i]);
+									}
+									game.me.addSkillH(result.control);
+									game.countPlayer(function(current){
+										current.storage._lingli=0;
+										if(!current.name){
+											current.init(_status.characterlist.randomRemove(1)[0]);
+											current.addSkillH(['xiandeng','shulv','xisheng'].randomGet());
+										}
+									});
+									game.showIdentity(true);
+									'step 3'
+									game.randomMission();
+									var list=[
+										game.createCard('hhzz_fudichouxin'),
+										game.createCard('hhzz_toulianghuanzhu'),
+										game.createCard('hhzz_toulianghuanzhu'),
+										game.createCard('hhzz_toulianghuanzhu'),
+									];
+									for(var i=0;i<list.length;i++){
+										ui.cardPile.insertBefore(list[i],ui.cardPile.childNodes[get.rand(ui.cardPile.childElementCount)]);
+									}
+									game.updateRoundNumber();
+									'step 4'
+									setTimeout(function(){	
+										ui.arena.classList.remove('choose-character');
+									},500);
+								});
+							},
+						},
+					};
+					for(var i in pack.pack){
+						for(var j in pack.pack[i]) lib[i][j]=pack.pack[i][j];
+					}
+					for(var i in pack.eltc) lib.element.content[i]=pack.eltc[i];
+					for(var i in pack.eltp) lib.element.player[i]=pack.eltp[i];
+					for(var i in pack.game) game[i]=pack.game[i];
+					for(var i in pack.get) get[i]=pack.get[i];
+					lib.huanhuazhizhan=pack;
+					},
+				},
+			},
 			duzhansanguo:{
 				name:'毒战三国',
 				mode:'identity',
@@ -547,7 +1184,7 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 				init:function(){
 					for(var i in lib.character){
 						var skills=lib.character[i][3]
-						if(skills.contains('jizhi')||skills.contains('rejizhi')||skills.contains('lingzhou')){
+						if(skills.contains('jizhi')||skills.contains('rejizhi')||skills.contains('lingzhou')||skills.contains('sbaiyin')){
 							delete lib.character[i];
 						}
 					}
@@ -780,9 +1417,9 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 				init:function(){
 					var map={};
 					var map3=[];
-					var list1=['司','夏','诸'];
-					var list2=['马','侯','葛'];
-					var exclude=['界','新','大'];
+					var list1=['司','夏','诸','皇'];
+					var list2=['马','侯','葛','甫'];
+					var exclude=['界','新','大','旧','☆','神'];
 					for(var i in lib.character){
 						if(lib.filter.characterDisabled(i)) continue;
 						var surname=lib.translate[i];
@@ -855,7 +1492,7 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 				},
 				showcase:function(init){
 					var node=this;
-					var list=['caoxiu','wenpin','caohong','zhanghe','xiahouyuan','xuhuang','re_xuzhu'];
+					var list=['caoxiu','wenpin','caohong','zhanghe','re_xiahouyuan','re_xuhuang','re_xuzhu'];
 					list.randomSort();
 					list.push('re_caocao');
 					var func=function(){
@@ -954,7 +1591,7 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 						}
 					},
 					submode:'normal',
-					list:['caoxiu','wenpin','caohong','zhanghe','xiahouyuan','xuhuang','re_xuzhu'],
+					list:['caoxiu','wenpin','caohong','zhanghe','re_xiahouyuan','re_xuhuang','re_xuzhu'],
 					chooseCharacterFixed:true,
 					chooseCharacterAi:function(player){
 						if(player==game.zhu){

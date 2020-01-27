@@ -188,12 +188,12 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 jiangyun_SNH48: ['female', 'S', 3, ['jingyan', 'qichang', 'duomian']],
                 kongxiaoyin_SNH48: ['female', 'S', 4, ['shenhun', 'diandao', 'xinggan']],
                 liyuqi_SNH48: ['female', 'S', 3, ['haomai', 'quanneng', 'chongzhen']],
-                liuzengyan_SNH48: ['female', 'S', 4, ['tongyin', 'ganbei', 'yonglie']],
+                liuzengyan_SNH48: ['female', 'S', 4, ['tongyin', 'ganbei', 'guohuo']],
                 mohan_SNH48: ['female', 'S', 3, ['shiyu', 'yuyan', 'new_ziqiang']],
                 panyanqi_SNH48: ['female', 'S', 4, ['tongxin', 'dedication']],
                 qianbeiting_SNH48: ['female', 'S', 4, ['juxia', 'qiangong', 'stage']],
                 qiuxinyi_SNH48: ['female', 'S', 4, ['meixi', 'nvwang', 'laydown']],
-                sunrui_SNH48: ['female', 'S', 3, ['qigai', 'rexin']],
+                sunrui_SNH48: ['female', 'S', 3, ['chidu', 'rexin']],
                 shaoxuecong_SNH48: ['female', 'S', 4, ['yibing', 'tianpin', 'jiaozhu']],
                 shenzhilin_SNH48: ['female', 'S', 4, ['zanmei', 'luanyin', 'luansheng']],
                 wenjingjie_SNH48: ['female', 'S', 4, ['talent', 'wenhe']],
@@ -315,7 +315,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
         skill: {
             //国战版技能
             new_lingjun: {
-                audio: 2,
+                audio: 1,
                 unique: true,
                 trigger: { target: 'taoBegin' },
                 forced: true,
@@ -335,7 +335,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             new_ziqiang: {
                 priority: 15,
                 skillAnimation: 'legend',
-                audio: 2,
+                audio: 1,
                 unique: true,
                 keepSkill: true,
                 derivation: 'mowang',
@@ -363,7 +363,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             },
             ho2_break: {
                 priority: 15,
-                audio: 2,
+                audio: 1,
                 unique: true,
                 trigger: { player: 'phaseBegin' },
                 forced: true,
@@ -403,7 +403,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 group: 'ho2_init'
             },
             ho2: {
-                audio: 2,
+                audio: 1,
                 trigger: { player: 'useCardAfter' },
                 filter: function (event, player) {
                     return event.card && get.suit(event.card) == 'heart';

@@ -258,7 +258,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					}
 					"step 2"
 					if(result.bool){
-						player.chooseUseTarget(game.createCard(result.links[0][2]));
+						player.chooseUseTarget(true,game.createCard(result.links[0][2]));
 					}
 					event.num--;
 					if(event.num>0){
@@ -1357,11 +1357,11 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 						},
 					},
 					shan:{
-						trigger:{player:'chooseToRespondBegin'},
+						trigger:{player:['chooseToRespondBegin','chooseToUseBegin']},
 						filter:function(event,player){
 							if(!player.isLinked()) return false;
 							if(event.responded) return false;
-							if(!event.filterCard({name:'shan'})) return false;
+							if(!event.filterCard({name:'shan'},player,event)) return false;
 							return true;
 						},
 						check:function(event,player){
@@ -1377,6 +1377,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 							trigger.result={bool:true,card:{name:'shan'}}
 						},
 						ai:{
+							respondShan:true,
 							target:function(card,player,target,current){
 								if(!player.isLinked()&&current<0) return 1.5;
 								if(!target.hasFriend()) return;
@@ -1690,7 +1691,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				}
 			},
 			hyunshen:{
-				trigger:{player:'respond'},
+				trigger:{player:['respond','useCard']},
 				filter:function(event,player){
 					return event.card.name=='shan';
 				},
@@ -1743,7 +1744,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			},
 			hlingbo:{
 				audio:['lingbo',2],
-				trigger:{player:'respond'},
+				trigger:{player:['respond','useCard']},
 				filter:function(event,player){
 					return event.card.name=='shan';
 				},
@@ -2361,7 +2362,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					if(num==0) return false;
 					return num%2==1;
 				},
-				prompt:'将一张手牌当作杀打出',
+				prompt:'将一张手牌当作杀使用或打出',
 				check:function(card){return 6-get.value(card)}
 			},
 			yaotong2:{
@@ -2374,7 +2375,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					if(num==0) return false;
 					return num%2==1;
 				},
-				prompt:'将一张手牌当作闪打出',
+				prompt:'将一张手牌当作闪使用或打出',
 				check:function(card){return 6-get.value(card)}
 			},
 			yaotong3:{
@@ -6426,7 +6427,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				}
 			},
 			shengong:{
-				trigger:{player:'chooseToRespondBegin'},
+				trigger:{player:['chooseToRespondBegin']},
 				filter:function(event,player){
 					if(event.responded) return false;
 					if(!player.countCards('he')) return false;
@@ -6714,7 +6715,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				filterCard:{color:'red'},
 				viewAs:{name:'shan'},
 				position:'he',
-				prompt:'将一张红色牌当闪打出',
+				prompt:'将一张红色牌当闪使用或打出',
 				check:function(card){return 6-get.value(card)}
 			},
 			duoren:{

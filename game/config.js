@@ -1,5 +1,5 @@
 window.config={
-	forbidai:['miheng','ns_liuzhang'],
+	forbidai:['ns_liuzhang','xin_yuji'],
 	forbidai_user:[],
 	forbidall:[],
 	forbidstone:['zhugedan','pal_xuanxiao','hs_malfurion','lusu','chenlin','hs_siwangzhiyi',
@@ -14,13 +14,11 @@ window.config={
 	forbiddouble:['zhugedan','swd_kangnalishi','dongzhuo','wutugu','hs_siwangzhiyi','hs_ronghejuren','hs_shanlingjuren'],
 	forbidthreecard:['qiankunbiao','shenhuofeiya','gw_ciguhanshuang','gw_birinongwu','gw_qinpendayu','gw_poxiao'],
 	all:{
-        //三国杀武将扩展包：标准，神话，一将成名，SP等，军争。。。
-		sgscharacters:['standard','shenhua','xinghuoliaoyuan','refresh','yijiang','sp','extra','old','mobile','SNH48'],
+		sgscharacters:['standard','shenhua','xinghuoliaoyuan','refresh','yijiang','sp','extra','old','mobile','tw','SNH48'],
         //三国杀牌堆扩展包：标准，军争，SP，国战
 		sgscards:['standard','extra','sp','guozhan'],
-        //三国杀模式：身份，国战，对决，挑战，联机
-		sgsmodes:['identity','guozhan','versus','brawl','connect'],
-		stockmode:['identity','guozhan','versus','boss','chess','stone','connect','brawl','tafang','SNH48'],
+		sgsmodes:['identity','guozhan','versus','doudizhu','single','brawl','connect'],
+		stockmode:['identity','guozhan','versus','boss','doudizhu','single','chess','stone','connect','brawl','tafang','SNH48'],
 		stockextension:['boss','cardpile','coin','wuxing'],
 		layout:['default','newlayout'],
 		theme:['woodden','music','simple'],
@@ -57,6 +55,7 @@ window.config={
 	background_speak:true,
 	glow_phase:'yellow',
 	die_move:'flip',
+
 	skin:{},
 	gameRecord:{},
 	extensionInfo:{},
@@ -129,7 +128,7 @@ window.config={
 	sort:'type_sort',
 
 	cards:['standard','ex','extra','sp','classic','basic','SNH48'],
-	characters:['standard','shenhua','sp','yijiang','SNH48'],
+	characters:['standard','shenhua','sp','yijiang','refresh','xinghuoliaoyuan','mobile','extra','SNH48'],
 	connect_characters:[],
 	connect_cards:[],
 	plays:[],
@@ -176,7 +175,7 @@ window.config={
 		},
 		guozhan:{
 			difficulty:'normal',
-			initshow_draw:2,
+			initshow_draw:'mark',
 			dierestart:true
         },
         SNH48: {
@@ -189,6 +188,11 @@ window.config={
 	customforbid:[],
 	forbid:[
 		['huashen'],
+		['rehuashen'],
+		['xinmanjuan'],
+		//['xinleiji','fuji'],
+		['xinleiji','xinfu_jijun'],
+		['reluanji','jueqing'],
 		['lianying','rende'],
 		['lianying','anxian'],
 		['lianying','yinguo'],
