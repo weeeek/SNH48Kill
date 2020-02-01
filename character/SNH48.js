@@ -34,6 +34,10 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             zhaoye_SNH48: ['female', 'S', 4, ['baofa', 'caihua']],
             zhuxiaodan_SNH48: ['female', 'S', 4, ['liren','shouzhuo']],
             chenjunyu_SNH48: ['female', 'S', 4, ['mengdong','maomao']],
+            youmiao_SNH48: ['female', 'S', 4, ['lianyu','guiji']],
+            chenyuzi_SNH48:['female','S',4,['manjia','xiaoshou']],
+            liuliqian_SNH48:['female','S',4,['qiangzheng','moukui']],
+            wangbeini_SNH48:['female','S',4,['suoling','xixing']],
             zhaojiamin_SNH48: ['female', 'S', 4, ['shuangfa', 'buzhuang']],
 
             //N
@@ -264,6 +268,229 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             }
         },
         skill: {
+            /*   ↓搬得技能    */
+            lianyu:{
+				enable:'phaseUse',
+				usable:1,
+				filterCard:{color:'red'},
+				check:function(card){return 6-get.value(card)},
+				filterTarget:true,
+				selectTarget:-1,
+				line:'fire',
+				content:function(){
+					target.damage('fire');
+				},
+				ai:{
+					result:{
+						player:function(card,player,target){
+							var eff=0;
+							for(var i=0;i<game.players.length;i++){
+								if(!game.players[i].isOut()){
+									eff+=get.damageEffect(game.players[i],player,player,'fire');
+								}
+							}
+							return eff;
+						}
+					},
+					expose:0.1
+				}
+			},
+			manjia:{
+				group:['manjia1','manjia2']
+			},
+			manjia1:{
+				trigger:{target:'useCardToBefore'},
+				forced:true,
+				priority:6,
+				filter:function(event,player){
+					if(player.getEquip(2)) return false;
+					return lib.skill.tengjia1.filter(event,player);
+				},
+				content:function(){
+					trigger.cancel();
+				},
+				ai:{
+					effect:{
+						target:function(card,player,target,current){
+							if(target.getEquip(2)) return;
+							return lib.skill.tengjia1.ai.effect.target.apply(this,arguments);
+						}
+					}
+				}
+			},
+			manjia2:{
+				trigger:{player:'damageBegin'},
+				filter:function(event,player){
+					if(player.getEquip(2)) return false;
+					if(event.nature=='fire') return true;
+				},
+				forced:true,
+				check:function(){
+					return false;
+				},
+				content:function(){
+					trigger.num++;
+				},
+				ai:{
+					effect:{
+						target:function(card,player,target,current){
+							if(target.getEquip(2)) return;
+							return lib.skill.tengjia2.ai.effect.target.apply(this,arguments);
+						}
+					}
+				}
+			},
+			xiaoshou:{
+				trigger:{player:'phaseEnd'},
+				filter:function(event,player){
+					var players=game.players.slice(0);
+					players.sort(function(a,b){
+						return b.hp-a.hp;
+					});
+					return players[0].hp>players[1].hp&&players[0]!=player;
+				},
+				check:function(event,player){
+					var players=game.players.slice(0);
+					players.sort(function(a,b){
+						return b.hp-a.hp;
+					});
+					return get.damageEffect(players[0],player,player,'fire')>0;
+				},
+				prompt:function(){
+					var players=game.players.slice(0);
+					players.sort(function(a,b){
+						return b.hp-a.hp;
+					});
+					return '枭首：是否对'+get.translation(players[0])+'造成一点火焰伤害？';
+				},
+				content:function(){
+					var players=game.players.slice(0);
+					players.sort(function(a,b){
+						return b.hp-a.hp;
+					});
+					if(players[0].hp>players[1].hp&&players[0]!=player){
+						players[0].damage('fire');
+						player.line(players[0],'fire');
+					}
+				},
+				ai:{
+					expose:0.2
+				}
+			},
+			guiji:{
+				trigger:{player:'phaseJudgeBegin'},
+				forced:true,
+				content:function(){
+					player.discard(player.getCards('j').randomGet());
+				},
+				filter:function(event ,player){
+					return player.countCards('j')>0;
+				},
+				ai:{
+					effect:{
+						target:function(card,player,target,current){
+							if(get.type(card)=='delay'&&target.countCards('j')==0) return 0.1;
+						}
+					}
+				}
+			},
+			qiangzheng:{
+				audio:2,
+				trigger:{player:'phaseEnd'},
+				direct:true,
+				forced:true,
+				filter:function(event,player){
+					for(var i=0;i<game.players.length;i++){
+						if(game.players[i]!=player&&game.players[i].countCards('h')) return true;
+					}
+					return false;
+				},
+				content:function(){
+					"step 0"
+					player.chooseTarget('获得一名角色的一张手牌',true,function(card,player,target){
+						return player!=target&&target.countCards('h')>0;
+					}).ai=function(target){
+						return -get.attitude(player,target);
+					};
+					"step 1"
+					if(result.targets&&result.targets.length){
+						player.logSkill('qiangzheng',result.targets);
+						player.gain(result.targets[0].getCards('h').randomGet(),result.targets[0]);
+						result.targets[0].$give(1,player);
+						game.delay();
+					}
+				},
+				ai:{
+					threaten:1.7
+				}
+			},
+			suoling:{
+				trigger:{player:'phaseEnd'},
+				forced:true,
+				filter:function(event,player){
+					if(player.isLinked()) return true;
+					for(var i=0;i<game.players.length;i++){
+						if(game.players[i]!=player&&!game.players[i].isLinked()){
+							return true;
+						}
+					}
+					return false;
+				},
+				content:function(){
+					"step 0"
+					event.targets=game.players.slice(0);
+					event.targets.remove(player);
+					event.targets.sort(lib.sort.seat);
+					if(player.isLinked()) player.link();
+					"step 1"
+					if(event.targets.length){
+						var target=event.targets.shift();
+						if(!target.isLinked()){
+							target.link();
+						}
+						event.redo();
+					}
+				}
+			},
+			xixing:{
+				enable:'phaseUse',
+				usable:1,
+				filterCard:function(card){
+					var type=get.type(card);
+					for(var i=0;i<ui.selected.cards.length;i++){
+						if(get.type(ui.selected.cards[i])==type) return false;
+					}
+					return true;
+				},
+				complexCard:true,
+				selectCard:3,
+				position:'he',
+				filterTarget:function(card,player,target){
+					return player!=target;
+				},
+				check:function(card){
+					if(_status.event.player.hp==_status.event.player.maxHp){
+						return 5-get.value(card);
+					}
+					return 10-get.value(card);
+				},
+				content:function(){
+					"step 0"
+					target.damage();
+					"step 1"
+					player.recover();
+				},
+				ai:{
+					order:9.5,
+					result:{
+						target:function(player,target){
+							return get.damageEffect(target,player);
+						}
+					},
+					expose:0.2
+				}
+            },
+            /*     ↑搬的技能     */
             shaDisabled: { mod: { cardEnabled: function (card) { return card.name != 'sha' } } },
             shaDamageMore: {
                 trigger: { source: 'damageBegin' },
@@ -903,7 +1130,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     return event.result.card.name == 'du';
                 },
                 filter: function (event, player) {
-                    if (event.result.card.parentNode.id != 'discardPile') return false;
+                    if(get.position(event.result.card)!='d') return false;
                     return (event.result.card.name == 'du' && get.position(event.result.card) == 'd');
                 },
                 content: function () {
@@ -1660,41 +1887,32 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             wenwan: {
                 audio: 1,
                 trigger: { player: 'respond' },
-                filter: function (event, player) {
+                filter: function (event) {
                     return event.card && event.card.name == 'shan';
                 },
-                direct: true,
-                content: function (player, target, event) {
+                content: function () {
                     if (player.hp % 2 == 1) {
                         player.draw(2);
                     } else {
-                        if (!trigger.source.hasSkill('qianxun')) {
+                        var source = trigger.respondTo[0]
+                        if (!source.hasSkill('qianxun')) {
                             //体力值为双数：该闪结算后，将一张乐不思蜀置于伤害来源的判定区
-                            if (!trigger.source.hasJudge('lebu')) {
-                                trigger.source.addJudge(game.createCard('lebu'));
+                            if (!source.hasJudge('lebu')) {
+                                source.addJudge(game.createCard('lebu'));
                             }
                         }
                     }
                 },
                 ai: {
-                    mingzhi: false,
                     useShan: true,
-                    effect: {
-                        target: function (card, player, target, current) {
-                            if (get.tag(card, 'respondShan')) {
-                                var hastarget = game.hasPlayer(function (current) {
-                                    return get.attitude(target, current) < 0;
-                                });
-                                if (target.countCards('h', 'shan') && target.countCards('e', { suit: 'spade' })) {
-                                    return [0, hastarget ? target.countCards('he') / 2 : 0];
-                                }
-                                if (target.countCards('h', 'shan')) {
-                                    return [1, hastarget ? target.countCards('he') / 2 : 0];
-                                }
-                                return [1, target.countCards('h') / 4];
-                            }
-                        }
-                    }
+					expose:0.4,                    
+					maixie_defend:true,
+					effect:{
+						target:function(card,player,target){
+							if(player.hasSkillTag('jueqing',false,target)) return [1,-1];
+							return 0.8;							
+						}
+					}
                 }
             },
             fuhei: {
@@ -2641,7 +2859,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     return event.result.card.name == 'jiu';
                 },
                 filter: function (event, player) {
-                    if (event.result.card.parentNode.id != 'discardPile') return false;
+                    if(get.position(event.result.card)!='d') return false;
                     return (event.result.card.name == 'jiu' && get.position(event.result.card) == 'd');
                 },
                 content: function () {
@@ -3971,27 +4189,35 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
 						return;
 					}
 					var check=lib.skill.rexin.checkx(trigger,player);
-					player.chooseCardButton(event.cards,'热心：选择令'+get.translation(trigger.player)+'收回的牌').set('ai',function(button){
+					player.chooseCardButton(event.cards,'热心：选择一张牌，令'+get.translation(trigger.player)+'收回同颜色的牌，你获得剩下的牌').set('ai',function(button){
 						if(_status.event.check){
 							return 20-get.value(button.link);
 						}
 						return 0;
 					}).set('check',check);
-					"step 1"
-					if(result.bool){
-						game.delay(0.5);
-						player.logSkill('rexin',trigger.player);
-						trigger.player.gain(result.links[0]);
-						trigger.player.$gain2(result.links[0]);
-						game.log(trigger.player,'收回了',result.links[0]);
-						event.cards.remove(result.links[0]);
-						if(event.cards.length){
-							player.gain(event.cards);
-							player.$gain2(event.cards);
-							game.log(player,'收回了',event.cards);
-						}
-						game.delay();
-					}
+                    "step 1"
+                    if (result.bool) {
+                        game.delay(0.5);
+                        player.logSkill('rexin', trigger.player);
+
+                        //同花色回收
+                        var backCards = event.cards.filter(f => get.color(f) == get.color(result.links[0]));
+                        //不同花色获得
+                        var gainCards = event.cards.filter(f => get.color(f) != get.color(result.links[0]));
+
+                        trigger.player.gain(backCards);
+                        trigger.player.$gain2(backCards);
+                        game.log(trigger.player, '收回了', backCards);
+
+                        //event.cards.remove(result.links[0]);
+
+                        if (gainCards.length) {
+                            player.gain(gainCards);
+                            player.$gain2(gainCards);
+                            game.log(player, '获得了', gainCards);
+                        }
+                        game.delay();
+                    }
 				},
 				ai:{
 					threaten:1.3,
@@ -6924,7 +7150,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 },
                 filter: function (event, player) {
                     if (event.player == player) return false;
-                    if (event.result.card.parentNode.id != 'discardPile') return false;
+                    if(get.position(event.result.card)!='d') return false;
                     return (get.suit(event.result.card) == 'heart');
                 },
                 content: function () {
@@ -7341,7 +7567,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             zhaohanqian_SNH48: '赵韩倩',
             zhaoye_SNH48: '赵晔',
             chenjunyu_SNH48: '陈俊羽',
-            zhuxiaodan_SNH48: '朱小丹',
+            zhuxiaodan_SNH48: '朱小丹', 
+            youmiao_SNH48: '由淼',
+            chenyuzi_SNH48: '陈雨孜',
+            liuliqian_SNH48: '刘丽千',
+            wangbeini_SNH48: '王贝妮',
             zhaojiamin_SNH48: '赵嘉敏',
 
             //N
@@ -7457,7 +7687,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             tianlai: '天籁',
             tianlai_info: '每当你使用或打出一张【闪】，可令任意一名角色进行一次判定，若结果为♣，其受到一点雷电伤害，然后你回复一点体力；若结果为♠，其受到两点雷电伤害',
             quanneng: '全能',
-            quanneng_info: '你可以将[杀]当[闪]，或[闪]当[杀]使用或打出',
+            quanneng_info: '你可以将【杀】当【闪】、【闪】当【杀】使用或打出',
             yezhan: '夜战',
             yezhan_info: '当你成为一张指定了多个目标的锦囊牌的目标时，你可以取消之，并摸一张牌',
             zhanbu: '占卜',
@@ -7470,15 +7700,15 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             luandance: '乱舞',
             luandance_info: '令除你外的所有SNH48非官方角色依次对另一名角色使用一张【杀】，无法如此做者受到1点伤害',
             tiaosuo: '挑唆',
-            tiaosuo_info: '出牌阶段限一次，你可以弃一张牌，视为一名SNH48角色对另一名SNH48角色使用一张[决斗]',
+            tiaosuo_info: '出牌阶段限一次，你可以弃一张牌，视为一名SNH48 Group角色对另一名SNH48 Group角色使用一张【决斗】',
 
             //鞠婧祎篇
             dufei: '毒妃',
-            dufei_info: '锁定技：每当其他角色弃置、判定、拼点、使用后并进入弃牌堆的毒，你获得之。你每有一个【毒】，手牌上限+1。你使用毒时不会流失体力，反而会回复1点体力',
+            dufei_info: '锁定技：每当其他角色弃置、判定、拼点、使用后并进入弃牌堆的毒，你获得之。你每有一个【毒】，手牌上限+1。你使用毒时不会流失体力，并回复1点体力',
             poisonousfog: '毒雾',
             poisonousfog_info: '出牌阶段限一次，你可以弃置两张【毒】，若如此做，除你之外的所有角色失去1点体力',
             jiedu: '解毒',
-            jiedu_info: '其他角色失去体力濒死时，你可以弃置一张"毒"，使其回复至1点体力。然后你摸一张牌',
+            jiedu_info: '其他角色失去体力濒死时，你可以弃置一张【毒】，使其回复至1点体力。然后你摸一张牌',
             duzong: '毒宗',
             duzong_info: '觉醒技：若你手中的【毒】大于等于两张，你体力上限-1并回复1点体力，永久获得技能【心血】',
             xinxie: '心血',
@@ -7498,9 +7728,9 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             jianyi: '坚毅',
             jianyi_info: '当你受到伤害时，若你的伤害来源不弃一张牌，此次伤害-1',
             lingjun: '领军',
-            lingjun_info: '主公技，当你陷入濒死状态时，与你同势力的角色对你使用的[桃]额外回复一点体力值。你以此法脱离濒死状态时，其摸一张牌',
+            lingjun_info: '主公技，当你陷入濒死状态时，与你同势力的角色对你使用的【桃】额外回复一点体力值。你以此法脱离濒死状态时，其摸一张牌',
             shiyu: '食欲',
-            shiyu_info: '每当你使用杀对一名角色造成伤害时，你可与其拼点，若你赢，你获得对方的一张牌并且摸一张牌，否则对方摸一张牌',
+            shiyu_info: '每当你使用【杀】对一名角色造成伤害时，你可与其拼点，若你赢，你获得对方的一张牌并且摸一张牌，否则对方摸一张牌',
             yuyan: '预言',
             yuyan_info: '回合外每失去一张牌，你选择一个颜色并进行一次判定，若结果相同，你获得该判定牌',
             mowang: '魔王',
@@ -7512,16 +7742,16 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             jingwu2_info: '体力值为单数：【杀】无视距离且能额外指定一名角色',
             jingwu3: '精武',
             jingwu3_info: '体力值为双数：【杀】无视防具且可额外使用1个【杀】',
-            jingwu_info: '你的杀根据当前体力值获得如下效果。体力值为单数：无视距离且能额外指定一名角色；体力值为双数：无视防具且可额外使用1个杀',
+            jingwu_info: '你的杀根据当前体力值获得如下效果。体力值为单数：无视距离且能额外指定一名角色；体力值为双数：无视防具且可额外使用1次【杀】',
             tianyin: '甜音',
             tianyin_info: '出牌阶段限一次，你可弃置一张红色手牌并指定一名角色，该角色回复1点体力',
 
             wenwan: '温婉',
-            wenwan_info: '锁定技：你使用或打出的闪根据当前体力值获得如下效果：体力值为单数：结算后摸两张牌；体力值为双数：该闪结算后视为对伤害来源使用乐不思蜀',
+            wenwan_info: '锁定技：你使用或打出的【闪】根据当前体力值获得如下效果：体力值为单数：结算后摸两张牌；体力值为双数：该【闪】结算后视为对伤害来源使用【乐不思蜀】',
             fuhei: '腹黑',
             fuhei2: '腹黑',
-            fuhei_info: '出牌阶段，你可弃置一张♠牌并选择一名角色，对其造成1点伤害，若如此做，下一个该角色的回合你需要两张闪来响应该角色的杀',
-            fuhei2_info: '对陈观慧使用杀时，陈观慧需要使用两个闪才能抵消',
+            fuhei_info: '出牌阶段，你可弃置一张♠牌并选择一名角色，对其造成1点伤害。若如此做，直到下一个该角色的回合结束，你需要两张【闪】来响应该角色的【杀】',
+            fuhei2_info: '对陈观慧使用杀时，陈观慧需要使用两张【闪】才能抵消',
 
 
             shenhun: '神魂',
@@ -7533,7 +7763,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             xinggan: '性感',
             xinggan_info: '觉醒技，你的回合内若音符数大于你体力值，你体力上限-1，获得技能"美艳"',
             meiyan: '美艳',
-            meiyan_info: '出牌阶段限一次，你可弃置一张武将牌最上面的【音符】并指定一名角色，视为对该角色使用乐不思蜀',
+            meiyan_info: '出牌阶段限一次，你可弃置一张武将牌最上面的【音符】并指定一名角色，视为对该角色使用【乐不思蜀】',
             kuaidao: '快刀',
             kuaidao_info: '使用杀指定目标后，你可以弃置其一张手牌，若此牌与【杀】花色相同，此【杀】不可被【闪】响应；同时若此牌为装备牌，此杀伤害+1；此【杀】结算后，该角色获得此【杀】',
             qiaoyan: '巧盐',
@@ -7624,7 +7854,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             wenhe: '温和',
             wenhe_info: '每当一名角色的判定牌生效前，你可打出一张牌替代之，若该牌与判定牌花色相同，你获得该判定牌',
             guayan: '寡言',
-            guayan_info: '你不能成为延时类锦囊的目标，你使用非延时类锦囊无距离限制',
+            guayan_info: '锁定技。你不能成为延时类锦囊的目标，你使用非延时类锦囊无距离限制',
             xuanmu: '炫目',
             xuanmu_info: '每当你受到一次伤害，你可随机获得每名其他角色区域内的一张牌。然后你翻面',
             zanmei: '赞美',
@@ -7822,7 +8052,30 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             news_club: '对一个其它角色造成1点雷属性伤害',
             news_diamond: '弃置一个其它角色的1张牌',
             shenmiao: '神喵',
-            shenmiao_info: '锁定技：你的出牌阶段使用的第一张牌的点数若为，奇数：恢复一点体力，偶数：摸两张牌；当你成为杀的目标后此杀若为，奇数：此杀使用者弃置一张牌，偶数：你摸一张牌'
+            shenmiao_info: '锁定技：你的出牌阶段使用的第一张牌的点数若为，奇数：恢复一点体力，偶数：摸两张牌；当你成为杀的目标后此杀若为，奇数：此杀使用者弃置一张牌，偶数：你摸一张牌',
+
+
+            lianyu:'炼狱',
+			lianyu_info:'出牌阶段限一次，你可以弃置一张红色手牌令场上所有角色受到一点火焰伤害',
+
+			manjia:'蛮甲',
+			manjia1:'蛮甲',
+			manjia2:'蛮甲',
+			manjia_info:'锁定技，若你的装备区内没有防具牌，则你视为装备了[藤甲]',
+			xiaoshou:'枭首',
+			xiaoshou_info:'结束阶段，若场上体力值最多的角色只有一个，你可以对其造成一点火焰伤害',
+			guiji:'诡计',
+			guiji_info:'锁定技，准备阶段结束时，若你的判定区内有牌，你随机弃置其中一张牌',
+
+			qiangzheng:'强征',
+			qiangzheng_info:'锁定技，结束阶段，你获得一名其他角色的一张手牌',
+			zuijiu:'醉酒',
+			zuijiu_info:'锁定技，你的黑杀造成的伤害+1，造成伤害后须弃置一张手牌',
+
+			suoling:'索令',
+			suoling_info:'锁定技，结束阶段，你解除横置状态，除你之外的所有角色进入横置状态',
+			xixing:'吸星',
+			xixing_info:'出牌阶段限一次，你可以弃置三张不同类别的牌，对一名其他角色造成一点伤害，然后回复一点体力'
         },
     };
 });

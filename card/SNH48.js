@@ -165,6 +165,35 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                     }
                 },
             },
+            baozuo: {
+                mode: ['SNH48'],
+                nomod: true,
+                nopower: true,
+                unique: true,
+                lianheng: true,
+                fullskin: true,
+                type: "equip",
+                subtype: 'equip5',
+                skills: ['baozuo_skill', 'baozuo_special'],
+				onLose:function(){
+                    // 失去时弃掉所有手牌
+					player.discard('h', player.getCards('h'));
+                },
+                filterLose:function(card,player){
+                    // AI不主动去顶掉这个装备
+					return player.countCards('h') > 0;
+				},
+                ai: {
+                    equipValue:function(card,player){                        
+						if(player.getEquip('yongqizhichui')) return 0;
+						if(player.getEquip('antyvote')) return 0;
+						return 10
+					},
+					basic:{
+						equipValue:3
+					}
+                },
+            }
         },
         skill: {
             yongqizhichui_skill: {
@@ -258,10 +287,7 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                     //不能anty男的。子杰殿下，我只能帮你到这里了
                     if (target.sex == 'male')
                         return false;
-                    if (target.group == 'S' || target.group == 'N' || target.group == 'H' || target.group == 'X')
-                        return true;
-                    else
-                        return false;
+                    return ['S','N','H','X','B','E','J','G','N3','Z'].includes(target.group);
                 },
                 filterCard: function (card) {
                     return get.color(card) == 'black';
@@ -304,6 +330,36 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
                     }
                 }
             },
+            baozuo_skill: {
+                trigger: {
+                    player: ["phaseEnd", "phaseBegin"],
+                },
+                audio: true,
+                filter: function (event, player) {
+                    return player.isAlive();
+                },
+                frequent: true,
+                content: function () {
+                    if (player.isDamaged()) {
+                        player.recover();
+                    }
+                    player.draw(1);
+                }
+            },
+            baozuo_special:{
+                trigger: {
+                    player: 'damageEnd'
+                },
+                audio: 1,
+                frequent: true,
+                filter: function(event) {
+                    return (event.parent && ['yongqizhichui_skill', 'antyvote_skill'].includes(event.parent.name)) ||
+                           (event.card && ['shandian', 'fulei'].includes(event.card.name))
+                },
+                content: function () {
+                    player.loseHp(player.hp);
+                }
+            }
         },
         translate: {
             juedou2:'决斗',
@@ -314,13 +370,22 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
             antyvote: 'Anty票',
             antyvote_bg: '票',
             antyvote_skill: 'Anty',
-            antyvote_info: '出牌阶段，你可以弃置三张黑色牌视为对所有SNH48女性角色打出“万箭齐发”，每回合限一次',
+            antyvote_info: '出牌阶段，你可以弃置三张黑色牌视为对所有SNH48女性角色打出【万箭齐发】，每回合限一次',
 
             yongqizhichui: '勇气之锤',
             yongqizhichui_bg: '锤',
             yongqizhichui_skill: '求锤',
             yongqizhichui_info: '选择一个角色进行拼点，若你赢，你对其造成一点伤害，若你没赢，其对你造成一点伤害。每回合限一次。',
 
+            baozuo: "宝座",
+            baozuo_skill: "资源",
+            baozuo_special: "被锤",
+            baozuo_info: "登顶啦！锁定技：回合开始和结束时，你回复一点体力并摸两张牌。当你失去装备区里的【宝座】时，你弃掉所有手牌。受到【求锤】、【Anty】、【闪电】、【浮雷】造成的伤害结算后，失去当前体力，直接濒死。",
+
+            // 未代码实现的技能
+            // 神魂颠倒
+            // shenhundiandao_info: "除你以外的所有角色依次进行一次判定，♥︎回复1点体力，♦︎摸两张牌，♠︎翻面，♣︎弃两张手牌",
+            
 
         },
         list: [
@@ -331,7 +396,8 @@ game.import('card', function (lib, game, ui, get, ai, _status) {
             //club: "♣︎",
             ['heart', 2, 'yingyuanbang'],
             ['spade', 2, 'antyvote'],
-            ['club', 2, 'yongqizhichui']
+            ['club', 2, 'yongqizhichui'],
+            ['heart', 13, 'baozuo']
         ],
     }
-});
+})

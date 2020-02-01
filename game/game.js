@@ -9354,9 +9354,10 @@
 			},
 			c:function(){
 				(function(){
-					var a=b=c=d=e=f=g=h=j=k=l=m=n=o=p=q=r=s=0;
+					var a=b=c=d=e=f=0;
 					var sa=sb=sc=sd=sf=0;
 					var z1=z2=z3=z4=z5=z6=z7=z8=z9=z10=z11=z12=z13=0;
+					var x1=x2=x3=x4=x5=x6=x7=x8=x9=x10=x11=x12=x13=0;
 					for(var i in lib.character){
 						switch(lib.character[i][1]){
 							case 'wei':a++;if(lib.config.banned.contains(i)) sa++;break;
@@ -9365,19 +9366,19 @@
 							case 'qun':d++;if(lib.config.banned.contains(i)) sd++;break;
 							case 'western':e++;if(lib.config.banned.contains(i)) se++;break;
 							case 'key':f++;if(lib.config.banned.contains(i)) sf++;break;
-							case 'S':f++;if(lib.config.banned.contains(i)) z1++;break;
-							case 'N':g++;if(lib.config.banned.contains(i)) z2++;break;
-							case 'H':h++;if(lib.config.banned.contains(i)) z3++;break;
-							case 'X':j++;if(lib.config.banned.contains(i)) z4++;break;
-							case 'B':k++;if(lib.config.banned.contains(i)) z5++;break;
-							case 'E':l++;if(lib.config.banned.contains(i)) z6++;break;
-							case 'J':m++;if(lib.config.banned.contains(i)) z7++;break;
-							case 'G':n++;if(lib.config.banned.contains(i)) z8++;break;
-							case 'N3':o++;if(lib.config.banned.contains(i)) z9++;break;
-							case 'Z':p++;if(lib.config.banned.contains(i)) z10++;break;
-							case 'guan':q++;if(lib.config.banned.contains(i)) z11++;break;
-							case 'C':r++;if(lib.config.banned.contains(i)) z12++;break;
-							case 'K':s++;if(lib.config.banned.contains(i)) z13++;break;
+							case 'S':x1++;if(lib.config.banned.contains(i)) z1++;break;
+							case 'N':x2++;if(lib.config.banned.contains(i)) z2++;break;
+							case 'H':x3++;if(lib.config.banned.contains(i)) z3++;break;
+							case 'X':x4++;if(lib.config.banned.contains(i)) z4++;break;
+							case 'B':x5++;if(lib.config.banned.contains(i)) z5++;break;
+							case 'E':x6++;if(lib.config.banned.contains(i)) z6++;break;
+							case 'J':x7++;if(lib.config.banned.contains(i)) z7++;break;
+							case 'G':x8++;if(lib.config.banned.contains(i)) z8++;break;
+							case 'N3':x9++;if(lib.config.banned.contains(i)) z9++;break;
+							case 'Z':x10++;if(lib.config.banned.contains(i)) z10++;break;
+							case 'guan':x11++;if(lib.config.banned.contains(i)) z11++;break;
+							case 'C':x12++;if(lib.config.banned.contains(i)) z12++;break;
+							case 'K':x13++;if(lib.config.banned.contains(i)) z13++;break;
 						}
 					}
 					console.log('魏：'+(a-sa)+'/'+a);
@@ -9866,6 +9867,17 @@
 			shenColor:"#ffe14c",
 			westernColor:"#ffe14c",
 			keyColor:"#ffc9b1fd",
+			SColor: "#87cdeb",
+			NColor: "#ae86bb",
+			HColor: "#f39800",
+			XColor: "#a9cc29",
+			BColor: "#ff2471",
+			EColor: "#0cc8c3",
+			JColor: "#006ab7",
+			GColor: "#aac913",
+			N3Color: "#ffd700",
+			ZColor: "#ea627c",
+			guanColor: "#000000",
 			basic:'基本',
 			equip:'装备',
 			trick:'锦囊',
@@ -30133,6 +30145,7 @@
 								game.print('游戏出错：'+event.name);
 								game.print(e.toString());
 								console.log(e);
+								event.finish()
 							}
 						}
 						else{

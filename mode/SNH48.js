@@ -209,7 +209,10 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 zhaoye_SNH48: ['female', 'S', 4, ['baofa', 'caihua']],
                 zhuxiaodan_SNH48: ['female', 'S', 4, ['liren','shouzhuo']],
                 chenjunyu_SNH48: ['female', 'S', 4, ['mengdong','maomao']],
-
+                youmiao_SNH48: ['female', 'S', 4, ['lianyu','guiji']],
+                chenyuzi_SNH48:['female','S',4,['manjia','xiaoshou']],
+                liuliqian_SNH48:['female','S',4,['qiangzheng','moukui']],
+                wangbeini_SNH48:['female','S',4,['suoling','xixing']],
                 zhaojiamin_SNH48: ['female', 'S', 4, ['shuangfa', 'buzhuang']],
 
                 //N
@@ -1536,8 +1539,8 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             ["club", 4, "bingliang"],
 
             ['heart', 9, 'yuanjiao'],
-            ['club', 3, 'zhibi'],
-            ['club', 4, 'zhibi'],
+            // ['club', 3, 'zhibi'],
+            // ['club', 4, 'zhibi'],
             ['diamond', 4, 'yiyi'],
             ['heart', 11, 'yiyi'],
             ['diamond', 6, 'wuliu'],
@@ -1565,9 +1568,10 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             ['heart', 3, 'taipingyaoshu'],
 
             //附加游戏卡牌
-            ['heart', 2, 'yingyuanbang'],
+            ['diamond', 2, 'yingyuanbang'],
             ['spade', 2, 'antyvote'],
             ['club', 12, 'yongqizhichui'],
+            ['heart', 12, 'baozuo'],
         ],
         element: {
             content: {
