@@ -24,7 +24,7 @@
 		versionOL:27,
 		updateURL:'https://raw.githubusercontent.com/libccy/noname',
 		mirrorURL:'https://gitlab.com/isgs/noname/raw',
-		hallURL:'noname.pub',
+		hallURL:'47.97.248.244',
 		assetURL:'',
 		changeLog:[],
 		updates:[],
