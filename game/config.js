@@ -36,7 +36,7 @@ window.config={
 	volumn_audio:2,
 
 	connect_avatar:'TeamSII',
-	connect_nickname:'丶Gone',
+	connect_nickname:'',
 	config_menu:true,
 	auto_popped_config:true,
 	auto_popped_history:false,

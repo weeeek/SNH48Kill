@@ -111,8 +111,8 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             huangenru_BEJ48: ['female','J',4,['mashu']],
             hanjiale_BEJ48: ['female','J',4,['biyue']],
             //GNZ48
-            xieleilei_GNZ48: ['female','G',4,['paoxiao']],
-            zhangqiongyu_GNZ48: ['female','G',4,['qianxun']],
+            xieleilei_GNZ48: ['female','G',4,['paoxiao', 'wusheng']],
+            zhangqiongyu_GNZ48: ['female','G',4,['qianxun', 'lianying']],
             liangjiao_GNZ48: ['female','G',3,['hongyan','tianxian']],
             zhengdanni_GNZ48: ['female','N3',4,['yingzi']],
             liulifei_GNZ48: ['female','N3',4,['guidao']],
@@ -561,7 +561,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 }
             },
             gaoshi: {
-                audio: 4,
+                audio: 1,
                 enable: 'phaseUse',
                 usable: 1,
                 filterTarget: function (card, player, target) {
@@ -2185,7 +2185,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 },
             },
             qiaoyan: {
-                audio: 4,
+                audio: 1,
                 enable: 'chooseToUse',
                 filterCard: function (card) {
                     return get.color(card) == 'black';
@@ -2327,7 +2327,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 group: ['chengzhang1', 'chengzhang2', 'chengzhang3']
             },
             chengzhang1: {
-                audio: 4,
+                audio: 1,
                 trigger: { player: 'loseEnd' },
                 frequent: true,
                 filter: function (event, player) {
@@ -2754,51 +2754,49 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                     player.awakenSkill('huangzi');
                 }
             },
-            luogod: {
-                audio: 1,
-                trigger: { player: 'phaseBegin' },
-                frequent: true,
-                content: function () {
-                    "step 0"
-                    if (event.cards == undefined) event.cards = [];
-                    player.judge(function (card) {
-                        if (get.color(card) == 'red') return 1.5;
-                        return -1.5;
-                    }, ui.special);
-                    "step 1"
-                    if (result.judge > 0) {
-                        event.cards.push(result.card);
-                        if (lib.config.autoskilllist.contains('luoshen')) {
-                            player.chooseBool('是否再次发动【络神】？');
-                        }
-                        else {
-                            event._result = { bool: true };
-                        }
-                    }
-                    else {
-                        for (var i = 0; i < event.cards.length; i++) {
-                            if (get.position(event.cards[i]) != 's') {
-                                event.cards.splice(i, 1); i--;
-                            }
-                        }
-                        player.gain(event.cards);
-                        if (event.cards.length) {
-                            player.$draw(event.cards);
-                        }
-                        event.finish();
-                    }
-                    "step 2"
-                    if (result.bool) {
-                        event.goto(0);
-                    }
-                    else {
-                        player.gain(event.cards);
-                        if (event.cards.length) {
-                            player.$draw(event.cards);
-                        }
-                    }
-                }
-            },
+            luogod:{
+				audio:2,
+				trigger:{player:'phaseZhunbeiBegin'},
+				frequent:true,
+				content:function(){
+					"step 0"
+					if(event.cards==undefined) event.cards=[];
+					player.judge(function(card){
+						if(get.color(card)=='red') return 1.5;
+						return -1.5;
+					});
+					"step 1"
+					if(result.judge>0){
+						event.cards.push(result.card);
+						if(lib.config.autoskilllist.contains('luogod')){
+							player.chooseBool('是否再次发动【络神】？');
+						}
+						else{
+							event._result={bool:true};
+						}
+					}
+					else{
+						for(var i=0;i<event.cards.length;i++){
+							if(get.position(event.cards[i])!='d'){
+								event.cards.splice(i,1);i--;
+							}
+						}
+						if(event.cards.length){
+							player.gain(event.cards,'gain2');
+						}
+						event.finish();
+					}
+					"step 2"
+					if(result.bool){
+						event.goto(0);
+					}
+					else{
+						if(event.cards.length){
+							player.gain(event.cards,'gain2');
+						}
+					}
+				}
+			},
             //刘增艳，AI测试ok
             tongyin: {
                 unique: true,
@@ -3190,7 +3188,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             //潘燕琦,AI测试OK
             tongxin: {
                 //除你之外每当有角色受到伤害时，你可对伤害来源进行一次判定，若为黑色，视为你对其造成X点雷属性伤害；若为红色，视为你对其造成X点火属性伤害，然后再进行一次判定，若为黑色，失去1点体力，若为红色，弃1张牌。（X为受到的伤害值）
-                audio: 4,
+                audio: 1,
                 trigger: { global: 'damageEnd' },
                 filter: function (event, player) {
                     if (!event.source || event.source == player || event.player == player)
@@ -4882,11 +4880,11 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             },
             //N
             //张雨鑫，AI测试ok
-            xingwen: {
-                audio: 1,
-                trigger: { player: 'phaseBegin' },
-                frequent: true,
-                content: function () {
+            xingwen:{
+				audio:1,
+				trigger:{player:'phaseZhunbeiBegin'},
+				frequent:true,
+				content:function(){
                     "step 0"
                     if (event.cards == undefined) event.cards = [];
                     player.judge(function (card) {
@@ -4897,40 +4895,38 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                             return -1.5;
                         return 1.5;
                     }, ui.special);
-                    "step 1"
-                    if (result.judge > 0) {
-                        event.cards.push(result.card);
-                        if (lib.config.autoskilllist.contains('xingwen')) {
-                            player.chooseBool('是否再次发动【行文】？');
-                        }
-                        else {
-                            event._result = { bool: true };
-                        }
-                    }
-                    else {
-                        for (var i = 0; i < event.cards.length; i++) {
-                            if (get.position(event.cards[i]) != 's') {
-                                event.cards.splice(i, 1); i--;
-                            }
-                        }
-                        player.gain(event.cards);
-                        if (event.cards.length) {
-                            player.$draw(event.cards);
-                        }
-                        event.finish();
-                    }
-                    "step 2"
-                    if (result.bool) {
-                        event.goto(0);
-                    }
-                    else {
-                        player.gain(event.cards);
-                        if (event.cards.length) {
-                            player.$draw(event.cards);
-                        }
-                    }
-                }
-            },
+					"step 1"
+					if(result.judge>0){
+						event.cards.push(result.card);
+						if(lib.config.autoskilllist.contains('xingwen')){
+							player.chooseBool('是否再次发动【行文】？');
+						}
+						else{
+							event._result={bool:true};
+						}
+					}
+					else{
+						for(var i=0;i<event.cards.length;i++){
+							if(get.position(event.cards[i])!='d'){
+								event.cards.splice(i,1);i--;
+							}
+						}
+						if(event.cards.length){
+							player.gain(event.cards,'gain2');
+						}
+						event.finish();
+					}
+					"step 2"
+					if(result.bool){
+						event.goto(0);
+					}
+					else{
+						if(event.cards.length){
+							player.gain(event.cards,'gain2');
+						}
+					}
+				}
+			},
             duoyi: {
                 audio: 1,
                 unique: true,
@@ -5156,7 +5152,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
                 group: 'hainv1'
             },
             hainv1: {
-                audio: 4,
+                audio: 1,
                 usable: 1,
                 enable: 'chooseToUse',
                 filter: function (player) {
@@ -5771,12 +5767,20 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             },
             yuanqi: {
                 audio: 1,
-                trigger: { player: 'chooseToRespondBegin' },
-                filter: function (event, player) {
-                    if (event.responded) return false;
-                    if (!event.filterCard({ name: 'shan' })) return false;
-                    return true;
-                },
+				trigger:{player:['chooseToRespondBegin', 'chooseToUseBegin']},
+                filter:function(event,player){
+					if(event.responded) return false;
+					if(!event.filterCard({name:'shan'},player,event)) return false;
+					if(event.name=='chooseToRespond'&&!lib.filter.cardRespondable({name:'shan'},player,event)) return false;
+					if(player.hasSkillTag('unequip2')) return false;
+					var evt=event.getParent();
+					if(evt.player&&evt.player.hasSkillTag('unequip',false,{
+						name:evt.card?evt.card.name:null,
+						target:player,
+						card:evt.card
+                    })) return false;
+					return true;
+				},
                 check: function (event, player) {
                     if (get.attitude(player, _status.currentPhase) > 0) return true;
                     var nh = _status.currentPhase.countCards('h') + 1;
@@ -7066,7 +7070,7 @@ game.import('character', function (lib, game, ui, get, ai, _status) {
             },
             //宋昕冉
             guoer: {
-                audio: 4,
+                audio: 1,
                 enable: 'chooseToUse',
                 filter: function (event, player) {
                     return player.countCards('h', { name: 'tao' }) > 0;

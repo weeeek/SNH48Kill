@@ -1,6 +1,6 @@
 "use strict";
 (function () {
-	var _status = {
+	let _status = {
 		paused: false,
 		paused2: false,
 		paused3: false,
@@ -19,7 +19,7 @@
 		dragline: [],
 		dying: []
 	};
-	var lib = {
+	let lib = {
 		configprefix: 'noname_0.9_',
 		versionOL: 27,
 		updateURL: 'https://raw.githubusercontent.com/libccy/noname',
@@ -3994,337 +3994,6 @@
 			},
 		},
 		mode: {
-			SNH48: {
-				name: '女团大战',
-				connect: {
-					update: function (config, map) {
-						if (config.connect_onlyguozhan) {
-							map.connect_junzhu.show();
-						} else {
-							map.connect_junzhu.hide();
-						}
-					},
-					connect_player_number: {
-						name: '游戏人数',
-						init: '8',
-						item: {
-							'3': '三人',
-							'4': '四人',
-							'5': '五人',
-							'6': '六人',
-							'7': '七人',
-							'8': '八人'
-						},
-						frequent: true,
-						restart: true,
-					},
-					connect_initshow_draw: {
-						name: '首亮奖励',
-						item: {
-							'off': '关闭',
-							'draw': '摸牌',
-							'mark': '标记',
-						},
-						init: 'mark',
-						frequent: true,
-						intro: '第一个明置武将牌的角色可获得首亮奖励'
-					},
-					connect_aozhan: {
-						name: '鏖战模式',
-						init: true,
-						intro: '若开启此选项，则将在游戏中引入“鏖战模式”的规则：<br>当游戏中仅剩四名或更少角色时（七人以下游戏时改为三名或更少），若此时全场没有超过一名势力相同的角色，则从一个新的回合开始，游戏进入鏖战模式直至游戏结束。<br>◇在鏖战模式下，【桃】只能当做【杀】或【闪】使用或打出，不能用来回复体力。<br>注：进入鏖战模式后，即使之后有两名或者更多势力相同的角色出现，仍然不会取消鏖战模式。',
-					},
-					connect_viewnext: {
-						name: '观看下家副将',
-						init: false,
-						intro: '若开启此选项，所有的玩家将在挑选武将后，分发起始手牌之前，分别观看自己下家的副将。',
-					},
-					connect_zhulian: {
-						name: '珠联璧合',
-						init: true,
-						// frequent:true,
-						intro: '主将和副将都明置后，若为特定组合，可获得【珠联璧合】标记'
-					},
-					connect_guozhanpile: {
-						name: '使用国战牌堆',
-						init: true,
-						frequent: true,
-						restart: true,
-					},
-					connect_onlyguozhan: {
-						name: '使用国战武将',
-						init: true,
-						frequent: true,
-						restart: true,
-						intro: '开启武将技能将替换为国战版本并禁用非国战武将'
-					},
-					connect_junzhu: {
-						name: '替换君主',
-						init: true,
-						// frequent:true,
-						restart: true,
-						intro: '若开启此选项，玩家的第一个回合开始时，若其主武将牌有对应的君主武将牌，则其可以将此武将牌替换为对应的君主武将牌，然后重新调整体力上限。若玩家的体力上限因此增大，则玩家回复等量的体力。'
-					},
-					// connect_ban_weak:{
-					// 	name:'屏蔽弱将',
-					// 	init:false,
-					// 	restart:true,
-					// },
-					// connect_ban_strong:{
-					// 	name:'屏蔽强将',
-					// 	init:false,
-					// 	restart:true,
-					// },
-				},
-				config: {
-					update: function (config, map) {
-						if (config.onlyguozhan) {
-							map.junzhu.show();
-						} else {
-							map.junzhu.hide();
-						}
-					},
-					guozhan_mode: {
-						name: '游戏模式',
-						init: 'normal',
-						item: {
-							normal: '标准',
-							mingjiang: '明将'
-						},
-						frequent: true,
-					},
-					player_number: {
-						name: '游戏人数',
-						init: '8',
-						item: {
-							'3': '三人',
-							'4': '四人',
-							'5': '五人',
-							'6': '六人',
-							'7': '七人',
-							'8': '八人'
-						},
-						frequent: true,
-						restart: true,
-					},
-					initshow_draw: {
-						name: '首亮奖励',
-						item: {
-							'off': '关闭',
-							'draw': '摸牌',
-							'mark': '标记',
-						},
-						init: 'mark',
-						frequent: true,
-						intro: '第一个明置身份牌的角色可获得摸牌奖励'
-					},
-					aozhan: {
-						name: '鏖战模式',
-						init: true,
-						intro: '若开启此选项，则将在游戏中引入“鏖战模式”的规则：<br>当游戏中仅剩四名或更少角色时（七人以下游戏时改为三名或更少），若此时全场没有超过一名势力相同的角色，则从一个新的回合开始，游戏进入鏖战模式直至游戏结束。<br>◇在鏖战模式下，【桃】只能当做【杀】或【闪】使用或打出，不能用来回复体力。<br>注：进入鏖战模式后，即使之后有两名或者更多势力相同的角色出现，仍然不会取消鏖战模式。',
-					},
-					viewnext: {
-						name: '观看下家副将',
-						init: false,
-						intro: '若开启此选项，所有的玩家将在挑选武将后，分发起始手牌之前，分别观看自己下家的副将。',
-					},
-					aozhan_bgm: {
-						name: '鏖战背景音乐',
-						item: {
-							disabled: '不启用',
-							online: 'Online',
-							rewrite: 'Rewrite',
-							chaoming: '潮鸣',
-						},
-						init: 'rewrite',
-						onclick: function (item) {
-							game.saveConfig('aozhan_bgm', item, this._link.config.mode);
-							if (_status._aozhan == true) game.playBackgroundMusic();
-						},
-					},
-					zhulian: {
-						name: '珠联璧合',
-						init: true,
-						// frequent:true,
-						intro: '主将和副将都明置后，若为特定组合，可获得【珠联璧合】标记'
-					},
-					guozhanpile: {
-						name: '使用国战牌堆',
-						init: true,
-						frequent: true,
-						restart: true,
-					},
-					onlyguozhan: {
-						name: '使用国战武将',
-						init: true,
-						frequent: true,
-						restart: true,
-						intro: '开启武将技能将替换为国战版本并禁用非国战武将'
-					},
-					guozhanSkin: {
-						name: '使用国战皮肤',
-						init: true,
-						frequent: true,
-						restart: true,
-						intro: '开启此选项后，将会把有国战专属皮肤的武将替换为国战皮肤'
-					},
-					junzhu: {
-						name: '替换君主',
-						init: true,
-						// frequent:true,
-						restart: true,
-						intro: '若开启此选项，玩家的第一个回合开始时，若其主武将牌有对应的君主武将牌，则其可以将此武将牌替换为对应的君主武将牌，然后重新调整体力上限。若玩家的体力上限因此增大，则玩家回复等量的体力。'
-					},
-					double_hp: {
-						name: '双将体力上限',
-						init: 'pingjun',
-						item: {
-							hejiansan: '和减三',
-							pingjun: '平均值',
-							zuidazhi: '最大值',
-							zuixiaozhi: '最小值',
-							zonghe: '相加',
-						},
-						restart: true,
-					},
-					// ban_weak:{
-					// 	name:'屏蔽弱将',
-					// 	init:true,
-					// 	restart:true,
-					// },
-					// ban_strong:{
-					// 	name:'屏蔽强将',
-					// 	init:false,
-					// 	restart:true,
-					// },
-					free_choose: {
-						name: '自由选将',
-						init: true,
-						onclick: function (bool) {
-							game.saveConfig('free_choose', bool, this._link.config.mode);
-							if (!_status.event.getParent().showConfig && !_status.event.showConfig) return;
-							if (!ui.cheat2 && get.config('free_choose')) ui.create.cheat2();
-							else if (ui.cheat2 && !get.config('free_choose')) {
-								ui.cheat2.close();
-								delete ui.cheat2;
-							}
-						}
-					},
-					onlyguozhanexpand: {
-						name: '默认展开自由选将',
-						init: false,
-						restart: true,
-						intro: '开启后自由选将对话框将默认显示全部武将'
-					},
-					change_identity: {
-						name: '自由选择座位',
-						init: true,
-						onclick: function (bool) {
-							game.saveConfig('change_identity', bool, this._link.config.mode);
-							if (!_status.event.getParent().showConfig && !_status.event.showConfig) return;
-							var dialog;
-							if (ui.cheat2 && ui.cheat2.backup) dialog = ui.cheat2.backup;
-							else dialog = _status.event.dialog;
-							if (!_status.brawl || !_status.brawl.noAddSetting) {
-								if (!dialog.querySelector('table') && get.config('change_identity')) _status.event.getParent().addSetting(dialog);
-								else _status.event.getParent().removeSetting(dialog);
-							}
-							ui.update();
-						}
-					},
-					change_choice: {
-						name: '开启换将卡',
-						init: true,
-						onclick: function (bool) {
-							game.saveConfig('change_choice', bool, this._link.config.mode);
-							if (!_status.event.getParent().showConfig && !_status.event.showConfig) return;
-							if (!ui.cheat && get.config('change_choice')) ui.create.cheat();
-							else if (ui.cheat && !get.config('change_choice')) {
-								ui.cheat.close();
-								delete ui.cheat;
-							}
-						}
-					},
-					change_card: {
-						name: '开启手气卡',
-						init: 'disabled',
-						item: {
-							disabled: '禁用',
-							once: '一次',
-							twice: '两次',
-							unlimited: '无限',
-						}
-					},
-					continue_game: {
-						name: '显示再战',
-						init: true,
-						intro: '游戏结束后可选择用相同的武将再进行一局游戏',
-						onclick: function (bool) {
-							game.saveConfig('continue_game', bool, this._link.config.mode);
-							if (get.config('continue_game')) {
-								if (!ui.continue_game && _status.over && !_status.brawl) {
-									ui.continue_game = ui.create.control('再战', game.reloadCurrent);
-								}
-							} else if (ui.continue_game) {
-								ui.continue_game.close();
-								delete ui.continue_game;
-							}
-						}
-					},
-					dierestart: {
-						name: '死亡后显示重来',
-						init: true,
-						onclick: function (bool) {
-							game.saveConfig('dierestart', bool, this._link.config.mode);
-							if (get.config('dierestart')) {
-								if (!ui.restart && game.me.isDead() && !_status.connectMode) {
-									ui.restart = ui.create.control('restart', game.reload);
-								}
-							} else if (ui.restart) {
-								ui.restart.close();
-								delete ui.restart;
-							}
-						}
-					},
-					revive: {
-						name: '死亡后显示复活',
-						init: false,
-						onclick: function (bool) {
-							game.saveConfig('revive', bool, this._link.config.mode);
-							if (get.config('revive')) {
-								if (!ui.revive && game.me.isDead()) {
-									ui.revive = ui.create.control('revive', ui.click.dierevive);
-								}
-							} else if (ui.revive) {
-								ui.revive.close();
-								delete ui.revive;
-							}
-						}
-					},
-					difficulty: {
-						name: 'AI对人类态度',
-						init: 'normal',
-						item: {
-							easy: '友好',
-							normal: '一般',
-							hard: '仇视',
-						}
-					},
-					choice_num: {
-						name: '候选武将数',
-						init: '7',
-						restart: true,
-						item: {
-							'5': '五',
-							'6': '六',
-							'7': '七',
-							'8': '八',
-							'9': '九',
-							'10': '十',
-						}
-					},
-				}
-			},
 			identity: {
 				name: '身份',
 				connect: {
@@ -4805,6 +4474,312 @@
 							'8': '八',
 							'10': '十',
 						},
+					},
+				}
+			},
+			SNH48: {
+				name: '女团大战',
+				connect: {
+					update: function (config, map) {
+						if (config.connect_onlyguozhan) {
+							map.connect_junzhu.show();
+						} else {
+							map.connect_junzhu.hide();
+						}
+					},
+					connect_player_number: {
+						name: '游戏人数',
+						init: '8',
+						item: {
+							'3': '三人',
+							'4': '四人',
+							'5': '五人',
+							'6': '六人',
+							'7': '七人',
+							'8': '八人'
+						},
+						frequent: true,
+						restart: true,
+					},
+					connect_initshow_draw: {
+						name: '首亮奖励',
+						item: {
+							'off': '关闭',
+							'draw': '摸牌',
+							'mark': '标记',
+						},
+						init: 'mark',
+						frequent: true,
+						intro: '第一个明置武将牌的角色可获得首亮奖励'
+					},
+					connect_guozhanpile: {
+						name: '使用队战牌堆',
+						init: true,
+						frequent: true,
+						restart: true,
+						intro: '多几张SNH48风格的特别制作的卡牌'
+					},
+					connect_onlyguozhan: {
+						name: '使用队战武将',
+						init: true,
+						frequent: true,
+						restart: true,
+						intro: '开启武将技能将替换为国战版本并禁用非国战武将'
+					},
+					connect_junzhu: {
+						name: '替换队长',
+						init: true,
+						// frequent:true,
+						restart: true,
+						intro: '若开启此选项，玩家的第一个回合开始时，若其主武将牌有对应的队长武将牌，则其可以将此武将牌替换为对应的队长武将牌，然后重新调整体力上限。若玩家的体力上限因此增大，则玩家回复等量的体力。'
+					}
+				},
+				config: {
+					update: function (config, map) {
+						if (config.onlyguozhan) {
+							map.junzhu.show();
+						} else {
+							map.junzhu.hide();
+						}
+					},
+					guozhan_mode: {
+						name: '游戏模式',
+						init: 'normal',
+						item: {
+							normal: '标准',
+							mingjiang: '明将'
+						},
+						frequent: true,
+					},
+					player_number: {
+						name: '游戏人数',
+						init: '8',
+						item: {
+							'3': '三人',
+							'4': '四人',
+							'5': '五人',
+							'6': '六人',
+							'7': '七人',
+							'8': '八人'
+						},
+						frequent: true,
+						restart: true,
+					},
+					initshow_draw: {
+						name: '首亮奖励',
+						item: {
+							'off': '关闭',
+							'draw': '摸牌',
+							'mark': '标记',
+						},
+						init: 'mark',
+						frequent: true,
+						intro: '第一个明置身份牌的角色可获得摸牌奖励'
+					},
+					aozhan: {
+						name: '鏖战模式',
+						init: true,
+						intro: '若开启此选项，则将在游戏中引入“鏖战模式”的规则：<br>当游戏中仅剩四名或更少角色时（七人以下游戏时改为三名或更少），若此时全场没有超过一名势力相同的角色，则从一个新的回合开始，游戏进入鏖战模式直至游戏结束。<br>◇在鏖战模式下，【桃】只能当做【杀】或【闪】使用或打出，不能用来回复体力。<br>注：进入鏖战模式后，即使之后有两名或者更多势力相同的角色出现，仍然不会取消鏖战模式。',
+					},
+					viewnext: {
+						name: '观看下家副将',
+						init: false,
+						intro: '若开启此选项，所有的玩家将在挑选武将后，分发起始手牌之前，分别观看自己下家的副将。',
+					},
+					aozhan_bgm: {
+						name: '鏖战背景音乐',
+						item: {
+							disabled: '不启用',
+							online: 'Online',
+							rewrite: 'Rewrite',
+							chaoming: '潮鸣',
+						},
+						init: 'rewrite',
+						onclick: function (item) {
+							game.saveConfig('aozhan_bgm', item, this._link.config.mode);
+							if (_status._aozhan == true) game.playBackgroundMusic();
+						},
+					},
+					zhulian: {
+						name: '珠联璧合',
+						init: true,
+						// frequent:true,
+						intro: '主将和副将都明置后，若为特定组合，可获得【珠联璧合】标记'
+					},
+					guozhanpile: {
+						name: '使用国战牌堆',
+						init: true,
+						frequent: true,
+						restart: true,
+					},
+					onlyguozhan: {
+						name: '使用国战武将',
+						init: true,
+						frequent: true,
+						restart: true,
+						intro: '开启武将技能将替换为国战版本并禁用非国战武将'
+					},
+					guozhanSkin: {
+						name: '使用国战皮肤',
+						init: true,
+						frequent: true,
+						restart: true,
+						intro: '开启此选项后，将会把有国战专属皮肤的武将替换为国战皮肤'
+					},
+					junzhu: {
+						name: '替换君主',
+						init: true,
+						// frequent:true,
+						restart: true,
+						intro: '若开启此选项，玩家的第一个回合开始时，若其主武将牌有对应的君主武将牌，则其可以将此武将牌替换为对应的君主武将牌，然后重新调整体力上限。若玩家的体力上限因此增大，则玩家回复等量的体力。'
+					},
+					double_hp: {
+						name: '双将体力上限',
+						init: 'pingjun',
+						item: {
+							hejiansan: '和减三',
+							pingjun: '平均值',
+							zuidazhi: '最大值',
+							zuixiaozhi: '最小值',
+							zonghe: '相加',
+						},
+						restart: true,
+					},
+					// ban_weak:{
+					// 	name:'屏蔽弱将',
+					// 	init:true,
+					// 	restart:true,
+					// },
+					// ban_strong:{
+					// 	name:'屏蔽强将',
+					// 	init:false,
+					// 	restart:true,
+					// },
+					free_choose: {
+						name: '自由选将',
+						init: true,
+						onclick: function (bool) {
+							game.saveConfig('free_choose', bool, this._link.config.mode);
+							if (!_status.event.getParent().showConfig && !_status.event.showConfig) return;
+							if (!ui.cheat2 && get.config('free_choose')) ui.create.cheat2();
+							else if (ui.cheat2 && !get.config('free_choose')) {
+								ui.cheat2.close();
+								delete ui.cheat2;
+							}
+						}
+					},
+					onlyguozhanexpand: {
+						name: '默认展开自由选将',
+						init: false,
+						restart: true,
+						intro: '开启后自由选将对话框将默认显示全部武将'
+					},
+					change_identity: {
+						name: '自由选择座位',
+						init: true,
+						onclick: function (bool) {
+							game.saveConfig('change_identity', bool, this._link.config.mode);
+							if (!_status.event.getParent().showConfig && !_status.event.showConfig) return;
+							var dialog;
+							if (ui.cheat2 && ui.cheat2.backup) dialog = ui.cheat2.backup;
+							else dialog = _status.event.dialog;
+							if (!_status.brawl || !_status.brawl.noAddSetting) {
+								if (!dialog.querySelector('table') && get.config('change_identity')) _status.event.getParent().addSetting(dialog);
+								else _status.event.getParent().removeSetting(dialog);
+							}
+							ui.update();
+						}
+					},
+					change_choice: {
+						name: '开启换将卡',
+						init: true,
+						onclick: function (bool) {
+							game.saveConfig('change_choice', bool, this._link.config.mode);
+							if (!_status.event.getParent().showConfig && !_status.event.showConfig) return;
+							if (!ui.cheat && get.config('change_choice')) ui.create.cheat();
+							else if (ui.cheat && !get.config('change_choice')) {
+								ui.cheat.close();
+								delete ui.cheat;
+							}
+						}
+					},
+					change_card: {
+						name: '开启手气卡',
+						init: 'disabled',
+						item: {
+							disabled: '禁用',
+							once: '一次',
+							twice: '两次',
+							unlimited: '无限',
+						}
+					},
+					continue_game: {
+						name: '显示再战',
+						init: true,
+						intro: '游戏结束后可选择用相同的武将再进行一局游戏',
+						onclick: function (bool) {
+							game.saveConfig('continue_game', bool, this._link.config.mode);
+							if (get.config('continue_game')) {
+								if (!ui.continue_game && _status.over && !_status.brawl) {
+									ui.continue_game = ui.create.control('再战', game.reloadCurrent);
+								}
+							} else if (ui.continue_game) {
+								ui.continue_game.close();
+								delete ui.continue_game;
+							}
+						}
+					},
+					dierestart: {
+						name: '死亡后显示重来',
+						init: true,
+						onclick: function (bool) {
+							game.saveConfig('dierestart', bool, this._link.config.mode);
+							if (get.config('dierestart')) {
+								if (!ui.restart && game.me.isDead() && !_status.connectMode) {
+									ui.restart = ui.create.control('restart', game.reload);
+								}
+							} else if (ui.restart) {
+								ui.restart.close();
+								delete ui.restart;
+							}
+						}
+					},
+					revive: {
+						name: '死亡后显示复活',
+						init: false,
+						onclick: function (bool) {
+							game.saveConfig('revive', bool, this._link.config.mode);
+							if (get.config('revive')) {
+								if (!ui.revive && game.me.isDead()) {
+									ui.revive = ui.create.control('revive', ui.click.dierevive);
+								}
+							} else if (ui.revive) {
+								ui.revive.close();
+								delete ui.revive;
+							}
+						}
+					},
+					difficulty: {
+						name: 'AI对人类态度',
+						init: 'normal',
+						item: {
+							easy: '友好',
+							normal: '一般',
+							hard: '仇视',
+						}
+					},
+					choice_num: {
+						name: '候选武将数',
+						init: '7',
+						restart: true,
+						item: {
+							'5': '五',
+							'6': '六',
+							'7': '七',
+							'8': '八',
+							'9': '九',
+							'10': '十',
+						}
 					},
 				}
 			},
@@ -25407,7 +25382,7 @@
 		},
 		phaseName: ['phaseZhunbei', 'phaseJudge', 'phaseDraw', 'phaseUse', 'phaseDiscard', 'phaseJieshu'],
 	};
-	var game = {
+	let game = {
 		cardsDiscard: function (cards) {
 			var type = get.itemtype(cards);
 			if (type != 'cards' && type != 'card') return;
