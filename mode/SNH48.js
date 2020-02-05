@@ -735,7 +735,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
             },
             getRoomInfo: function (uiintro) {
                 var num, last;
-                if (lib.configOL.initshow_draw == '0') {
+                if (lib.configOL.initshow_draw == 'off') {
                     num = '关闭'
                 } else {
                     num = {
@@ -747,8 +747,8 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 uiintro.add('<div class="text chat">珠联璧合：' + (lib.configOL.zhulian ? '开启' : '关闭'));
                 uiintro.add('<div class="text chat">出牌时限：' + lib.configOL.choose_timeout + '秒');
                 uiintro.add('<div class="text chat">国战牌堆：' + (lib.configOL.guozhanpile ? '开启' : '关闭'));
-                // uiintro.add('<div class="text chat">鏖战模式：' + (lib.configOL.aozhan ? '开启' : '关闭'));
-                // uiintro.add('<div class="text chat">观看下家副将：' + (lib.configOL.viewnext ? '开启' : '关闭'));
+                uiintro.add('<div class="text chat">鏖战模式：' + (lib.configOL.aozhan ? '开启' : '关闭'));
+                uiintro.add('<div class="text chat">观看下家副将：' + (lib.configOL.viewnext ? '开启' : '关闭'));
                 last = uiintro.add('<div class="text chat">国战武将：' + (lib.configOL.onlyguozhan ? '开启' : '关闭'));
                 if (!lib.configOL.onlyguozhan) {
                     // uiintro.add('<div class="text chat">屏蔽弱将：'+(lib.configOL.ban_weak?'开启':'关闭'));
@@ -1440,31 +1440,32 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
         },
         ui: {
             click: {
-                identity: function () {
-                    if (this.touched) {
-                        this.touched = false; return;
-                    }
-                    _status.clicked = true;
-                    if (this.parentNode.isUnseen() && this.parentNode != game.me) {
-                        switch (this.firstChild.innerHTML) {
-                            //右上角队伍归属标识，如有需要CKG48，idft于此处扩展case，并在layout.css中添加对应样式
-                            case 'S': this.firstChild.innerHTML = 'S'; this.dataset.color = 'SNH48S'; break;
-                            case 'N': this.firstChild.innerHTML = 'N'; this.dataset.color = 'SNH48N'; break;
-                            case 'H': this.firstChild.innerHTML = 'H'; this.dataset.color = 'SNH48H'; break;
-                            case 'X': this.firstChild.innerHTML = 'X'; this.dataset.color = 'SNH48X'; break;
-                            case 'B': this.firstChild.innerHTML = 'B'; this.dataset.color = 'BEJ48B'; break;
-                            case 'E': this.firstChild.innerHTML = 'E'; this.dataset.color = 'BEJ48E'; break;
-                            case 'J': this.firstChild.innerHTML = 'J'; this.dataset.color = 'BEJ48J'; break;
-                            case 'G': this.firstChild.innerHTML = 'G'; this.dataset.color = 'GNZ48G'; break;
-                            case 'N3': this.firstChild.innerHTML = 'N'; this.dataset.color = 'GNZ48N'; break;
-                            case 'Z': this.firstChild.innerHTML = 'Z'; this.dataset.color = 'GNZ48Z'; break;
-                            case 'C': this.firstChild.innerHTML = 'C'; this.dataset.color = 'CKG48C'; break;
-                            case 'K': this.firstChild.innerHTML = 'K'; this.dataset.color = 'CKG48K'; break;
-                            case 'guan': this.firstChild.innerHTML = 'guan'; this.dataset.color = 'metal'; break;
-                            default: this.firstChild.innerHTML = 'S'; this.dataset.color = 'SNH48S'; break;
-                        }
-                    }
-                }
+                // identity: function () {
+                //     if (this.touched) {
+                //         this.touched = false; return;
+                //     }
+                //     _status.clicked = true;
+                //     if (this.parentNode.isUnseen() && this.parentNode != game.me) {
+                //         console.log('innerHTML' + this.firstChild.innerHTML)
+                //         switch (this.firstChild.innerHTML) {
+                //             //右上角队伍归属标识，如有需要CKG48，idft于此处扩展case，并在layout.css中添加对应样式
+                //             case 'S': this.firstChild.innerHTML = 'S'; this.dataset.color = 'SNH48S'; break;
+                //             case 'N': this.firstChild.innerHTML = 'N'; this.dataset.color = 'SNH48N'; break;
+                //             case 'H': this.firstChild.innerHTML = 'H'; this.dataset.color = 'SNH48H'; break;
+                //             case 'X': this.firstChild.innerHTML = 'X'; this.dataset.color = 'SNH48X'; break;
+                //             case 'B': this.firstChild.innerHTML = 'B'; this.dataset.color = 'BEJ48B'; break;
+                //             case 'E': this.firstChild.innerHTML = 'E'; this.dataset.color = 'BEJ48E'; break;
+                //             case 'J': this.firstChild.innerHTML = 'J'; this.dataset.color = 'BEJ48J'; break;
+                //             case 'G': this.firstChild.innerHTML = 'G'; this.dataset.color = 'GNZ48G'; break;
+                //             case 'N3': this.firstChild.innerHTML = 'N'; this.dataset.color = 'GNZ48N'; break;
+                //             case 'Z': this.firstChild.innerHTML = 'Z'; this.dataset.color = 'GNZ48Z'; break;
+                //             case 'C': this.firstChild.innerHTML = 'C'; this.dataset.color = 'CKG48C'; break;
+                //             case 'K': this.firstChild.innerHTML = 'K'; this.dataset.color = 'CKG48K'; break;
+                //             case 'guan': this.firstChild.innerHTML = 'guan'; this.dataset.color = 'metal'; break;
+                //             default: this.firstChild.innerHTML = '猜'; this.dataset.color = 'unknown'; break;
+                //         }
+                //     }
+                // }
             }
         },
         translate: {
@@ -1811,8 +1812,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     'step 2'
                     if (event.junling == 'junling2' && source != player) {
                         if (result.cards.length && event.ing) {
-                            source.gain(result.cards, player);
-                            player.$give(1, source);
+                            source.gain(result.cards, player, 'giveAuto');
                         }
                         event.num++;
                         if (event.num < 3) {
@@ -1839,10 +1839,40 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                     game.log(player, '获得了', '#g【阴阳鱼】', '标记');
                     player.addSkill('yinyang_skill');
                 },
+                changeViceOnline: function () {
+                    'step 0'
+                    var group = lib.character[player.name1][1];
+                    _status.characterlist.randomSort();
+                    var name = false;
+                    for (var i = 0; i < _status.characterlist.length; i++) {
+                        if (lib.character[_status.characterlist[i]][1] == group) {
+                            name = _status.characterlist[i];
+                            break;
+                        }
+                    }
+                    if (!name) {
+                        event.finish();
+                        return;
+                    }
+                    _status.characterlist.remove(name);
+                    if (player.hasViceCharacter()) {
+                        event.change = true;
+                        _status.characterlist.add(player.name2);
+                    }
+                    event.toRemove = player.name2;
+                    event.toChange = name;
+                    if (event.change) event.trigger('removeCharacterBefore');
+                    'step 1'
+                    var name = event.toChange;
+                    game.log(player, '将副将变更为', '#g' + get.translation(name));
+                    player.viceChanged = true;
+                    if (player.isUnseen(1)) {
+                        player.showCharacter(1, false);
+                    }
+                    player.reinit(player.name2, name, false);
+                },
                 changeVice: function () {
                     'step 0'
-                    //if(!player.hasViceCharacter()) event.finish();
-                    //else{
                     var group = lib.character[player.name1][1];
                     _status.characterlist.randomSort();
                     event.tochange = []
@@ -1856,11 +1886,18 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                             return get.guozhanRank(button.link);
                         };
                     }
-                    //}
                     'step 1'
                     var name = result.links[0];
                     _status.characterlist.remove(name);
-                    if (player.hasViceCharacter()) _status.characterlist.add(player.name2);
+                    if (player.hasViceCharacter()) {
+                        event.change = true;
+                        _status.characterlist.add(player.name2);
+                    }
+                    event.toRemove = player.name2;
+                    event.toChange = name;
+                    if (event.change) event.trigger('removeCharacterBefore');
+                    'step 2'
+                    var name = event.toChange;
                     game.log(player, '将副将变更为', '#g' + get.translation(name));
                     player.viceChanged = true;
                     if (player.isUnseen(1)) {
@@ -1926,7 +1963,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                         next.setContent('mayChangeVice');
                         next.player = this;
                         next.skill = skill;
-                        if (repeat) next.repeat = true;
+                        if (repeat || (!_status.connectMode && get.config('changeViceType') == 'online')) next.repeat = true;
                         return next;
                     }
                 },
@@ -2155,7 +2192,7 @@ game.import('mode', function (lib, game, ui, get, ai, _status) {
                 changeVice: function () {
                     var next = game.createEvent('changeVice');
                     next.player = this;
-                    next.setContent('changeVice');
+                    next.setContent((!_status.connectMode && get.config('changeViceType') == 'online') ? 'changeViceOnline' : 'changeVice');
                     return next;
                 },
                 hasMainCharacter: function () {

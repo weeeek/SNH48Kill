@@ -3831,6 +3831,9 @@ span[data-nature='guan']{
 				 rgba(0,0,0,1) 0 0 20px,
 				 black 0 0 1px
 }
+.identitycircle > div > div[data-color='guan'] {
+	background-image: radial-gradient(circle at bottom left, rgb(0, 0, 0), rgb(0, 0, 0))
+}
 
 .player .identity[data-color="S"] {
 	color: rgba(145, 205, 235, 1)
@@ -3846,6 +3849,10 @@ span[data-nature='S']{
 				 black 0 0 1px
 }
 
+.identitycircle > div > div[data-color='S'] {
+	background-image: radial-gradient(circle at bottom left, rgb(145, 205, 235), rgb(145, 205, 235))
+}
+
 .player .identity[data-color="N"] {
 	color: rgba(174, 134, 187, 1)
 }
@@ -3858,6 +3865,9 @@ span[data-nature='N']{
 				 rgba(174,134,187,1) 0 0 10px,
 				 rgba(174,134,187,1) 0 0 20px,
 				 black 0 0 1px
+}
+.identitycircle > div > div[data-color='N'] {
+	background-image: radial-gradient(circle at bottom left, rgb(174, 134, 187), rgb(174, 134, 187))
 }
 
 .player .identity[data-color="H"] {
@@ -3873,6 +3883,9 @@ span[data-nature='H']{
 				 rgba(243,152,0,1) 0 0 20px,
 				 black 0 0 1px
 }
+.identitycircle > div > div[data-color='H'] {
+	background-image: radial-gradient(circle at bottom left, rgb(243, 152, 0), rgb(243, 152, 0))
+}
 
 .player .identity[data-color="X"] {
 	color: rgba(169, 204, 41, 1)
@@ -3886,6 +3899,9 @@ span[data-nature='X']{
 				 rgba(169,204,41,1) 0 0 10px,
 				 rgba(169,204,41,1) 0 0 20px,
 				 black 0 0 1px
+}
+.identitycircle > div > div[data-color='X'] {
+	background-image: radial-gradient(circle at bottom left, rgb(243, 152, 41), rgb(243, 152, 41))
 }
 
 .player .identity[data-color="B"] {
@@ -3901,6 +3917,9 @@ span[data-nature='B']{
 				 rgba(255,36,113,1) 0 0 20px,
 				 black 0 0 1px
 }
+.identitycircle > div > div[data-color='B'] {
+	background-image: radial-gradient(circle at bottom left, rgb(255, 36, 113), rgb(255, 36, 113))
+}
 
 .player .identity[data-color="E"] {
 	color: rgba(12,200,195, 1)
@@ -3914,6 +3933,9 @@ span[data-nature='E']{
 				 rgba(12,200,195,1) 0 0 10px,
 				 rgba(12,200,195,1) 0 0 20px,
 				 black 0 0 1px
+}
+.identitycircle > div > div[data-color='E'] {
+	background-image: radial-gradient(circle at bottom left, rgb(12, 200, 195), rgb(12, 200, 195))
 }
 
 .player .identity[data-color="J"] {
@@ -3929,6 +3951,9 @@ span[data-nature='J']{
 				 rgba(0,106,183,1) 0 0 20px,
 				 black 0 0 1px
 }
+.identitycircle > div > div[data-color='J'] {
+	background-image: radial-gradient(circle at bottom left, rgb(0, 106, 183), rgb(0, 106, 183))
+}
 
 .player .identity[data-color="G"] {
 	color: rgba(170,201,19, 1)
@@ -3942,6 +3967,9 @@ span[data-nature='G']{
 				 rgba(170,201,19,1) 0 0 10px,
 				 rgba(170,201,19,1) 0 0 20px,
 				 black 0 0 1px
+}
+.identitycircle > div > div[data-color='G'] {
+	background-image: radial-gradient(circle at bottom left, rgb(170, 201, 19), rgb(170, 201, 19))
 }
 
 
@@ -3960,6 +3988,9 @@ span[data-nature='N3']{
 				 rgba(255,215,0,1) 0 0 20px,
 				 black 0 0 1px
 }
+.identitycircle > div > div[data-color='N3'] {
+	background-image: radial-gradient(circle at bottom left, rgb(255, 215, 0), rgb(255, 215, 0))
+}
 
 .player .identity[data-color="Z"] {
 	color: rgba(234,98,124, 1)
@@ -3974,6 +4005,10 @@ span[data-nature='Z']{
 				 rgba(234,98,124,1) 0 0 20px,
 				 black 0 0 1px
 }
+.identitycircle > div > div[data-color='Z'] {
+	background-image: radial-gradient(circle at bottom left, rgb(234, 98, 124), rgb(234, 98, 124))
+}
+
 .player .identity[data-color="C"] {
 	color: rgba(158,97,36,1)
 }
@@ -3987,6 +4022,10 @@ span[data-nature='C']{
 				 rgba(158,97,36,1) 0 0 20px,
 				 black 0 0 1px
 }
+.identitycircle > div > div[data-color='C'] {
+	background-image: radial-gradient(circle at bottom left, rgb(158, 97, 36), rgb(158, 97, 36))
+}
+
 .player .identity[data-color="K"] {
 	color: rgba(255,80,67,1)
 }
@@ -3999,6 +4038,9 @@ span[data-nature='K']{
 				 rgba(255,80,67,1) 0 0 10px,
 				 rgba(255,80,67,1) 0 0 20px,
 				 black 0 0 1px
+}
+.identitycircle > div > div[data-color='K'] {
+	background-image: radial-gradient(circle at bottom left, rgb(255, 80, 67), rgb(255, 80, 67))
 }
 
 .player .identity[data-color="cai"],

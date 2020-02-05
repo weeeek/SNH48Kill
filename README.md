@@ -6,9 +6,9 @@
 ### 游戏截图
 ------------
 #### 新增模式：SNH48国战
-![新增模式：SNH48国战](https://weeeek.github.io/SNH48Kill/image/screenshot/selectMode.jpg)	
+![新增模式：SNH48国战](http://47.97.248.244/static/images/selectMode.jpg)	
 #### 身份模式：新增SNH48角色，自定义技能
-![身份模式：新增SNH48角色，自定义技能](https://weeeek.github.io/SNH48Kill/image/screenshot/identityMode.jpg)
+![身份模式：新增SNH48角色，自定义技能](http://47.97.248.244/static/images/SNH48Kill.jpg)
 ### 代码说明
 <ol>
 	<li>

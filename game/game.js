@@ -1,6 +1,6 @@
 "use strict";
 (function () {
-	let _status = {
+	var _status = {
 		paused: false,
 		paused2: false,
 		paused3: false,
@@ -19,7 +19,7 @@
 		dragline: [],
 		dying: []
 	};
-	let lib = {
+	var lib = {
 		configprefix: 'noname_0.9_',
 		versionOL: 27,
 		updateURL: 'https://raw.githubusercontent.com/libccy/noname',
@@ -3207,6 +3207,19 @@
 							}
 						}
 					},
+					show_sortcard: {
+						name: '显示整理手牌按钮',
+						init: true,
+						unfrequent: true,
+						onclick: function (bool) {
+							game.saveConfig('show_sortcard', bool);
+							if (lib.config.show_sortcard) {
+								ui.sortCard.style.display = '';
+							} else {
+								ui.sortCard.style.display = 'none';
+							}
+						}
+					},
 					show_pause: {
 						name: '显示暂停按钮',
 						init: true,
@@ -4477,8 +4490,8 @@
 					},
 				}
 			},
-			SNH48: {
-				name: '女团大战',
+			guozhan: {
+				name: '国战',
 				connect: {
 					update: function (config, map) {
 						if (config.connect_onlyguozhan) {
@@ -4512,27 +4525,54 @@
 						frequent: true,
 						intro: '第一个明置武将牌的角色可获得首亮奖励'
 					},
+					connect_aozhan: {
+						name: '鏖战模式',
+						init: true,
+						intro: '若开启此选项，则将在游戏中引入“鏖战模式”的规则：<br>当游戏中仅剩四名或更少角色时（七人以下游戏时改为三名或更少），若此时全场没有超过一名势力相同的角色，则从一个新的回合开始，游戏进入鏖战模式直至游戏结束。<br>◇在鏖战模式下，【桃】只能当做【杀】或【闪】使用或打出，不能用来回复体力。<br>注：进入鏖战模式后，即使之后有两名或者更多势力相同的角色出现，仍然不会取消鏖战模式。',
+						frequent: true,
+						restart: true,
+					},
+					connect_viewnext: {
+						name: '观看下家副将',
+						init: false,
+						intro: '若开启此选项，所有的玩家将在挑选武将后，分发起始手牌之前，分别观看自己下家的副将。',
+					},
+					connect_zhulian: {
+						name: '珠联璧合',
+						init: true,
+						// frequent:true,
+						intro: '主将和副将都明置后，若为特定组合，可获得【珠联璧合】标记'
+					},
 					connect_guozhanpile: {
-						name: '使用队战牌堆',
+						name: '使用国战牌堆',
 						init: true,
 						frequent: true,
 						restart: true,
-						intro: '多几张SNH48风格的特别制作的卡牌'
 					},
 					connect_onlyguozhan: {
-						name: '使用队战武将',
+						name: '使用国战武将',
 						init: true,
 						frequent: true,
 						restart: true,
 						intro: '开启武将技能将替换为国战版本并禁用非国战武将'
 					},
 					connect_junzhu: {
-						name: '替换队长',
+						name: '替换君主',
 						init: true,
 						// frequent:true,
 						restart: true,
-						intro: '若开启此选项，玩家的第一个回合开始时，若其主武将牌有对应的队长武将牌，则其可以将此武将牌替换为对应的队长武将牌，然后重新调整体力上限。若玩家的体力上限因此增大，则玩家回复等量的体力。'
-					}
+						intro: '若开启此选项，玩家的第一个回合开始时，若其主武将牌有对应的君主武将牌，则其可以将此武将牌替换为对应的君主武将牌，然后重新调整体力上限。若玩家的体力上限因此增大，则玩家回复等量的体力。'
+					},
+					// connect_ban_weak:{
+					// 	name:'屏蔽弱将',
+					// 	init:false,
+					// 	restart:true,
+					// },
+					// connect_ban_strong:{
+					// 	name:'屏蔽强将',
+					// 	init:false,
+					// 	restart:true,
+					// },
 				},
 				config: {
 					update: function (config, map) {
@@ -4579,6 +4619,8 @@
 					aozhan: {
 						name: '鏖战模式',
 						init: true,
+						frequent: true,
+						restart: true,
 						intro: '若开启此选项，则将在游戏中引入“鏖战模式”的规则：<br>当游戏中仅剩四名或更少角色时（七人以下游戏时改为三名或更少），若此时全场没有超过一名势力相同的角色，则从一个新的回合开始，游戏进入鏖战模式直至游戏结束。<br>◇在鏖战模式下，【桃】只能当做【杀】或【闪】使用或打出，不能用来回复体力。<br>注：进入鏖战模式后，即使之后有两名或者更多势力相同的角色出现，仍然不会取消鏖战模式。',
 					},
 					viewnext: {
@@ -4609,6 +4651,16 @@
 					guozhanpile: {
 						name: '使用国战牌堆',
 						init: true,
+						frequent: true,
+						restart: true,
+					},
+					changeViceType: {
+						name: '副将变更方式',
+						init: 'default',
+						item: {
+							default: '发现式',
+							online: '随机式',
+						},
 						frequent: true,
 						restart: true,
 					},
@@ -4783,8 +4835,8 @@
 					},
 				}
 			},
-			guozhan: {
-				name: '国战',
+			SNH48: {
+				name: '女团大战',
 				connect: {
 					update: function (config, map) {
 						if (config.connect_onlyguozhan) {
@@ -4814,45 +4866,47 @@
 							'draw': '摸牌',
 							'mark': '标记',
 						},
-						init: 'mark',
+						init: 'draw',
 						frequent: true,
-						intro: '第一个明置武将牌的角色可获得首亮奖励'
+						intro: '第一个明置成员牌的角色可获得首亮奖励'
 					},
 					connect_aozhan: {
 						name: '鏖战模式',
-						init: true,
+						init: false,
 						intro: '若开启此选项，则将在游戏中引入“鏖战模式”的规则：<br>当游戏中仅剩四名或更少角色时（七人以下游戏时改为三名或更少），若此时全场没有超过一名势力相同的角色，则从一个新的回合开始，游戏进入鏖战模式直至游戏结束。<br>◇在鏖战模式下，【桃】只能当做【杀】或【闪】使用或打出，不能用来回复体力。<br>注：进入鏖战模式后，即使之后有两名或者更多势力相同的角色出现，仍然不会取消鏖战模式。',
+						frequent: true,
+						restart: true,
 					},
 					connect_viewnext: {
 						name: '观看下家副将',
 						init: false,
-						intro: '若开启此选项，所有的玩家将在挑选武将后，分发起始手牌之前，分别观看自己下家的副将。',
+						intro: '若开启此选项，所有的玩家将在挑选成员后，分发起始手牌之前，分别观看自己下家的副将。',
 					},
 					connect_zhulian: {
 						name: '珠联璧合',
-						init: true,
+						init: false,
 						// frequent:true,
 						intro: '主将和副将都明置后，若为特定组合，可获得【珠联璧合】标记'
 					},
 					connect_guozhanpile: {
-						name: '使用国战牌堆',
+						name: '使用队战牌堆',
 						init: true,
 						frequent: true,
 						restart: true,
 					},
 					connect_onlyguozhan: {
-						name: '使用国战武将',
+						name: '使用队战成员',
 						init: true,
 						frequent: true,
 						restart: true,
-						intro: '开启武将技能将替换为国战版本并禁用非国战武将'
+						intro: '开启后成员技能将替换为队战版本并禁用非队战成员'
 					},
 					connect_junzhu: {
-						name: '替换君主',
+						name: '替换队长',
 						init: true,
 						// frequent:true,
 						restart: true,
-						intro: '若开启此选项，玩家的第一个回合开始时，若其主武将牌有对应的君主武将牌，则其可以将此武将牌替换为对应的君主武将牌，然后重新调整体力上限。若玩家的体力上限因此增大，则玩家回复等量的体力。'
+						intro: '若开启此选项，玩家的第一个回合开始时，若其主成员牌有对应的队长成员牌，则其可以将此成员牌替换为对应的队长成员牌，然后重新调整体力上限。若玩家的体力上限因此增大，则玩家回复等量的体力。'
 					},
 					// connect_ban_weak:{
 					// 	name:'屏蔽弱将',
@@ -4910,12 +4964,14 @@
 					aozhan: {
 						name: '鏖战模式',
 						init: true,
+						frequent: true,
+						restart: true,
 						intro: '若开启此选项，则将在游戏中引入“鏖战模式”的规则：<br>当游戏中仅剩四名或更少角色时（七人以下游戏时改为三名或更少），若此时全场没有超过一名势力相同的角色，则从一个新的回合开始，游戏进入鏖战模式直至游戏结束。<br>◇在鏖战模式下，【桃】只能当做【杀】或【闪】使用或打出，不能用来回复体力。<br>注：进入鏖战模式后，即使之后有两名或者更多势力相同的角色出现，仍然不会取消鏖战模式。',
 					},
 					viewnext: {
 						name: '观看下家副将',
 						init: false,
-						intro: '若开启此选项，所有的玩家将在挑选武将后，分发起始手牌之前，分别观看自己下家的副将。',
+						intro: '若开启此选项，所有的玩家将在挑选成员后，分发起始手牌之前，分别观看自己下家的副成员。',
 					},
 					aozhan_bgm: {
 						name: '鏖战背景音乐',
@@ -4925,7 +4981,7 @@
 							rewrite: 'Rewrite',
 							chaoming: '潮鸣',
 						},
-						init: 'rewrite',
+						init: 'disabled',
 						onclick: function (item) {
 							game.saveConfig('aozhan_bgm', item, this._link.config.mode);
 							if (_status._aozhan == true) game.playBackgroundMusic();
@@ -4935,34 +4991,44 @@
 						name: '珠联璧合',
 						init: true,
 						// frequent:true,
-						intro: '主将和副将都明置后，若为特定组合，可获得【珠联璧合】标记'
+						intro: '主成员和副成员都明置后，若为特定CP组合，可获得【珠联璧合】标记'
 					},
 					guozhanpile: {
-						name: '使用国战牌堆',
+						name: '使用队战牌堆',
 						init: true,
+						frequent: true,
+						restart: true,
+					},
+					changeViceType: {
+						name: '副成员变更方式',
+						init: 'default',
+						item: {
+							default: '发现式',
+							online: '随机式',
+						},
 						frequent: true,
 						restart: true,
 					},
 					onlyguozhan: {
-						name: '使用国战武将',
+						name: '使用队战成员',
 						init: true,
 						frequent: true,
 						restart: true,
-						intro: '开启武将技能将替换为国战版本并禁用非国战武将'
+						intro: '开启后成员技能将替换为国战版本并禁用非队战成员'
 					},
 					guozhanSkin: {
-						name: '使用国战皮肤',
+						name: '使用队战皮肤',
 						init: true,
 						frequent: true,
 						restart: true,
-						intro: '开启此选项后，将会把有国战专属皮肤的武将替换为国战皮肤'
+						intro: '开启此选项后，将会把有队战专属皮肤的成员替换为队战皮肤'
 					},
 					junzhu: {
 						name: '替换君主',
 						init: true,
 						// frequent:true,
 						restart: true,
-						intro: '若开启此选项，玩家的第一个回合开始时，若其主武将牌有对应的君主武将牌，则其可以将此武将牌替换为对应的君主武将牌，然后重新调整体力上限。若玩家的体力上限因此增大，则玩家回复等量的体力。'
+						intro: '若开启此选项，玩家的第一个回合开始时，若其主成员牌有对应的队长成员牌，则其可以将此成员牌替换为对应的队长成员牌，然后重新调整体力上限。若玩家的体力上限因此增大，则玩家回复等量的体力。'
 					},
 					double_hp: {
 						name: '双将体力上限',
@@ -5003,7 +5069,7 @@
 						name: '默认展开自由选将',
 						init: false,
 						restart: true,
-						intro: '开启后自由选将对话框将默认显示全部武将'
+						intro: '开启后自由选将对话框将默认显示全部成员'
 					},
 					change_identity: {
 						name: '自由选择座位',
@@ -5047,7 +5113,7 @@
 					continue_game: {
 						name: '显示再战',
 						init: true,
-						intro: '游戏结束后可选择用相同的武将再进行一局游戏',
+						intro: '游戏结束后可选择用相同的成员再进行一局游戏',
 						onclick: function (bool) {
 							game.saveConfig('continue_game', bool, this._link.config.mode);
 							if (get.config('continue_game')) {
@@ -5100,16 +5166,15 @@
 						}
 					},
 					choice_num: {
-						name: '候选武将数',
-						init: '7',
+						name: '候选成员数',
+						init: '10',
 						restart: true,
 						item: {
-							'5': '五',
 							'6': '六',
-							'7': '七',
 							'8': '八',
-							'9': '九',
 							'10': '十',
+							'20': '廿',
+							'30': '卅',
 						}
 					},
 				}
@@ -6224,7 +6289,8 @@
 				'<li>角色资料<br>lib.character<li>卡牌资料<br>lib.card</ul>',
 			'游戏名词': '<ul><li>护甲：和体力类似，每点护甲可抵挡一点伤害，但不影响手牌上限' +
 				'<li>随从：通过技能获得，拥有独立的技能、手牌区和装备区（共享判定区），出场时替代主武将的位置；随从死亡时自动切换回主武将' +
-				'<li>发现：从三张随机亮出的牌中选择一张，若无特殊说明，则获得此牌'
+				'<li>发现：从三张随机亮出的牌中选择一张，若无特殊说明，则获得此牌' +
+				'<li>蓄力技：发动时可以增大黄色的数字。若如此做，红色数字于技能的结算过程中改为原来的两倍'
 		},
 		setIntro: function (node, func, left) {
 			if (lib.config.touchscreen) {
@@ -8167,7 +8233,7 @@
 									} else if (Array.isArray(lib[j][k]) && Array.isArray(character[i][j][k])) {
 										lib[j][k].addArray(character[i][j][k]);
 									} else {
-										// console.log('dublicate '+j+' in character '+i+':\n'+k+'\n'+': '+lib[j][k]+'\n'+character[i][j][k]);
+										console.log('dublicate ' + j + ' in character ' + i + ':\n' + k + '\n' + ': ' + lib[j][k] + '\n' + character[i][j][k]);
 									}
 								}
 							}
@@ -9985,6 +10051,8 @@
 						if (event.nopopup) next.nopopup = true;
 						if (event.animate === false) next.animate = false;
 						if (event.addCount === false) next.addCount = false;
+						if (event.noTargetDelay) next.targetDelay = false;
+						if (event.nodelayx) next.delayx = false;
 					}
 				},
 				chooseToDuiben: function () {
@@ -10442,11 +10510,7 @@
 						}
 					}
 					player.ai.tempIgnore = [];
-					player.stat.push({
-						card: {},
-						skill: {}
-					});
-					game.countPlayer(function (current) {
+					game.countPlayer2(function (current) {
 						current.actionHistory.push({
 							useCard: [],
 							respond: [],
@@ -10455,6 +10519,10 @@
 							gain: [],
 							sourceDamage: [],
 							damage: []
+						});
+						current.stat.push({
+							card: {},
+							skill: {}
 						});
 					});
 					if (ui.land && ui.land.player == player) {
@@ -10972,10 +11040,6 @@
 								bool: true
 							};
 							event._direct = true;
-						} else if (checkFrequent(info) && !lib.config.autoskilllist.contains(event.skill)) {
-							event._result = {
-								bool: true
-							};
 						} else if (info.direct) {
 							event._result = {
 								bool: true
@@ -10987,6 +11051,9 @@
 							};
 							event._direct = true;
 						} else {
+							if (checkFrequent(info)) {
+								event.frequentSkill = true;
+							}
 							var str;
 							var check = info.check;
 							if (info.prompt) str = info.prompt;
@@ -11003,6 +11070,7 @@
 								str = str(trigger, player)
 							}
 							var next = player.chooseBool(str);
+							if (event.frequentSkill) next.set('frequentSkill', event.skill);
 							next.set('forceDie', true);
 							next.ai = function () {
 								return !check || check(trigger, player);
@@ -12781,6 +12849,10 @@
 				chooseBool: function () {
 					"step 0"
 					if (event.isMine()) {
+						if (event.frequentSkill && !lib.config.autoskilllist.contains(event.frequentSkill)) {
+							ui.click.ok();
+							return;
+						}
 						ui.create.confirm('oc');
 						if (event.createDialog && !event.dialog) {
 							if (Array.isArray(event.createDialog)) {
@@ -13685,6 +13757,9 @@
 						next.card = card;
 						next.cards = cards;
 						next.player = player;
+						next.excluded = event.excluded;
+						next.directHit = event.directHit;
+						next.customArgs = event.customArgs;
 						if (event.forceDie) next.forceDie = true;
 						event.redo();
 					}
@@ -13700,6 +13775,9 @@
 						next.card = card;
 						next.cards = cards;
 						next.player = player;
+						next.excluded = event.excluded;
+						next.directHit = event.directHit;
+						next.customArgs = event.customArgs;
 						if (event.forceDie) next.forceDie = true;
 						event.redo();
 					}
@@ -13715,6 +13793,9 @@
 						next.card = card;
 						next.cards = cards;
 						next.player = player;
+						next.excluded = event.excluded;
+						next.directHit = event.directHit;
+						next.customArgs = event.customArgs;
 						if (event.forceDie) next.forceDie = true;
 						event.redo();
 					}
@@ -13730,6 +13811,9 @@
 						next.card = card;
 						next.cards = cards;
 						next.player = player;
+						next.excluded = event.excluded;
+						next.directHit = event.directHit;
+						next.customArgs = event.customArgs;
 						if (event.forceDie) next.forceDie = true;
 						event.redo();
 					}
@@ -15849,7 +15933,10 @@
 					this.node.hp.innerHTML = '';
 					this.node.count.innerHTML = '0';
 					if (this.name2) {
+						delete this.singleHp;
 						this.node.avatar2.hide();
+						this.node.name2.innerHTML = '';
+						this.classList.remove('fullskin2')
 						delete this.name2;
 						this.node.count.classList.remove('p2');
 					}
@@ -16251,6 +16338,44 @@
 					}
 					this.updateMarks();
 					return this;
+				},
+				removeMark: function (i, num, log) {
+					if (typeof num != 'number' || !num) num = 1;
+					if (typeof this.storage[i] != 'number' || !this.storage[i]) return;
+					if (num > this.storage[i]) num = this.storage[i];
+					this.storage[i] -= num;
+					if (log !== false) {
+						var str = false;
+						var info = get.info(i);
+						if (info && info.intro && (info.intro.name || info.intro.name2)) str = info.intro.name2 || info.intro.name;
+						else str = lib.translate[i];
+						if (str) game.log(this, '移去了', get.cnNumber(num), '个', '#g【' + str + '】');
+					}
+					this.syncStorage(i);
+					this[this.storage[i] ? 'updateMark' : 'unmarkSkill'](i);
+				},
+				addMark: function (i, num, log) {
+					if (typeof num != 'number' || !num) num = 1;
+					if (typeof this.storage[i] != 'number') this.storage[i] = 0;
+					this.storage[i] += num;
+					if (log !== false) {
+						var str = false;
+						var info = get.info(i);
+						if (info && info.intro && (info.intro.name || info.intro.name2)) str = info.intro.name2 || info.intro.name;
+						else str = lib.translate[i];
+						if (str) game.log(this, '获得了', get.cnNumber(num), '个', '#g【' + str + '】');
+					}
+					this.syncStorage(i);
+					this.updateMark(i);
+				},
+				countMark: function (i) {
+					if (this.storage[i] == undefined) return 0;
+					if (typeof this.storage[i] == 'number') return this.storage[i];
+					if (Array.isArray(this.storage[i])) return this.storage[i].length;
+					return 0;
+				},
+				hasMark: function (i) {
+					return this.countMark(i) > 0;
 				},
 				updateMark: function (i, storage) {
 					if (!this.marks[i]) {
@@ -17329,6 +17454,10 @@
 								next.animate = false;
 							} else if (arguments[i] == 'nodistance') {
 								next.nodistance = true;
+							} else if (arguments[i] == 'noTargetDelay') {
+								next.noTargetDelay = true;
+							} else if (arguments[i] == 'nodelayx') {
+								next.nodelayx = true;
 							} else if (lib.card[arguments[i]] && !next.card) {
 								next.card = {
 									name: arguments[i]
@@ -22680,6 +22809,8 @@
 				},
 				trigger: function (name) {
 					if (_status.video) return;
+					if ((this.name === 'gain' || this.name === 'lose') && !_status.gameDrawed) return;
+					if (name === 'gameDrawEnd') _status.gameDrawed = true;
 					if (name === 'gameStart') {
 						if (_status.brawl && _status.brawl.gameStart) {
 							_status.brawl.gameStart();
@@ -25382,7 +25513,7 @@
 		},
 		phaseName: ['phaseZhunbei', 'phaseJudge', 'phaseDraw', 'phaseUse', 'phaseDiscard', 'phaseJieshu'],
 	};
-	let game = {
+	var game = {
 		cardsDiscard: function (cards) {
 			var type = get.itemtype(cards);
 			if (type != 'cards' && type != 'card') return;
@@ -25742,7 +25873,12 @@
 			if (_status.connectMode && !_status.countDown) {
 				ui.timer.show();
 				var num;
-				if (_status.connectMode) {
+				//这么一大行都是为了祢衡
+				if (_status.event && _status.event.name == 'chooseToUse' && _status.event.type == 'phase' &&
+					_status.event.player && _status.event.player.forceCountChoose &&
+					typeof _status.event.player.forceCountChoose.phaseUse == 'number') {
+					num = _status.event.player.forceCountChoose.phaseUse;
+				} else if (_status.connectMode) {
 					num = lib.configOL.choose_timeout;
 				} else {
 					num = get.config('choose_timeout');
@@ -25764,11 +25900,13 @@
 			} else if (_status.event.player.forceCountChoose && _status.event.isMine() && !_status.countDown) {
 				var info = _status.event.player.forceCountChoose;
 				var num;
-				if (typeof info[_status.event.name] == 'number') {
+				if (_status.event.name == 'chooseToUse' && _status.event.type == 'phase' && typeof info.phaseUse == 'number') {
+					num = info.phaseUse;
+				} else if (typeof info[_status.event.name] == 'number') {
 					num = info[_status.event.name]
-				} else {
+				} else if (info.default) {
 					num = info.default;
-				}
+				} else return;
 				var finish = function () {
 					if (_status.event.endButton) {
 						if (_status.event.skill) {
@@ -25975,11 +26113,6 @@
 							}
 						}
 						return;
-					} else {
-						audioname = audioinfo;
-						if (lib.skill[audioinfo]) {
-							audioinfo = lib.skill[audioinfo].audio;
-						}
 					}
 				} else if (Array.isArray(audioinfo)) {
 					audioname = audioinfo[0];
@@ -26559,6 +26692,22 @@
 			game.loop();
 		},
 		videoContent: {
+			jiuNode: function (player, bool) {
+				//Powered by 升麻
+				if (bool) {
+					if (!player.node.jiu && lib.config.jiu_effect) {
+						player.node.jiu = ui.create.div('.playerjiu', player.node.avatar);
+						player.node.jiu2 = ui.create.div('.playerjiu', player.node.avatar2);
+					}
+				} else {
+					if (player.node.jiu) {
+						player.node.jiu.delete();
+						player.node.jiu2.delete();
+						delete player.node.jiu;
+						delete player.node.jiu2;
+					}
+				}
+			},
 			init: function (players) {
 				if (game.chess) return;
 				if (lib.config.mode == 'versus') {
@@ -29492,7 +29641,6 @@
 								game.print('游戏出错：' + event.name);
 								game.print(e.toString());
 								console.log(e);
-								event.finish()
 							}
 						} else {
 							event.content(event, step, source, player, target, targets,
@@ -32118,6 +32266,14 @@
 			}
 			return false;
 		},
+		hasPlayer2: function (func) {
+			var players = game.players.slice(0).concat(game.dead);
+			for (var i = 0; i < players.length; i++) {
+				if (players[i].isOut()) continue;
+				if (func(players[i])) return true;
+			}
+			return false;
+		},
 		countPlayer: function (func) {
 			var num = 0;
 			if (typeof func != 'function') {
@@ -32126,6 +32282,23 @@
 			for (var i = 0; i < game.players.length; i++) {
 				if (game.players[i].isOut()) continue;
 				var result = func(game.players[i]);
+				if (typeof result == 'number') {
+					num += result;
+				} else if (result) {
+					num++;
+				}
+			}
+			return num;
+		},
+		countPlayer2: function (func) {
+			var num = 0;
+			if (typeof func != 'function') {
+				func = lib.filter.all;
+			}
+			var players = game.players.slice(0).concat(game.dead);
+			for (var i = 0; i < players.length; i++) {
+				if (players[i].isOut()) continue;
+				var result = func(players[i]);
 				if (typeof result == 'number') {
 					num += result;
 				} else if (result) {
@@ -32149,11 +32322,37 @@
 			}
 			return list;
 		},
+		filterPlayer2: function (func, list) {
+			if (!Array.isArray(list)) {
+				list = [];
+			}
+			if (typeof func != 'function') {
+				func = lib.filter.all;
+			}
+			var players = game.players.slice(0).concat(game.dead);
+			for (var i = 0; i < game.players.length; i++) {
+				if (players[i].isOut()) continue;
+				if (func(players[i])) {
+					list.add(players[i]);
+				}
+			}
+			return list;
+		},
 		findPlayer: function (func) {
 			for (var i = 0; i < game.players.length; i++) {
 				if (game.players[i].isOut()) continue;
 				if (func(game.players[i])) {
 					return game.players[i];
+				}
+			}
+			return null;
+		},
+		findPlayer2: function (func) {
+			var players = game.players.slice(0).concat(game.dead);
+			for (var i = 0; i < players.length; i++) {
+				if (players[i].isOut()) continue;
+				if (func(players[i])) {
+					return players[i];
 				}
 			}
 			return null;
@@ -39209,7 +39408,8 @@
 				}, true);
 			},
 			groupControl: function (dialog) {
-				return ui.create.control('wei', 'shu', 'wu', 'qun', 'western', 'key', 'S', function (link, node) {
+				// ???
+				return ui.create.control('wei', 'shu', 'wu', 'qun', 'western', 'key', function (link, node) {
 					if (link == '全部') {
 						dialog.currentcapt = '';
 						dialog.currentgroup = '';
@@ -40679,6 +40879,9 @@
 					});
 					game.me.directgain(hs, false);
 				});
+				if (!lib.config.show_sortcard) {
+					ui.sortCard.style.display = 'none';
+				}
 				ui.playerids = ui.create.system('显示身份', function () {
 					if (game.showIdentity) {
 						game.showIdentity();
@@ -44383,6 +44586,7 @@
 					intro2.innerHTML = '<span style="font-weight:bold;margin-right:5px">' + get.translation(this.link) + '</span>' + get.skillInfoTranslation(this.link);
 					var info = get.info(this.link);
 					var skill = this.link;
+					var playername = this.linkname;
 					var skillnode = this;
 					if (info.derivation) {
 						var derivation = info.derivation;
@@ -44452,10 +44656,13 @@
 							audioinfo = audioinfo[1];
 						}
 						if (typeof audioinfo == 'number') {
+							if (Array.isArray(info.audioname) && info.audioname.contains(playername)) audioname = audioname + '_' + playername;
 							game.playAudio('skill', audioname + getIndex(audioinfo));
 						} else if (audioinfo) {
+							if (Array.isArray(info.audioname) && info.audioname.contains(playername)) audioname = audioname + '_' + playername;
 							game.playAudio('skill', audioname);
 						} else if (true && info.audio !== false) {
+							if (Array.isArray(info.audioname) && info.audioname.contains(playername)) audioname = audioname + '_' + playername;
 							game.playSkillAudio(audioname, getIndex(2));
 						}
 					}
@@ -44470,6 +44677,7 @@
 					}
 					var current = ui.create.div('.menubutton.large', skills, clickSkill, skilltrans);
 					current.link = list[i];
+					current.linkname = name;
 					if (!initskill) {
 						initskill = true;
 						clickSkill.call(current, 'init');
