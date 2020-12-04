@@ -2,8 +2,14 @@
 game.import('character',function(lib,game,ui,get,ai,_status){
 	return {
 		name:'tw',
-		connect:false,
-		characterSort:{},
+		connect:true,
+		characterSort:{
+			tw:{
+				tw_mobile:['tw_beimihu','nashime'],
+				tw_yijiang:['tw_caoang','tw_caohong','tw_zumao','tw_dingfeng','tw_maliang','tw_xiahouba'],
+				tw_english:['kaisa'],
+			},
+		},
 		character:{
 			tw_beimihu:['female','qun',3,['zongkui','guju','baijia','bingzhao'],['zhu']],
 			nashime:['male','qun',3,['chijie','waishi','renshe']],
@@ -20,7 +26,14 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 		},
 		card:{
 		},
-		characterFilter:{},
+		characterFilter:{
+			nashime:function(mode){
+				return mode!='guozhan';
+			},
+			tw_xiahouba:function(mode){
+				return mode!='guozhan';
+			},
+		},
 		skill:{
 			twrangyi:{
 				audio:2,
@@ -39,7 +52,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					target.chooseToUse({
 						prompt:'请使用得到的一张牌，或者受到来自'+get.translation(player)+'的一点伤害',
 						filterCard:function(card,player,event){
-							if(!cards.contains(card)) return false;
+							if(get.itemtype(card)!='card'||!cards.contains(card)) return false;
 							return lib.filter.filterCard(card,player,event);
 						},
 					});
@@ -248,14 +261,21 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				},
 			},
 			twxiaolian:{
-				inherit:'twtijin',
+				audio:2,
+				trigger:{global:'useCardToTarget'},
+				logTarget:'target',
 				filter:function(event,player){
 					return event.card&&event.card.name=='sha'&&event.player!=player&&
 					event.targets.length==1&&event.targets[0]!=player;
 				},
+				check:function(event,player){
+					return get.effect(event.targets[0],event.card,event.player,player)<=get.effect(player,event.card,event.player,player);
+				},
 				content:function(){
-					trigger.twxiaolian=trigger.targets[0];
-					trigger.targets=[player];
+					trigger.getParent().twxiaolian=trigger.targets[0];
+					trigger.targets.length=0;
+						trigger.getParent().triggeredTargets2.length=0;
+					trigger.targets.push(player);
 				},
 				group:'twxiaolian_damage',
 				subSkill:{
@@ -269,10 +289,11 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 						marktext:'马',
 						intro:{
 							content:'cards',
+							onunmark:'throw',
 						},
 						mod:{
 							globalTo:function(from,to,distance){
-								if(from!=to) return distance+to.storage.twxiaolian_distance.length;
+								if(from!=to&&to.storage.twxiaolian_distance) return distance+to.storage.twxiaolian_distance.length;
 							},
 						},
 					},
@@ -287,7 +308,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 							'step 0'
 							var target=trigger.getParent(2).twxiaolian;
 							event.target=target;
-							player.chooseCard('是否将一张牌当做【马】置于'+get.translation(target)+'的武将牌旁？','he').ai=function(target){
+							player.chooseCard('是否将一张牌当做【马】置于'+get.translation(target)+'的武将牌旁？','he').ai=function(card){
 								if(get.attitude(_status.event.player,_status.event.getParent('twxiaolian_damage').target)>2) return 7-get.value(card);
 								return 0;
 							};
@@ -303,21 +324,23 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					},
 				},
 			},
-			twtijin:{	
+			twtijin:{
 				audio:2,
-				trigger:{global:'useCard'},
+				trigger:{global:'useCardToPlayer'},
 				filter:function(event,player){
-					return event.card&&event.card.name=='sha'&&event.player!=player&&
-					event.targets.length==1&&event.targets[0]!=player&&get.distance(event.player,player,'attack')<=1;
+					return event.card&&event.card.name=='sha'&&event.player!=player&&event.target!=player&&
+					event.targets.length==1&&event.player.inRange(player);
 				},
-				logTarget:'player',
+				logTarget:'target',
 				check:function(event,player){
-					return get.effect(event.targets[0],{name:'sha'},event.player,player)<=get.effect(player,{name:'sha'},event.player,player);
+					return get.effect(event.targets[0],event.card,event.player,player)<=get.effect(player,event.card,event.player,player);
 				},
 				content:function(){
 					'step 0'
-					trigger.targets=[player];
-					var next=game.createEvent('twtijin_discard',null,trigger.getParent());
+					trigger.targets.length=0;
+					trigger.getParent().triggeredTargets1.length=0;
+					trigger.targets.push(player);
+					var next=game.createEvent('twtijin_discard',null,trigger.getParent(2));
 					next.player=player;
 					next.target=trigger.player;
 					next.setContent(function(){
@@ -375,12 +398,13 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				},
 			},
 			renshe:{
+				audio:2,
 				trigger:{player:'damageEnd'},
 				direct:true,
 				content:function(){
 					'step 0'
 					var choiceList=['令一名其他角色与你各摸一张牌','令自己下个出牌阶段可以多发动一次【外使】'];
-					if(lib.skill.chijie.filter({},player)) choiceList.push('将自己的势力变更为场上存在的一个其他势力');
+					if(lib.skill.chijie.filter&&lib.skill.chijie.filter({},player)) choiceList.push('将自己的势力变更为场上存在的一个其他势力');
 					player.chooseControl('cancel2').set('prompt',get.prompt('renshe')).set('choiceList',choiceList).set('ai',function(){
 						if(game.hasPlayer(function(current){
 							return get.attitude(player,current)>0||current.hasSkillTag('nogain');
@@ -419,6 +443,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				},
 			},
 			waishi:{
+				audio:2,
 				group:'waishi_afterstory',
 				subSkill:{
 					afterstory:{
@@ -434,12 +459,13 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				},
 				enable:'phaseUse',
 				filter:function(event,player){
-					return player.storage.waishi>0;
+					return typeof player.storage.waishi!='number'||player.storage.waishi>0;
 				},
 				filterTarget:function(card,player,target){
 					return target!=player&&target.countCards('h')>=ui.selected.cards.length;
 				},
 				filterCard:true,
+				position:'he',
 				check:function(card){
 					if(!game.hasPlayer(function(current){
 						return current!=_status.event.player&&current.countCards('h')>ui.selected.cards.length;
@@ -455,9 +481,10 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				delay:0,
 				content:function(){
 					'step 0'
+					if(typeof player.storage.waishi!='number') player.storage.waishi=1;
 					player.storage.waishi--;
 					player.lose(cards,ui.special);
-					player.gainPlayerCard(target,true,'h',cards.length).chooseonly=true;
+					player.choosePlayerCard(target,true,'h',cards.length).chooseonly=true;
 					'step 1'
 					event.cards2=result.cards;
 					target.lose(event.cards2,ui.special);
@@ -481,6 +508,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				},
 			},
 			chijie:{
+				audio:true,
 				forbid:['guozhan'],
 				trigger:{global:'gameDrawAfter'},
 				direct:true,
@@ -491,10 +519,11 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				},
 				content:function(){
 					'step 0'
-					var list=[];
-					game.countPlayer(function(current){
-						if(current.group!=player.group&&current.group!='shen') list.add(current.group);
-					});
+					var list=lib.group.filter(function(group){
+						return group!=player.group&&game.hasPlayer(function(current){
+							return current.group==group;
+						});
+					})
 					if(!event.renshe) list.push('cancel2');
 					player.chooseControl(list).set('prompt',event.renshe?'请选择一个势力':get.prompt('chijie')).set('prompt2',event.renshe?'':'将自己的势力变更为场上存在的一个势力').set('',function(){
 						return list.randomGet();
@@ -543,6 +572,9 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			waishi_info:' 出牌阶段限一次，你可以用至多X张牌交换一名其他角色等量的手牌（X为现存势力数），然后若其与你势力相同或手牌多于你，你摸一张牌。',
 			renshe:'忍涉',
 			renshe_info:'当你受到伤害后，你可以选择一项：将势力改为现存的另一个势力；或可以额外发动一次“外使”直到你的下个出牌阶段结束；或与另一名其他角色各摸一张牌。',
+			tw_mobile:'移动版',
+			tw_yijiang:'一将成名TW',
+			tw_english:'英文版',
 		}
 	};
 });

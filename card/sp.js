@@ -46,6 +46,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 				type:'trick',
 				enable:true,
 				filterTarget:function(card,player,target){
+					if(target==player) return false;
 					if(target.getEquip(5)){
 						return target.countCards('e')>1;
 					}
@@ -546,9 +547,12 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 				},
 				content:function(){
 					'step 0'
-					player.chooseToUse({name:'jinchan'},'是否对'+get.translation(trigger.card)+'使用【金蝉脱壳】？').set('ai1',function(card){
+					player.chooseToUse('是否对'+get.translation(trigger.card)+'使用【金蝉脱壳】？').set('ai1',function(card){
 						return _status.event.bool;
-					}).set('bool',-get.effect(player,trigger.card,trigger.player,player)).set('respondTo',[trigger.player,trigger.card]);
+					}).set('bool',-get.effect(player,trigger.card,trigger.player,player)).set('respondTo',[trigger.player,trigger.card]).set('filterCard',function(card,player){
+						if(get.name(card)!='jinchan') return false;
+						return lib.filter.cardEnabled(card,player,'forceEnable');
+					});
 					trigger.jinchan=true;
 					'step 1'
 					delete trigger.jinchan;
@@ -604,17 +608,17 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 				filter:function(event,player){
 					if(!event.visible) return false;
 					if(player.hasSkillTag('nodu')) return false;
-					if(event.cards){
-						for(var i=0;i<event.cards.length;i++){
-							if(event.cards[i].name=='du'&&event.cards[i].original=='h') return true;
+					if(event.hs){
+						for(var i=0;i<event.hs.length;i++){
+							if(get.name(event.hs[i],player)=='du') return true;
 						}
 					}
 					return false;
 				},
 				content:function(){
 					var num=0;
-					for(var i=0;i<trigger.cards.length;i++){
-						if(trigger.cards[i].name=='du'&&trigger.cards[i].original=='h') num++;
+					for(var i=0;i<trigger.hs.length;i++){
+						if(get.name(trigger.hs[i],player)=='du') num++;
 					}
 					if(trigger.getParent().name!='useCard'||trigger.getParent().card.name!='du') player.popup('毒','wood');
 					player.loseHp(num).type='du';
@@ -673,7 +677,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 		list:[
 			['spade',1,'caomu'],
 			['club',3,'caomu'],
-			['heart',12,'shengdong',],
+			['heart',12,'shengdong'],
 			['club',9,'shengdong'],
 			['spade',9,'shengdong'],
 			['diamond',4,'zengbin'],
@@ -691,7 +695,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 			["club",13,'jinchan'],
 			["club",12,'qijia'],
 			["club",13,'qijia'],
-			["spade",1,'fulei','thunder'],
+			["spade",1,'fulei'],
 			["spade",6,'qibaodao'],
 			["spade",5,'zhungangshuo'],
 			["spade",2,'lanyinjia'],

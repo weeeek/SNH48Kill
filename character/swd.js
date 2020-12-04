@@ -17,7 +17,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			swd_chenjingchou:['male','wu',3,['youyin','yihua']],
 			swd_duguningke:['female','qun',3,['nlianji','touxi']],
 			swd_guyue:['male','wei',3,['gtiandao','gxianyin','wangchen']],
-			swd_tuobayuer:['female','shu',4,['liuhong','poyue','niepan']],
+			swd_tuobayuer:['female','shu',4,['swdliuhong','poyue','niepan']],
 			swd_yuwentuo:['male','shu',4,['wushuang','xielei','kunlunjing']],
 			swd_yuxiaoxue:['female','wei',3,['huanhun','daixing','yinyue']],
 
@@ -1120,7 +1120,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			gaizao:{
 				trigger:{player:'useCardToBegin'},
 				filter:function(event,player){
-					if(player.countCards('e')==5) return false;
+					if(player!=event.target&&player.countCards('e')==5) return false;
 					return lib.skill.gaizao.filterx(event.card,player)&&event.target==player;
 				},
 				direct:true,
@@ -1159,7 +1159,8 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 							lib.translate[name]=lib.translate[trigger.card.name];
 							lib.translate[name+'_info']=lib.translate[trigger.card.name+'_info'];
 						}
-						trigger.card.init([trigger.card.suit,trigger.card.number,name,trigger.card.nature]);
+						trigger.card.name=name;
+						trigger.cards[0].init([trigger.card.suit,trigger.card.number,name,trigger.card.nature]);
 					}
 				},
 				ai:{
@@ -2753,9 +2754,6 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					"step 1"
 					if(result.bool){
 						trigger.target=player;
-						trigger.untrigger();
-						trigger.trigger('useCardToBefore');
-						trigger.trigger('shaBefore');
 						player.addSkill('hzhenwei2');
 						game.delay();
 					}
@@ -4007,7 +4005,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					player.recover();
 				}
 			},
-			liuhong:{
+			swdliuhong:{
 				trigger:{player:['useCard']},
 				frequent:true,
 				filter:function(event){
@@ -4582,7 +4580,8 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				usable:1,
 				filterTarget:function(card,player,target){
 					if(player==target) return false;
-					return target.countCards('h')>0;
+					if(!ui.selected.targets.length) return target.countCards('h')>0;
+					return ui.selected.targets[0].canCompare(target);
 				},
 				selectTarget:2,
 				multitarget:true,
@@ -4598,7 +4597,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 				},
 				content:function(){
 					"step 0"
-					if(targets[0].countCards('h')&&targets[1].countCards('h')){
+					if(targets[0].canCompare(targets[1])){
 						targets[0].chooseToCompare(targets[1]);
 					}
 					else{
@@ -4610,7 +4609,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 						targets[0].$gain2(cards);
 						targets[1].damage(targets[0]);
 					}
-					else{
+					else if(!result.tie){
 						targets[1].gain(cards,'log');
 						targets[1].$gain2(cards);
 						targets[0].damage(targets[1]);
@@ -8752,6 +8751,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 						backup:[],
 						source:player,
 					});
+					next.forceDie=true;
 					for(var i=0;i<game.players.length;i++){
 						if(game.players[i]!=player&&game.players[i]!=target){
 							game.players[i].out('duijue');
@@ -9842,7 +9842,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			gtiandao:'天道',
 			gtiandao_info:'任意一名角色的判定生效前，你可以打出一张牌替换之',
 			nlianji:'连计',
-			nlianji_info:'出牌阶段限一次，你可以选择一张手牌并指定两名角色进行拼点，拼点赢的角色获得此牌，并对没赢的角色造成一点伤害',
+			nlianji_info:'出牌阶段限一次，你可以选择一张手牌并指定两名角色进行拼点。若拼点结果不为平局，拼点赢的角色获得此牌，并对没赢的角色造成一点伤害。',
 			fengze:'风泽',
 			fengze_info:'出牌阶段限一次，你可以将一张黑色牌当作桃园结义使用',
 			lingyue:'凌月',
@@ -10008,7 +10008,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			shejie_info:'每当你受到一次伤害，可以令伤害来源不能使用或打出其手牌，直到其下一回合开始',
 			shejie2_info:'不能使用或打出手牌，直到下一回合开始',
 			yinyue:'引月',
-			yinyue_info:'每当有一名角色回复一次体力，你可以令其摸一张牌，若你的手牌数不大于该角色，你也摸一张牌',
+			yinyue_info:'每当有一名角色回复一次体力，你可以令其摸一张牌，若该角色不是你且你的手牌数不大于该角色，你也摸一张牌。',
 			yinyue_info_alter:'每当有一名角色回复一次体力，你可以令其摸一张牌',
 			mohua2:'魔化',
 			mohua2_info:'锁定技，当你进入濒死状态时，你立即变身为撒旦，将体力回复至２，然后摸两张牌',
@@ -10082,8 +10082,8 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			gongshen:'工神',
 			gongshen_info:'任意一名其他角色使用一张基本牌或锦囊牌指定目标后，你可以弃置一张装备牌令其失效',
 
-			liuhong:'流虹',
-			liuhong_info:'每当你使用一张杀，可以摸一张牌',
+			swdliuhong:'流虹',
+			swdliuhong_info:'每当你使用一张杀，可以摸一张牌',
 			poyue:'破月',
 			poyue_info:'锁定技，你的黑杀无视距离，红色杀不计入回合内的出杀限制且不可闪避',
 			poyue_info_alter:'锁定技，你的黑杀无视距离，红色杀不可闪避',
@@ -10230,7 +10230,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 			duanyi_info:'出牌阶段限一次，你可以弃置两张杀，对一名角色造成一点伤害，然后其随机弃置X张牌，X为其已损失的体力值',
 			duanyi_info_alter:'出牌阶段限一次，你可以弃置两张杀，并对一名角色造成一点伤害',
 			guxing_info:'出牌阶段，你可以将最后至多X张手牌当杀使用，此杀无视距离且可以指定至多3个目标，每造成一次伤害，你摸一张牌，Ｘ为你已损失的体力值且至少为１。',
-			tianlun_info:'任意一名角色的判定生效前，你可以弃置一张场上角色的判定牌代替之',
+			tianlun_info:'任意一名角色的判定牌生效前，你可以弃置一张场上角色的判定牌代替之',
 			hlongyin_info:'出牌阶段，你可以弃置任意张颜色相同且点数不同的牌，并获得逆时针座位距离与卡牌点数相同的角色区域内的一张牌。每阶段限一次',
 			lanzhi_info:'每当你使用一张梅花牌，你可以令所有体力值不大于你的角色回复一点体力',
 			lanzhi_old_info:'每当你即将造成伤害，可以防止此伤害，然后摸两张牌。每回合限发动一次。',

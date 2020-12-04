@@ -42,7 +42,6 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 				fullskin:true,
 				type:'equip',
 				subtype:'equip2',
-				cardimage:'suolianjia',
 				skills:['minguangkai_cancel','minguangkai_link'],
 				ai:{
 					basic:{
@@ -130,11 +129,22 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 					}
 				},
 				filterLose:function(card,player){
-				if(player.hasSkillTag('unequip2')) return false;
-				return true;
+					if(player.hasSkillTag('unequip2')) return false;
+					return true;
 				},
+				loseDelay:false,
 				onLose:function(){
+					var next=game.createEvent('taipingyaoshu');
+					event.next.remove(next);
+					var evt=event.getParent();
+					if(evt.getlx===false) evt=evt.getParent();
+					evt.after.push(next);
+					next.player=player;
+					next.setContent(lib.card.taipingyaoshu.onLosex);
+				},
+				onLosex:function(){
 					'step 0'
+					player.logSkill('taipingyaoshu');
 					player.draw(2);
 					'step 1'
 					if(player.hp>1) player.loseHp();
@@ -231,7 +241,8 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 					tag:{
 						damage:1,
 						thunderDamage:1,
-						natureDamage:1
+						natureDamage:1,
+						loseCard:1,
 					},
 					result:{
 						target:function(player,target){
@@ -245,21 +256,27 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 				audio:true,
 				type:'trick',
 				enable:function(card,player){
+					if(get.mode()=='versus') return true;
 					return game.hasPlayer(function(current){
 						return current.isMajor();
 					});
 				},
-				mode:['guozhan'],
+				mode:['guozhan','versus'],
 				filterTarget:true,
 				chongzhu:true,
 				changeTarget:function(player,targets){
 					var target=targets[0];
 					game.filterPlayer(function(current){
+						if(get.mode()=='versus') return current.isFriendOf(target);
 						return current.isMajor()==target.isMajor()&&current!=target&&!current.hasSkill('diaohulishan');
 					},targets);
 				},
 				content:function(){
-					if(target.isLinked()){
+					if(get.mode()=='versus'){
+						if(target.isEnemyOf(player)) target.link(true);
+						else if(target.isLinked()) target.draw();
+					}
+					else if(target.isLinked()){
 						target.draw();
 					}
 					else{
@@ -274,17 +291,12 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 						return 0;
 					},
 					result:{
-						player:function(player,target){
-							return game.countPlayer(function(current){
-								if(target.isMajor()==current.isMajor()){
-									if(current.isLinked()){
-										return get.attitude(player,target);
-									}
-									else{
-										return -get.attitude(player,target)*0.8;
-									}
-								}
-							});
+						target:function(player,target){
+							if(get.mode()=='versus'){
+								if(target.isFriendOf(player)) return target.isLinked()?1:0;
+								return target.isLinked()?0:-1;
+							}
+							return target.isLinked()?1:-1;
 						}
 					}
 				}
@@ -345,8 +357,8 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 							}
 							else{
 								var list=[];
-								for(var i=0;i<=Math.min(num,damaged);i++){
-									list.push('摸'+i+'回'+(num-i));
+								for(var i=Math.min(num,damaged);i>=0;i--){
+									list.push('摸'+(num-i)+'回'+i);
 								}
 								target.chooseControl(list).set('prompt','请分配自己的摸牌数和回复量').ai=function(){
 									if(player.hasSkill('diaohulishan')) return 0;
@@ -374,8 +386,10 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 					value:4,
 					useful:2,
 					result:{
-						player:1.5,
-						target:1,
+						target:function(player,target){
+							if(player==target) return 2;
+							return 1;
+						},
 					},
 				},
 			},
@@ -621,7 +635,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 					if(target.isUnseen(0)) controls.push('主将');
 					if(target.isUnseen(1)) controls.push('副将');
 					if(controls.length>1){
-						player.chooseControl(controls);
+						player.chooseControl(controls).set('ai',function(){return 1});
 					}
 					if(controls.length==0) event.finish();
 					"step 1"
@@ -708,7 +722,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 						target:function(player,target){
 							var hs=target.getCards('h');
 							if(hs.length<=1){
-								if(target==player&&hs[0].name=='yiyi'){
+								if(target==player&&(hs.length==0||hs[0].name=='yiyi')){
 									return 0;
 								}
 								return 0.3;
@@ -800,9 +814,9 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 				equipSkill:true,
 				trigger:{player:'linkBefore'},
 				forced:true,
-				priority:20,
+				//priority:20,
 				filter:function(event,player){
-					return player.isMinor()&&!player.isLinked();
+					return !player.isMajor()&&!player.isLinked();
 				},
 				content:function(){
 					trigger.cancel();
@@ -1022,6 +1036,8 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 					return evt&&evt.card&&evt.card.name=='sha'&&event.player.countGainableCards(player,'h')>0;
 				},
 				//priority:7,
+				logTarget:'player',
+				prompt2:'获得该角色的一张手牌',
 				check:function(event,player){
 					return get.attitude(player,event.player)<0;
 				},
@@ -1060,10 +1076,14 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 					nothunder:true,
 					effect:{
 						target:function(card,player,target,current){
-							if(card.name=='sha'&&player.getEquip('qinggang')||target.hasSkillTag('unequip2')) return;
+							if(target.hasSkillTag('unequip2')) return;
 							if(player.hasSkillTag('unequip',false,{
 								name:card?card.name:null,
-								target:player,
+								target:target,
+								card:card
+							})||player.hasSkillTag('unequip_ai',false,{
+								name:card?card.name:null,
+								target:target,
 								card:card
 							})) return;
 							if(get.tag(card,'natureDamage')) return 'zerotarget';
@@ -1080,7 +1100,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 				trigger:{player:'phaseDrawBegin2'},
 				forced:true,
 				filter:function(event,player){
-					return !player.isUnseen();
+					return !player.isUnseen()&&!event.numFixed;
 				},
 				content:function(){
 					trigger.num++;
@@ -1146,7 +1166,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 				content:function(){
 					var cards=[];
 					for(var i=0;i<trigger.cards.length;i++){
-						if(trigger.cards[i].name=='chiling'&&get.position(trigger.cards[i])=='d'){
+						if(trigger.cards[i].name=='chiling'&&get.position(trigger.cards[i],true)=='d'){
 							cards.push(trigger.cards[i]);
 						}
 					}
@@ -1154,7 +1174,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 						game.cardsGotoSpecial(cards);
 						game.log(cards,'已被移出游戏');
 						_status.chiling=true;
-						player.popup('敕令');
+						if(player&&player.popup) player.popup('敕令');
 					}
 				},
 			},
@@ -1371,8 +1391,9 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 			shuiyanqijunx_info:'出牌阶段，对一名装备区里有牌的其他角色使用。目标角色选择一项：1、弃置装备区里的所有牌；2、受到你造成的1点雷电伤害',
 			lulitongxin:'勠力同心',
 			lulitongxin_info:'出牌阶段，对所有大势力角色或所有小势力角色使用。若目标角色：不处于“连环状态”，其横置；处于“连环状态”，其摸一张牌',
+			lulitongxin_info_versus:'出牌阶段，对所有敌方角色或所有己方角色使用。若目标角色：为敌方角色且不处于“连环状态”，其横置；为己方角色且处于“连环状态”，其摸一张牌。',
 			lianjunshengyan:'联军盛宴',
-			lianjunshengyan_info:'出牌阶段，对你和你选择的除你的势力外的一个势力的所有角色。若目标角色：为你，你摸X张牌或回复X点体力（X为该势力的角色数）；不为你，其摸一张牌，然后重置。',
+			lianjunshengyan_info:'出牌阶段，对你和你选择的除你的势力外的一个势力的所有角色。若目标角色：为你，你选择摸Y张牌并回复X-Y点体力（X为该势力的角色数，Y∈[0,X]）；不为你，其摸一张牌，然后重置。',
 			lianjunshengyan_info_boss:'出牌阶段，对场上所有角色使用。你摸X张牌（X为目存活角色数），其他角色依次选择回复1点体力或摸一张牌。',
 			chiling:'敕令',
 			chiling_info:'出牌阶段，对所有没有势力的角色使用。目标角色选择一项：1、明置一张武将牌，然后摸一张牌；2、弃置一张装备牌；3、失去1点体力。当【敕令】因判定或弃置而置入弃牌堆时，系统将之移出游戏，然后系统于当前回合结束后视为对所有没有势力的角色使用【敕令】',

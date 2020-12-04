@@ -1,5 +1,5 @@
 window.config={
-	forbidai:['ns_liuzhang','xin_yuji'],
+	forbidai:['ns_liuzhang','xin_yuji','re_yuji'],
 	forbidai_user:[],
 	forbidall:[],
 	forbidstone:['zhugedan','pal_xuanxiao','hs_malfurion','lusu','chenlin','hs_siwangzhiyi',
@@ -14,9 +14,8 @@ window.config={
 	forbiddouble:['zhugedan','swd_kangnalishi','dongzhuo','wutugu','hs_siwangzhiyi','hs_ronghejuren','hs_shanlingjuren'],
 	forbidthreecard:['qiankunbiao','shenhuofeiya','gw_ciguhanshuang','gw_birinongwu','gw_qinpendayu','gw_poxiao'],
 	all:{
-		sgscharacters:['standard','shenhua','xinghuoliaoyuan','refresh','yijiang','sp','extra','old','mobile','tw','SNH48'],
-        //三国杀牌堆扩展包：标准，军争，SP，国战
-		sgscards:['standard','extra','sp','guozhan'],
+		sgscharacters:['standard','shenhua','xinghuoliaoyuan','refresh','yijiang','sp','sp2','extra','old','mobile','tw','SNH48'],
+		sgscards:['standard','extra','sp','guozhan','zhulu'],
 		sgsmodes:['identity','guozhan','versus','doudizhu','single','brawl','connect'],
 		stockmode:['identity','guozhan','versus','boss','doudizhu','single','chess','stone','connect','brawl','tafang','SNH48'],
 		stockextension:['boss','cardpile','coin','wuxing'],
@@ -36,7 +35,7 @@ window.config={
 	volumn_audio:2,
 
 	connect_avatar:'TeamSII',
-	connect_nickname:'',
+	connect_nickname:'队推',
 	config_menu:true,
 	auto_popped_config:true,
 	auto_popped_history:false,
@@ -128,9 +127,9 @@ window.config={
 	sort:'type_sort',
 
 	cards:['standard','ex','extra','sp','classic','basic','SNH48'],
-	characters:['standard','shenhua','sp','yijiang','refresh','xinghuoliaoyuan','mobile','extra','SNH48'],
-	connect_characters:[],
-	connect_cards:[],
+	characters:['standard','shenhua','sp','sp2','yijiang','refresh','xinghuoliaoyuan','mobile','extra','SNH48'],
+	connect_characters:['diy'],
+	connect_cards:['huanlekapai','guozhan','sp','zhulu'],
 	plays:[],
 	extensions:[],
 	banned:[],
@@ -235,5 +234,8 @@ window.config={
 		// ['jiushi','kuiwei'],
 		['zishu','xinfu_songsang'],
 		['zishu','shenxing'],
+		['akane_quanqing','lianying'],
+		['akane_quanqing','relianying'],
+		['akane_quanqing','shangshi'],
 	]
 };

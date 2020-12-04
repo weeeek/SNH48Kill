@@ -430,7 +430,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 					event.source.storage.youdishenru=player;
 					event.source.addSkill('youdishenru');
 					'step 1'
-					var next=event.source.chooseToUse({name:'sha'},player,-1,'对'+get.translation(player)+'使用一张杀，或受到一点伤害');
+					var next=event.source.chooseToUse({name:'sha'},player,-1,'对'+get.translation(player)+'使用一张杀，或受到一点伤害').set('addCount',false);
 					next.ai2=function(){
 						return 1;
 					};
@@ -859,7 +859,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 				trigger:{target:'shaBefore'},
 				direct:true,
 				filter:function(event,player){
-					return !event.getParent().directHit.contains(player)&&player.hasCard('youdishenru');
+					return !event.getParent().directHit.contains(player)&&player.hasUsableCard('youdishenru');
 				},
 				content:function(){
 					event.youdiinfo={
@@ -880,7 +880,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 					if(!event.player.countCards('he')) return false;
 					if(!lib.filter.targetEnabled({name:'chenhuodajie'},player,event.player)) return false;
 					if(event._notrigger.contains(event.player)) return false;
-					return player.hasCard('chenhuodajie');
+					return player.hasUsableCard('chenhuodajie');
 				},
 				content:function(){
 					player.chooseToUse(get.prompt('chenhuodajie',trigger.player).replace(/发动/,'使用'),function(card,player){

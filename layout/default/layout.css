@@ -1871,6 +1871,11 @@ div:not(.handcards)>.card>.info>span,
 .skill {
 	left: 0 !important;
 	width: 70px !important;
+	white-space: nowrap;
+}
+.skilln {
+	left: 0 !important;
+	width: 70px !important;
 }
 .skill>.card {
 	transform: scale(0.56);
@@ -2245,6 +2250,9 @@ div:not(.handcards)>.card>.info>span,
 }
 #window>.damage.fullscreenavatar[data-nature='thunder']:not(.noshadow)>div:first-child>div{
 	box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0,0.5) 0 0 10px, rgba(0, 0, 0,0.3) 0 0 30px, rgba(100, 74, 139,1) 0 0 60px;
+}
+#window>.damage.fullscreenavatar[data-nature='kami']:not(.noshadow)>div:first-child>div{
+	box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0,0.5) 0 0 10px, rgba(0, 0, 0,0.3) 0 0 30px, rgba(90, 118, 99,1) 0 0 60px;
 }
 #window>.damage.fullscreenavatar[data-nature='metal']>div:first-child>div{
 	box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0,0.5) 0 0 10px, rgba(255, 0, 0,0.1) 0 0 30px, rgba(255, 203, 0,0.6) 0 0 80px;
@@ -2727,14 +2735,14 @@ div:not(.handcards)>.card>.info>span,
 	opacity: 0 !important;
 }
 
-.player[data-position='0'].unseen>.avatar,
-.player[data-position='0'].unseen2>.avatar2,
-.player[data-position='0'].unseen>.name:not(.name2):not(.name_seat),
-.player[data-position='0'].unseen2>.name2,
-.unseen_v>.avatar,
-.unseen2_v>.avatar2,
-.unseen_v>.name:not(.name2):not(.name_seat),
-.unseen2_v>.name2 {
+#arena:not(.observe) .player[data-position='0'].unseen>.avatar,
+#arena:not(.observe) .player[data-position='0'].unseen2>.avatar2,
+#arena:not(.observe) .player[data-position='0'].unseen>.name:not(.name2):not(.name_seat),
+#arena:not(.observe) .player[data-position='0'].unseen2>.name2,
+#arena:not(.observe) .unseen_v>.avatar,
+#arena:not(.observe) .unseen2_v>.avatar2,
+#arena:not(.observe) .unseen_v>.name:not(.name2):not(.name_seat),
+#arena:not(.observe) .unseen2_v>.name2 {
 	opacity: 0.2 !important
 }
 
@@ -2744,6 +2752,7 @@ div:not(.handcards)>.card>.info>span,
 .player:not([data-position='0']).unseen.unseen2>.name_seat {
 	opacity: 1 !important;
 }
+
 .linked>.avatar,.linked>.avatar2 {
 	transform: rotate(-90deg);
 }
@@ -3444,6 +3453,9 @@ div:not(.handcards)>.card>.info>span,
 .thunder {
 	color: rgba(0,80,255,0.3);
 }
+.kami {
+	color: rgba(90,118,99,0.3);
+}
 .poison {
 	color: rgba(30, 133, 51,0.4);
 }
@@ -3709,6 +3721,10 @@ span[data-nature='firemm'] {
 }
 
 .player .identity[data-color="mingzhong"],
+.player .identity[data-color="rZhu"],
+.player .identity[data-color="rZhong"],
+.player .identity[data-color="rNei"],
+.player .identity[data-color="cai2"],
 div[data-nature='orange'],
 span[data-nature='orange'] {
 	text-shadow: rgba(255, 120, 0,1) 0 0 2px,rgba(255, 120, 0,1) 0 0 5px,rgba(255, 120, 0,1) 0 0 10px,
@@ -3769,6 +3785,8 @@ span[data-nature='keymm'] {
 
 .player .identity[data-color="nei"],
 .player .identity[data-color="ye"],
+.player .identity[data-color="rYe"],
+.player .identity[data-color="bYe"],
 div[data-nature='thunder'],
 span[data-nature='thunder'] {
 	text-shadow: rgba(100, 74, 139,1) 0 0 2px,rgba(100, 74, 139,1) 0 0 5px,rgba(100, 74, 139,1) 0 0 10px,
@@ -3783,6 +3801,23 @@ div[data-nature='thundermm'],
 span[data-nature='thundermm'] {
 	text-shadow: rgba(100, 74, 139,1) 0 0 2px,rgba(100, 74, 139,1) 0 0 2px,rgba(100, 74, 139,1) 0 0 2px,
 		rgba(100, 74, 139,1) 0 0 2px,black 0 0 1px;
+}
+
+.player .identity[data-color="kami"],
+div[data-nature='kami'],
+span[data-nature='kami'] {
+	text-shadow: rgba(90, 118, 99,1) 0 0 2px,rgba(90, 118, 99,1) 0 0 5px,rgba(90, 118, 99,1) 0 0 10px,
+		rgba(90, 118, 99,1) 0 0 10px,rgba(90, 118, 99,1) 0 0 20px,rgba(90, 118, 99,1) 0 0 20px,black 0 0 1px;
+}
+div[data-nature='kamim'],
+span[data-nature='kamim'] {
+	text-shadow: rgba(90, 118, 99,1) 0 0 2px,rgba(90, 118, 99,1) 0 0 5px,rgba(90, 118, 99,1) 0 0 5px,
+		rgba(90, 118, 99,1) 0 0 5px,black 0 0 1px;
+}
+div[data-nature='kamimm'],
+span[data-nature='kamimm'] {
+	text-shadow: rgba(90, 118, 99,1) 0 0 2px,rgba(90, 118, 99,1) 0 0 2px,rgba(90, 118, 99,1) 0 0 2px,
+		rgba(90, 118, 99,1) 0 0 2px,black 0 0 1px;
 }
 
 .player .identity[data-color="fan"],
@@ -4044,6 +4079,9 @@ span[data-nature='K']{
 }
 
 .player .identity[data-color="cai"],
+.player .identity[data-color="bZhu"],
+.player .identity[data-color="bZhong"],
+.player .identity[data-color="bNei"],
 .player .identity[data-color="wei"],
 .player .identity[data-color="falsezhu"],
 .player .identity[data-color="friend"],
@@ -4277,6 +4315,10 @@ div[data-decoration="bronze"]::after{
 	color: #152E63;
 	border: 1px solid #152E63;
 }
+.card.fullskin.kami>.name {
+	color: #1F3C38;
+	border: 1px solid #1F3C38;
+}
 .card.fullskin.fire>.name {
 	color: #631515;
 	border: 1px solid #631515;
@@ -4453,6 +4495,9 @@ div[data-decoration="bronze"]::after{
 .controlthundertext {
 	color: rgb(117,186,255);
 }
+.kamitext {
+	color: rgb(90,118,99);
+}
 .whitetext .thundertext {
 	color: white;
 }
@@ -4541,6 +4586,13 @@ div[data-decoration="bronze"]::after{
 .card .wunature {
 	top: 74px;
 	right: 6px;
+}
+.card .tempname {
+	top: 6px;
+	left: 6px;
+	font-size: 22px;
+	color: white !important;
+	pointer-events: none;
 }
 /*.card.equip1 .wunature,
 .card.equip3 .wunature,
